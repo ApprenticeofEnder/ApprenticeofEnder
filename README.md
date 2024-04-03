@@ -20,6 +20,8 @@
 
 ###
 
+![Development](https://img.shields.io/badge/Development-777777) ![Cyber Security](https://img.shields.io/badge/Cyber_Security-777777)
+
 Profile under construction...
 
 <!--
