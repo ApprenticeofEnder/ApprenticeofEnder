@@ -5,14 +5,16 @@
 ###
 
 <div align="center">
-  <img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=0077B5&logoColor=white&labelColor=&style=for-the-badge" height="25" alt="linkedin logo"  />
+  <img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo"  />
 </div>
 
 ###
 
 <div align="center">
-  <img src="https://visitor-badge.laobi.icu/badge?page_id=ApprenticeofEnder.ApprenticeofEnder&"  />
+  <img src="https://komarev.com/ghpvc/?username=ApprenticeofEnder&color=brightgreen&style=for-the-badge&base=112"  />
 </div>
+
+![]()
 
 ###
 
@@ -20,9 +22,13 @@
 
 ###
 
-![Development](https://img.shields.io/badge/Development-777777) ![Cyber Security](https://img.shields.io/badge/Cyber_Security-777777)
+<div align="center">
+  <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGtwYWExcjRneXl2ZmFoZDEzanFuYmc0Y3NxenF1dWVsY3lnc2xlMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zyFcsWHX2fdpyb5SBi/giphy.gif"  />
+  <pre>Profile under construction...
+  Please check back soon!</pre>
+</div>
 
-Profile under construction...
+
 
 <!--
 I'm ... from ...
