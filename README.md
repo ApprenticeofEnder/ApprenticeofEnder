@@ -23,7 +23,7 @@
 ###
 
 <div align="center">
-  <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGtwYWExcjRneXl2ZmFoZDEzanFuYmc0Y3NxenF1dWVsY3lnc2xlMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zyFcsWHX2fdpyb5SBi/giphy.gif"  />
+  <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGtwYWExcjRneXl2ZmFoZDEzanFuYmc0Y3NxenF1dWVsY3lnc2xlMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zyFcsWHX2fdpyb5SBi/giphy.gif" width="100%"  />
   <pre>Profile under construction...
   Please check back soon!</pre>
 </div>
