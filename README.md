@@ -63,7 +63,7 @@ That said, every craftsman has his favourite tools -- here are mine.
 - **AWS** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" height="16" alt="aws logo" /> for robust cloud hosting and the best supported set of services out there.
 - **Azure** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg" height="16" alt="azure logo" /> for its Sentinel SIEM and integrated query language.
 - **Supabase** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg" height="16" alt="supabase logo" /> because managing all your own authentication and database work is . . . ow.
-- **Burp Suite** for when dev tools doesn't cut it for ethical hacking.
+- **Burp Suite** for when dev tools don't cut it for ethical hacking.
 - **Docker** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain.svg" height="16" alt="docker logo" /> for consistent app deployments, every time, in every environment.
 
 ### Stats
