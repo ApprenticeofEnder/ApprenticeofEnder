@@ -48,23 +48,23 @@ Jokes aside, I'm capable of learning a lot in a short period of time!
 That said, every craftsman has his favourite tools -- here are mine.
 
 ***Languages***
-- **Rust** <img src="https://cdn.simpleicons.org/rust/000000" height="10" alt="rust logo"  /> for high-performance, memory-safe apps.
-- **Python** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="10" alt="python logo"  /> for rapid prototypes and all things security.
-- **TypeScript** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="10" alt="typescript logo"  /> for all things front end.
-- **SQL** (specifically **PostgreSQL** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgres/postgres-original.svg" height="10" alt="postgres logo"  />) for wrangling data in a way that few other languages can.
-- **Bash** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" height="10" alt="bash logo"/> for scripts that will work on just about every UNIX system.
+- **Rust** <img src="https://cdn.simpleicons.org/rust/FFFFFF" height="16" alt="rust logo"  /> for high-performance, memory-safe apps.
+- **Python** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="16" alt="python logo"  /> for rapid prototypes and all things security.
+- **TypeScript** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="16" alt="typescript logo"  /> for all things front end.
+- **SQL** (specifically **PostgreSQL** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgres/postgres-original.svg" height="16" alt="postgres logo"  />) for wrangling data in a way that few other languages can.
+- **Bash** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" style="color: white;" height="16" alt="bash logo"/> for scripts that will work on just about every UNIX system.
 
 ***Tools***
-- **Svelte** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg" height="10" alt="svelte logo"  /> for building web app clients with a buttery smooth API.
-- **React/NextJS** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="10" alt="react logo"  /> for building web app clients with some more community support.
-- **FastAPI** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" height="10" alt="fastapi logo" /> for drafting APIs in record time with Python.
-- **Linux** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" height="10" alt="linux logo" /> because owning your operating system is awesome.
-- **DigitalOcean** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/digitalocean/digitalocean-original.svg" height="10" alt="digitalocean logo" /> for cloud hosting without too many extras.
-- **AWS** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" height="10" alt="aws logo" /> for robust cloud hosting and the best supported set of services out there.
-- **Azure** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg" height="10" alt="azure logo" /> for its Sentinel SIEM and integrated query language.
-- **Supabase** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg" height="10" alt="supabase logo" /> because managing all your own authentication and database work is . . . ow.
+- **Svelte** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg" height="16" alt="svelte logo"  /> for building web app clients with a buttery smooth API.
+- **React/NextJS** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="16" alt="react logo"  /> for building web app clients with some more community support.
+- **FastAPI** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" height="16" alt="fastapi logo" /> for drafting APIs in record time with Python.
+- **Linux** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" height="16" alt="linux logo" /> because owning your operating system is awesome.
+- **DigitalOcean** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/digitalocean/digitalocean-original.svg" height="16" alt="digitalocean logo" /> for cloud hosting without too many extras.
+- **AWS** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" height="16" alt="aws logo" /> for robust cloud hosting and the best supported set of services out there.
+- **Azure** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg" height="16" alt="azure logo" /> for its Sentinel SIEM and integrated query language.
+- **Supabase** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg" height="16" alt="supabase logo" /> because managing all your own authentication and database work is . . . ow.
 - **Burp Suite** for when dev tools doesn't cut it for ethical hacking.
-- **Docker** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain.svg" height="10" alt="docker logo" /> for consistent app deployments, every time, in every environment.
+- **Docker** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain.svg" height="16" alt="docker logo" /> for consistent app deployments, every time, in every environment.
 
 ### Stats
 [![Github Streak](https://github-readme-streak-stats.herokuapp.com/?user=ApprenticeofEnder&theme=dark&background=000000)](https://git.io/streak-stats)
