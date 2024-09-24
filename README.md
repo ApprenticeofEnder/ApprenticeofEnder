@@ -51,7 +51,7 @@ That said, every craftsman has his favourite tools -- here are mine.
 - **Rust** <img src="https://cdn.simpleicons.org/rust/FFFFFF" height="16" alt="rust logo"  /> for high-performance, memory-safe apps.
 - **Python** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="16" alt="python logo"  /> for rapid prototypes and all things security.
 - **TypeScript** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="16" alt="typescript logo"  /> for all things front end.
-- **SQL** (specifically **PostgreSQL** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgres/postgres-original.svg" height="16" alt="postgres logo"  />) for wrangling data in a way that few other languages can.
+- **SQL** (specifically **PostgreSQL** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" height="16" alt="postgres logo"  />) for wrangling data in a way that few other languages can.
 - **Bash** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" style="color: white;" height="16" alt="bash logo"/> for scripts that will work on just about every UNIX system.
 
 ***Tools***
