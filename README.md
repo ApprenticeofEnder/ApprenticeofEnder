@@ -41,11 +41,8 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
 - 📚 I'm currently learning GraphQL, both from a development and offensive security perspective.
 - ⚡ In my free time, I train Muay Thai,
 - 💬 Ask me about password managers, IAM, and secure development!
-- 📫 How to reach me: <a href="https://www.linkedin.com/in/robertbabaev2001/">
-  <img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo"  />
-</a> or check out my Contact page on <a href="https://robertbabaev.tech">
-  <img src="https://img.shields.io/static/v1?message=My Website&logo=firefox&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo"  />
-</a>
+- 📫 How to reach me: <a href="https://www.linkedin.com/in/robertbabaev2001/"><img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo"  /></a> or check out my Contact page on <a href="https://robertbabaev.tech"><img src="https://img.shields.io/static/v1?message=My Website&logo=firefox&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo"  /></a>
+
 - 😄 Pronouns: He/Him, They/Them
 - ⚡ Fun fact: I got into security because I pitched a startup that never would have gotten off the ground in a million years!
 
