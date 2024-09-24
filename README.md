@@ -5,12 +5,8 @@
 ###
 
 <div align="center">
-  <a href="https://www.linkedin.com/in/robertbabaev2001/">
-    <img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo"  />
-  </a>
-  <a href="https://robertbabaev.tech">
-    <img src="https://img.shields.io/static/v1?message=My Website&logo=firefox&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo"  />
-  </a>
+  <a href="https://www.linkedin.com/in/robertbabaev2001/"><img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo"  /></a>
+  <a href="https://robertbabaev.tech"><img src="https://img.shields.io/static/v1?message=My Website&logo=firefox&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo"  /></a>
 </div>
 
 ###
@@ -18,8 +14,6 @@
 <div align="center">
   <img src="https://komarev.com/ghpvc/?username=ApprenticeofEnder&color=brightgreen&style=for-the-badge&base=112"  />
 </div>
-
-![]()
 
 ###
 
@@ -39,133 +33,47 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
 - 🌱 I'm currently working on CourseFull, an app that lets students keep track of their goals, not just their grades!
 - 🔭 I'm also working on sharpening my penetration testing skills through bug bounties.
 - 📚 I'm currently learning GraphQL, both from a development and offensive security perspective.
-- ⚡ In my free time, I train Muay Thai,
-- 💬 Ask me about password managers, IAM, and secure development!
-- 📫 How to reach me: <a href="https://www.linkedin.com/in/robertbabaev2001/"><img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo"  /></a> or check out my Contact page on <a href="https://robertbabaev.tech"><img src="https://img.shields.io/static/v1?message=My Website&logo=firefox&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo"  /></a>
-
+- ⚡ In my free time, I train Muay Thai, work on side projects, get involved with the Lancer community, and
+- 💬 Ask me about password managers, IAM, secure development, or anything else in Cyber!
+- 📫 How to reach me: [LinkedIn](https://linkedin.com/in/robertbabaev2001/) or see the [Contact Page](https://robertbabaev.tech) on my website!
 - 😄 Pronouns: He/Him, They/Them
 - ⚡ Fun fact: I got into security because I pitched a startup that never would have gotten off the ground in a million years!
 
-### Languages and Tools
+### 🛠 Languages and Tools
 
-<div align="left" style="columns: 3;">
-  <img src="https://cdn.simpleicons.org/rust/000000" height="40" alt="rust logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="40" alt="javascript logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" alt="python logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg" height="40" alt="svelte logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" alt="react logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" height="40" alt="linux logo"  />
-</div>
+- All of them except Assembly
+
+Jokes aside, I'm capable of learning a lot in a short period of time!
+
+That said, every craftsman has his favourite tools -- here are mine.
+
+***Languages***
+- **Rust** <img src="https://cdn.simpleicons.org/rust/000000" height="6" alt="rust logo"  /> for high-performance, memory-safe apps.
+- **Python** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="6" alt="python logo"  /> for rapid prototypes and all things security.
+- **TypeScript** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="6" alt="typescript logo"  /> for all things front end.
+- **SQL** (specifically **PostgreSQL** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgres/postgres-original.svg" height="6" alt="postgres logo"  />) for wrangling data in a way that few other languages can.
+- **Bash** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" height="6" alt="bash logo"/> for scripts that will work on just about every UNIX system.
+
+***Tools***
+- **Svelte** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg" height="6" alt="svelte logo"  /> for building web app clients with a buttery smooth API.
+- **React/NextJS** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="6" alt="react logo"  /> for building web app clients with some more community support.
+- **FastAPI** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" height="6" alt="fastapi logo" /> for drafting APIs in record time with Python.
+- **Linux** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" height="6" alt="linux logo" /> because owning your operating system is awesome.
+- **DigitalOcean** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/digitalocean/digitalocean-original.svg" height="6" alt="digitalocean logo" /> for cloud hosting without too many extras.
+- **AWS** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" height="6" alt="aws logo" /> for robust cloud hosting and the best supported set of services out there.
+- **Azure** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg" height="6" alt="azure logo" /> for its Sentinel SIEM and integrated query language.
+- **Supabase** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg" height="6" alt="supabase logo" /> because managing all your own authentication and database work is . . . ow.
+- **Burp Suite** for when dev tools doesn't cut it for ethical hacking.
+- **Docker** <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-plain.svg" /> for consistent app deployments, every time, in every environment.
+
+### Stats
+[![Github Streak](https://github-readme-streak-stats.herokuapp.com/?user=ApprenticeofEnder&theme=dark&background=000000)](https://git.io/streak-stats)
 
 ### Some Of My Best Work
-<div style="columns: 3;">
-  <div class="substack-post-embed"><p lang="en">Athena - An Old AI (ISSessions CTF 2024) by Robert Babaev</p><p>A guardian? What's she hiding?</p><a data-post-link href="https://robertbabaev.substack.com/p/athena-an-old-ai-issessions-ctf-2024">Read on Substack</a></div><script async src="https://substack.com/embedjs/embed.js" charset="utf-8"></script>
-</div>
+- [UnitedCTF 2024 - IT Portal](https://robertbabaev.substack.com/p/unitedctf-2024-it-portal)
+- [(Mostly) Irrefutable, Secure, and Performant Logging with Structlog and FastAPI](https://robertbabaev.substack.com/p/0x06-mostly-irrefutable-secure-and)
+- [Athena - An Old AI (ISSessions 2024)](https://robertbabaev.substack.com/p/athena-an-old-ai-issessions-ctf-2024)
+- [How to do JWT Authentication in Python & FastAPI (The Right Way)](https://robertbabaev.substack.com/p/0x04-how-to-do-jwt-authentication)
 
-<!--
-I'm ... from ...
-
-- 🔭 I’m working as ...
-- 📚 I'm currently learning ...
-- ⚡ In my free time I ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
-
-<!--
-**ApprenticeofEnder/ApprenticeofEnder** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-
-Here are some ideas to get you started:
-
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
-
-<div align="center">
-  <img height="300" src="https://robertbabaev.tech/PFP_V2.jpg"  />
-</div>
-
-###
-
-<div align="center">
-  <img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=0077B5&logoColor=white&labelColor=&style=for-the-badge" height="25" alt="linkedin logo"  />
-</div>
-
-###
-
-<div align="center">
-  <img src="https://visitor-badge.laobi.icu/badge?page_id=ApprenticeofEnder.ApprenticeofEnder&"  />
-</div>
-
-###
-
-<h1 align="center">Robert Babaev</h1>
-
-###
-
-<h3 align="left">👩‍💻  About Me</h3>
-
-###
-
-I'm ... from ...
-
-- 🔭 I’m working as ...
-- 📚 I'm currently learning ...
-- ⚡ In my free time I ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
-
-###
-
-<h3 align="left">🛠 Language and tools</h3>
-
-###
-
-<div align="left">
-  <img src="https://cdn.simpleicons.org/rust/000000" height="40" alt="rust logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="40" alt="javascript logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" alt="python logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg" height="40" alt="svelte logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" alt="react logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg" height="40" alt="redux logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" height="40" alt="linux logo"  />
-</div>
-
-###
-
-<h3 align="left">🔥   My Stats :</h3>
-
-###
-
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=ApprenticeofEnder&locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=dracula&hide_border=false&order=2" height="150" alt="languages graph"  />
-</div>
-
-###
-
-
--->
+### Still Here?
+Thanks for reading to the end. If you want to get in touch, check my contact info in the [About Me](#about-me) section!
