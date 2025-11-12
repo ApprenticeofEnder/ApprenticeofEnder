@@ -117,9 +117,6 @@ if ! shopt -oq posix; then
 fi
 . "$HOME/.cargo/env"
 
-. /etc/profile.d/gradle.sh
-
-
 # Created by `pipx` on 2024-01-30 01:03:46
 export PATH="$PATH:/home/ender/.local/bin"
 # eval "$(register-python-argcomplete pipx)"
