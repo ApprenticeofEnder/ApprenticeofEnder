@@ -1,11 +1,12 @@
 {
   cachix = {
     enable = true;
-    push = "mfarabi";
+    push = "rbabaev";
     pull = [
       "cachix"
-      "oxalica"
       "devenv"
+      "oxalica"
+      "rbabaev"
       "nixpkgs"
       "mfarabi"
       "emacs-ci"
@@ -15,11 +16,3 @@
     ];
   };
 }
-
-# nix profile install github:fuellabs/fuel.nix#fuel
-# cachix use fuellabs
-# fuel-labs:
-#   url: github:fuellabs/fuel.nix
-#   or
-#   url: github:fuellabs/fuel.nix#fuel-nightly
-# nix profile list

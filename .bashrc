@@ -117,49 +117,20 @@ if ! shopt -oq posix; then
 fi
 . "$HOME/.cargo/env"
 
-# Created by `pipx` on 2024-01-30 01:03:46
-export PATH="$PATH:/home/ender/.local/bin"
-# eval "$(register-python-argcomplete pipx)"
-
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-eval "$(fzf --bash)"
-
-# pnpm
-export PNPM_HOME="/home/ender/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-# export PATH="$HOME/.rbenv/bin:$PATH"
-# eval "$(rbenv init -)"
-# export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
-# export PATH="/home/ender/.local/share/sentry-devenv/bin:$PATH"
-
-
-# eval "$(direnv hook bash)"
 
 eval "$(uv generate-shell-completion bash)"
-
-alias dl-audio='yt-dlp -x --audio-format mp3 --restrict-filenames -P . -S "res:480"'
 
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:/home/ender/go/bin
 
-# bash completion for op 
+# bash completion for op
 eval "$(op completion bash)$"
 
-# export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
-# export ANDROID_HOME=$HOME/Android/Sdk
-# export NDK_HOME=$ANDROID_HOME/ndk/28.0.12674087
-# export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-eval "$(zoxide init bash)"
+# Created by `pipx` on 2024-01-30 01:03:46
+export PATH="$PATH:/home/ender/.local/bin"
+# eval "$(register-python-argcomplete pipx)"
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+eval "$(direnv hook bash)"
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+alias dl-audio='yt-dlp -x --audio-format mp3 --restrict-filenames -P . -S "res:480"'

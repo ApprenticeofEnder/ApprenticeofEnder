@@ -1,5 +1,6 @@
 let
   PORTS = {
+    APP = "3000";
     API = "5150";
     DOCS = "4000";
     ARCH = "5173";

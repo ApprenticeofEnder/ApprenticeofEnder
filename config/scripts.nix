@@ -59,5 +59,30 @@
         sudo git clean -fdX
       '';
     };
+
+    yls = {
+      description = "   GET BACK HERE yOU lITTLE sHIT!";
+      exec = ''
+        function divider(){
+          echo "---------------------------------------"
+        }
+
+        TARGET="$1"
+
+        which $TARGET
+
+        divider
+
+        where $TARGET
+
+        divider
+
+        brew list | grep $TARGET
+
+        divider
+
+        apt list | grep $TARGET
+      '';
+    };
   };
 }
