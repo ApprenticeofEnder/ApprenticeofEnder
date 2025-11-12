@@ -5,32 +5,29 @@
   lib,
   config,
   ...
-}:
-let
+}: let
   inherit (flake.inputs) self;
-  mapListToAttrs =
-    m: f:
+  mapListToAttrs = m: f:
     lib.listToAttrs (
       map (name: {
         inherit name;
         value = f name;
-      }) m
+      })
+      m
     );
-in
-{
-  imports = [ ../../modules/shared/nix ];
+in {
+  imports = [../../modules/shared/nix];
   options = {
     myusers = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       description = "List of usernames";
       defaultText = "All users under ./configuration/users are included by default";
-      default =
-        let
-          dirContents = builtins.readDir (self + /configurations/home);
-          fileNames = builtins.attrNames dirContents; # Extracts keys: [ "mfarabi.nix" ]
-          regularFiles = builtins.filter (name: dirContents.${name} == "regular") fileNames; # Filters for regular files
-          baseNames = map (name: builtins.replaceStrings [ ".nix" ] [ "" ] name) regularFiles; # Removes .nix extension
-        in
+      default = let
+        dirContents = builtins.readDir (self + /configurations/home);
+        fileNames = builtins.attrNames dirContents; # Extracts keys: [ "ender.nix" ]
+        regularFiles = builtins.filter (name: dirContents.${name} == "regular") fileNames; # Filters for regular files
+        baseNames = map (name: builtins.replaceStrings [".nix"] [""] name) regularFiles; # Removes .nix extension
+      in
         baseNames;
     };
   };
@@ -40,14 +37,14 @@ in
     # https://github.com/nix-community/home-manager/issues/4026#issuecomment-1565487545
     users.users = mapListToAttrs config.myusers (
       name:
-      lib.optionalAttrs pkgs.stdenv.isDarwin {
-        home = "/Users/${name}";
-        shell = pkgs.zsh;
-      }
-      // lib.optionalAttrs pkgs.stdenv.isLinux {
-        isNormalUser = true;
-        shell = pkgs.zsh;
-      }
+        lib.optionalAttrs pkgs.stdenv.isDarwin {
+          home = "/Users/${name}";
+          shell = pkgs.zsh;
+        }
+        // lib.optionalAttrs pkgs.stdenv.isLinux {
+          isNormalUser = true;
+          shell = pkgs.zsh;
+        }
     );
 
     # Enable home-manager for our user
@@ -66,10 +63,11 @@ in
     nix = {
       settings = {
         max-jobs = "auto";
-        trusted-users = [
-          "root"
-        ]
-        ++ config.myusers;
+        trusted-users =
+          [
+            "root"
+          ]
+          ++ config.myusers;
         experimental-features = [
           "nix-command"
           "flakes"

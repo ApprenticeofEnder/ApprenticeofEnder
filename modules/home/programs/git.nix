@@ -1,8 +1,7 @@
 {
   # config,
   ...
-}:
-{
+}: {
   programs.git = {
     enable = true;
     lfs.enable = false;
@@ -12,14 +11,14 @@
       pull.rebase = false;
 
       user = {
-        name = "Mumtahin Farabi";
-        email = "mfarabi619@gmail.com";
+        name = "Robert Babaev";
+        email = "github@robertbabaev.tech";
       };
       alias = {
         ga = "git add .";
         gama = "";
       };
-     };
+    };
 
     # signing = {
     #   # format = "ssh";

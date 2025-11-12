@@ -1,8 +1,7 @@
 {
   # config,
   ...
-}:
-{
+}: {
   home.shellAliases.lg = "lazygit";
   programs.lazygit = {
     enable = true;
@@ -29,7 +28,7 @@
       git = {
         parseEmoji = true;
         commit.signOff = true;
-        branchPrefix = "mfarabi/";
+        branchPrefix = "rbabaev/";
         # branchPrefix = "${config.me.username}/";
       };
     };

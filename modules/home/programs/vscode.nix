@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.vscode = {
     enable = false;
     # mutableExtensionsDir = true;
@@ -10,8 +8,8 @@
         enableExtensionUpdateCheck = true;
       };
 
-      mfarabi = {
-        userTasks = { };
+      ender = {
+        userTasks = {};
 
         keybindings = [
           {
@@ -77,7 +75,6 @@
             minimap.enabled = false;
             files.autoSave = "afterDelay";
             fontFamily = "JetBrainsMono Nerd Font";
-
           };
           workbench = {
             panel = {
@@ -98,7 +95,6 @@
           window = {
             titleBarStyle = "native";
             customTitleBarVisibility = "windowed";
-
           };
           zenMode = {
             showTabs = "single";

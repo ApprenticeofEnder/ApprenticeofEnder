@@ -22,7 +22,7 @@
 
       nixos-server = {
         port = 22;
-        user = "mfarabi";
+        user = "ender";
         host = "nixos-server";
         checkHostIP = true;
         addKeysToAgent = "yes";
@@ -30,77 +30,26 @@
         setEnv.TERM = "xterm-kitty";
       };
 
-      archlinux = {
-        port = 22;
-        user = "mfarabi";
-        host = "archlinux";
-        checkHostIP = true;
-        addKeysToAgent = "yes";
-        hostname = "10.0.0.145";
-        setEnv.TERM = "xterm-kitty";
-      };
-
-      macos = {
-        port = 22;
-        host = "macos";
-        user = "mfarabi";
-        checkHostIP = true;
-        addKeysToAgent = "yes";
-        hostname = "192.168.50.151";
-        setEnv.TERM = "xterm-kitty";
-      };
-
-      macos-intel = {
-        port = 22;
-        host = "macos-intel";
-        user = "mfarabi";
-        checkHostIP = true;
-        addKeysToAgent = "yes";
-        hostname = "10.0.0.90";
-        setEnv.TERM = "xterm-kitty";
-      };
-
-      freebsd = {
-        port = 22;
-        host = "freebsd";
-        user = "mfarabi";
-        checkHostIP = true;
-        addKeysToAgent = "yes";
-        hostname = "192.168.50.142";
-        setEnv.TERM = "xterm-kitty";
-      };
-
       nixos = {
         port = 22;
         host = "nixos";
-        user = "mfarabi";
+        user = "ender";
         checkHostIP = true;
         addKeysToAgent = "yes";
         hostname = "192.168.64.6";
         setEnv.TERM = "xterm-kitty";
       };
 
-      router = {
-        port = 22;
-        user = "admin";
-        host = "router";
-        checkHostIP = true;
-        addKeysToAgent = "yes";
-        hostname = "192.168.50.1";
-        setEnv.TERM = "xterm-256color";
-      };
-
-
       rpi5 = {
         port = 22;
         host = "rpi5";
-        user = "mfarabi";
+        user = "ender";
         checkHostIP = true;
         addKeysToAgent = "yes";
         hostname = "192.168.50.241";
         setEnv = {
           TERM = "xterm-256color";
-          };
+        };
 
         # addressFamily = null; # "any" | "inet" | "inet6"
         # certificateFile = [ ./.file ];
