@@ -1,9 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-
-{
+{pkgs, ...}: {
   programs = {
     neovim = {
       enable = true;
@@ -13,39 +8,35 @@
       withNodeJs = true;
       withPython3 = true;
       defaultEditor = true;
-      plugins = with pkgs.vimPlugins; [
-        LazyVim
-        qmk-nvim
-      ];
+      plugins = with pkgs.vimPlugins; [LazyVim qmk-nvim];
     };
   };
-
 
   home = {
     file = {
       ".config/nvim/init.lua" = {
-        enable = true;
+        enable = false;
         text = ''
           -- bootstrap lazy.nvim, LazyVim and your plugins
           require("config.lazy")
         '';
       };
       ".config/nvim/lua/plugins" = {
-        enable = true;
+        enable = false;
         source = ./plugins;
         recursive = true;
       };
       ".config/nvim/lua/config" = {
-        enable = true;
+        enable = false;
         source = ./config;
         recursive = true;
       };
       ".config/nvim/lazyvim.json" = {
-        enable = true;
+        enable = false;
         source = ./lazyvim.json;
       };
       ".config/nvim/.neoconf.json" = {
-        enable = true;
+        enable = false;
         text = ''
           {
             "neodev": {
@@ -65,7 +56,7 @@
         '';
       };
       ".config/nvim/stylua.toml" = {
-        enable = true;
+        enable = false;
         text = ''
           indent_width = 2
           column_width = 120
