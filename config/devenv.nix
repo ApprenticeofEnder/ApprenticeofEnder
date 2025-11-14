@@ -1,8 +1,8 @@
 {
-  name = "🧮 Microvisor 🧮";
+  name = "Home Base";
 
   infoSections = {
-    name = [ "Mumtahin Farabi" ];
+    name = ["Robert Babaev"];
   };
 
   imports = [

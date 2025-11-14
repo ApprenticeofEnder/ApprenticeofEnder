@@ -60,10 +60,10 @@
       ;; doom-lantern-padded-modeline t
       doom-modeline-major-mode-icon t
       org-directory "~/Documents/org/"
-      user-full-name "Mumtahin Farabi"
+      user-full-name "Robert Babaev"
       display-line-numbers-type 'relative
       which-key-allow-multiple-replacements t ;; Remove 'evil-' in too many popups
-      user-mail-address "mfarabi619@gmail.com"
+      user-mail-address "github@robertbabaev.tech"
       ;; plstore-cache-passphrase-for-symmetric-encryption t
       browse-url-browser-function 'browse-url-default-browser
       fancy-splash-image "~/MFarabi619/assets/apollyon-emacs.png"
