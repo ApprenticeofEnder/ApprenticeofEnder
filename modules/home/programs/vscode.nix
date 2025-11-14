@@ -1,12 +1,14 @@
 {pkgs, ...}: {
   programs.vscode = {
-    enable = false;
+    enable = true;
     # mutableExtensionsDir = true;
     profiles = {
       default = {
         enableUpdateCheck = true;
         enableExtensionUpdateCheck = true;
       };
+
+      # TODO: Add home vs work profiles
 
       ender = {
         userTasks = {};
@@ -23,27 +25,35 @@
           vue.volar
           antfu.slidev
           bbenoist.nix
-          vscodevim.vim
-          atopile.atopile
           ms-vscode.cpptools
           jnoortheen.nix-ide
+          vspacecode.whichkey
           unifiedjs.vscode-mdx
-          likec4.likec4-vscode
           timonwong.shellcheck
           esbenp.prettier-vscode
           graphql.vscode-graphql
+          gruntfuggly.todo-tree
+          ms-dotnettools.csdevkit
+          ms-dotnettools.csharp
+          ms-dotnettools.vscode-dotnet-runtime
+          # tobias-z.vscode-harpoon
           tamasfe.even-better-toml
           bierner.markdown-mermaid
+          asvetliakov.vscode-neovim
           bradlc.vscode-tailwindcss
+          pkief.material-icon-theme
+          aaron-bond.better-comments
           ms-vsliveshare.vsliveshare
           tailscale.vscode-tailscale
+          alefragnani.project-manager
           github.vscode-github-actions
           graphql.vscode-graphql-syntax
           platformio.platformio-vscode-ide
           christian-kohler.npm-intellisense
           christian-kohler.path-intellisense
-          ms-vscode-remote.vscode-remote-extensionpack
+          arcticicestudio.nord-visual-studio-code
           ms-kubernetes-tools.vscode-kubernetes-tools
+          ms-vscode-remote.vscode-remote-extensionpack
 
           # solidity
           # supabase
@@ -77,6 +87,8 @@
             fontFamily = "JetBrainsMono Nerd Font";
           };
           workbench = {
+            colorTheme = "Nord";
+            iconTheme = "material-icon-theme";
             panel = {
               showLabels = false;
             };
@@ -96,9 +108,9 @@
             titleBarStyle = "native";
             customTitleBarVisibility = "windowed";
           };
-          zenMode = {
-            showTabs = "single";
-          };
+          # zenMode = {
+          #   showTabs = "single";
+          # };
           terminal = {
             integrated = {
               enableImages = true;
@@ -109,6 +121,9 @@
             plaintext = false;
             markdown = false;
             scminput = false;
+          };
+          extensions.experimental.affinity = {
+            "asvetliakov.vscode-neovim" = 1;
           };
         };
       };
