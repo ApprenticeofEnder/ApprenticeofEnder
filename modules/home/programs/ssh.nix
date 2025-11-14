@@ -35,8 +35,30 @@
         user = "git";
         host = "github.com";
         checkHostIP = true;
-        identityFile = [ "~/.ssh/github.pub" ];
-        identityAgent = [ "~/.1password/agent.sock" ];
+        identityFile = ["~/.ssh/github.pub"];
+        identityAgent = ["~/.1password/agent.sock"];
+        identitiesOnly = true;
+      };
+
+      rabbit-holes = {
+        port = 22;
+        user = "vpcadmin";
+        host = "rabbit-holes.ctf";
+        hostname = "10.0.2.51";
+        checkHostIP = true;
+        identityFile = ["~/.ssh/cybersci_2025_regionals.pub"];
+        identityAgent = ["~/.1password/agent.sock"];
+        identitiesOnly = true;
+      };
+
+      trc = {
+        port = 22;
+        user = "vpcadmin";
+        host = "trc.ctf";
+        hostname = "10.0.2.41";
+        checkHostIP = true;
+        identityFile = ["~/.ssh/cybersci_2025_regionals.pub"];
+        identityAgent = ["~/.1password/agent.sock"];
         identitiesOnly = true;
       };
 
@@ -57,7 +79,7 @@
         checkHostIP = true;
         addKeysToAgent = "yes";
         hostname = "192.168.50.241";
-        setEnv = { TERM = "xterm-256color"; };
+        setEnv = {TERM = "xterm-256color";};
 
         # addressFamily = null; # "any" | "inet" | "inet6"
         # certificateFile = [ ./.file ];
