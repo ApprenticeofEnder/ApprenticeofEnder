@@ -62,6 +62,17 @@
         identitiesOnly = true;
       };
 
+      defence = {
+        port = 22;
+        user = "vpcadmin";
+        host = "inventory.ctf";
+        hostname = "10.0.2.22";
+        checkHostIP = true;
+        identityFile = ["~/.ssh/cybersci_2025_regionals.pub"];
+        identityAgent = ["~/.1password/agent.sock"];
+        identitiesOnly = true;
+      };
+
       nixos = {
         port = 22;
         host = "nixos";
