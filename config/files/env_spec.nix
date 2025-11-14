@@ -1,6 +1,6 @@
 let
   VERSIONS = rec {
-    NIX = "nix (Lix, like Nix) 2.94.0";
+    NIX = "nix (Lix, like Nix) 2.93.0";
     DEVENV = "1.10.0";
     PNPM = "10.17.0";
     NODE_JS = "24.8.0";
