@@ -19,5 +19,5 @@ brew list | grep $TARGET
 
 divider
 
-apt list | grep $TARGET
+apt list --installed | grep $TARGET
 

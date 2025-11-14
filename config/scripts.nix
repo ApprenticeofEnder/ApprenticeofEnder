@@ -6,7 +6,7 @@
   scripts = {
     hello = {
       packages = with pkgs; [chafa];
-      description = "  👋 Show the Devenv logo art and a friendly greeting";
+      description = "\t👋 Show the Devenv logo art and a friendly greeting";
       exec = ''
         echo "👋🧩"
       '';
@@ -17,7 +17,7 @@
         shellspec
       ];
 
-      description = " 💊 Run Microdoctor health-check suite with docs output";
+      description = "\t💊 Run Microdoctor health-check suite with docs output";
       exec = ''
         figlet -cf slant "💊 Microdoctor";
         shellspec -c "${config.env.DEVENV_ROOT}/tests" --quiet "$@";
@@ -25,43 +25,43 @@
     };
 
     kernel = {
-      description = " 🎉 Fire up the Microvisor Kernel";
+      description = "\t🎉 Fire up the Microvisor Kernel";
       exec = ''
         process-compose
       '';
     };
 
     console = {
-      description = "🕹  Fire up the Microvisor Console";
+      description = "\t🕹  Fire up the Microvisor Console";
       exec = ''
         ttyd --writable --browser --url-arg --once process-compose
       '';
     };
 
     di = {
-      description = "      ⌨ Reload devenv";
+      description = "\t\t⌨ Reload devenv";
       exec = "set -ex; direnv reload";
     };
 
     dn = {
-      description = "     💥 Nuke & reload devenv";
+      description = "\t\t💥 Nuke & reload devenv";
       exec = "set -ex; git clean -fdX -e '!.env*'";
     };
 
     clean = {
-      description = "  🧽 Remove all files matched by .gitignore (except any .env*)";
+      description = "\t🧽 Remove all files matched by .gitignore (except any .env*)";
       exec = "set -ex; git clean -fdX -e '!.env*' -e '!.devenv*' -e '!.direnv*'";
     };
 
     nuke = {
-      description = "   🚨 Remove all files matched by .gitignore, including .env*";
+      description = "\t🚨 Remove all files matched by .gitignore, including .env*";
       exec = ''
         sudo git clean -fdX
       '';
     };
 
     yls = {
-      description = "   GET BACK HERE yOU lITTLE sHIT!";
+      description = "\t\tGET BACK HERE yOU lITTLE sHIT!";
       exec = ''
         function divider(){
           echo "---------------------------------------"
@@ -81,7 +81,7 @@
 
         divider
 
-        apt list | grep $TARGET
+        apt list --installed | grep $TARGET
       '';
     };
   };
