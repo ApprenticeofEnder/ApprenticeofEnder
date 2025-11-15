@@ -73,6 +73,17 @@
         identitiesOnly = true;
       };
 
+      homelab-pi = {
+        port = 22;
+        user = "ender";
+        host = "homelab-pi";
+        hostname = "192.168.18.100";
+        checkHostIP = true;
+        identityFile = ["~/.ssh/pi_master.pub"];
+        identityAgent = ["~/.1password/agent.sock"];
+        identitiesOnly = true;
+      };
+
       nixos = {
         port = 22;
         host = "nixos";
