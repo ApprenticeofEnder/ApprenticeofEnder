@@ -84,5 +84,12 @@
         apt list --installed | grep $TARGET
       '';
     };
+
+    upcache = {
+      description = "\tUpdate Cachix";
+      exec = ''
+        nix path-info --all | cachix push rbabaev
+      '';
+    };
   };
 }
