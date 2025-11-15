@@ -7,6 +7,7 @@
   packages = with pkgs;
     [
       binsider # binary inspector TUI
+      binwalk
 
       ccache
 
