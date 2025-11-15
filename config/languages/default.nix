@@ -5,6 +5,7 @@
     ./rust.nix
     ./shell.nix
     ./python.nix
+    ./dotnet.nix
     # ./ruby.nix
     ./cplusplus.nix
     ./javascript.nix

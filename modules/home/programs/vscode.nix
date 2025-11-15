@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   programs.vscode = {
-    enable = true;
+    enable = false;
     # mutableExtensionsDir = true;
     profiles = {
       default = {
@@ -122,6 +122,17 @@
             markdown = false;
             scminput = false;
           };
+          dotnetAcquisitionExtension.existingDotnetPath = [
+            {
+              extensionId = "ms-dotnettools.csdevkit";
+              path = "/nix/store/iqfss9xsrf9lrqxkl4gnr0njaya7hw1p-dotnet-sdk-wrapped-8.0.415/bin/dotnet";
+            }
+
+            {
+              extensionId = "ms-dotnettools.csharp";
+              path = "/nix/store/iqfss9xsrf9lrqxkl4gnr0njaya7hw1p-dotnet-sdk-wrapped-8.0.415/bin/dotnet";
+            }
+          ];
           extensions.experimental.affinity = {
             "asvetliakov.vscode-neovim" = 1;
           };
