@@ -64,3 +64,9 @@ config/services/supabase/.temp
 
 !/firmware/src/bin
 ml/target
+
+#====================================================
+#                   Sandboxes
+#====================================================
+sandboxes/*
+!sandboxes/.gitkeep
