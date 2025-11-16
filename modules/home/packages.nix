@@ -71,6 +71,7 @@
         # ============= 🧑‍💻🐞✨‍ ================
         # tsui # tailscale tui, not on nixpkgs yet | curl -fsSL https://neuralink.com/tsui/install.sh | bash
         ansible
+        ansible-lint
         nmap
         tgpt
         pik # local port tui
