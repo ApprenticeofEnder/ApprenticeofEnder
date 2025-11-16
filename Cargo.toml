@@ -2,18 +2,16 @@
 resolver = "3"
 
 members = [
-    "tui",
-    "api",
-    "desktop",
-    "mobile",
-    "ui",
-    "web", "learning/rust/variables",
+  "tui",
+  "api",
+  "desktop",
+  "mobile",
+  "ui",
+  "web",
+  "learning/rust/variables",
 ]
 
-exclude = [
-"ml",
-"firmware"
-]
+exclude = ["ml", "firmware"]
 
 
 [package]
@@ -33,7 +31,7 @@ dioxus = { version = "0.7.0" }
 loco-rs = { version = "0.16" }
 
 [dependencies]
-loco-rs = { workspace = true  }
+loco-rs = { workspace = true }
 serde_json = { version = "1" }
 serde = { version = "1", features = ["derive"] }
 tokio = { version = "1.45", default-features = false, features = [
