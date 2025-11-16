@@ -1,0 +1,3 @@
+[submodule "projects/homelab"]
+	path = projects/homelab
+	url = git@github.com:ApprenticeofEnder/homelab.git
