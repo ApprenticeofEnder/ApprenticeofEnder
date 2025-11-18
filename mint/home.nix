@@ -81,7 +81,7 @@
       kubectl
       # microk8s
       minikube
-      # tailscale
+      tailscale
       # fw-fanctrl TODO: Work out what is going on with this
     ];
   };
