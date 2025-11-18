@@ -8,6 +8,7 @@
     [
       binsider # binary inspector TUI
       binwalk
+      opentofu
 
       ccache
 
