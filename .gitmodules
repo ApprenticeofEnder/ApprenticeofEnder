@@ -1,3 +1,6 @@
 [submodule "projects/homelab"]
 	path = projects/homelab
 	url = git@github.com:ApprenticeofEnder/homelab.git
+[submodule "projects/robertbabaev.tech"]
+	path = projects/robertbabaev.tech
+	url = git@github.com:ApprenticeofEnder/robertbabaev.tech.git
