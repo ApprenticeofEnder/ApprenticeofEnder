@@ -129,6 +129,7 @@
         platformio
         arduino-cli
         arduino-language-server
+        omnisharp-roslyn
 
         # fritzing
 
