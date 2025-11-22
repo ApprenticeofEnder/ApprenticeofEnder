@@ -46,6 +46,9 @@
         host = "rabbit-holes.ctf";
         hostname = "10.0.2.51";
         checkHostIP = true;
+        extraOptions = {
+          strictHostKeyChecking = "no";
+        };
         identityFile = ["~/.ssh/cybersci_2025_regionals.pub"];
         identityAgent = ["~/.1password/agent.sock"];
         identitiesOnly = true;
@@ -57,6 +60,9 @@
         host = "trc.ctf";
         hostname = "10.0.2.41";
         checkHostIP = true;
+        extraOptions = {
+          strictHostKeyChecking = "no";
+        };
         identityFile = ["~/.ssh/cybersci_2025_regionals.pub"];
         identityAgent = ["~/.1password/agent.sock"];
         identitiesOnly = true;
