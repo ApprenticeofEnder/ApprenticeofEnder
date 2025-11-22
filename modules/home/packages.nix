@@ -70,6 +70,7 @@
         mermaid-cli # mermaid diagram support
         # ============= 🧑‍💻🐞✨‍ ================
         # tsui # tailscale tui, not on nixpkgs yet | curl -fsSL https://neuralink.com/tsui/install.sh | bash
+        md-tui
         ansible
         ansible-lint
         nmap

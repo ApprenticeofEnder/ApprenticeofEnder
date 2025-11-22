@@ -1,6 +1,6 @@
 {
   programs.uv = {
     enable = true;
-    settings = { };
+    settings = {};
   };
 }
