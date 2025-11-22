@@ -72,6 +72,8 @@
         # tsui # tailscale tui, not on nixpkgs yet | curl -fsSL https://neuralink.com/tsui/install.sh | bash
         md-tui
         secretspec
+        _1password-cli
+        _1password-gui
         lynx
         ansible
         ansible-lint
