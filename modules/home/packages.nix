@@ -71,6 +71,7 @@
         # ============= 🧑‍💻🐞✨‍ ================
         # tsui # tailscale tui, not on nixpkgs yet | curl -fsSL https://neuralink.com/tsui/install.sh | bash
         md-tui
+        lynx
         ansible
         ansible-lint
         nmap
@@ -130,7 +131,6 @@
         platformio
         arduino-cli
         arduino-language-server
-        omnisharp-roslyn
 
         # fritzing
 
