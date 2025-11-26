@@ -1,9 +1,4 @@
-let
-  _1password_ssh = {
-    identityAgent = ["~/.1password/agent.sock"];
-    identitiesOnly = true;
-  };
-in {
+{
   programs.ssh = {
     enable = true;
     # includes = [];
@@ -46,7 +41,6 @@ in {
       };
 
       rabbit-holes = {
-        inherit _1password_ssh;
         port = 22;
         user = "vpcadmin";
         host = "rabbit-holes.ctf";
@@ -56,10 +50,11 @@ in {
           strictHostKeyChecking = "no";
         };
         identityFile = ["~/.ssh/cybersci_2025_regionals.pub"];
+        identityAgent = ["~/.1password/agent.sock"];
+        identitiesOnly = true;
       };
 
       trc = {
-        inherit _1password_ssh;
         port = 22;
         user = "vpcadmin";
         host = "trc.ctf";
@@ -69,10 +64,11 @@ in {
           strictHostKeyChecking = "no";
         };
         identityFile = ["~/.ssh/cybersci_2025_regionals.pub"];
+        identityAgent = ["~/.1password/agent.sock"];
+        identitiesOnly = true;
       };
 
       defence = {
-        inherit _1password_ssh;
         port = 22;
         user = "vpcadmin";
         host = "inventory.ctf";
