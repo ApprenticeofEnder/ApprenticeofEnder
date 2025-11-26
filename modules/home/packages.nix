@@ -185,6 +185,8 @@
         # qmk_hid
         # qmk-udev-rules
 
+        ksnip
+
         # ============== 🤪 =================
         hollywood
       ]
