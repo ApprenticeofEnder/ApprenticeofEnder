@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   programs.kitty = {
     enable = true;
     enableGitIntegration = true;
@@ -12,7 +12,8 @@
 
     font = {
       size = 12;
-      name = "JetBrainsMono Nerd Font";
+      name = "Hack Nerd Font";
+      package = pkgs.nerd-fonts.hack;
     };
 
     keybindings = {
@@ -50,5 +51,4 @@
     # extraConfig = ''
     # '';
   };
-
 }
