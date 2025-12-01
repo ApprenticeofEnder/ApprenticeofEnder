@@ -43,7 +43,6 @@ let
     fd
     sd
     pnpm
-    cargo
     omnix
     cachix
     devenv
@@ -58,6 +57,9 @@ let
     nil
     nix-info
     nixpkgs-fmt
+    # rust
+    cargo
+    rustfmt
   ];
 
   security = with pkgs; [
