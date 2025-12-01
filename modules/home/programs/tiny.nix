@@ -1,20 +1,42 @@
+{ config
+, pkgs
+, ...
+}:
+let
+  profile = {
+    realname = config.me.fullname;
+    nicks = [ config.me.username ];
+  };
+in
 {
   programs.tiny = {
-    enable = true;
+    enable = pkgs.stdenv.isLinux;
     settings = {
-    servers = [
-          {
-            tls = true;
-            port = 6697;
-            addr = "irc.libera.chat";
-            realname = "Mumtahin Farabi";
-            nicks = [ "johndoe" ];
-          }
-        ];
+      servers = [
+        {
+          tls = true;
+          port = 6697;
+          addr = "irc.libera.chat";
+          realname = profile.realname;
+          nicks = profile.nicks;
+          join = [ "#libera" ];
+        }
+        {
+          tls = true;
+          port = 6697;
+          addr = "irc.oftc.net";
+          realname = profile.realname;
+          nicks = profile.nicks;
+          join = [
+            "#oftc"
+            "#moocows"
+          ];
+        }
+      ];
       defaults = {
-        nicks = [ "johndoe" ];
-        realname = "Mumtahin Farabi";
-        join = [];
+        nicks = profile.nicks;
+        realname = profile.realname;
+        join = [ ];
         tls = true;
       };
     };

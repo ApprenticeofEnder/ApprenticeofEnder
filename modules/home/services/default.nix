@@ -1,11 +1,6 @@
+# A module that automatically imports everything else in the parent folder.
 {
-  imports = [
-    ./cachix-agent.nix
-    ./gpg-agent.nix
-    ./home-manager.nix
-    ./mbsync.nix
-    ./ssh-agent.nix
-    ./ollama.nix
-    ./podman.nix
-  ];
+  imports =
+    with builtins;
+    map (fn: ./${fn}) (filter (fn: fn != "default.nix") (attrNames (readDir ./.)));
 }

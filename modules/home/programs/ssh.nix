@@ -1,3 +1,11 @@
+{ pkgs, ... }:
+let
+  identityAgent =
+    if pkgs.stdenv.isLinux then
+      "~/.1password/agent.sock"
+    else
+      "'~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock'";
+in
 {
   programs.ssh = {
     enable = true;
@@ -35,8 +43,8 @@
         user = "git";
         host = "github.com";
         checkHostIP = true;
-        identityFile = ["~/.ssh/github.pub"];
-        identityAgent = ["~/.1password/agent.sock"];
+        identityFile = [ "~/.ssh/github.pub" ];
+        identityAgent = [ identityAgent ];
         identitiesOnly = true;
       };
 
@@ -49,8 +57,8 @@
         extraOptions = {
           strictHostKeyChecking = "no";
         };
-        identityFile = ["~/.ssh/cybersci_2025_regionals.pub"];
-        identityAgent = ["~/.1password/agent.sock"];
+        identityFile = [ "~/.ssh/cybersci_2025_regionals.pub" ];
+        identityAgent = [ identityAgent ];
         identitiesOnly = true;
       };
 
@@ -63,8 +71,8 @@
         extraOptions = {
           strictHostKeyChecking = "no";
         };
-        identityFile = ["~/.ssh/cybersci_2025_regionals.pub"];
-        identityAgent = ["~/.1password/agent.sock"];
+        identityFile = [ "~/.ssh/cybersci_2025_regionals.pub" ];
+        identityAgent = [ identityAgent ];
         identitiesOnly = true;
       };
 
@@ -74,8 +82,8 @@
         host = "inventory.ctf";
         hostname = "10.0.2.22";
         checkHostIP = true;
-        identityFile = ["~/.ssh/cybersci_2025_regionals.pub"];
-        identityAgent = ["~/.1password/agent.sock"];
+        identityFile = [ "~/.ssh/cybersci_2025_regionals.pub" ];
+        identityAgent = [ identityAgent ];
         identitiesOnly = true;
       };
 
@@ -85,8 +93,8 @@
         host = "homelab-pi";
         hostname = "192.168.18.100";
         checkHostIP = true;
-        identityFile = ["~/.ssh/pi_master.pub"];
-        identityAgent = ["~/.1password/agent.sock"];
+        identityFile = [ "~/.ssh/pi_master.pub" ];
+        identityAgent = [ identityAgent ];
         identitiesOnly = true;
       };
 
@@ -107,7 +115,9 @@
         checkHostIP = true;
         addKeysToAgent = "yes";
         hostname = "192.168.50.241";
-        setEnv = {TERM = "xterm-256color";};
+        setEnv = {
+          TERM = "xterm-256color";
+        };
 
         # addressFamily = null; # "any" | "inet" | "inet6"
         # certificateFile = [ ./.file ];

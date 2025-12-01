@@ -1,10 +1,24 @@
-{ pkgs, lib, ... }:
+{ pkgs
+, lib
+, config
+, ...
+}:
 {
   programs.zsh = {
     enable = true;
     autocd = false;
     enableCompletion = true;
-    shellAliases.mkdir = "mkdir -p";
+    shellAliases = {
+      mkdir = "mkdir -p";
+    };
+
+    # plugins = [
+    #   {
+    #     name = "1password";
+    #     src = ./plugins/1password/1password.plugin.zsh;
+    #     file = "1password/1password.plugin.zsh";
+    #   }
+    # ];
 
     history = {
       size = 10000;
@@ -15,9 +29,7 @@
       ignoreDups = true;
       ignoreAllDups = true;
       expireDuplicatesFirst = true;
-      # path = "`\${config.programs.zsh.dotDir}/.zsh_history`"; # default
     };
-
 
     autosuggestion = {
       enable = true;
@@ -39,24 +51,15 @@
       ];
     };
 
-    plugins = [
-      {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      }
-      {
-        name = "powerlevel10k-config";
-        src = lib.cleanSource ./.;
-        file = ".p10k.zsh";
-      }
-    ];
+    initContent = builtins.readFile ./init-extra.zsh;
 
     oh-my-zsh = {
       enable = true;
+      theme = "nanotech";
       plugins = [
         "git"
         "sudo"
+        "direnv"
         "docker"
         "kubectl"
         "colorize"
@@ -67,11 +70,9 @@
         "dash"
         "macos"
       ];
+      extraConfig = ''
+        zstyle ':omz:update' mode reminder
+      '';
     };
-
-    # envExtra = '''';     # ~/.zshenv
-    # loginExtra = '''';   # ~/.zlogin
-    # logoutExtra = '''';  # ~/.zlogout
-    # profileExtra = ''''; # ~/.zprofile
   };
 }

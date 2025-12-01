@@ -1,6 +1,7 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs.kitty = {
-    enable = true;
+    enable = false;
     enableGitIntegration = true;
 
     shellIntegration = {
@@ -31,6 +32,8 @@
       tab_bar_margin_width = 0;
       window_padding_width = 0;
 
+      scrollback_lines = 10000;
+
       tab_fade = 1;
       background_blur = 40;
       tab_bar_edge = "top";
@@ -46,6 +49,10 @@
       macos_colorspace = "default";
       hide_window_decorations = "titlebar-only";
       macos_quit_when_last_window_closed = "yes";
+
+      enabled_layouts = "tall:bias=50;full_size=1;mirrored=false";
+
+      # include = ./nord-theme.conf;
     };
 
     # extraConfig = ''

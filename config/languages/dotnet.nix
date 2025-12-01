@@ -1,3 +1,0 @@
-{
-  languages.dotnet.enable = true;
-}

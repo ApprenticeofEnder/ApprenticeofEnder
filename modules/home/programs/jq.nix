@@ -1,6 +1,3 @@
 {
-  programs.jq = {
-    enable = true;
-    # colors = {};
-    };
+  programs.jq.enable = true;
 }

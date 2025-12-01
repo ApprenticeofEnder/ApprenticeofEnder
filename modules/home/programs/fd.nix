@@ -1,10 +1,8 @@
 {
   programs.fd = {
     enable = true;
-    extraOptions = [
-
-    ];
+    extraOptions = [ ];
     hidden = false;
-    ignores = [];
+    ignores = [ ];
   };
 }

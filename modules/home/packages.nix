@@ -36,198 +36,94 @@
 # lazy-etherscan
 # chamber
 # tick-rs
+
+{ lib, pkgs, ... }:
+let
+  dev = with pkgs; [
+    fd
+    sd
+    pnpm
+    omnix
+    cachix
+    devenv
+    direnv
+    gnumake
+    vi-mongo
+    nodejs_24
+    typst
+    shellcheck
+    mermaid-cli
+    # nix-specific
+    nil
+    nix-info
+    nixpkgs-fmt
+  ];
+
+  security = with pkgs; [
+    nmap
+    gnutls
+    tcpdump
+    pulumi-esc
+    # wireshark # TODO: Figure out why THIS one fails
+    # _1password-gui # TODO: Work out the whole user/group requirement thing
+    # _1password-cli
+  ];
+
+  devops = with pkgs; [
+    act
+    pulumi
+    ansible
+    kubectl
+    gama-tui
+    opentofu
+    ansible-lint
+  ];
+
+  utility = with pkgs; [
+    pik # process info
+    just
+    less # needed for Ubuntu
+    lynx
+    tree
+    ttyd
+    md-tui
+    zotero
+    lazyssh
+    termscp
+    wiki-tui
+    cargo-seek
+    presenterm
+  ];
+
+  linux = with pkgs; [ lazyjournal systemctl-tui ];
+
+  x86Linux = with pkgs;
+    [
+      impala # wifi management
+    ];
+
+  darwin = with pkgs; [
+    utm
+
+    # acre security
+    dotnet-sdk
+    dotnet-runtime
+    # dotnet-runtime_10
+  ];
+
+  fun = with pkgs; [ genact smassh cmatrix asciiquarium ];
+in
 {
-  pkgs,
-  lib,
-  ...
-}: {
-  home = {
-    packages = with pkgs;
-      [
-        tree
-        pixi # multi-language package manager
-        pnpm
-        gnutls # TLS connectivity
-        # =============
-        # kicad
-        # logseq
-        openscad
-        openscad-lsp
-        # =============
-        vips # dired image previews
-        mediainfo
-        poppler # dired pdf previews
-        imagemagick # for image-dired
-        epub-thumbnailer # dired epub previews
-        ffmpegthumbnailer
-        # =============
-        tuntox # collab
-        sqlite # :tools lookup & :lang org +roam
-        ispell # spelling
-        gnuplot
-        shellcheck # shell script formatting
-        octaveFull # gnu octave
-        mermaid-cli # mermaid diagram support
-        # ============= 🧑‍💻🐞✨‍ ================
-        # tsui # tailscale tui, not on nixpkgs yet | curl -fsSL https://neuralink.com/tsui/install.sh | bash
-        md-tui
-        secretspec
-        # _1password-cli Both of these are not super useful to have in Nix atm
-        # _1password-gui
-        lynx
-        ansible
-        ansible-lint
-        nmap
-        tgpt
-        pik # local port tui
-        sshs # ssh tui
-        gpg-tui
-        termscp
-        caligula # disk imaging
-        keymapviz # visualize keyboard layout in ascii
-        tcpdump
-        cointop # crypto price feed
-        wiki-tui
-        bandwhich
-        cargo-seek
-        nvtopPackages.full # btop for gpu
-
-        # leetcode-tui
-
-        # keymap-drawer # visualize keyboard layout
-
-        lazyssh # ssh
-
-        # lazyhetzner
-
-        gama-tui # github actions runners
-        codeberg-cli
-
-        vi-mongo # mongodb tui
-
-        presenterm
-
-        wireshark-cli
-
-        stylelint
-        exercism
-        # ============= ‍❄🕸 ================
-        nil # nix formatter
-        omnix
-        devenv
-        cachix
-        nix-du # store visualizer
-        # nix-ld      # run unpatched dynamic binaries
-        nix-btm # nix process monitor
-        nix-top # nix process visualizer
-        nix-web # web gui
-        nix-info
-        # mcp-nixos # mcp server for NixOS
-        nix-health # health check
-        nix-inspect # flake explorer tui
-        nix-weather # check binary cache availability
-
-        # ============= 🤖 ==================
-        cmake # vterm compilation and more
-        gnumake
-        coreutils
-        platformio
-        arduino-cli
-        arduino-language-server
-
-        # fritzing
-
-        # Setup Claude Code using Google Vertex AI Platform
-        # https://github.com/juspay/vertex
-        # flake.inputs.vertex.packages.${system}.default
-
-        # ============== 🤪 =================
-        genact
-        smassh # TUI monkeytype
-        cowsay # ascii cow
-        lolcat # rainbow text output
-        figlet # fancy ascii text output
-        cmatrix # matrix animation
-        nyancat # rainbow flying cat
-        asciiquarium # ascii aquarium
-
-        #  Fine-tune packages by applying overrides, for example
-        # (nerdfonts.override { fonts = [ "FantasqueSansMono" ]; }) # Nerd Fonts with a limited number of fonts
-        # simple shell scripts
-        # (writeShellScriptBin "my-hello" ''
-        #   echo "Hello, ${config.home.username}!"
-        # '')
-
-        discordo
-        jellyfin-tui
-      ]
-      ++ lib.optionals stdenv.isLinux [
-        # atopile     # circuit diagrams as code
-        # ventoy-full # flash multiple isos to usb
-        # super-slicer # 3D printing
-        freecad
-        woeusb-ng # flash bootable windows iso
-
-        # ============= 🧑‍💻🐞✨‍ ================
-        ugm # user group management
-        isd # systemd units
-        dysk # see mounted
-        kmon # kernel monitor
-        termshark # wireshark-like TUI
-        systeroid # powerful sysctl alternative
-        netscanner
-        lazyjournal # journal logs
-        systemctl-tui # systemctl logs
-
-        virt-viewer
-        smartmontools
-        # qmk
-        # qmk_hid
-        # qmk-udev-rules
-
-        ksnip
-
-        # ============== 🤪 =================
-        hollywood
-      ]
-      ++ lib.optionals (stdenv.isLinux && stdenv.isx86_64) [
-        gparted
-
-        impala # wifi mgmt tui
-        bluetui
-
-        blink
-        crates-tui
-        arduino-ide
-        # webcord-vencord
-
-        penpot-desktop
-      ]
-      ++ lib.optionals stdenv.isDarwin [
-        utm # virtual machines on macos
-        ttyd # ttyd -aWB -t fontSize=16 -t fontFamily="'JetBrainsMono Nerd Font'" -t enableSixel=true -t enableZmodem=true -t enableTrzsz=true zsh
-        ninja
-        ccache
-        avrdude
-        dfu-util
-        minikube
-        dfu-programmer
-      ];
-
-    file = {
-      # Building this configuration will create a copy of 'dotfiles/screenrc' in
-      # the Nix store. Activating the configuration will then make '~/.screenrc' a
-      # symlink to the Nix store copy.
-      # .screenrc".source = dotfiles/screenrc;
-      ".config/surfingkeys/.surfingkeys.js" = {
-        enable = true;
-        source = ./programs/surfingkeys/index.js;
-      };
-
-      "/Library/Application Support/kanata/kanata.kbd" = {
-        enable = pkgs.stdenv.isDarwin;
-        source = ../darwin/kanata.kbd;
-      };
-    };
-  };
+  home.packages = with pkgs;
+    [
+      (writeShellScriptBin "yls" (builtins.readFile ./scripts/yls.sh))
+      # # It is sometimes useful to fine-tune packages, for example, by applying
+      # # overrides. You can do that directly here, just don't forget the
+      # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+      # # fonts?
+      # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    ] ++ dev ++ security ++ devops ++ utility ++ fun
+    ++ lib.optionals stdenv.isLinux linux
+    ++ lib.optionals (stdenv.isLinux && stdenv.isx86_64) x86Linux
+    ++ lib.optionals stdenv.isDarwin darwin;
 }

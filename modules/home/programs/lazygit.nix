@@ -1,10 +1,8 @@
 {
-  # config,
-  ...
-}: {
-  home.shellAliases.lg = "lazygit";
   programs.lazygit = {
     enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
     settings = {
       notARepository = "skip";
       disableStartupPopups = true;
@@ -20,9 +18,9 @@
 
       os = {
         editInTerminal = true;
-        edit = "emacsclient -nw {{filename}}";
-        openDirInEditor = "emacsclient -nw {{dir}}";
-        editAtLine = "emacsclient -nw +{{line}} {{filename}}";
+        # edit = "emacsclient -nw {{filename}}";
+        # openDirInEditor = "emacsclient -nw {{dir}}";
+        # editAtLine = "emacsclient -nw +{{line}} {{filename}}";
       };
 
       git = {

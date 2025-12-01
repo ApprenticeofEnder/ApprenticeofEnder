@@ -1,6 +1,6 @@
+{ pkgs, ... }:
 {
   programs.uv = {
     enable = true;
-    settings = {};
   };
 }

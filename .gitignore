@@ -1,72 +1,12 @@
-ource====================================================
-#i               Build/#st OutputsTH | tr ':' '\n'
-where ruby
-rm -rf .rbenv/
+result
 
-#====================================================
-.shellspec
-tests/env_spec.sh
-**/debug/
-**/target/
-debug/
-target/
-**/result
-**/node_modules
-
-#====================================================
-#                 Caches & Logs
-#====================================================
-logs
+# Devenv
 .devenv*
 devenv.local.nix
-**/.direnv/
-**.qcow2
+devenv.local.yaml
+
+# direnv
+.direnv
+
+# pre-commit
 .pre-commit-config.yaml
-**/*.rs.bk
-# MSVC Windows builds of rustc generate these, which store debugging information
-*.pdb
-*.sqlite
-*.sqlite-*
-
-#====================================================
-#                  Miscellaneous
-#====================================================
-**/config/local.yaml
-**/config/*.local.yaml
-**/config/production.yaml
-.DS_Store
-*.pem
-*tmp*
-.idea/
-.project
-.classpath
-.c9
-*.launch
-.vscode/*
-.settings
-!.vscode/extensions.json
-!.vscode/settings-example.json
-config/services/supabase/.branches
-config/services/supabase/.temp
-
-!Cargo.lock
-**/!Cargo.lock
-
-.open-webui
-**/.git-hooks
-.webui_secret_key
-
-#====================================================
-#                  Dependencies
-#====================================================
-/.pnp
-.pnp.js
-
-!/firmware/src/bin
-ml/target
-
-#====================================================
-#                   Sandboxes
-#====================================================
-sandboxes/*
-!sandboxes/.gitkeep

@@ -1,6 +1,5 @@
 {
   programs.password-store = {
-   enable = true;
-    # settings = {};
+    enable = true;
   };
 }

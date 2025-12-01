@@ -8,9 +8,7 @@
       "https://cachix.cachix.org"
       "https://devenv.cachix.org"
       "https://mfarabi.cachix.org"
-      "https://emacs-ci.cachix.org"
-      "https://hyprland.cachix.org"
-      "https://ros.cachix.org"
+      "https://rbabaev.cachix.org"
     ];
 
     trusted-substituters = [
@@ -21,9 +19,7 @@
       "https://cachix.cachix.org"
       "https://devenv.cachix.org"
       "https://mfarabi.cachix.org"
-      "https://emacs-ci.cachix.org"
-      "https://hyprland.cachix.org"
-      "https://ros.cachix.org"
+      "https://rbabaev.cachix.org"
     ];
 
     trusted-public-keys = [
@@ -34,9 +30,7 @@
       "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
       "mfarabi.cachix.org-1:FPO/Xsv7VIaZqGBAbjYMyjU1uUekdeEdMbWfxzf5wrM="
-      "emacs-ci.cachix.org-1:B5FVOrxhXXrOL0S+tQ7USrhjMT5iOPH+QN9q0NItom4="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-      "ros.cachix.org-1:dSyZxI8geDCJrwgvCOHDoAfOm5sV1wCPjBkKL+38Rvo="
+      "rbabaev.cachix.org-1:l3bjgEYtcuGtWvquWOqTTbTy8PXbnSVFTiAG+Q/mEe0="
     ];
 
     extra-substituters = [
@@ -47,9 +41,7 @@
       "https://devenv.cachix.org"
       "https://nixpkgs.cachix.org"
       "https://mfarabi.cachix.org"
-      "https://emacs-ci.cachix.org"
-      "https://hyprland.cachix.org"
-      "https://ros.cachix.org"
+      "https://rbabaev.cachix.org"
     ];
 
     extra-trusted-public-keys = [
@@ -60,9 +52,7 @@
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
       "nixpkgs.cachix.org-1:q91R6hxbwFvDqTSDKwDAV4T5PxqXGxswD8vhONFMeOE="
       "mfarabi.cachix.org-1:FPO/Xsv7VIaZqGBAbjYMyjU1uUekdeEdMbWfxzf5wrM="
-      "emacs-ci.cachix.org-1:B5FVOrxhXXrOL0S+tQ7USrhjMT5iOPH+QN9q0NItom4="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-      "ros.cachix.org-1:dSyZxI8geDCJrwgvCOHDoAfOm5sV1wCPjBkKL+38Rvo="
+      "rbabaev.cachix.org-1:l3bjgEYtcuGtWvquWOqTTbTy8PXbnSVFTiAG+Q/mEe0="
     ];
   };
 }
