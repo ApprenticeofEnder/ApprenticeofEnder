@@ -57,7 +57,7 @@ let
     nil
     nix-info
     nixpkgs-fmt
-    # rust
+    # rust, just in case
     cargo
     rustfmt
   ];
