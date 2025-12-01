@@ -43,6 +43,7 @@ let
     fd
     sd
     pnpm
+    cargo
     omnix
     cachix
     devenv
