@@ -5,6 +5,13 @@ let
       "~/.1password/agent.sock"
     else
       "'~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock'";
+
+  hostDefaults = {
+    port = 22;
+    checkHostIP = true;
+    identityAgent = [ identityAgent ];
+    identitiesOnly = true;
+  };
 in
 {
   programs.ssh = {
@@ -38,64 +45,44 @@ in
         setEnv.TERM = "xterm-kitty";
       };
 
-      github = {
-        port = 22;
+      github = hostDefaults // {
         user = "git";
         host = "github.com";
-        checkHostIP = true;
         identityFile = [ "~/.ssh/github.pub" ];
-        identityAgent = [ identityAgent ];
-        identitiesOnly = true;
       };
 
-      rabbit-holes = {
-        port = 22;
+      rabbit-holes = hostDefaults // {
         user = "vpcadmin";
         host = "rabbit-holes.ctf";
         hostname = "10.0.2.51";
-        checkHostIP = true;
         extraOptions = {
           strictHostKeyChecking = "no";
         };
         identityFile = [ "~/.ssh/cybersci_2025_regionals.pub" ];
-        identityAgent = [ identityAgent ];
-        identitiesOnly = true;
       };
 
-      trc = {
-        port = 22;
+      trc = hostDefaults // {
         user = "vpcadmin";
         host = "trc.ctf";
         hostname = "10.0.2.41";
-        checkHostIP = true;
         extraOptions = {
           strictHostKeyChecking = "no";
         };
         identityFile = [ "~/.ssh/cybersci_2025_regionals.pub" ];
-        identityAgent = [ identityAgent ];
-        identitiesOnly = true;
       };
 
-      defence = {
-        port = 22;
+      defence = hostDefaults // {
         user = "vpcadmin";
         host = "inventory.ctf";
         hostname = "10.0.2.22";
-        checkHostIP = true;
         identityFile = [ "~/.ssh/cybersci_2025_regionals.pub" ];
-        identityAgent = [ identityAgent ];
-        identitiesOnly = true;
       };
 
-      homelab-pi = {
-        port = 22;
+      homelab-pi = hostDefaults // {
         user = "ender";
         host = "homelab-pi";
         hostname = "192.168.18.100";
-        checkHostIP = true;
         identityFile = [ "~/.ssh/pi_master.pub" ];
-        identityAgent = [ identityAgent ];
-        identitiesOnly = true;
       };
 
       nixos = {
