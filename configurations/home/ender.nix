@@ -4,7 +4,10 @@ let
   inherit (inputs) self;
 in
 {
-  imports = [ self.homeModules.default ];
+  imports = [
+    self.homeModules.default
+    ../../modules/home/programs/linux-only
+  ];
 
   # Defined by /modules/home/me.nix
   # And used all around in /modules/home/*

@@ -1,9 +1,5 @@
-{ lib
-, pkgs
-, ...
-}:
 {
-  programs.sftpman = lib.mkIf pkgs.stdenv.isLinux {
+  programs.sftpman = {
     enable = true;
     # mounts = {
     #   mountOptions = {
