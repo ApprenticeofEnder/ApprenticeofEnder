@@ -83,6 +83,7 @@ let
   ];
 
   utility = with pkgs; [
+    duf # disk usage
     pik # process info
     just
     less # needed for Ubuntu
