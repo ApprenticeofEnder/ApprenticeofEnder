@@ -21,6 +21,6 @@ in
   };
 
   home.packages = with pkgs; [
-    libiconv # needed this to install nixpkgs-fmt
+    nixpkgs-fmt
   ];
 }
