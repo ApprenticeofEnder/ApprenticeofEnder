@@ -22,10 +22,8 @@
 # mqtttui
 # taproom
 # tuistash
-# arduino-cli-interactive # github.com/Vaishnav-Sabari-Girish/arduino-cli-interactive?ref=terminaltrove
 # ballast
 # calcure
-# duf
 # goto
 # sshclick
 # hostctl
@@ -33,7 +31,6 @@
 # neoss
 # nap
 # pinix
-# lazy-etherscan
 # chamber
 # tick-rs
 
