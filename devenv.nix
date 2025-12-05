@@ -1,4 +1,9 @@
-{ pkgs, lib, config, inputs, ... }: {
+{ pkgs, lib, config, inputs, ... }:
+
+let
+  pushCache = "rbabaev";
+in
+{
   # https://devenv.sh/basics/
   env.GREET = "devenv";
 
@@ -19,7 +24,12 @@
   };
 
   # https://devenv.sh/packages/
-  packages = with pkgs; [ just nixd pulumi-esc ];
+  packages = with pkgs; [
+    just
+    nixd
+    cachix
+    pulumi-esc
+  ];
 
   # https://devenv.sh/languages/
   # languages.rust.enable = true;
@@ -34,6 +44,16 @@
   scripts.hello.exec = ''
     echo hello from $GREET
   '';
+
+  scripts = {
+    upcache = {
+      exec = ''
+        set -euxo pipefail
+
+        nix path-info --all | cachix push ${pushCache}
+      '';
+    };
+  };
 
   # https://devenv.sh/basics/
   enterShell = ''
