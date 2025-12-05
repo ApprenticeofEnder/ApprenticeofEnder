@@ -69,6 +69,7 @@ let
   security = with pkgs; [
     nmap # recon
     gnutls
+    semgrep # SAST
     tcpdump # network forensics
     wireshark # network forensics
     pulumi-esc # secrets management
