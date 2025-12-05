@@ -42,61 +42,71 @@ let
   dev = with pkgs; [
     fd
     sd
-    pnpm
     omnix
+    typst
     cachix
     devenv
     direnv
     gnumake
     vi-mongo
-    nodejs_24
-    typst
     shellcheck
     mermaid-cli
+
     # nix-specific
-    nil
-    nix-info
-    nixpkgs-fmt
+    nil # lsp
+    nix-info # system information
+    nixpkgs-fmt # formatter
+
     # rust, just in case
     cargo
     rustfmt
+
+    # js
+    pnpm
+    nodejs_24
   ];
 
   security = with pkgs; [
-    nmap
+    nmap # recon
     gnutls
-    tcpdump
-    pulumi-esc
-    # wireshark # TODO: Figure out why THIS one fails
+    tcpdump # network forensics
+    wireshark # network forensics
+    pulumi-esc # secrets management
     # _1password-gui # TODO: Work out the whole user/group requirement thing
     # _1password-cli
   ];
 
   devops = with pkgs; [
-    act
-    pulumi
-    ansible
-    kubectl
-    gama-tui
-    opentofu
-    ansible-lint
+    act # local CI/CD testing
+    pulumi # IaC
+    ansible # deployment automation
+    kubectl # k8s
+    gama-tui # github actions manager
+    opentofu # IaC
+    ansible-lint # linter
   ];
 
   utility = with pkgs; [
+    # System
     duf # disk usage
     pik # process info
     just
     less # needed for Ubuntu
-    lynx
     tree
     ttyd
-    md-tui
-    zotero
     lazyssh
     termscp
-    wiki-tui
     cargo-seek
-    presenterm
+
+    # Research
+    zotero # citation and document management
+    wiki-tui # wikipedia TUI
+    presenterm # terminal based presentations
+
+    # Routine
+    lynx # text web browser
+    md-tui # markdown reader
+    ispell # spelling
   ];
 
   linux = with pkgs; [
@@ -104,10 +114,11 @@ let
     systemctl-tui
   ];
 
-  x86Linux = with pkgs;
-    [
-      impala # wifi management
-    ];
+  x86Linux = with pkgs; [
+    impala # wifi management
+    audacity # audio editing
+    handbrake # video file conversions
+  ];
 
   darwin = with pkgs; [
     utm
@@ -115,7 +126,6 @@ let
     # acre security
     dotnet-sdk
     dotnet-runtime
-    # dotnet-runtime_10
   ];
 
   fun = with pkgs; [
@@ -123,6 +133,7 @@ let
     smassh
     cmatrix
     asciiquarium
+    hollywood
   ];
 in
 {
@@ -134,7 +145,12 @@ in
       # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
       # # fonts?
       # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-    ] ++ dev ++ security ++ devops ++ utility ++ fun
+    ]
+    ++ dev
+    ++ security
+    ++ devops
+    ++ utility
+    ++ fun
     ++ lib.optionals stdenv.isLinux linux
     ++ lib.optionals (stdenv.isLinux && stdenv.isx86_64) x86Linux
     ++ lib.optionals stdenv.isDarwin darwin;
