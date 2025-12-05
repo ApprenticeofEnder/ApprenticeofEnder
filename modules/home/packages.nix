@@ -99,7 +99,10 @@ let
     presenterm
   ];
 
-  linux = with pkgs; [ lazyjournal systemctl-tui ];
+  linux = with pkgs; [
+    lazyjournal
+    systemctl-tui
+  ];
 
   x86Linux = with pkgs;
     [
@@ -115,7 +118,12 @@ let
     # dotnet-runtime_10
   ];
 
-  fun = with pkgs; [ genact smassh cmatrix asciiquarium ];
+  fun = with pkgs; [
+    genact
+    smassh
+    cmatrix
+    asciiquarium
+  ];
 in
 {
   home.packages = with pkgs;
