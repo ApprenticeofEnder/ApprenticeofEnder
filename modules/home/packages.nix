@@ -97,7 +97,6 @@ let
     lazyssh
     termscp
     cargo-seek
-    nvtopPackages.full
 
     # Research
     zotero # citation and document management
@@ -113,6 +112,7 @@ let
   linux = with pkgs; [
     lazyjournal
     systemctl-tui
+    nvtopPackages.full
   ];
 
   x86Linux = with pkgs; [
