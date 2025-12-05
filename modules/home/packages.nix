@@ -113,6 +113,9 @@ let
     lazyjournal
     systemctl-tui
     nvtopPackages.full
+
+    # fun that only works on Linux
+    hollywood
   ];
 
   x86Linux = with pkgs; [
@@ -134,7 +137,6 @@ let
     smassh
     cmatrix
     asciiquarium
-    hollywood
   ];
 in
 {
