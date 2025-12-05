@@ -97,6 +97,7 @@ let
     lazyssh
     termscp
     cargo-seek
+    nvtopPackages.full
 
     # Research
     zotero # citation and document management
