@@ -21,20 +21,25 @@ function try() {
   fi
 
   if [ "$PROGRAM" == "brew" ]; then
-    brew list | grep "$TARGET"
+    brew list 2>/dev/null | rg -i "$TARGET"
     divider
     return
   fi
 
   if [ "$PROGRAM" == "apt" ]; then
-    apt list --installed | grep "$TARGET"
+    apt list --installed 2>/dev/null | rg -i "$TARGET"
     divider
     return
   fi
 
   if [ "$PROGRAM" == "yay" ]; then
-    yay -Qqe | grep "$TARGET"
+    yay -Qqe 2>/dev/null | rg -i "$TARGET"
     divider
+    return
+  fi
+
+  if [ "$PROGRAM" == "flatpak" ]; then
+    flatpak list 2>/dev/null | rg -i "$TARGET"
     return
   fi
 
@@ -45,14 +50,15 @@ function try() {
 
 TARGET="$1"
 
-try which "$TARGET"
-
-try where "$TARGET"
-
-try whereis "$TARGET"
-
-try brew "$TARGET"
-
-try apt "$TARGET"
-
-try yay "$TARGET"
+PROGRAMS=(
+  "which"
+  "where"
+  "whereis"
+  "brew"
+  "apt"
+  "yay"
+  "flatpak"
+)
+for program in "${PROGRAMS[@]}"; do
+  try "$program" "$TARGET"
+done
