@@ -12,7 +12,6 @@ in
   cachix = {
     pull = [
       "cachix"
-      "devenv"
       "oxalica"
       "rbabaev"
       "nixpkgs"
@@ -28,6 +27,7 @@ in
     just
     nixd
     cachix
+    nix-top
     pulumi-esc
   ];
 
