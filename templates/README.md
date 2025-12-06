@@ -1,3 +1,5 @@
+<div style="visbility:hidden;"></div>
+
 <div align="center">
   <img height="300" src="https://robertbabaev.tech/images/PFP_V2.jpg" />
 </div>
@@ -53,15 +55,36 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
             </tr>
             <tr>
                 <td>
-                    <a href="https://rust-lang.org/" target="_blank" rel="noopener noreferrer">
-                        <img src="https://cdn.simpleicons.org/rust/FFFFFF" height="40" width="40" alt="Rust"  />
-                    </a>
-                    <a href="https://www.python.org" target="_blank" rel="noopener noreferrer">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" width="40" alt="Python"  />
-                    </a>
-                    <a href="typescriptlang.org" target="_blank" rel="noopener noreferrer">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" width="40" alt="TypeScript"  />
-                    </a>
+                    <a href="https://rust-lang.org/" target="_blank" rel="noopener noreferrer"><img src="https://cdn.simpleicons.org/rust/FFFFFF" height="40" width="40" alt="Rust"/></a>
+                    <a href="https://www.python.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" width="40" alt="Python"/></a>
+                    <a href="typescriptlang.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" width="40" alt="TypeScript"/></a>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center">
+                    <b>
+                        Actively Using 
+                    </b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center">
+                    <b>
+                        Previously Used
+                    </b>
+                </td>
+            </tr>
+            <tr>
+                <td>
                 </td>
                 <td></td>
                 <td></td>

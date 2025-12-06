@@ -1,5 +1,4 @@
 { pkgs, lib, config, inputs, ... }:
-
 let
   pushCache = "rbabaev";
 in
@@ -69,6 +68,34 @@ in
             href = "typescriptlang.org";
             alt = "TypeScript";
           }
+        ];
+        actively_using = [
+
+        ];
+        previous = [
+
+        ];
+      };
+      frameworks = {
+        favourites = [
+
+        ];
+        actively_using = [
+
+        ];
+        previous = [
+
+        ];
+      };
+      tools = {
+        favourites = [
+
+        ];
+        actively_using = [
+
+        ];
+        previous = [
+
         ];
       };
     };

@@ -1,3 +1,9 @@
+<div style="visbility:hidden;">
+    {%- macro icon(item) -%}
+    <a href="{{ item.href }}" target="_blank" rel="noopener noreferrer"><img src="{{ item.image }}" height="40" width="40" alt="{{ item.alt }}"/></a>
+    {%- endmacro -%}
+</div>
+
 <div align="center">
   <img height="300" src="{{ pfp_image }}" />
 </div>
@@ -54,9 +60,43 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
             <tr>
                 <td>
                     {%- for language in languages.favourites %}
-                    <a href="{{ language.href }}" target="_blank" rel="noopener noreferrer">
-                        <img src="{{ language.image }}" height="40" width="40" alt="{{ language.alt }}"  />
-                    </a>
+                    {{ icon(language) }}
+                    {%- endfor %}
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center">
+                    <b>
+                        Actively Using 
+                    </b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {%- for language in languages.actively_using %}
+                    {{ icon(language) }}
+                    {%- endfor %}
+                </td>
+                <td>
+                    {%- for framework in frameworks.actively_using %}
+                    {{ icon(framework) }}
+                    {%- endfor %}
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center">
+                    <b>
+                        Previously Used
+                    </b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {%- for language in languages.previous %}
+                    {{ icon(language) }}
                     {%- endfor %}
                 </td>
                 <td></td>
