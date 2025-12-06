@@ -87,12 +87,15 @@ in
           }
         ];
         previous = [
-
+          # Java
+          # Golang
         ];
       };
       frameworks = {
         favourites = [
-
+          # FastAPI
+          # Loco.rs
+          # Svelte
         ];
         actively_using = [
           {
@@ -100,9 +103,10 @@ in
             href = "https://flutter.dev";
             alt = "Flutter";
           }
+          # React
+          # Django
         ];
         previous = [
-
         ];
       };
       tools = {
