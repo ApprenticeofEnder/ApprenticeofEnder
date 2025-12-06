@@ -44,10 +44,12 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
             </tr>
         </thead>
         <tbody>
-            <tr colspan="3" align="center">
-                <b>
-                    Favourites 
-                </b>
+            <tr>
+                <td colspan="3" align="center">
+                    <b>
+                        Favourites 
+                    </b>
+                </td>
             </tr>
             <tr>
                 <td>
