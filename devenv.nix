@@ -65,12 +65,21 @@ in
           }
           {
             image = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg";
-            href = "typescriptlang.org";
+            href = "https://typescriptlang.org";
             alt = "TypeScript";
           }
         ];
         actively_using = [
-
+          {
+            image = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg";
+            href = "https://learn.microsoft.com/en-us/dotnet/csharp/";
+            alt = "C#";
+          }
+          {
+            image = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg";
+            href = "https://dart.dev";
+            alt = "Dart";
+          }
         ];
         previous = [
 

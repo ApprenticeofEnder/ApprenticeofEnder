@@ -57,7 +57,7 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
                 <td>
                     <a href="https://rust-lang.org/" target="_blank" rel="noopener noreferrer"><img src="https://cdn.simpleicons.org/rust/FFFFFF" height="40" width="40" alt="Rust"/></a>
                     <a href="https://www.python.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" width="40" alt="Python"/></a>
-                    <a href="typescriptlang.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" width="40" alt="TypeScript"/></a>
+                    <a href="https://typescriptlang.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" width="40" alt="TypeScript"/></a>
                 </td>
                 <td></td>
                 <td></td>
@@ -71,6 +71,8 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
             </tr>
             <tr>
                 <td>
+                    <a href="https://learn.microsoft.com/en-us/dotnet/csharp/" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" height="40" width="40" alt="C#"/></a>
+                    <a href="https://dart.dev" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg" height="40" width="40" alt="Dart"/></a>
                 </td>
                 <td>
                 </td>
