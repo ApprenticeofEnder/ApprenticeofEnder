@@ -28,6 +28,7 @@ in
     nixd
     cachix
     nix-top
+    jinja2-cli
     pulumi-esc
   ];
 
@@ -45,12 +46,47 @@ in
     echo hello from $GREET
   '';
 
+  files = {
+    "templates/readme.json".json = {
+      pfp_image = "https://robertbabaev.tech/images/PFP_V2.jpg";
+      name = "Robert Babaev";
+      linkedin = "https://www.linkedin.com/in/robertbabaev2001";
+      website = "https://robertbabaev.tech";
+      languages = {
+        favourites = [
+          {
+            image = "https://cdn.simpleicons.org/rust/FFFFFF";
+            href = "https://rust-lang.org/";
+            alt = "Rust";
+          }
+          {
+            image = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg";
+            href = "https://www.python.org";
+            alt = "Python";
+          }
+          {
+            image = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg";
+            href = "typescriptlang.org";
+            alt = "TypeScript";
+          }
+        ];
+      };
+    };
+  };
+
   scripts = {
     upcache = {
       exec = ''
         set -euxo pipefail
 
         nix path-info --all | cachix push ${pushCache}
+      '';
+    };
+    generate-readme = {
+      exec = ''
+        set -euxo pipefail
+        cd ${config.devenv.root}/templates
+        jinja2 README.j2.md readme.json > README.md
       '';
     };
   };
@@ -62,10 +98,11 @@ in
   '';
 
   # https://devenv.sh/tasks/
-  # tasks = {
-  #   "myproj:setup".exec = "mytool build";
-  #   "devenv:enterShell".after = [ "myproj:setup" ];
-  # };
+  tasks = {
+    "readme:generate".exec = config.scripts.generate-readme.exec;
+    "readme:generate".after = [ "devenv:enterShell" ];
+    # "devenv:files".after = [ "readme:generate" ];
+  };
 
   # https://devenv.sh/tests/
   enterTest = ''
