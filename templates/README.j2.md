@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo" />
   </a>
   <a href="{{ website }}">
-    <img src="https://img.shields.io/static/v1?message=My Website&logo=firefox&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="website"/>
+    <img src="https://img.shields.io/static/v1?message=robertbabaev.tech&logo=firefox&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="website"/>
   </a>
 </div>
 
