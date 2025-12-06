@@ -101,7 +101,6 @@ in
   tasks = {
     "readme:generate".exec = config.scripts.generate-readme.exec;
     "readme:generate".after = [ "devenv:enterShell" ];
-    # "devenv:files".after = [ "readme:generate" ];
   };
 
   # https://devenv.sh/tests/
