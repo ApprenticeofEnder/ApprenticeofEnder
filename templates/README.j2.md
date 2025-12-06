@@ -1,4 +1,3 @@
-<link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
 <div style="visbility:hidden;">
     {%- macro icon(item) -%}
     <a href="{{ item.href }}" target="_blank" rel="noopener noreferrer"><img src="{{ item.image }}" height="40" width="40" alt="{{ item.alt }}"/></a>
@@ -106,5 +105,3 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
         </tbody>
     </table>
 </div>
-
-<i class="devicon-rust-original"></i>
