@@ -35,29 +35,31 @@
 Hey! I'm Robert, a Security Software Engineer from Canada.
 
 <div class="tg-wrap">
-    <thead>
-        <tr>
-            <th>Languages</th>
-            <th>Frameworks</th>
-            <th>Tools</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr colspan="3" align="center">
-            <b>
-                Favourites 
-            </b>
-        </tr>
-        <tr>
-            <td>
-                {%- for language in languages.favourites %}
-                <a href="{{ language.href }}" target="_blank" rel="noopener noreferrer">
-                    <img src="{{ language.image }}" height="40" width="40" alt="{{ language.alt }}"  />
-                </a>
-                {%- endfor %}
-            </td>
-            <td></td>
-            <td></td>
-        </tr>
-    </tbody>
+    <table>
+        <thead>
+            <tr>
+                <th>Languages</th>
+                <th>Frameworks</th>
+                <th>Tools</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr colspan="3" align="center">
+                <b>
+                    Favourites 
+                </b>
+            </tr>
+            <tr>
+                <td>
+                    {%- for language in languages.favourites %}
+                    <a href="{{ language.href }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ language.image }}" height="40" width="40" alt="{{ language.alt }}"  />
+                    </a>
+                    {%- endfor %}
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
