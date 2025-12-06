@@ -6,7 +6,7 @@
 
 <div align="center">
   <a href="https://www.linkedin.com/in/robertbabaev2001">
-    <img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo" />
+    <img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=black&logoColor=chartreuse&labelColor=chartreuse&style=for-the-badge" height="25" alt="linkedin logo" />
   </a>
   <a href="https://robertbabaev.tech">
     <img src="https://img.shields.io/static/v1?message=robertbabaev.tech&logo=firefox&label=&color=black&logoColor=black&labelColor=chartreuse&style=for-the-badge" height="25" alt="website"/>
