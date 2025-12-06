@@ -68,6 +68,11 @@ in
             href = "https://typescriptlang.org";
             alt = "TypeScript";
           }
+          {
+            image = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nixos/nixos-original.svg";
+            href = "https://nixos.org";
+            alt = "Nix";
+          }
         ];
         actively_using = [
           {
@@ -90,7 +95,11 @@ in
 
         ];
         actively_using = [
-
+          {
+            image = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg";
+            href = "https://flutter.dev";
+            alt = "Flutter";
+          }
         ];
         previous = [
 

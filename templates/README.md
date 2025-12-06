@@ -58,6 +58,7 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
                     <a href="https://rust-lang.org/" target="_blank" rel="noopener noreferrer"><img src="https://cdn.simpleicons.org/rust/FFFFFF" height="40" width="40" alt="Rust"/></a>
                     <a href="https://www.python.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" width="40" alt="Python"/></a>
                     <a href="https://typescriptlang.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" width="40" alt="TypeScript"/></a>
+                    <a href="https://nixos.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nixos/nixos-original.svg" height="40" width="40" alt="Nix"/></a>
                 </td>
                 <td></td>
                 <td></td>
@@ -75,6 +76,7 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
                     <a href="https://dart.dev" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg" height="40" width="40" alt="Dart"/></a>
                 </td>
                 <td>
+                    <a href="https://flutter.dev" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg" height="40" width="40" alt="Flutter"/></a>
                 </td>
                 <td></td>
             </tr>
