@@ -1,6 +1,9 @@
 { pkgs, lib, config, inputs, ... }:
 let
   pushCache = "rbabaev";
+
+  devicon = icon:
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon}/${icon}-original.svg";
 in
 {
   # https://devenv.sh/basics/
@@ -59,29 +62,29 @@ in
             alt = "Rust";
           }
           {
-            image = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg";
+            image = devicon "python";
             href = "https://www.python.org";
             alt = "Python";
           }
           {
-            image = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg";
+            image = devicon "typescript";
             href = "https://typescriptlang.org";
             alt = "TypeScript";
           }
           {
-            image = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nixos/nixos-original.svg";
+            image = devicon "nixos";
             href = "https://nixos.org";
             alt = "Nix";
           }
         ];
         actively_using = [
           {
-            image = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg";
+            image = devicon "csharp";
             href = "https://learn.microsoft.com/en-us/dotnet/csharp/";
             alt = "C#";
           }
           {
-            image = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg";
+            image = devicon "dart";
             href = "https://dart.dev";
             alt = "Dart";
           }
@@ -97,17 +100,15 @@ in
           # Loco.rs
           # Svelte
         ];
-        actively_using = [
-          {
-            image = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg";
-            href = "https://flutter.dev";
-            alt = "Flutter";
-          }
+        actively_using = [{
+          image = devicon "flutter";
+          href = "https://flutter.dev";
+          alt = "Flutter";
+        }
           # React
           # Django
         ];
-        previous = [
-        ];
+        previous = [ ];
       };
       tools = {
         favourites = [
