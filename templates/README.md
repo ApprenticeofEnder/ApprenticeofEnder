@@ -1,4 +1,3 @@
-<link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
 <div style="visbility:hidden;"></div>
 
 <div align="center">
@@ -97,5 +96,3 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
         </tbody>
     </table>
 </div>
-
-<i class="devicon-rust-original"></i>
