@@ -100,11 +100,12 @@ in
           # Loco.rs
           # Svelte
         ];
-        actively_using = [{
-          image = devicon "flutter";
-          href = "https://flutter.dev";
-          alt = "Flutter";
-        }
+        actively_using = [
+          {
+            image = devicon "flutter";
+            href = "https://flutter.dev";
+            alt = "Flutter";
+          }
           # React
           # Django
         ];
