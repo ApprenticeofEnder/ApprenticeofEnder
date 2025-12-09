@@ -7,6 +7,9 @@
     shellAliases = {
       mkdir = "mkdir -p";
     };
+    sessionVariables = { } // lib.mkIf pkgs.stdenv.isDarwin {
+      LIBRARY_PATH = "$LIBRARY_PATH:${pkgs.libiconv}/lib";
+    };
     # sessionVariables = {
     #   LIBRARY_PATH = "$LIBRARY_PATH:${pkgs.libiconv}";
     # };
