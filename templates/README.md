@@ -85,7 +85,7 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
                 </td>
                 <td>
                     <a href="https://flutter.dev" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" height="40" width="40" alt="Flutter"/></a>
-                    <a href="https://djangoproject.com" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-original.svg" height="40" width="40" alt="Django"/></a>
+                    <a href="https://djangoproject.com" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" height="40" width="40" alt="Django"/></a>
                     <a href="https://react.dev" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" width="40" alt="React"/></a>
                 </td>
                 <td>

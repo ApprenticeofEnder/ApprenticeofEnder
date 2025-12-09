@@ -111,7 +111,7 @@ in
             alt = "Flutter";
           }
           {
-            image = devicon "django";
+            image = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg";
             href = "https://djangoproject.com";
             alt = "Django";
           }
