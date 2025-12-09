@@ -125,10 +125,13 @@ let
 
   darwin = with pkgs; [
     utm
+    podman
 
     # acre security
     dotnet-sdk
     dotnet-runtime
+
+    # libraries
     libiconv
   ];
 
