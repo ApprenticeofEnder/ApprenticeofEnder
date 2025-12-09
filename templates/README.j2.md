@@ -45,7 +45,7 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
         <thead>
             <tr>
                 <th>Languages</th>
-                <th>Frameworks</th>
+                <th>Frameworks & Libraries</th>
                 <th>Tools</th>
             </tr>
         </thead>
@@ -63,8 +63,16 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
                     {{ icon(language) }}
                     {%- endfor %}
                 </td>
-                <td></td>
-                <td></td>
+                <td>
+                    {%- for framework in frameworks.favourites %}
+                    {{ icon(framework) }}
+                    {%- endfor %}
+                </td>
+                <td>
+                    {%- for tool in tools.favourites %}
+                    {{ icon(tool) }}
+                    {%- endfor %}
+                </td>
             </tr>
             <tr>
                 <td colspan="3" align="center">
@@ -84,7 +92,11 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
                     {{ icon(framework) }}
                     {%- endfor %}
                 </td>
-                <td></td>
+                <td>
+                    {%- for tool in tools.actively_using %}
+                    {{ icon(tool) }}
+                    {%- endfor %}
+                </td>
             </tr>
             <tr>
                 <td colspan="3" align="center">
@@ -99,8 +111,16 @@ Hey! I'm Robert, a Security Software Engineer from Canada.
                     {{ icon(language) }}
                     {%- endfor %}
                 </td>
-                <td></td>
-                <td></td>
+                <td>
+                    {%- for framework in frameworks.previous %}
+                    {{ icon(framework) }}
+                    {%- endfor %}
+                </td>
+                <td>
+                    {%- for tool in tools.previous %}
+                    {{ icon(tool) }}
+                    {%- endfor %}
+                </td>
             </tr>
         </tbody>
     </table>

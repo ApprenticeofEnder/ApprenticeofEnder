@@ -1,5 +1,7 @@
 { pkgs, lib, config, inputs, ... }:
 let
+  name = "Robert Babaev";
+  domain = "robertbabaev.tech";
   pushCache = "rbabaev";
 
   devicon = icon:
@@ -14,10 +16,10 @@ in
   cachix = {
     pull = [
       "cachix"
+      "mfarabi"
+      "nixpkgs"
       "oxalica"
       "rbabaev"
-      "nixpkgs"
-      "mfarabi"
       "nix-darwin"
       "nix-community"
       "pre-commit-hooks"
@@ -34,26 +36,12 @@ in
     pulumi-esc
   ];
 
-  # https://devenv.sh/languages/
-  # languages.rust.enable = true;
-
-  # https://devenv.sh/processes/
-  # processes.dev.exec = "${lib.getExe pkgs.watchexec} -n -- ls -la";
-
-  # https://devenv.sh/services/
-  # services.postgres.enable = true;
-
-  # https://devenv.sh/scripts/
-  scripts.hello.exec = ''
-    echo hello from $GREET
-  '';
-
   files = {
     "templates/readme.json".json = {
       pfp_image = "https://robertbabaev.tech/images/PFP_V2.jpg";
-      name = "Robert Babaev";
+      name = name;
       linkedin = "https://www.linkedin.com/in/robertbabaev2001";
-      website = "https://robertbabaev.tech";
+      website = "https://${domain}";
       languages = {
         favourites = [
           {
@@ -88,17 +76,33 @@ in
             href = "https://dart.dev";
             alt = "Dart";
           }
+          {
+            image = devicon "go";
+            href = "https://go.dev";
+            alt = "Go";
+          }
         ];
         previous = [
-          # Java
-          # Golang
+          {
+            image = devicon "java";
+            href = "https://www.java.com/en/";
+            alt = "Java";
+          }
         ];
       };
       frameworks = {
         favourites = [
-          # FastAPI
+          {
+            image = devicon "fastapi";
+            href = "https://fastapi.tiangolo.com";
+            alt = "FastAPI";
+          }
+          {
+            image = devicon "svelte";
+            href = "https://svelte.dev";
+            alt = "Svelte";
+          }
           # Loco.rs
-          # Svelte
         ];
         actively_using = [
           {
@@ -106,14 +110,42 @@ in
             href = "https://flutter.dev";
             alt = "Flutter";
           }
-          # React
-          # Django
+          {
+            image = devicon "django";
+            href = "https://djangoproject.com";
+            alt = "Django";
+          }
+          {
+            image = devicon "react";
+            href = "https://react.dev";
+            alt = "React";
+          }
         ];
-        previous = [ ];
+        previous = [
+          {
+            image = devicon "angular";
+            href = "https://angular.dev";
+            alt = "Angular";
+          }
+        ];
       };
       tools = {
         favourites = [
-
+          {
+            image = devicon "terraform";
+            href = "https://developer.hashicorp.com/terraform";
+            alt = "Terraform";
+          }
+          {
+            image = devicon "pulumi";
+            href = "https://www.pulumi.com";
+            alt = "Pulumi";
+          }
+          {
+            image = "https://raw.githubusercontent.com/cachix/devenv/36807c727e743e7a00999922e7f737a0cc4e05ac/logos/devenv-dark-bg.svg";
+            href = "https://devenv.sh";
+            alt = "Devenv";
+          }
         ];
         actively_using = [
 
@@ -142,12 +174,6 @@ in
     };
   };
 
-  # https://devenv.sh/basics/
-  enterShell = ''
-    hello         # Run scripts directly
-    git --version # Use packages
-  '';
-
   # https://devenv.sh/tasks/
   tasks = {
     "readme:generate".exec = config.scripts.generate-readme.exec;
@@ -159,9 +185,4 @@ in
     echo "Running tests"
     git --version | grep --color=auto "${pkgs.git.version}"
   '';
-
-  # https://devenv.sh/git-hooks/
-  # git-hooks.hooks.shellcheck.enable = true;
-
-  # See full reference at https://devenv.sh/reference/options/
 }
