@@ -125,6 +125,7 @@ let
 
   darwin = with pkgs; [
     utm
+    docker
     podman
 
     # acre security
