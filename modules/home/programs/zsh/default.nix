@@ -1,8 +1,4 @@
-{ pkgs
-, lib
-, config
-, ...
-}:
+{ pkgs, lib, config, ... }:
 {
   programs.zsh = {
     enable = true;
@@ -11,6 +7,9 @@
     shellAliases = {
       mkdir = "mkdir -p";
     };
+    # sessionVariables = {
+    #   LIBRARY_PATH = "$LIBRARY_PATH:${pkgs.libiconv}";
+    # };
 
     # plugins = [
     #   {

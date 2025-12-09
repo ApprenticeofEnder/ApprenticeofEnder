@@ -52,6 +52,7 @@ let
     # nix-specific
     nil # lsp
     nix-info # system information
+    nix-tree # dependency navigation
     nixpkgs-fmt # formatter
 
     # rust, just in case
@@ -128,6 +129,7 @@ let
     # acre security
     dotnet-sdk
     dotnet-runtime
+    libiconv
   ];
 
   fun = with pkgs; [
