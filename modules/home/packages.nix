@@ -38,6 +38,7 @@
 let
   dev = with pkgs; [
     fd
+    gh
     sd
     omnix
     typst
