@@ -177,8 +177,11 @@ in
 
   # https://devenv.sh/tasks/
   tasks = {
-    "readme:generate".exec = config.scripts.generate-readme.exec;
-    "readme:generate".after = [ "devenv:enterShell" ];
+    "readme:generate" = {
+      exec = config.scripts.generate-readme.exec;
+      after = [ "devenv:enterShell" ];
+      # before = [ "devenv:enterTest" ];
+    };
   };
 
   # https://devenv.sh/tests/
