@@ -1,4 +1,4 @@
-{ pkgs, lib, config, inputs, ... }:
+{ pkgs, config, ... }:
 let
   name = "Robert Babaev";
   domain = "robertbabaev.tech";
@@ -28,6 +28,7 @@ in
 
   # https://devenv.sh/packages/
   packages = with pkgs; [
+    vale
     just
     nixd
     cachix
@@ -185,4 +186,10 @@ in
     echo "Running tests"
     git --version | grep --color=auto "${pkgs.git.version}"
   '';
+
+  git-hooks.hooks = {
+    deadnix.enable = true;
+    vale.enable = true;
+    shellcheck.enable = true;
+  };
 }
