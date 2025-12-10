@@ -198,5 +198,6 @@ in
       enable = true;
       excludes = [ ".zsh$" ];
     };
+    convco.enable = true;
   };
 }
