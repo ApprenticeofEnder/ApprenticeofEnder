@@ -181,7 +181,7 @@ in
     "readme:generate" = {
       exec = config.scripts.generate-readme.exec;
       after = [ "devenv:enterShell" ];
-      # before = [ "devenv:enterTest" ];
+      before = [ "devenv:enterTest" ];
     };
   };
 
