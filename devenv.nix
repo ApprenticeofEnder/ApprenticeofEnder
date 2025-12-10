@@ -28,6 +28,7 @@ in
 
   # https://devenv.sh/packages/
   packages = with pkgs; [
+    git
     vale
     just
     nixd
