@@ -182,6 +182,10 @@ in
       exec = config.scripts.generate-readme.exec;
       after = [ "devenv:enterShell" ];
       before = [ "devenv:enterTest" ];
+      execIfModified = [
+        "${config.git.root}/templates/README.j2.md"
+        "${config.git.root}/templates/readme.json"
+      ];
     };
   };
 
