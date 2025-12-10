@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, ... }:
 {
   services.spotifyd = {
     enable = pkgs.stdenv.isLinux;

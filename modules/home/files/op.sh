@@ -1,2 +1,4 @@
+#!/usr/bin/env bash
+
 export OP_PLUGIN_ALIASES_SOURCED=1
 alias aws="op plugin run -- aws"

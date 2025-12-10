@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, ... }: {
 
   home.packages = with pkgs; [
     (writeShellScriptBin "yls" (builtins.readFile ./yls.sh))

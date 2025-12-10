@@ -193,6 +193,9 @@ in
   git-hooks.hooks = {
     deadnix.enable = true;
     vale.enable = true;
-    shellcheck.enable = true;
+    shellcheck = {
+      enable = true;
+      excludes = [ ".zsh$" ];
+    };
   };
 }

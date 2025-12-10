@@ -12,14 +12,14 @@ elif [ -x "$(command -v podman)" ]; then
   DOCKER_CMD="podman"
 fi
 
-if ! $DOCKER_CMD info > /dev/null 2>&1; then
+if ! $DOCKER_CMD info >/dev/null 2>&1; then
   echo "$DOCKER_CMD daemon is not running. Please start $DOCKER_CMD and try again."
   exit 1
 fi
 
 TTY_FLAG=""
 
-if [ -n $USE_TTY ]; then
+if [ -n "$USE_TTY" ]; then
   TTY_FLAG="-t"
 fi
 
@@ -27,6 +27,6 @@ $DOCKER_CMD run \
   --rm -i \
   $TTY_FLAG \
   -v fit_vol:/app/Feenics \
-  -v $(pwd):/app/scripts \
+  -v "$(pwd):/app/scripts" \
   -v "$HOME/Library/Application Support/Code/User:/app/vscode" \
-  feenics/fit $@
+  feenics/fit "$@"

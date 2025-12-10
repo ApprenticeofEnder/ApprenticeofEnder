@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, ... }:
 {
   programs.zsh = {
     enable = true;
@@ -7,17 +7,11 @@
     shellAliases = {
       mkdir = "mkdir -p";
     };
-    sessionVariables = { } // lib.mkIf pkgs.stdenv.isDarwin {
-      LIBRARY_PATH = "${pkgs.libiconv}/lib";
-    };
-
-    # plugins = [
-    #   {
-    #     name = "1password";
-    #     src = ./plugins/1password/1password.plugin.zsh;
-    #     file = "1password/1password.plugin.zsh";
-    #   }
-    # ];
+    sessionVariables =
+      { }
+      // lib.mkIf pkgs.stdenv.isDarwin {
+        LIBRARY_PATH = "${pkgs.libiconv}/lib";
+      };
 
     history = {
       size = 10000;
