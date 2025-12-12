@@ -2,6 +2,23 @@
     {%- macro icon(item) -%}
     <a href="{{ item.href }}" target="_blank" rel="noopener noreferrer"><img src="{{ item.image }}" height="40" width="40" alt="{{ item.alt }}"/></a>
     {%- endmacro -%}
+    {%- macro tablerow(key) -%}
+    <td>
+        {%- for language in languages[key] %}
+        {{ icon(language) }}
+        {%- endfor %}
+    </td>
+    <td>
+        {%- for framework in frameworks[key] %}
+        {{ icon(framework) }}
+        {%- endfor %}
+    </td>
+    <td>
+        {%- for tool in tools[key] %}
+        {{ icon(tool) }}
+        {%- endfor %}
+    </td>
+    {%- endmacro -%}
 </div>
 
 <div align="center">
@@ -58,21 +75,7 @@ Hey! My name is Robert, a Security Software Engineer from Canada.
                 </td>
             </tr>
             <tr>
-                <td>
-                    {%- for language in languages.favourites %}
-                    {{ icon(language) }}
-                    {%- endfor %}
-                </td>
-                <td>
-                    {%- for framework in frameworks.favourites %}
-                    {{ icon(framework) }}
-                    {%- endfor %}
-                </td>
-                <td>
-                    {%- for tool in tools.favourites %}
-                    {{ icon(tool) }}
-                    {%- endfor %}
-                </td>
+                {{ tablerow("favourites") }}
             </tr>
             <tr>
                 <td colspan="3" align="center">

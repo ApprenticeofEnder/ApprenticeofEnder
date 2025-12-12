@@ -55,20 +55,20 @@ Hey! My name is Robert, a Security Software Engineer from Canada.
             </tr>
             <tr>
                 <td>
-                    <a href="https://rust-lang.org/" target="_blank" rel="noopener noreferrer"><img src="https://cdn.simpleicons.org/rust/FFFFFF" height="40" width="40" alt="Rust"/></a>
-                    <a href="https://www.python.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" width="40" alt="Python"/></a>
-                    <a href="https://typescriptlang.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" width="40" alt="TypeScript"/></a>
-                    <a href="https://nixos.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nixos/nixos-original.svg" height="40" width="40" alt="Nix"/></a>
-                </td>
-                <td>
-                    <a href="https://fastapi.tiangolo.com" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" height="40" width="40" alt="FastAPI"/></a>
-                    <a href="https://svelte.dev" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg" height="40" width="40" alt="Svelte"/></a>
-                </td>
-                <td>
-                    <a href="https://developer.hashicorp.com/terraform" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" height="40" width="40" alt="Terraform"/></a>
-                    <a href="https://www.pulumi.com" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pulumi/pulumi-original.svg" height="40" width="40" alt="Pulumi"/></a>
-                    <a href="https://devenv.sh" target="_blank" rel="noopener noreferrer"><img src="https://raw.githubusercontent.com/cachix/devenv/36807c727e743e7a00999922e7f737a0cc4e05ac/logos/devenv-dark-bg.svg" height="40" width="40" alt="Devenv"/></a>
-                </td>
+        <a href="https://rust-lang.org/" target="_blank" rel="noopener noreferrer"><img src="https://cdn.simpleicons.org/rust/FFFFFF" height="40" width="40" alt="Rust"/></a>
+        <a href="https://www.python.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" width="40" alt="Python"/></a>
+        <a href="https://typescriptlang.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" width="40" alt="TypeScript"/></a>
+        <a href="https://nixos.org" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nixos/nixos-original.svg" height="40" width="40" alt="Nix"/></a>
+    </td>
+    <td>
+        <a href="https://fastapi.tiangolo.com" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" height="40" width="40" alt="FastAPI"/></a>
+        <a href="https://svelte.dev" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg" height="40" width="40" alt="Svelte"/></a>
+    </td>
+    <td>
+        <a href="https://developer.hashicorp.com/terraform" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" height="40" width="40" alt="Terraform"/></a>
+        <a href="https://www.pulumi.com" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pulumi/pulumi-original.svg" height="40" width="40" alt="Pulumi"/></a>
+        <a href="https://devenv.sh" target="_blank" rel="noopener noreferrer"><img src="https://raw.githubusercontent.com/cachix/devenv/36807c727e743e7a00999922e7f737a0cc4e05ac/logos/devenv-dark-bg.svg" height="40" width="40" alt="Devenv"/></a>
+    </td>
             </tr>
             <tr>
                 <td colspan="3" align="center">
