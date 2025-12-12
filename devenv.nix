@@ -32,6 +32,7 @@ in
     nixd
     cachix
     nix-top
+    prettier
     jinja2-cli
     pulumi-esc
   ];
@@ -170,6 +171,7 @@ in
         set -euxo pipefail
         cd ${config.devenv.root}/templates
         jinja2 README.j2.md readme.json > README.md
+        prettier README.md
       '';
     };
   };

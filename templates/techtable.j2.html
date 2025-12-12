@@ -1,0 +1,67 @@
+<div style="display: none">
+  <span>
+    {%- set headers = {"favourites": "Favourites", "actively_using": "Actively
+    Using", "previous": "Previous"} -%}
+  </span>
+  <span>
+    {%- set sections = ["favourites", "actively_using", "previous"] -%}
+  </span>
+</div>
+<div class="tg-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Languages</th>
+        <th>Frameworks & Libraries</th>
+        <th>Tools</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for section in sections -%}
+      <tr>
+        <td colspan="3" align="center">
+          <b> {{ headers[section] }} </b>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {%- for item in languages[section] %}
+          <a href="{{ item.href }}" target="_blank" rel="noopener noreferrer">
+            <img
+              src="{{ item.image }}"
+              height="40"
+              width="40"
+              alt="{{ item.alt }}"
+            />
+          </a>
+          {%- endfor -%}
+        </td>
+        <td>
+          {%- for item in frameworks[section] -%}
+          <a href="{{ item.href }}" target="_blank" rel="noopener noreferrer">
+            <img
+              src="{{ item.image }}"
+              height="40"
+              width="40"
+              alt="{{ item.alt }}"
+            />
+          </a>
+          {%- endfor -%}
+        </td>
+        <td>
+          {%- for item in frameworks[section] -%}
+          <a href="{{ item.href }}" target="_blank" rel="noopener noreferrer">
+            <img
+              src="{{ item.image }}"
+              height="40"
+              width="40"
+              alt="{{ item.alt }}"
+            />
+          </a>
+          {%- endfor -%}
+        </td>
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
