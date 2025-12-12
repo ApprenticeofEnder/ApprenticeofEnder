@@ -38,7 +38,6 @@ Hey! My name is Robert, a Security Software Engineer from Canada.
   <span></span>
   <span></span>
 </div>
-
 <div class="tg-wrap">
   <table>
     <thead>

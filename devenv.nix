@@ -185,6 +185,7 @@ in
       execIfModified = [
         "${config.git.root}/templates/README.j2.md"
         "${config.git.root}/templates/readme.json"
+        "${config.git.root}/templates/techtable.j2.html"
       ];
     };
   };
