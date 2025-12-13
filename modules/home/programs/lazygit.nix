@@ -1,4 +1,7 @@
-{
+{ pkgs, ... }: {
+  home.packages = with pkgs; [
+    difftastic
+  ];
   programs.lazygit = {
     enable = true;
     enableZshIntegration = true;
@@ -28,6 +31,11 @@
         commit.signOff = true;
         branchPrefix = "rbabaev/";
         # branchPrefix = "${config.me.username}/";
+        pagers = [
+          {
+            externalDiffCommand = "difft --color=always";
+          }
+        ];
       };
     };
   };
