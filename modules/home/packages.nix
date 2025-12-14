@@ -59,6 +59,7 @@ let
     # rust, just in case
     cargo
     rustfmt
+    rust-analyzer
 
     # js
     pnpm
