@@ -111,11 +111,13 @@ let
   ];
 
   linux = with pkgs; [
+    ksnip
     lazyjournal
     systemctl-tui
     nvtopPackages.full
 
     # fun that only works on Linux
+    spotify
     hollywood
   ];
 
