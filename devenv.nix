@@ -196,6 +196,7 @@ in {
   '';
 
   git-hooks.hooks = {
+    alejandra.enable = true;
     deadnix.enable = true;
     vale.enable = true;
     shellcheck = {
