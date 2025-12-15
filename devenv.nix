@@ -1,13 +1,14 @@
-{ pkgs, config, ... }:
-let
+{
+  pkgs,
+  config,
+  ...
+}: let
   name = "Robert Babaev";
   domain = "robertbabaev.tech";
   pushCache = "rbabaev";
 
-  devicon = icon:
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon}/${icon}-original.svg";
-in
-{
+  devicon = icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon}/${icon}-original.svg";
+in {
   # https://devenv.sh/basics/
   name = "Home Base";
 
@@ -149,10 +150,8 @@ in
           }
         ];
         actively_using = [
-
         ];
         previous = [
-
         ];
       };
     };
@@ -180,8 +179,8 @@ in
   tasks = {
     "readme:generate" = {
       exec = config.scripts.generate-readme.exec;
-      after = [ "devenv:enterShell" ];
-      before = [ "devenv:enterTest" ];
+      after = ["devenv:enterShell"];
+      before = ["devenv:enterTest"];
       execIfModified = [
         "${config.git.root}/templates/README.j2.md"
         "${config.git.root}/templates/readme.json"
@@ -201,7 +200,7 @@ in
     vale.enable = true;
     shellcheck = {
       enable = true;
-      excludes = [ ".zsh$" ];
+      excludes = [".zsh$"];
     };
     convco.enable = true;
   };
