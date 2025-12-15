@@ -1,5 +1,4 @@
-{ flake, ... }:
-{
+{flake, ...}: {
   imports = [
     # NOTE: The nix-index DB is slow to search, until
     # https://github.com/nix-community/nix-index-database/issues/130

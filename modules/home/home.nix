@@ -1,5 +1,5 @@
 {
-  imports = [ ../../modules/shared/nix ];
+  imports = [../../modules/shared/nix];
 
   home.shellAliases = {
     docker = "podman";

@@ -1,7 +1,10 @@
-{ pkgs, lib, ... }:
-
+{
+  pkgs,
+  lib,
+  ...
+}:
 lib.mkMerge [
-  { }
+  {}
   (lib.mkIf pkgs.stdenv.isLinux {
     targets = {
       genericLinux = {
@@ -14,4 +17,3 @@ lib.mkMerge [
     ];
   })
 ]
-

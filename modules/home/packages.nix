@@ -33,9 +33,11 @@
 # pinix
 # chamber
 # tick-rs
-
-{ lib, pkgs, ... }:
-let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   dev = with pkgs; [
     fd
     gh
@@ -146,8 +148,7 @@ let
     cmatrix
     asciiquarium
   ];
-in
-{
+in {
   home.packages = with pkgs;
     dev
     ++ security

@@ -1,5 +1,8 @@
-{ pkgs, lib, ... }:
 {
+  pkgs,
+  lib,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     autocd = false;
@@ -8,7 +11,7 @@
       mkdir = "mkdir -p";
     };
     sessionVariables =
-      { }
+      {}
       // lib.mkIf pkgs.stdenv.isDarwin {
         LIBRARY_PATH = "${pkgs.libiconv}/lib";
       };
@@ -49,20 +52,21 @@
     oh-my-zsh = {
       enable = true;
       theme = "nanotech";
-      plugins = [
-        "git"
-        "sudo"
-        "direnv"
-        "docker"
-        "kubectl"
-        "colorize"
-        "docker-compose"
-        "colored-man-pages"
-      ]
-      ++ lib.optionals pkgs.stdenv.isDarwin [
-        "dash"
-        "macos"
-      ];
+      plugins =
+        [
+          "git"
+          "sudo"
+          "direnv"
+          "docker"
+          "kubectl"
+          "colorize"
+          "docker-compose"
+          "colored-man-pages"
+        ]
+        ++ lib.optionals pkgs.stdenv.isDarwin [
+          "dash"
+          "macos"
+        ];
       extraConfig = ''
         zstyle ':omz:update' mode reminder
       '';

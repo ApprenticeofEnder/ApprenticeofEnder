@@ -1,4 +1,4 @@
-{ ... }: {
+{...}: {
   programs = {
     # on macOS, you probably don't need this
     bash = {

@@ -19,7 +19,7 @@
           Port = "";
           DBName = "mtg_trader_dev";
           URLParams = "";
-          Commands = [ ];
+          Commands = [];
         }
       ];
     };

@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   services.cachix-agent = {
     enable = false;
     verbose = true;

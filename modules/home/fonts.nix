@@ -2,13 +2,13 @@
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      emoji = [ "Noto Color Emoji" ];
+      emoji = ["Noto Color Emoji"];
 
-      serif = [ "Hack Nerd Font" ];
+      serif = ["Hack Nerd Font"];
 
-      sansSerif = [ "Hack Nerd Font" ];
+      sansSerif = ["Hack Nerd Font"];
 
-      monospace = [ "Hack Nerd Font" ];
+      monospace = ["Hack Nerd Font"];
     };
   };
 }

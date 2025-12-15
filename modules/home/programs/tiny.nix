@@ -1,11 +1,13 @@
-{ config, pkgs, ... }:
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   profile = {
     realname = config.me.fullname;
-    nicks = [ config.me.username ];
+    nicks = [config.me.username];
   };
-in
-{
+in {
   programs.tiny = {
     enable = pkgs.stdenv.isLinux;
     settings = {
@@ -16,7 +18,7 @@ in
           addr = "irc.libera.chat";
           realname = profile.realname;
           nicks = profile.nicks;
-          join = [ "#libera" ];
+          join = ["#libera"];
         }
         {
           tls = true;
@@ -33,7 +35,7 @@ in
       defaults = {
         nicks = profile.nicks;
         realname = profile.realname;
-        join = [ ];
+        join = [];
         tls = true;
       };
     };

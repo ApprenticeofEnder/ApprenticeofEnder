@@ -1,19 +1,16 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   identityAgent =
-    if pkgs.stdenv.isLinux then
-      "~/.1password/agent.sock"
-    else
-      "'~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock'";
+    if pkgs.stdenv.isLinux
+    then "~/.1password/agent.sock"
+    else "'~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock'";
 
   hostDefaults = {
     port = 22;
     checkHostIP = true;
-    identityAgent = [ identityAgent ];
+    identityAgent = [identityAgent];
     identitiesOnly = true;
   };
-in
-{
+in {
   programs.ssh = {
     enable = true;
     # includes = [];
@@ -45,45 +42,55 @@ in
         setEnv.TERM = "xterm-kitty";
       };
 
-      github = hostDefaults // {
-        user = "git";
-        host = "github.com";
-        identityFile = [ "~/.ssh/github.pub" ];
-      };
-
-      rabbit-holes = hostDefaults // {
-        user = "vpcadmin";
-        host = "rabbit-holes.ctf";
-        hostname = "10.0.2.51";
-        extraOptions = {
-          strictHostKeyChecking = "no";
+      github =
+        hostDefaults
+        // {
+          user = "git";
+          host = "github.com";
+          identityFile = ["~/.ssh/github.pub"];
         };
-        identityFile = [ "~/.ssh/cybersci_2025_regionals.pub" ];
-      };
 
-      trc = hostDefaults // {
-        user = "vpcadmin";
-        host = "trc.ctf";
-        hostname = "10.0.2.41";
-        extraOptions = {
-          strictHostKeyChecking = "no";
+      rabbit-holes =
+        hostDefaults
+        // {
+          user = "vpcadmin";
+          host = "rabbit-holes.ctf";
+          hostname = "10.0.2.51";
+          extraOptions = {
+            strictHostKeyChecking = "no";
+          };
+          identityFile = ["~/.ssh/cybersci_2025_regionals.pub"];
         };
-        identityFile = [ "~/.ssh/cybersci_2025_regionals.pub" ];
-      };
 
-      defence = hostDefaults // {
-        user = "vpcadmin";
-        host = "inventory.ctf";
-        hostname = "10.0.2.22";
-        identityFile = [ "~/.ssh/cybersci_2025_regionals.pub" ];
-      };
+      trc =
+        hostDefaults
+        // {
+          user = "vpcadmin";
+          host = "trc.ctf";
+          hostname = "10.0.2.41";
+          extraOptions = {
+            strictHostKeyChecking = "no";
+          };
+          identityFile = ["~/.ssh/cybersci_2025_regionals.pub"];
+        };
 
-      homelab-pi = hostDefaults // {
-        user = "ender";
-        host = "homelab-pi";
-        hostname = "192.168.18.100";
-        identityFile = [ "~/.ssh/pi_master.pub" ];
-      };
+      defence =
+        hostDefaults
+        // {
+          user = "vpcadmin";
+          host = "inventory.ctf";
+          hostname = "10.0.2.22";
+          identityFile = ["~/.ssh/cybersci_2025_regionals.pub"];
+        };
+
+      homelab-pi =
+        hostDefaults
+        // {
+          user = "ender";
+          host = "homelab-pi";
+          hostname = "192.168.18.100";
+          identityFile = ["~/.ssh/pi_master.pub"];
+        };
 
       nixos = {
         port = 22;

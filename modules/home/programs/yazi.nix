@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   programs.yazi = {
     enable = true;
     shellWrapperName = "yy";
@@ -9,7 +8,8 @@
     # flavors = { inherit (pkgs.yaziPlugins); };
     # theme = {};
     plugins = {
-      inherit (pkgs.yaziPlugins)
+      inherit
+        (pkgs.yaziPlugins)
         git
         sudo
         lazygit
