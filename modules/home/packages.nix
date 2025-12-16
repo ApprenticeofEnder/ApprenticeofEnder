@@ -56,7 +56,7 @@
     nil # lsp
     nix-info # system information
     nix-tree # dependency navigation
-    nixpkgs-fmt # formatter
+    alejandra # formatter
 
     # rust, just in case
     cargo
@@ -135,6 +135,7 @@
     podman
 
     # acre security
+    csharpier
     dotnet-sdk
     dotnet-runtime
 
