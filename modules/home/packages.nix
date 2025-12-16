@@ -135,7 +135,6 @@
     podman
 
     # acre security
-    csharpier
     dotnet-sdk
     dotnet-runtime
 
