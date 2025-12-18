@@ -6,6 +6,13 @@
 
   # https://nixos.asia/en/git
   programs = {
+    difftastic = {
+      enable = true;
+      git = {
+        enable = true;
+        diffToolMode = true;
+      };
+    };
     git = {
       enable = true;
       settings = {

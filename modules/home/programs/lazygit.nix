@@ -1,7 +1,4 @@
-{pkgs, ...}: {
-  home.packages = with pkgs; [
-    difftastic
-  ];
+{
   programs.lazygit = {
     enable = true;
     enableZshIntegration = true;
