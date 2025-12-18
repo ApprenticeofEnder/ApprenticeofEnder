@@ -46,7 +46,6 @@
     typst
     cachix
     devenv
-    direnv
     gnumake
     vi-mongo
     shellcheck
