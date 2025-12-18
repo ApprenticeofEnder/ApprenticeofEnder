@@ -42,8 +42,6 @@
     fd
     gh
     sd
-    ncdu
-    tldr
     omnix
     procs
     typst
@@ -97,6 +95,9 @@
     pik # process info
     just
     less # needed for Ubuntu
+    mosh # better SSH
+    ncdu # disk usage (baobab-like tui)
+    tldr
     tree
     ttyd
     lazyssh
