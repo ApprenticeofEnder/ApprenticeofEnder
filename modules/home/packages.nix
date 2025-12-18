@@ -42,7 +42,10 @@
     fd
     gh
     sd
+    ncdu
+    tldr
     omnix
+    procs
     typst
     cachix
     devenv
