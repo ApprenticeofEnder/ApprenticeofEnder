@@ -44,6 +44,7 @@
     sd
     omnix
     procs
+    shfmt
     typst
     cachix
     devenv
