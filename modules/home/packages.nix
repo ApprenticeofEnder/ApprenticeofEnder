@@ -117,7 +117,8 @@
   ];
 
   linux = with pkgs; [
-    ksnip
+    ksnip # screenshots
+    krita # drawing
     lazyjournal
     systemctl-tui
     nvtopPackages.full
