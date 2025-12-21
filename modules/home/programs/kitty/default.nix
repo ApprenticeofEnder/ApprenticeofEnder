@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs.kitty = {
-    enable = false;
-    enableGitIntegration = true;
+    enable = true;
+    enableGitIntegration = false;
 
     shellIntegration = {
       enableZshIntegration = true;
@@ -11,7 +11,7 @@
     # themeFile = "SpaceGray_Eighties";
 
     font = {
-      size = 12;
+      size = 11;
       name = "Hack Nerd Font";
       package = pkgs.nerd-fonts.hack;
     };
@@ -54,7 +54,6 @@
       # include = ./nord-theme.conf;
     };
 
-    # extraConfig = ''
-    # '';
+    extraConfig = builtins.readFile ./nord-theme.conf;
   };
 }
