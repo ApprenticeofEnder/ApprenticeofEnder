@@ -39,18 +39,18 @@
   ...
 }: let
   dev = with pkgs; [
-    fd
-    gh
-    sd
+    fd # better find
+    gh # Github CLI
+    sd # better sed
     omnix
-    procs
-    shfmt
-    typst
+    procs # better ps
+    shfmt # shell formatter
+    typst # latex alternative
     cachix
     devenv
     gnumake
-    vi-mongo
-    shellcheck
+    vi-mongo # mongodb tui
+    shellcheck # shell linter
     mermaid-cli
 
     # nix-specific
@@ -94,13 +94,13 @@
     # System
     duf # disk usage
     pik # process info
-    just
+    just # make for commands
     less # needed for Ubuntu
     mosh # better SSH
     ncdu # disk usage (baobab-like tui)
-    tldr
+    tldr # man with examples
     tree
-    ttyd
+    ttyd # terminal sharing
     lazyssh
     termscp
     cargo-seek
