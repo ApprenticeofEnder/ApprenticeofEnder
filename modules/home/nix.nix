@@ -24,5 +24,6 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
     allowBroken = true;
+    nvidia.acceptLicense = true;
   };
 }

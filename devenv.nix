@@ -7,6 +7,8 @@
   domain = "robertbabaev.tech";
   pushCache = "rbabaev";
 
+  nvidiaDriverVersion = "580.95.05";
+
   devicon = icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon}/${icon}-original.svg";
 in {
   # https://devenv.sh/basics/
@@ -171,6 +173,12 @@ in {
         cd ${config.devenv.root}/templates
         jinja2 README.j2.md readme.json > README.md
         prettier README.md
+      '';
+    };
+    nvidia-drivers = {
+      exec = ''
+        nix store prefetch-file \
+          "https://download.nvidia.com/XFree86/Linux-x86_64/${nvidiaDriverVersion}/NVIDIA-Linux-x86_64-${nvidiaDriverVersion}.run"
       '';
     };
   };
