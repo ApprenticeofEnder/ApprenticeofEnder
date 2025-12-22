@@ -6,7 +6,7 @@
     # acceleration = "rocm";
     acceleration = "cuda"; # nvidia
     environmentVariables = {
-      OLLAMA_CONTEXT_LENGTH = "16000";
+      OLLAMA_CONTEXT_LENGTH = "32000";
     };
   };
 }
