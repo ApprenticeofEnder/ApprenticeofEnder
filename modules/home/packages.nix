@@ -36,38 +36,42 @@
 {
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
-  dev = with pkgs; [
-    fd # better find
-    gh # Github CLI
-    sd # better sed
-    omnix
-    procs # better ps
-    shfmt # shell formatter
-    typst # latex alternative
-    cachix
-    devenv
-    gnumake
-    vi-mongo # mongodb tui
-    shellcheck # shell linter
-    mermaid-cli
+  dev = with pkgs;
+    [
+      fd # better find
+      gh # Github CLI
+      sd # better sed
+      omnix
+      procs # better ps
+      shfmt # shell formatter
+      typst # latex alternative
+      cachix
+      gnumake
+      vi-mongo # mongodb tui
+      shellcheck # shell linter
+      mermaid-cli
 
-    # nix-specific
-    nil # lsp
-    nix-info # system information
-    nix-tree # dependency navigation
-    alejandra # formatter
+      # nix-specific
+      nil # lsp
+      nix-info # system information
+      nix-tree # dependency navigation
+      alejandra # formatter
 
-    # rust, just in case
-    cargo
-    rustfmt
-    rust-analyzer
+      # rust, just in case
+      cargo
+      rustfmt
+      rust-analyzer
 
-    # js
-    pnpm
-    nodejs_24
-  ];
+      # js
+      pnpm
+      nodejs_24
+    ]
+    ++ [
+      pkgs-unstable.devenv
+    ];
 
   security = with pkgs; [
     nmap # recon
