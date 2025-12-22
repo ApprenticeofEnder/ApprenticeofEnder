@@ -106,7 +106,6 @@
     tree
     ttyd # terminal sharing
     lazyssh
-    termscp
     cargo-seek
 
     # Research
@@ -123,6 +122,7 @@
   linux = with pkgs; [
     ksnip # screenshots
     krita # drawing
+    termscp # scp tui, broken on darwin because of some samba library
     lazyjournal
     systemctl-tui
     nvtopPackages.full
