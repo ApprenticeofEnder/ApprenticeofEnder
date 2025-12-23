@@ -123,6 +123,7 @@
     ksnip # screenshots
     krita # drawing
     termscp # scp tui, broken on darwin because of some samba library
+    # TODO: Figure out how to get Docker working properly here
     lazyjournal
     systemctl-tui
     nvtopPackages.full
