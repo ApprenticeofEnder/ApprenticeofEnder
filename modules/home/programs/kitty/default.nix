@@ -46,7 +46,7 @@
 
       macos_option_as_alt = "yes";
       macos_colorspace = "default";
-      hide_window_decorations = "titlebar-only";
+      # hide_window_decorations = "titlebar-only";
       macos_quit_when_last_window_closed = "yes";
 
       enabled_layouts = "tall:bias=50;full_size=1;mirrored=false";
