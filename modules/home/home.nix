@@ -2,7 +2,7 @@
   imports = [../../modules/shared/nix];
 
   home.shellAliases = {
-    docker = "podman";
+    # docker = "podman";
     pathlist = ''printenv PATH | tr ":" "\n"'';
   };
 }
