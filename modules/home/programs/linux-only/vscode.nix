@@ -26,6 +26,7 @@
     "editor.wordWrap" = "on";
 
     "workbench.colorTheme" = "Nord";
+    "workbench.iconTheme" = "material-icon-theme";
     "workbench.sideBar.location" = "right";
   };
 in {
