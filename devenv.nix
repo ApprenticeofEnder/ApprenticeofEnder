@@ -164,7 +164,7 @@ in {
       exec = ''
         set -euxo pipefail
 
-        nix path-info --all | cachix push ${pushCache}
+        nix path-info --all | cachix push --verbose ${pushCache}
       '';
     };
     generate-readme = {
