@@ -1,6 +1,11 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  pkgs-unstable,
+  ...
+}: {
   services.ollama = {
     enable = pkgs.stdenv.isLinux; # TODO: Investigate detecting gpus
+    package = pkgs-unstable.ollama;
     port = 11434; # default
     host = "0.0.0.0"; # default
     # acceleration = "rocm";
