@@ -49,6 +49,7 @@ in {
           hashicorp.terraform
           svelte.svelte-vscode
           unifiedjs.vscode-mdx
+          geequlim.godot-tools
           rust-lang.rust-analyzer
 
           # formatters and linters

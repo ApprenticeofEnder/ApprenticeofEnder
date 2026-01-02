@@ -135,6 +135,7 @@
   ];
 
   x86Linux = with pkgs; [
+    godot # game engine
     impala # wifi management
     audacity # audio editing
     handbrake # video file conversions
