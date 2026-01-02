@@ -91,6 +91,7 @@
     kubectl # k8s
     gama-tui # github actions manager
     opentofu # IaC
+    terraform # IaC
     actionlint # github actions linter
     ansible-lint # linter
   ];
