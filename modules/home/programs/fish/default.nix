@@ -20,6 +20,7 @@ lib.mkMerge [
     programs.fish = {
       shellInit = ''
         set LIBRARY_PATH ${pkgs.libiconv}/lib
+        fish_add_path "/opt/homebrew/bin/"
       '';
     };
   })

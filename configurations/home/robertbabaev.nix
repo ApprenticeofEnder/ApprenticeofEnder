@@ -1,4 +1,8 @@
-{flake, ...}: let
+{
+  flake,
+  pkgs-unstable,
+  ...
+}: let
   inherit (flake) inputs;
   inherit (inputs) self;
 in {
@@ -18,6 +22,6 @@ in {
   home.stateVersion = "25.05";
 
   home.shellAliases = {
-    opencode = ''AWS_BEARER_TOKEN_BEDROCK=$(op read "op://Work/Amazon Bedrock API Key/credential") opencode'';
+    opencode = ''AWS_BEARER_TOKEN_BEDROCK=$(op read "op://Work/Amazon Bedrock API Key/credential") ${pkgs-unstable.opencode}/bin/opencode'';
   };
 }
