@@ -4,6 +4,7 @@
     shellWrapperName = "yy";
     enableZshIntegration = true;
     enableBashIntegration = true;
+    enableFishIntegration = true;
     # keymap = {};
     # flavors = { inherit (pkgs.yaziPlugins); };
     # theme = {};

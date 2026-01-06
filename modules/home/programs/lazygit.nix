@@ -3,6 +3,7 @@
     enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
+    enableFishIntegration = true;
     settings = {
       notARepository = "skip";
       disableStartupPopups = true;

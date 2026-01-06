@@ -6,6 +6,7 @@
     colors = "always";
     enableBashIntegration = true;
     enableZshIntegration = true;
+    enableFishIntegration = true;
     extraOptions = [
       "--group-directories-first"
       "--no-quotes"

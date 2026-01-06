@@ -3,6 +3,7 @@
     enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
+    enableFishIntegration = true;
     settings = {
       tick_rate = 50;
       default_channel = "nix-search-tv";

@@ -3,6 +3,7 @@
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
+    enableFishIntegration = true;
     settings = {
       scrollback-limit = 10000;
       window-decoration = "client";

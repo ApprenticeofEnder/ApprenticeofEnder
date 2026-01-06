@@ -9,11 +9,15 @@
     };
 
     # Type `z <pat>` to cd to some directory
-    zoxide.enable = true;
+    zoxide = {
+      enable = true;
+      enableFishIntegration = true;
+    };
 
     # # Better shell prompt!
     starship = {
       enable = true;
+      enableFishIntegration = true;
       settings = {
         username = {
           style_user = "blue bold";
