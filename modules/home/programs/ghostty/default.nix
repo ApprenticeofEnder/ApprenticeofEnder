@@ -17,6 +17,7 @@
       keybind = [
         "ctrl+w>v=new_split:right"
         "ctrl+w>s=new_split:down"
+        "ctrl+shift+w=close_surface"
         "ctrl+shift+h=goto_split:left"
         "ctrl+shift+l=goto_split:right"
         "ctrl+shift+k=goto_split:up"
