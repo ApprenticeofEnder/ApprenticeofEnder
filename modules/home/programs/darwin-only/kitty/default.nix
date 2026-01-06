@@ -27,7 +27,7 @@
     };
 
     settings = {
-      shell = "fish";
+      # shell = "fish";
       # cursor_trail = 1;
       copy_on_select = "yes";
       tab_bar_margin_width = 0;
