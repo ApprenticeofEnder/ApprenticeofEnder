@@ -19,7 +19,7 @@ lib.mkMerge [
   (lib.mkIf pkgs.stdenv.isDarwin {
     programs.fish = {
       shellInit = ''
-        LIBRARY_PATH=${pkgs.libiconv}/lib
+        set LIBRARY_PATH ${pkgs.libiconv}/lib
       '';
     };
   })
