@@ -1,11 +1,12 @@
 {pkgs, ...}: {
   programs.kitty = {
-    enable = false;
+    enable = true;
     enableGitIntegration = false;
 
     shellIntegration = {
       enableZshIntegration = true;
       enableBashIntegration = true;
+      enableFishIntegration = true;
     };
 
     # themeFile = "SpaceGray_Eighties";
@@ -26,6 +27,7 @@
     };
 
     settings = {
+      shell = "fish";
       # cursor_trail = 1;
       copy_on_select = "yes";
       tab_bar_margin_width = 0;
