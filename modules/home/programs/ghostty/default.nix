@@ -15,10 +15,10 @@
       keybind = [
         "ctrl+w>v=new_split:right"
         "ctrl+w>s=new_split:down"
-        "ctrl+h=goto_split:left"
-        "ctrl+l=goto_split:right"
-        "ctrl+k=goto_split:up"
-        "ctrl+j=goto_split:down"
+        "ctrl+shift+h=goto_split:left"
+        "ctrl+shift+l=goto_split:right"
+        "ctrl+shift+k=goto_split:up"
+        "ctrl+shift+j=goto_split:down"
         "ctrl+shift+v=paste_from_selection"
       ];
 
