@@ -163,7 +163,8 @@ in {
     upcache = {
       exec = ''
         set -euxo pipefail
-
+        nix-collect-garbage
+        devenv gc
         nix path-info --all | cachix push --verbose ${pushCache}
       '';
     };
