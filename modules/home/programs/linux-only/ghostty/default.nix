@@ -15,9 +15,9 @@
       font-size = 11;
       font-family = "Hack Nerd Font";
       keybind = [
-        "ctrl+w>v=new_split:right"
-        "ctrl+w>s=new_split:down"
-        "ctrl+shift+w=close_surface"
+        "ctrl+shift+w>v=new_split:right"
+        "ctrl+shift+w>s=new_split:down"
+        "ctrl+shift+w>q=close_surface"
         "ctrl+shift+h=goto_split:left"
         "ctrl+shift+l=goto_split:right"
         "ctrl+shift+k=goto_split:up"
