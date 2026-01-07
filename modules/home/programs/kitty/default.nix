@@ -19,6 +19,11 @@
 
     keybindings = {
       "ctrl+shift+v" = "paste_from_selection";
+      "ctrl+shift+w>q" = "close_window";
+      "ctrl+shift+h" = "neighboring_window left";
+      "ctrl+shift+l" = "neighboring_window right";
+      "ctrl+shift+k" = "neighboring_window up";
+      "ctrl+shift+j" = "neighboring_window down";
       "ctrl+c" = "copy_and_clear_or_interrupt";
     };
 
