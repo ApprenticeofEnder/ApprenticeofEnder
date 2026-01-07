@@ -42,6 +42,8 @@
       tab_bar_style = "powerline";
       focus_follows_mouse = "yes";
       tab_powerline_style = "angled";
+
+      inactive_text_alpha = 0.5;
       active_tab_font_style = "bold";
       inactive_tab_font_style = "bold";
       dynamic_background_opacity = "yes";
