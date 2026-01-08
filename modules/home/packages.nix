@@ -41,11 +41,8 @@
 }: let
   dev = with pkgs;
     [
-      fd # better find
       gh # Github CLI
-      sd # better sed
       omnix
-      procs # better ps
       shfmt # shell formatter
       typst # latex alternative
       cachix
@@ -75,6 +72,7 @@
 
   security = with pkgs; [
     nmap # recon
+    snyk # vuln management
     gnutls
     semgrep # SAST
     tcpdump # network forensics
@@ -98,6 +96,8 @@
 
   utility = with pkgs; [
     # System
+    fd # better find
+    sd # better sed
     duf # disk usage
     pik # process info
     just # make for commands
@@ -107,6 +107,7 @@
     tldr # man with examples
     tree
     ttyd # terminal sharing
+    procs # better ps
     lazyssh
     cargo-seek
 
