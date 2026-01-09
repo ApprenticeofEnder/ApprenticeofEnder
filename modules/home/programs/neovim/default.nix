@@ -1,4 +1,10 @@
 {pkgs, ...}: {
+  imports = [
+    ./lsp.nix
+    ./linters.nix
+    ./formatters.nix
+  ];
+
   programs = {
     neovim = {
       enable = true;
