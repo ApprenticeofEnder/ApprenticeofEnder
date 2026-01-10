@@ -1,8 +1,10 @@
 {
-  programs.ripgrep = {
-    enable = true;
-  };
-  programs.ripgrep-all = {
-    enable = true;
+  programs = {
+    ripgrep = {
+      enable = true;
+    };
+    ripgrep-all = {
+      enable = true;
+    };
   };
 }
