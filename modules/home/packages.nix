@@ -1,38 +1,3 @@
-# hygg # TUI book reader
-# pog
-# uvx parllama
-# uvx netshow
-# uvx exosphere
-# cargo-selector
-# systemd-manager-tui
-# tewi
-# ssh-para
-# terminaltexteffects
-# nemu
-# doxx
-# hwinfo-tui
-# fnug
-# godap
-# jwt-tui
-# mcp-probe
-# mcp-nixos
-# bagels
-# moneyterm
-# ticker
-# mqtttui
-# taproom
-# tuistash
-# ballast
-# calcure
-# goto
-# sshclick
-# hostctl
-# lssh
-# neoss
-# nap
-# pinix
-# chamber
-# tick-rs
 {
   lib,
   pkgs,
@@ -174,3 +139,42 @@ in {
     ++ lib.optionals (stdenv.isLinux && stdenv.isx86_64) x86Linux
     ++ lib.optionals stdenv.isDarwin darwin;
 }
+#
+# TODO: Investigate the below tools
+#
+# hygg # TUI book reader
+# pog
+# uvx parllama
+# uvx netshow
+# uvx exosphere
+# cargo-selector
+# systemd-manager-tui
+# tewi
+# ssh-para
+# terminaltexteffects
+# nemu
+# doxx
+# hwinfo-tui
+# fnug
+# godap
+# jwt-tui
+# mcp-probe
+# mcp-nixos
+# bagels
+# moneyterm
+# ticker
+# mqtttui
+# taproom
+# tuistash
+# ballast
+# calcure
+# goto
+# sshclick
+# hostctl
+# lssh
+# neoss
+# nap
+# pinix
+# chamber
+# tick-rs
+
