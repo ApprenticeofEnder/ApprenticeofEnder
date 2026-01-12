@@ -7,10 +7,8 @@
   dev = with pkgs;
     [
       gh # Github CLI
-      omnix
       shfmt # shell formatter
       typst # latex alternative
-      cachix
       gnumake
       vi-mongo # mongodb tui
       shellcheck # shell linter
@@ -32,6 +30,8 @@
       nodejs_24
     ]
     ++ [
+      pkgs-unstable.omnix
+      pkgs-unstable.cachix
       pkgs-unstable.devenv
     ];
 

@@ -1,11 +1,19 @@
-{pkgs, ...}: {
-  programs.spotify-player = {
-    enable = true;
-    package = pkgs.spotify-player.override {
-      withAudioBackend =
-        if pkgs.stdenv.isLinux # This fixed an issue on EndeavourOS
-        then "pulseaudio"
-        else "portaudio";
+{
+  pkgs,
+  lib,
+  ...
+}:
+lib.mkMerge [
+  {
+    programs.spotify-player = {
+      enable = true;
     };
-  };
-}
+  }
+  (lib.mkIf pkgs.stdenv.isLinux {
+    programs.spotify-player = {
+      package = pkgs.spotify-player.override {
+        withAudioBackend = "pulseaudio";
+      };
+    };
+  })
+]
