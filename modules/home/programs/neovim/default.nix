@@ -1,8 +1,8 @@
 {pkgs, ...}: {
   imports = [
-    ./lsp.nix
-    ./linters.nix
-    ./formatters.nix
+    # ./lsp.nix
+    # ./linters.nix
+    # ./formatters.nix
   ];
 
   programs = {
