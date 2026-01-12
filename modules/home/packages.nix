@@ -35,17 +35,20 @@
       pkgs-unstable.devenv
     ];
 
-  security = with pkgs; [
-    nmap # recon
-    snyk # vuln management
-    gnutls
-    semgrep # SAST
-    tcpdump # network forensics
-    wireshark # network forensics
-    pulumi-esc # secrets management
-    # _1password-gui # TODO: Work out the whole user/group requirement thing
-    # _1password-cli
-  ];
+  security = with pkgs;
+    [
+      nmap # recon
+      snyk # vuln management
+      gnutls
+      tcpdump # network forensics
+      wireshark # network forensics
+      pulumi-esc # secrets management
+      # _1password-gui # TODO: Work out the whole user/group requirement thing
+      # _1password-cli
+    ]
+    ++ [
+      pkgs-unstable.semgrep
+    ];
 
   devops = with pkgs; [
     act # local CI/CD testing
