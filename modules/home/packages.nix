@@ -112,18 +112,19 @@
     protonvpn-gui # VPN
   ];
 
-  darwin = with pkgs; [
-    utm
-    docker
-    podman
+  darwin = with pkgs;
+    [
+      utm
+      docker
+      podman
 
-    # acre security
-    dotnet-sdk
-    dotnet-runtime
-
-    # libraries
-    libiconv
-  ];
+      # libraries
+      libiconv
+    ]
+    ++ [
+      pkgs-unstable.dotnet-sdk
+      pkgs-unstable.dotnet-runtime
+    ];
 
   fun = with pkgs; [
     genact
