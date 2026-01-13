@@ -116,6 +116,7 @@
     [
       utm
       docker
+      docker-compose
       podman
 
       # libraries
