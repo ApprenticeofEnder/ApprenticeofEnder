@@ -50,6 +50,14 @@ in {
           identityFile = ["~/.ssh/github.pub"];
         };
 
+      github-gist =
+        hostDefaults
+        // {
+          user = "git";
+          host = "gist.github.com";
+          identityFile = ["~/.ssh/github.pub"];
+        };
+
       rabbit-holes =
         hostDefaults
         // {
