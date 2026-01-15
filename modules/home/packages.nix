@@ -77,6 +77,7 @@
     ttyd # terminal sharing
     procs # better ps
     lazyssh
+    macchina
     cargo-seek
 
     # Research
