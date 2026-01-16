@@ -92,6 +92,7 @@
   ];
 
   linux = with pkgs; [
+    abcde
     ksnip # screenshots
     krita # drawing
     termscp # scp tui, broken on darwin because of some samba library
