@@ -78,6 +78,7 @@
     procs # better ps
     lazyssh
     macchina
+    libnotify
     cargo-seek
 
     # Research

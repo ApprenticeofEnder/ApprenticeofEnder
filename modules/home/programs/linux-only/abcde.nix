@@ -5,7 +5,7 @@
     ];
 
     shellAliases = {
-      cdrip = "abcde -o flac -B";
+      cdrip = "abcde -o flac -B && notify-send 'Rip Complete'";
     };
   };
 }
