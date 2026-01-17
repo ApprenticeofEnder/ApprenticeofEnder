@@ -13,9 +13,7 @@ in {
 
     file = {
       ".abcde.conf" = {
-        text = ''
-          PADTRACKS=y
-        '';
+        text = builtins.readFile ./abcde.conf;
       };
     };
   };
@@ -33,9 +31,10 @@ in {
   programs.fish = {
     functions = {
       cdrip = ''
-        if abcde -o flac -B -N
-            notify-send "Rip Complete" "Your CD rip is finished!"
-        end
+        abcde
+        # if
+        #     notify-send "Rip Complete" "Your CD rip is finished!"
+        # end
       '';
     };
   };
