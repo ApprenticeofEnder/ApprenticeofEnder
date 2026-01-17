@@ -13,7 +13,7 @@ in {
   };
 
   xdg = {
-    dataFile = {
+    configFile = {
       "udev/rules.d/cd.rules" = {
         text = ''
           ACTION=="add", KERNEL=="sr[0-9]", ENV{ID_SERIAL_SHORT}=="${readers.robDay.idSerialShort}", SYMLINK+="${readers.robDay.devFile}"
@@ -22,7 +22,6 @@ in {
     };
   };
 
-  # TODO: Maybe make a config file for udev rules?
   programs.fish = {
     functions = {
       cdrip = ''
