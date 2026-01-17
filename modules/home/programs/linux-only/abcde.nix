@@ -33,7 +33,7 @@ in {
   programs.fish = {
     functions = {
       cdrip = ''
-        if abcde -o flac -B
+        if abcde -o flac -B -N
             notify-send "Rip Complete" "Your CD rip is finished!"
         end
       '';
