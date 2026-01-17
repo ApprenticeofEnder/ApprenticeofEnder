@@ -2,7 +2,7 @@
   readers = {
     robDay = {
       devFile = "cd-rday";
-      idSerialShort = "";
+      idSerialShort = "RF6XA16";
     };
   };
 in {
@@ -10,9 +10,11 @@ in {
     packages = with pkgs; [
       abcde
     ];
+  };
 
-    file = {
-      "/etc/udev/rules.d/cd.rules" = {
+  xdg = {
+    dataFile = {
+      "udev/rules.d/cd.rules" = {
         text = ''
           ACTION=="add", KERNEL=="sr[0-9]", ENV{ID_SERIAL_SHORT}=="${readers.robDay.idSerialShort}", SYMLINK+="${readers.robDay.devFile}"
         '';
