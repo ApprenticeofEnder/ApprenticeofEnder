@@ -13,7 +13,7 @@ in {
 
     file = {
       ".abcde.conf" = {
-        text = builtins.readFile ./abcde.conf;
+        source = ./abcde.conf;
       };
     };
   };
