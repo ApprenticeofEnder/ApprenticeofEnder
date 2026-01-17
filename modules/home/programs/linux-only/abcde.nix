@@ -10,6 +10,14 @@ in {
     packages = with pkgs; [
       abcde
     ];
+
+    file = {
+      ".abcde.conf" = {
+        text = ''
+          PADTRACKS=y
+        '';
+      };
+    };
   };
 
   xdg = {
