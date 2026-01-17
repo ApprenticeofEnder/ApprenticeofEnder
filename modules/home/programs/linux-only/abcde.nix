@@ -25,7 +25,9 @@ in {
   programs.fish = {
     functions = {
       cdrip = ''
-        abcde -o flac -B -d /dev/${readers.robDay.devFile} && notify-send "Rip Complete" "Your CD rip is finished!"
+        if abcde -o flac -B -d /dev/${readers.robDay.devFile}
+            notify-send "Rip Complete" "Your CD rip is finished!"
+        end
       '';
     };
   };
