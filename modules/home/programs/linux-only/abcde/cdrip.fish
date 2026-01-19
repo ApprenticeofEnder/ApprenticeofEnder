@@ -1,5 +1,6 @@
 function failed
-    ntfy publish "$ntfyTopic" "$argv[1]:\n$(cat rip.log)"
+    ntfy publish "$ntfyTopic" \
+        "$argv[1]:"\n"$(cat rip.log)"
 end
 
 if ! test -n "$ntfyTopic"
