@@ -1,5 +1,5 @@
 ntfy publish $ntfyTopic "CD rip starting..."
-abcde >rip.log 2>&1
+abcde 2>&1 | tee rip.log
 if test $status
     ntfy publish $ntfyTopic "CD rip complete."
 else
