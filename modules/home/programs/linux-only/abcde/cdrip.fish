@@ -1,6 +1,6 @@
 function failed
     ntfy publish $ntfyTopic "$(cat rip.log)"
-    exit 1
+    return 1
 end
 
 ntfy publish $ntfyTopic "CD rip starting..."
