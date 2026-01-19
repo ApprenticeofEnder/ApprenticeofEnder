@@ -1,5 +1,5 @@
 function failed
-    ntfy publish "$ntfyTopic" "$(cat rip.log)"
+    ntfy publish "$ntfyTopic" "$argv[1]:\n$(cat rip.log)"
 end
 
 if ! test -n "$ntfyTopic"
@@ -13,14 +13,14 @@ set abcde_success $status
 rg -q "SSL connect attempt failed" rip.log
 set ssl_failed $status
 
-if test "$ssl_failed"
-    failed
+if test "$ssl_failed" -eq 0
+    failed "SSL Error"
     return 1
 end
 
-if test "$abcde_success"
+if test "$abcde_success" -eq 0
     ntfy publish "$ntfyTopic" "CD rip complete."
 else
-    failed
+    failed "Unknown Error"
     return 1
 end
