@@ -1,6 +1,14 @@
 function failed
     ntfy publish "$ntfyTopic" \
-        "$argv[1]:"\n"$(cat rip.log)"
+        "$argv[1]:"\n"$(cat rip.log)" |
+        jq '{
+          id,
+          event,
+          message,
+          topic,
+          time: .time | todate,
+          expires: .expires | todate
+        }'
 end
 
 if ! test -n "$ntfyTopic"
@@ -8,7 +16,14 @@ if ! test -n "$ntfyTopic"
     return 2
 end
 
-ntfy publish "$ntfyTopic" "CD rip starting..."
+ntfy publish "$ntfyTopic" "CD rip starting..." | jq '{
+  id,
+  event,
+  message,
+  topic,
+  time: .time | todate,
+  expires: .expires | todate
+}'
 abcde $argv &>rip.log
 set abcde_success $status
 rg -q "SSL connect attempt failed" rip.log
@@ -20,7 +35,15 @@ if test "$ssl_failed" -eq 0
 end
 
 if test "$abcde_success" -eq 0
-    ntfy publish "$ntfyTopic" "CD rip complete."
+    ntfy publish "$ntfyTopic" "CD rip complete." |
+        jq '{
+          id,
+          event,
+          message,
+          topic,
+          time: .time | todate,
+          expires: .expires | todate
+        }'
 else
     failed "Unknown Error"
     return 1
