@@ -1,9 +1,8 @@
 function failed
     ntfy publish "$ntfyTopic" "$(cat rip.log)"
-    return 1
 end
 
-if test -n "$ntfyTopic"
+if ! test -n "$ntfyTopic"
     echo "NTFY topic not set. Exiting."
     return 2
 end
@@ -16,10 +15,12 @@ set ssl_failed $status
 
 if test "$ssl_failed"
     failed
+    return 1
 end
 
 if test "$abcde_success"
     ntfy publish "$ntfyTopic" "CD rip complete."
 else
     failed
+    return 1
 end
