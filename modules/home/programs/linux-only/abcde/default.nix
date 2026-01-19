@@ -32,7 +32,7 @@ in {
   programs.fish = {
     functions = {
       cdrip = ''
-        set ntfyTopic ${ntfyTopic}
+        set -x ntfyTopic ${ntfyTopic}
 
         ${builtins.readFile ./cdrip.fish}
       '';
