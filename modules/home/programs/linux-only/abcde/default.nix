@@ -36,6 +36,8 @@ in {
 
         ${builtins.readFile ./cdrip.fish}
       '';
+      cdmigrate = builtins.readFile ./migrate.fish;
+      cdmigrate-patch = builtins.readFile ./migrate-patch.fish;
       ntfy-test = ''
         ntfy publish ${ntfyTopic} "NTFY TEST"
       '';
