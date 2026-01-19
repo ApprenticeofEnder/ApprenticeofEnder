@@ -5,6 +5,7 @@
       idSerialShort = "RF6XA16";
     };
   };
+  ntfyTopic = "6N3gGuklnOsWbO4R-cdrip";
 in {
   home = {
     packages = with pkgs; [
@@ -31,10 +32,10 @@ in {
   programs.fish = {
     functions = {
       cdrip = ''
-        abcde
-        # if
-        #     notify-send "Rip Complete" "Your CD rip is finished!"
-        # end
+        abcde && ntfy publish ${ntfyTopic} "CD rip complete."
+      '';
+      ntfy-test = ''
+        ntfy publish ${ntfyTopic} "NTFY TEST"
       '';
     };
   };

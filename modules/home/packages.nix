@@ -72,6 +72,7 @@
     less # needed for Ubuntu
     mosh # better SSH
     ncdu # disk usage (baobab-like tui)
+    ntfy-sh # notifications when commands finish
     tldr # man with examples
     tree
     ttyd # terminal sharing
