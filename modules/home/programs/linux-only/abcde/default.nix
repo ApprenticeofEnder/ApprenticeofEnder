@@ -32,6 +32,7 @@ in {
   programs.fish = {
     functions = {
       cdrip = ''
+        ntfy publish ${ntfyTopic} "CD rip starting..."
         abcde && ntfy publish ${ntfyTopic} "CD rip complete."
       '';
       ntfy-test = ''
