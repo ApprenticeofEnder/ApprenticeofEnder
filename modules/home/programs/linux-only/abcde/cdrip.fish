@@ -4,7 +4,7 @@ function failed
 end
 
 ntfy publish $ntfyTopic "CD rip starting..."
-abcde &>rip.log
+abcde $argv &>rip.log
 set abcde_success $status
 rg -q "SSL connect attempt failed" rip.log
 set ssl_failed $status
