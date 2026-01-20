@@ -9,6 +9,7 @@
       gh # Github CLI
       shfmt # shell formatter
       typst # latex alternative
+      httpie # better http client
       gnumake
       vi-mongo # mongodb tui
       shellcheck # shell linter
