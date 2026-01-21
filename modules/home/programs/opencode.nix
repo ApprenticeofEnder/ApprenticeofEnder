@@ -11,6 +11,33 @@
         bash = "ask";
         webfetch = "ask";
       };
+      mcp = {
+        hashicorp-terraform = {
+          enabled = true;
+          type = "local";
+          command = [
+            "docker"
+            "run"
+            "--rm"
+            "--interactive"
+            "hashicorp/terraform-mcp-server:latest"
+          ];
+        };
+        aws-terraform = {
+          enabled = true;
+          type = "local";
+          command = [
+            "docker"
+            "run"
+            "--rm"
+            "--interactive"
+            "awslabs/terraform-mcp-server:latest"
+          ];
+          environment = {
+            FASTMCP_LOG_LEVEL = "ERROR";
+          };
+        };
+      };
       # mcp = {
       #   my-local-mcp-server = {
       #     enabled = true;
