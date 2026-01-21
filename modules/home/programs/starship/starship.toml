@@ -1,9 +1,11 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+format = """$all$directory$character"""
+
 [hostname]
 disabled = false
 format = "on [$hostname](bold red) "
-ssh_only = true
+ssh_only = false
 ssh_symbol = "🌐 "
 trim_at = ".local"
 
@@ -13,3 +15,6 @@ format = "[$user]($style) "
 show_always = true
 style_root = "red bold"
 style_user = "blue bold"
+
+[direnv]
+disabled = false

@@ -4,8 +4,6 @@
   ...
 }:
 lib.mkMerge [
-  # (lib.mkIf pkgs.stdenv.isLinux {
-  #   })
   {
     # # Better shell prompt!
     programs.starship = {
