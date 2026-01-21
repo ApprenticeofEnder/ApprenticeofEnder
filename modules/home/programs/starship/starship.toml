@@ -1,6 +1,10 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = """$all$directory$character"""
+format = """$all\
+$nix_shell\
+$aws\
+$directory\
+$character"""
 
 [hostname]
 disabled = false
@@ -18,3 +22,20 @@ style_user = "blue bold"
 
 [direnv]
 disabled = false
+
+[terraform]
+format = 'TF [$symbol$workspace]($style) '
+
+[nix_shell]
+format = """[>>]($style) Nix Shell\t[$symbol$state( \\($name\\))]($style) 
+"""
+
+[aws]
+format = """>> AWS\t\t[$symbol($profile )(\\($region\\) )(\\[$duration\\] )]($style)
+"""
+
+[gcloud]
+disabled = true
+
+[haskell]
+disabled = true
