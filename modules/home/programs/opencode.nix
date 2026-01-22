@@ -31,12 +31,22 @@
             "run"
             "--rm"
             "--interactive"
-            "awslabs/terraform-mcp-server:latest"
+            "mcp/aws-terraform:latest"
           ];
           environment = {
             FASTMCP_LOG_LEVEL = "ERROR";
           };
         };
+        # TODO: Investigate these MCP servers:
+        # https://github.com/augmnt/augments-mcp-server
+        # https://github.com/securityfortech/secops-mcp
+        # https://github.com/exoticknight/mcp-file-merger
+        # https://github.com/semgrep/semgrep
+        # https://github.com/8b-is/smart-tree
+        # https://github.com/CodeGraphContext/CodeGraphContext
+        # https://github.com/trilogy-group/aws-pricing-mcp
+        # https://github.com/Flux159/mcp-server-kubernetes
+        # https://github.com/oraios/serena
       };
       # mcp = {
       #   my-local-mcp-server = {
