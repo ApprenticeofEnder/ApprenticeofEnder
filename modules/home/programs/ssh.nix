@@ -67,6 +67,15 @@ in {
           identityFile = ["~/.ssh/pi_master.pub"];
         };
 
+      poc-mongodb =
+        hostDefaults
+        // {
+          user = "ec2-user";
+          host = "poc-mongodb";
+          hostname = "ec2-98-92-185-213.compute-1.amazonaws.com";
+          identityFile = ["~/.ssh/robert_poc.pub"];
+        };
+
       # rpi5 = {
       #   port = 22;
       #   host = "rpi5";
