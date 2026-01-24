@@ -7,7 +7,7 @@
   domain = "robertbabaev.tech";
   pushCache = "rbabaev";
 
-  nvidiaDriverVersion = "580.95.05";
+  nvidiaDriverVersion = "580.126.09";
 
   devicon = icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon}/${icon}-original.svg";
 in {
