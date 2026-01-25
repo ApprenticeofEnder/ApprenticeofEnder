@@ -1,10 +1,9 @@
-{
-  pkgs,
-  pkgs-unstable,
-  ...
-}: {
+{pkgs-unstable, ...}: let
+  hostname = builtins.pathExists /etc/hostname && builtins.readFile /etc/hostname;
+  ollamaHostname = "ender-hornet";
+in {
   services.ollama = {
-    enable = pkgs.stdenv.isLinux; # TODO: Investigate detecting gpus
+    enable = hostname == ollamaHostname;
     package = pkgs-unstable.ollama;
     port = 11434; # default
     host = "0.0.0.0"; # default
