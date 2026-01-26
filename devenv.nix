@@ -185,15 +185,16 @@ in {
     };
     dotfiles = {
       exec = ''
-        set -euxo pipefail
-        cd ${config.devenv.root}/dotfiles
-        links=(
-          starship
-        )
-        for link in "''${links[@]}"
-        do
-            stow $link --adopt -t ~
-        done
+             set -euxo pipefail
+             cd ${config.devenv.root}/dotfiles
+             links=(
+               starship
+        nvim
+             )
+             for link in "''${links[@]}"
+             do
+                 stow $link --adopt -t ~
+             done
       '';
     };
   };
