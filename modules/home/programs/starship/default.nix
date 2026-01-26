@@ -9,7 +9,7 @@ lib.mkMerge [
     programs.starship = {
       enable = true;
       enableFishIntegration = true;
-      settings = lib.importTOML ./starship.toml;
+      # settings = lib.importTOML ./starship.toml;
     };
   }
 ]

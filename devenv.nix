@@ -33,6 +33,7 @@ in {
     vale
     just
     nixd
+    stow
     cachix
     nix-top
     prettier
@@ -180,6 +181,19 @@ in {
       exec = ''
         nix store prefetch-file \
           "https://download.nvidia.com/XFree86/Linux-x86_64/${nvidiaDriverVersion}/NVIDIA-Linux-x86_64-${nvidiaDriverVersion}.run"
+      '';
+    };
+    dotfiles = {
+      exec = ''
+        set -euxo pipefail
+        cd ${config.devenv.root}/dotfiles
+        links=(
+          starship
+        )
+        for link in "''${links[@]}"
+        do
+            stow $link --adopt -t ~
+        done
       '';
     };
   };
