@@ -127,8 +127,8 @@
       libiconv
     ]
     ++ [
-      pkgs-unstable.dotnet-sdk
-      pkgs-unstable.dotnet-runtime
+      # pkgs-unstable.dotnet-sdk
+      # pkgs-unstable.dotnet-runtime
     ];
 
   fun = with pkgs; [
