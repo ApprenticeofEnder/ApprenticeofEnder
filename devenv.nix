@@ -168,6 +168,7 @@ in {
         devenv gc
         nix path-info --all | cachix push --verbose ${pushCache}
       '';
+      description = "Clean garbage and update Cachix cache";
     };
     generate-readme = {
       exec = ''
@@ -182,20 +183,22 @@ in {
         nix store prefetch-file \
           "https://download.nvidia.com/XFree86/Linux-x86_64/${nvidiaDriverVersion}/NVIDIA-Linux-x86_64-${nvidiaDriverVersion}.run"
       '';
+      description = "Prefetch hash for Nvidia drivers";
     };
     dotfiles = {
       exec = ''
-             set -euxo pipefail
-             cd ${config.devenv.root}/dotfiles
-             links=(
-               starship
-        nvim
-             )
-             for link in "''${links[@]}"
-             do
-                 stow $link --adopt -t ~
-             done
+        set -euxo pipefail
+        cd ${config.devenv.root}/dotfiles
+        links=(
+          starship
+          nvim
+        )
+        for link in "''${links[@]}"
+        do
+            stow $link --adopt -t ~
+        done
       '';
+      description = "Load dotfiles";
     };
   };
 
