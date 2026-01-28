@@ -48,20 +48,6 @@
         # https://github.com/Flux159/mcp-server-kubernetes
         # https://github.com/oraios/serena
       };
-      # mcp = {
-      #   my-local-mcp-server = {
-      #     enabled = true;
-      #     type = "local";
-      #     command = [
-      #       "bun"
-      #       "x"
-      #       "my-mcp-command"
-      #     ];
-      #     environment = {
-      #       MY_ENV_VAR = "my_env_var_value";
-      #     };
-      #   };
-      # };
 
       provider = {
         ollama-ender = {
@@ -92,6 +78,22 @@
           };
         };
       };
+
+      rules = ''
+        # General Rules
+
+        - Use modular, reusable code as much as possible.
+        - When doing feature development, move slow and start small. Get things working correctly before moving on.
+        - Use good security practices. Follow security principles well, and think about potential security implications with each change as relevant.
+
+        # Never Nesting
+
+        Use the "never nester" approach wherever feasible. This means:
+
+        1. Do not nest more than three layers deep.
+        2. Use guard clauses.
+        3. If you find yourself nesting 2 or 3 layers deep, try to extract the code to a separate function.
+      '';
 
       # disabled_providers= ["openai" "gemini"];
       # instructions = ["CONTRIBUTING.md" "docs/guidelines.md" ".cursor/rules/*.md"];
