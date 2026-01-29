@@ -99,6 +99,7 @@
     krita # drawing
     termscp # scp tui, broken on darwin because of some samba library
     # TODO: Figure out how to get Docker working properly here
+    kdePackages.okular
     lazyjournal
     systemctl-tui
     nvtopPackages.full
