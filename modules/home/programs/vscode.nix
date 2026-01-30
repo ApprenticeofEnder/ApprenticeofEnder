@@ -5,12 +5,18 @@
 }: let
   biome = "biomejs.biome";
   prettier = "esbenp.prettier-vscode";
+  csharpier = "csharpier.csharpier-vscode";
 
   biomeDefault = {
     "editor.defaultFormatter" = biome;
   };
   prettierDefault = {
     "editor.defaultFormatter" = prettier;
+  };
+
+  csharpierDefault = {
+    "editor.defaultFormatter" = csharpier;
+    "editor.formatOnSave" = false;
   };
 
   userSettings = {
@@ -25,6 +31,7 @@
     "[typescriptreact]" = biomeDefault;
     "[vue]" = prettierDefault;
     "[svelte]" = prettierDefault;
+    "[csharp]" = csharpierDefault;
 
     "editor.formatOnSave" = true;
     "editor.wordWrap" = "on";
