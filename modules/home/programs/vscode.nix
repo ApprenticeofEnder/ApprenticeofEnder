@@ -3,19 +3,15 @@
   lib,
   ...
 }: let
-  biome = "biomejs.biome";
-  prettier = "esbenp.prettier-vscode";
-  csharpier = "csharpier.csharpier-vscode";
-
   biomeDefault = {
-    "editor.defaultFormatter" = biome;
+    "editor.defaultFormatter" = "biomejs.biome";
   };
   prettierDefault = {
-    "editor.defaultFormatter" = prettier;
+    "editor.defaultFormatter" = "esbenp.prettier-vscode";
   };
 
   csharpierDefault = {
-    "editor.defaultFormatter" = csharpier;
+    "editor.defaultFormatter" = "csharpier.csharpier-vscode";
     "editor.formatOnSave" = false;
   };
 
