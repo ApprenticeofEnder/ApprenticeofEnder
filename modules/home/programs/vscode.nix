@@ -20,15 +20,6 @@
       "asvetliakov.vscode-neovim" = 1;
     };
 
-    "[javascript]" = biomeDefault;
-    "[html]" = biomeDefault;
-    "[json]" = biomeDefault;
-    "[typescript]" = biomeDefault;
-    "[typescriptreact]" = biomeDefault;
-    "[vue]" = prettierDefault;
-    "[svelte]" = prettierDefault;
-    "[csharp]" = csharpierDefault;
-
     "editor.formatOnSave" = true;
     "editor.wordWrap" = "on";
 
@@ -84,6 +75,9 @@ in
           package = pkgs.vscode;
           profiles = {
             default = {
+              userSettings = {
+                "[csharp]" = csharpierDefault;
+              };
               extensions = with pkgs.vscode-extensions; [
                 # languages
                 ms-dotnettools.csharp
@@ -108,7 +102,15 @@ in
           package = pkgs.vscodium;
           profiles = {
             default = {
-              userSettings = userSettings;
+              userSettings = {
+                "[javascript]" = biomeDefault;
+                "[html]" = biomeDefault;
+                "[json]" = biomeDefault;
+                "[typescript]" = biomeDefault;
+                "[typescriptreact]" = biomeDefault;
+                "[vue]" = prettierDefault;
+                "[svelte]" = prettierDefault;
+              };
               extensions = with pkgs.vscode-extensions; [
                 # languages
                 vue.volar
