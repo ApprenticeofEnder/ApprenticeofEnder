@@ -80,9 +80,9 @@ in
               };
               extensions = with pkgs.vscode-extensions; [
                 # languages
-                ms-dotnettools.csharp
-                ms-dotnettools.csdevkit
-                ms-dotnettools.vscode-dotnet-runtime
+                # ms-dotnettools.csharp
+                # ms-dotnettools.csdevkit
+                # ms-dotnettools.vscode-dotnet-runtime
 
                 # formatters and linters
                 csharpier.csharpier-vscode
