@@ -67,6 +67,8 @@ in
     (
       lib.mkIf pkgs.stdenv.isDarwin {
         programs.vscode = {
+          # Disable this shit until I can figure out why my C# intellisense doesn't work
+          enable = lib.mkForce false;
           package = pkgs.vscode;
           profiles = {
             default = {
