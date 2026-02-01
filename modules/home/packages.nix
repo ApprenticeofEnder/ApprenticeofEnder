@@ -124,8 +124,8 @@
     podman
 
     # languages
-    dotnet-sdk
-    dotnet-runtime
+    dotnet-sdk_10
+    dotnet-runtime_10
 
     # libraries
     libiconv
