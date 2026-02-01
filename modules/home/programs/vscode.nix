@@ -86,6 +86,9 @@ in
 
                 # formatters and linters
                 csharpier.csharpier-vscode
+
+                # Utilities
+                alefragnani.project-manager
               ];
             };
           };
