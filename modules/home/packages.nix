@@ -123,10 +123,6 @@
     docker-compose
     podman
 
-    # languages
-    dotnet-sdk_10
-    dotnet-runtime_10
-
     # libraries
     libiconv
   ];

@@ -10,11 +10,6 @@
     "editor.defaultFormatter" = "esbenp.prettier-vscode";
   };
 
-  csharpierDefault = {
-    "editor.defaultFormatter" = "csharpier.csharpier-vscode";
-    "editor.formatOnSave" = false;
-  };
-
   userSettings = {
     "extensions.experimental.affinity" = {
       "asvetliakov.vscode-neovim" = 1;
@@ -76,13 +71,20 @@ in
           profiles = {
             default = {
               userSettings = {
-                "[csharp]" = csharpierDefault;
+                "[csharp]" = {
+                  "editor.defaultFormatter" = "csharpier.csharpier-vscode";
+                  "editor.formatOnSave" = false;
+                };
+
+                "omnisharp.enableRoslynAnalyzers" = true;
+                "dotnet.server.useOmnisharp" = false;
+                "dotnet.server.path" = "";
               };
               extensions = with pkgs.vscode-extensions; [
                 # languages
-                # ms-dotnettools.csharp
-                # ms-dotnettools.csdevkit
-                # ms-dotnettools.vscode-dotnet-runtime
+                ms-dotnettools.csharp
+                ms-dotnettools.csdevkit
+                ms-dotnettools.vscode-dotnet-runtime
 
                 # formatters and linters
                 csharpier.csharpier-vscode
