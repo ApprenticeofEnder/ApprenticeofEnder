@@ -75,17 +75,8 @@ in
                   "editor.defaultFormatter" = "csharpier.csharpier-vscode";
                   "editor.formatOnSave" = false;
                 };
-
-                "omnisharp.enableRoslynAnalyzers" = true;
-                "dotnet.server.useOmnisharp" = false;
-                "dotnet.server.path" = "";
               };
               extensions = with pkgs.vscode-extensions; [
-                # languages
-                ms-dotnettools.csharp
-                ms-dotnettools.csdevkit
-                ms-dotnettools.vscode-dotnet-runtime
-
                 # formatters and linters
                 csharpier.csharpier-vscode
 
