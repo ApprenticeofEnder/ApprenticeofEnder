@@ -9,6 +9,7 @@
     else "";
   ollamaHostname = "ender-hornet";
   isOllamaHost = hostname == ollamaHostname;
+  ollama = "${pkgs-unstable.ollama}/bin/ollama";
 
   # Models to pull on activation
   # Add or remove models as needed
@@ -18,6 +19,8 @@
     "qwen2.5-coder:3b"
     "deepcoder:1.5b"
   ];
+
+  modelListBash = lib.concatStringsSep " " models;
 in {
   services.ollama = {
     enable = isOllamaHost;
@@ -52,12 +55,15 @@ in {
   # to be run manually after initial activation
   home.activation.pullOllamaModels = lib.mkIf (isOllamaHost && models != []) (
     lib.hm.dag.entryAfter ["writeBoundary"] ''
-      if command -v ${pkgs-unstable.ollama}/bin/ollama &> /dev/null; then
-        for model in ${lib.concatStringsSep " " models}; do
-          echo "Pulling $model..."
-          ${pkgs-unstable.ollama}/bin/ollama pull "$model" || echo "Warning: Failed to pull $model (service may not be running)"
-        done
+      if ! command -v ${ollama} &> /dev/null; then
+        echo "Ollama not available." && exit 1
       fi
+
+      for model in ${modelListBash}; do
+        echo "Pulling $model..."
+        ${ollama} pull "$model" ||
+          echo "Warning: Failed to pull $model (service may not be running)"
+      done
     ''
   );
 }
