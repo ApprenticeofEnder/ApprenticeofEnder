@@ -92,36 +92,6 @@
         # https://github.com/oraios/serena
       };
 
-      provider = {
-        ollama-ender = {
-          npm = "@ai-sdk/openai-compatible";
-          name = "ollama@ender-raptor";
-          options = {
-            "baseURL" = "http://localhost:11434/v1";
-          };
-          models = {
-            "gpt-oss:20b" = {
-              name = "gpt-oss:20b";
-            };
-            "gpt-oss:120b" = {
-              name = "gpt-oss:120b";
-            };
-            "phind-codellama:34b" = {
-              name = "phind-codellama:34b";
-            };
-            "qwen2.5-coder:32b" = {
-              name = "qwen2.5-coder:32b";
-            };
-            "qwen3-coder:30b" = {
-              name = "qwen3-coder:30b";
-            };
-            "codellama:70b" = {
-              name = "codellama:70b";
-            };
-          };
-        };
-      };
-
       # disabled_providers= ["openai" "gemini"];
       # instructions = ["CONTRIBUTING.md" "docs/guidelines.md" ".cursor/rules/*.md"];
       #   model = "anthropic/claude-sonnet-4-20250514";

@@ -31,6 +31,22 @@ in {
     };
   };
 
+  programs.opencode.settings.provider =
+    if isOllamaHost
+    then {
+      ollama-ender = {
+        npm = "@ai-sdk/openai-compatible";
+        name = "ollama@ender-raptor";
+        options = {
+          "baseURL" = "http://localhost:11434/v1";
+        };
+        models = lib.genAttrs models (model: {
+          name = model;
+        });
+      };
+    }
+    else {};
+
   # Pull models on home-manager activation
   # Note: Requires ollama service to be running, so this may need
   # to be run manually after initial activation
