@@ -1,4 +1,8 @@
-{pkgs-unstable, ...}: {
+{
+  pkgs-unstable,
+  config,
+  ...
+}: {
   programs.opencode = {
     enable = true;
     package = pkgs-unstable.opencode;
@@ -37,6 +41,8 @@
             "run"
             "--rm"
             "--interactive"
+            "--name"
+            "terraform-mcp"
             "hashicorp/terraform-mcp-server:latest"
           ];
         };
@@ -48,17 +54,37 @@
             "run"
             "--rm"
             "--interactive"
+            "--name"
+            "aws-terraform-mcp"
             "mcp/aws-terraform:latest"
           ];
           environment = {
             FASTMCP_LOG_LEVEL = "ERROR";
           };
         };
+        semgrep = {
+          enabled = true;
+          type = "local";
+          command = [
+            "docker"
+            "run"
+            "--rm"
+            "--interactive"
+            "-v"
+            "${config.home.homeDirectory}/Documents/Projects:/projects:ro"
+            "--name"
+            "semgrep-mcp"
+            "semgrep/semgrep"
+            "semgrep"
+            "mcp"
+            "-t"
+            "stdio"
+          ];
+        };
         # TODO: Investigate these MCP servers:
         # https://github.com/augmnt/augments-mcp-server
         # https://github.com/securityfortech/secops-mcp
         # https://github.com/exoticknight/mcp-file-merger
-        # https://github.com/semgrep/semgrep
         # https://github.com/8b-is/smart-tree
         # https://github.com/CodeGraphContext/CodeGraphContext
         # https://github.com/trilogy-group/aws-pricing-mcp
