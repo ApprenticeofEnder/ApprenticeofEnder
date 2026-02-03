@@ -5,6 +5,7 @@ in {
   imports = [
     self.homeModules.default
     ../../modules/home/programs/linux-only
+    ../../modules/home/toolkits/ai-server.nix
   ];
 
   # Defined by /modules/home/me.nix
