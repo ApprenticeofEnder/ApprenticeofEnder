@@ -12,7 +12,12 @@
         name = "activate-home";
         text = ''
           set -x
-          ${lib.getExe self'.packages.activate} "$(id -un)"@
+
+          if ${lib.getExe self'.packages.activate} "$(id -un)"@"$(hostname -s)"; then
+            exit 0
+          else
+            ${lib.getExe self'.packages.activate} "$(id -un)"@
+          fi
         '';
       };
     };
