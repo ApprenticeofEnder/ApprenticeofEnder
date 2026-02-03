@@ -5,6 +5,11 @@
 }:
 lib.mkMerge [
   {}
+  (lib.mkIf pkgs.stdenv.isDarwin {
+    targets.darwin = {
+      search = "DuckDuckGo";
+    };
+  })
   (lib.mkIf pkgs.stdenv.isLinux {
     targets = {
       genericLinux = {
