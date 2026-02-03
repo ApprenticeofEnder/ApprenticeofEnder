@@ -65,7 +65,6 @@
 
   utility = with pkgs; [
     # System
-    fd # better find
     sd # better sed
     duf # disk usage
     pik # process info
