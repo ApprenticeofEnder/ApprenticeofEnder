@@ -25,16 +25,19 @@ in {
     };
   };
 
-  programs.opencode.settings.provider = {
-    ollama-ender = {
-      npm = "@ai-sdk/openai-compatible";
-      name = "ollama@ender-raptor";
-      options = {
-        "baseURL" = "http://localhost:11434/v1";
+  programs.opencode.settings = {
+    model = "ollama-ender/${builtins.elemAt models 0}";
+    provider = {
+      ollama-ender = {
+        npm = "@ai-sdk/openai-compatible";
+        name = "ollama@ender-raptor";
+        options = {
+          "baseURL" = "http://localhost:11434/v1";
+        };
+        models = lib.genAttrs models (model: {
+          name = model;
+        });
       };
-      models = lib.genAttrs models (model: {
-        name = model;
-      });
     };
   };
 
