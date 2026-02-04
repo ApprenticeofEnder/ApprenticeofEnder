@@ -34,7 +34,7 @@
       };
       mcp = {
         hashicorp-terraform = {
-          enabled = true;
+          enabled = false;
           type = "local";
           command = [
             "docker"
@@ -47,7 +47,7 @@
           ];
         };
         aws-terraform = {
-          enabled = true;
+          enabled = false;
           type = "local";
           command = [
             "docker"
@@ -63,7 +63,7 @@
           };
         };
         semgrep = {
-          enabled = true;
+          enabled = false;
           type = "local";
           command = [
             "docker"
