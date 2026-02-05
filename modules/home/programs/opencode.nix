@@ -52,6 +52,20 @@
         "stdio"
       ];
     };
+    serena = {
+      enabled = false;
+      type = "local";
+      command = [
+        "uvx"
+        "--from"
+        "git+https://github.com/oraios/serena"
+        "serena"
+        "start-mcp-server"
+        "--context"
+        "ide"
+        "--project-from-cwd"
+      ];
+    };
     # TODO: Investigate these MCP servers:
     # https://github.com/augmnt/augments-mcp-server
     # https://github.com/securityfortech/secops-mcp
@@ -63,6 +77,8 @@
     # https://github.com/oraios/serena
   };
 in {
+  # Need this for uvx
+  programs.uv.enable = true;
   programs.opencode = {
     enable = true;
     package = pkgs-unstable.opencode;
