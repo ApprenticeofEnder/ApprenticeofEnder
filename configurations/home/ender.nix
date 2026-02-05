@@ -5,6 +5,9 @@ in {
   imports = [
     self.homeModules.default
     ../../modules/home/programs/linux-only
+    ../../modules/home/toolkits/rust.nix
+    ../../modules/home/toolkits/python.nix
+    ../../modules/home/toolkits/javascript.nix
   ];
 
   # Defined by /modules/home/me.nix

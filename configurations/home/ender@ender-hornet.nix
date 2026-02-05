@@ -6,6 +6,9 @@ in {
     self.homeModules.default
     ../../modules/home/programs/linux-only
     ../../modules/home/toolkits/ai-server.nix
+    ../../modules/home/toolkits/rust.nix
+    ../../modules/home/toolkits/python.nix
+    ../../modules/home/toolkits/javascript.nix
   ];
 
   # Defined by /modules/home/me.nix
