@@ -20,15 +20,6 @@
       nix-info # system information
       nix-tree # dependency navigation
       alejandra # formatter
-
-      # rust, just in case
-      cargo
-      rustfmt
-      rust-analyzer
-
-      # js
-      pnpm
-      nodejs_24
     ]
     ++ [
       pkgs-unstable.omnix
