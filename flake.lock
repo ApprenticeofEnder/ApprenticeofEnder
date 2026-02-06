@@ -6,15 +6,15 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1770384405,
-        "narHash": "sha256-J4T7BuB3WQPkCHxyL3IQQ696JicvCqLpxVxl9mdm9QE=",
-        "owner": "RoseSecurity",
+        "lastModified": 1770420711,
+        "narHash": "sha256-X7PtGgZgQJ6WZv5Nb1uqoQHH4X4Dnf76Nc+aboIzGJA=",
+        "owner": "ApprenticeofEnder",
         "repo": "Terramaid",
-        "rev": "a8bfeb64970d11fe4b094af2ed39797af3cd90ec",
+        "rev": "af8361c0e2622881a723744caf4fba3533cd08f1",
         "type": "github"
       },
       "original": {
-        "owner": "RoseSecurity",
+        "owner": "ApprenticeofEnder",
         "repo": "Terramaid",
         "type": "github"
       }
@@ -292,11 +292,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770404477,
-        "narHash": "sha256-orf0l6U4E3Xkg0IzbepBvAzkSYJMXJlw4N/snQozf0g=",
+        "lastModified": 1770417499,
+        "narHash": "sha256-HtyRMX8OLgAZJWfdWsFidNPUJgMIlrKAOGPDisNhc+I=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "463eb12a84bbbf843f7c00e3d0300ae7f9bba47c",
+        "rev": "eb1c0f893dc2bdd4748c76c100e9924e0454ac55",
         "type": "github"
       },
       "original": {
