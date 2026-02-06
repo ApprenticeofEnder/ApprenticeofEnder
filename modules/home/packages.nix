@@ -50,6 +50,7 @@
     gama-tui # github actions manager
     opentofu # IaC
     terraform # IaC
+    # terramaid # TEMPORARILY DISABLED: upstream go.sum missing github.com/hashicorp/copywrite entry
     actionlint # github actions linter
     ansible-lint # linter
   ];
