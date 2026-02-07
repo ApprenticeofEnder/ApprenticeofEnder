@@ -6,7 +6,7 @@
     rust-analyzer
   ];
 
-  progams.vscode = {
+  programs.vscode = {
     profiles = {
       default = {
         extensions = with pkgs.vscode-extensions; [
