@@ -12,7 +12,7 @@
       window-width = 3000;
 
       theme = "Nord";
-      font-size = 11;
+      # font-size = 11;
       font-family = "Hack Nerd Font";
       keybind = [
         "ctrl+shift+w>v=new_split:right"

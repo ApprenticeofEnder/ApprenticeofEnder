@@ -190,6 +190,7 @@ in {
         set -euxo pipefail
         cd ${config.devenv.root}/dotfiles
         links=(
+          presenterm
           starship
           nvim
         )

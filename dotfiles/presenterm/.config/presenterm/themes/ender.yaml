@@ -1,0 +1,187 @@
+---
+extends: terminal-dark
+
+intro_slide:
+  title:
+    alignment: center
+    colors:
+      foreground: green
+    font_size: 3
+  subtitle:
+    alignment: center
+    colors:
+      foreground: blue
+  event:
+    alignment: center
+    colors:
+      foreground: green
+  location:
+    alignment: center
+    colors:
+      foreground: blue
+  date:
+    alignment: center
+    colors:
+      foreground: yellow
+  author:
+    alignment: center
+    colors:
+      foreground: white
+    positioning: page_bottom
+  footer: false
+#
+# default:
+#   margin:
+#     percent: 8
+#   colors:
+#     foreground: null
+#     background: null
+#
+# slide_title:
+#   alignment: center
+#   padding_bottom: 1
+#   padding_top: 1
+#   colors:
+#     foreground: yellow
+#   bold: true
+#   font_size: 2
+#
+# code:
+#   alignment: center
+#   minimum_size: 50
+#   minimum_margin:
+#     percent: 8
+#   theme_name: base16-eighties.dark
+#   padding:
+#     horizontal: 2
+#     vertical: 1
+#   background: false
+#
+# execution_output:
+#   colors:
+#     foreground: white
+#   status:
+#     running:
+#       foreground: blue
+#     success:
+#       foreground: green
+#     failure:
+#       foreground: red
+#     not_started:
+#       foreground: yellow
+#   padding:
+#     horizontal: 2
+#     vertical: 1
+#
+# pty_output:
+#   colors:
+#     foreground: white
+#   cursor:
+#     highlight_colors:
+#       foreground: black
+#       background: white
+#
+# inline_code:
+#   colors:
+#     foreground: green
+#
+# intro_slide:
+#   title:
+#     alignment: center
+#     colors:
+#       foreground: green
+#     font_size: 2
+#   subtitle:
+#     alignment: center
+#     colors:
+#       foreground: blue
+#   event:
+#     alignment: center
+#     colors:
+#       foreground: green
+#   location:
+#     alignment: center
+#     colors:
+#       foreground: blue
+#   date:
+#     alignment: center
+#     colors:
+#       foreground: yellow
+#   author:
+#     alignment: center
+#     colors:
+#       foreground: white
+#     positioning: page_bottom
+#   footer: false
+#
+# headings:
+#   h1:
+#     prefix: "██"
+#     colors:
+#       foreground: cyan
+#   h2:
+#     prefix: "▓▓▓"
+#     colors:
+#       foreground: magenta
+#   h3:
+#     prefix: "▒▒▒▒"
+#     colors:
+#       foreground: red
+#   h4:
+#     prefix: "░░░░░"
+#     colors:
+#       foreground: blue
+#   h5:
+#     prefix: "░░░░░░"
+#     colors:
+#       foreground: blue
+#   h6:
+#     prefix: "░░░░░░░"
+#     colors:
+#       foreground: blue
+#
+# block_quote:
+#   prefix: "▍ "
+#   colors:
+#     foreground: white
+#     background: black
+#     prefix: yellow
+#
+# alert:
+#   prefix: "▍ "
+#   base_colors:
+#     foreground: white
+#     background: black
+#   styles:
+#     note:
+#       color: blue
+#     tip:
+#       color: green
+#     important:
+#       color: magenta
+#     warning:
+#       color: yellow
+#     caution:
+#       color: red
+#
+# typst:
+#   colors:
+#     foreground: "f0f0f0"
+#
+# footer:
+#   style: template
+#   right: "{current_slide} / {total_slides}"
+#
+# modals:
+#   selection_colors:
+#     foreground: yellow
+#
+# mermaid:
+#   background: transparent
+#   theme: dark
+#
+# d2:
+#   theme: 200
+#
+# layout_grid:
+#   color: blue

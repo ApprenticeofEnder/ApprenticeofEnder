@@ -1,11 +1,8 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mfontanini/presenterm/master/config-file-schema.json
 defaults:
-  # override the terminal font size when in windows or when using sixel.
-  terminal_font_size: 16
-
   # the theme to use by default in every presentation unless overridden.
-  theme: terminal-dark
+  theme: ender
 
   # the image protocol to use.
   image_protocol: kitty-local
