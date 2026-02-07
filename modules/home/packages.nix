@@ -77,7 +77,6 @@
     # Research
     zotero # citation and document management
     wiki-tui # wikipedia TUI
-    presenterm # terminal based presentations
 
     # Routine
     lynx # text web browser
