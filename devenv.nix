@@ -34,7 +34,6 @@ in {
     just
     nixd
     stow
-    cachix
     nix-top
     prettier
     jinja2-cli
