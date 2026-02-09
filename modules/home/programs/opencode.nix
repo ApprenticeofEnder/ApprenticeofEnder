@@ -53,7 +53,7 @@
       ];
     };
     serena = {
-      enabled = false;
+      enabled = true;
       type = "local";
       command = [
         "uvx"
