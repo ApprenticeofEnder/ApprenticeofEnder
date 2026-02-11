@@ -1,4 +1,3 @@
----
 extends: terminal-dark
 
 intro_slide:
@@ -29,6 +28,11 @@ intro_slide:
       foreground: white
     positioning: page_bottom
   footer: false
+
+footer:
+  style: template
+  left: Robert Babaev
+  right: "{current_slide} / {total_slides}"
 #
 # default:
 #   margin:

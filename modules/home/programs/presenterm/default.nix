@@ -2,4 +2,14 @@
   home.packages = with pkgs; [
     presenterm
   ];
+
+  xdg.configFile = {
+    "presenterm/config.yaml" = {
+      source = ./config.yaml;
+    };
+
+    "presenterm/themes/ender.yaml" = {
+      source = ./themes/ender.yaml;
+    };
+  };
 }
