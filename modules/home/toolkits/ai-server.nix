@@ -1,9 +1,9 @@
 {
   lib,
-  pkgs-unstable,
+  pkgs,
   ...
 }: let
-  ollama = "${pkgs-unstable.ollama}/bin/ollama";
+  ollama = "${pkgs.ollama}/bin/ollama";
   models = [
     "cogito:3b"
     "deepseek-coder:1.3b"
@@ -15,7 +15,7 @@
 in {
   services.ollama = {
     enable = true;
-    package = pkgs-unstable.ollama;
+    package = pkgs.ollama;
     port = 11434; # default
     host = "0.0.0.0"; # default
     # acceleration = "rocm";
