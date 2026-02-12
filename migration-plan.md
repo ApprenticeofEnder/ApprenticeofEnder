@@ -33,12 +33,12 @@ Inputs that currently `follows = "nixpkgs"` (`nur`, `lix-module`, `nix-index-dat
 
 ### Step 4: Update package references across 4 files
 
-| File                                   | Change                                                                                                                |
-| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `modules/home/packages.nix`            | Remove `pkgs-unstable` arg; fold `pkgs-unstable.omnix/cachix/devenv/semgrep` into their respective `with pkgs` blocks |
-| `modules/home/programs/opencode.nix`   | Change arg from `pkgs-unstable` to `pkgs`; update `package = pkgs.opencode`                                           |
-| `configurations/home/robertbabaev.nix` | Remove `pkgs-unstable` arg; change `${pkgs-unstable.opencode}` to `${pkgs.opencode}`                                  |
-| `modules/home/toolkits/ai-server.nix`  | Remove `pkgs-unstable` arg; change `pkgs-unstable.ollama` to `pkgs.ollama` (2 occurrences)                            |
+| File                                   | Change                                                                                                                       |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `modules/home/packages.nix`            | Remove `pkgs-unstable` arg; fold `pkgs-unstable.omnix/cachix/devenv/semgrep` into their respective `with pkgs` blocks        |
+| `modules/home/programs/opencode.nix`   | Change arg from `pkgs-unstable` to `pkgs`; remove `package = pkgs-unstable.opencode` since it will be in unstable by default |
+| `configurations/home/robertbabaev.nix` | Remove `pkgs-unstable` arg; change `${pkgs-unstable.opencode}` to `${pkgs.opencode}`                                         |
+| `modules/home/toolkits/ai-server.nix`  | Remove `pkgs-unstable` arg; change `pkgs-unstable.ollama` to `pkgs.ollama` (2 occurrences)                                   |
 
 ### Step 5: Update flake lock
 
