@@ -1,9 +1,3 @@
-## Assistant (Plan · claude-opus-4.6 · 26.4s)
-
-Now I have the complete picture. Here's the refined, final plan:
-
----
-
 ## Final Execution Plan: Migrate to nixpkgs-unstable as Default
 
 ### Step 1: Update `flake.nix` (6 changes)
@@ -33,12 +27,12 @@ Inputs that currently `follows = "nixpkgs"` (`nur`, `lix-module`, `nix-index-dat
 
 ### Step 4: Update package references across 4 files
 
-| File                                   | Change                                                                                                                       |
-| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `modules/home/packages.nix`            | Remove `pkgs-unstable` arg; fold `pkgs-unstable.omnix/cachix/devenv/semgrep` into their respective `with pkgs` blocks        |
-| `modules/home/programs/opencode.nix`   | Change arg from `pkgs-unstable` to `pkgs`; remove `package = pkgs-unstable.opencode` since it will be in unstable by default |
-| `configurations/home/robertbabaev.nix` | Remove `pkgs-unstable` arg; change `${pkgs-unstable.opencode}` to `${pkgs.opencode}`                                         |
-| `modules/home/toolkits/ai-server.nix`  | Remove `pkgs-unstable` arg; change `pkgs-unstable.ollama` to `pkgs.ollama` (2 occurrences)                                   |
+| File                                   | Change                                                                                                                               |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `modules/home/packages.nix`            | Remove `pkgs-unstable` arg; fold `pkgs-unstable.omnix/cachix/devenv/semgrep` into their respective `with pkgs` blocks                |
+| `modules/home/programs/opencode.nix`   | Change arg from `pkgs-unstable` to `pkgs`; remove `package = pkgs-unstable.opencode` since it will be in nixpkgs-unstable by default |
+| `configurations/home/robertbabaev.nix` | Remove `pkgs-unstable` arg; change `${pkgs-unstable.opencode}` to `${pkgs.opencode}`                                                 |
+| `modules/home/toolkits/ai-server.nix`  | Remove `pkgs-unstable` arg; change `pkgs-unstable.ollama` to `pkgs.ollama` (2 occurrences)                                           |
 
 ### Step 5: Update flake lock
 
@@ -46,11 +40,17 @@ Run `nix flake update` to re-pin all inputs to the new branches.
 
 ### Step 6: Validate build (no activation)
 
+Before building, check the flake first to make sure it evaluates.
+
+```
+nix flake check
+```
+
 Build each configuration without activating:
 
 ```
 nix build .#homeConfigurations."ender@ender-hornet".activationPackage
-nix build .#homeConfigurations."ender@".activationPackage
+nix build .#homeConfigurations."ender".activationPackage
 ```
 
 (macOS configs can't be built on Linux, so those would need testing on the Mac)
