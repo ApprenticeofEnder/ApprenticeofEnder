@@ -3,17 +3,15 @@
 
   inputs = {
     # Principle inputs (updated by `nix run .#update`)
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
     nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+      url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
-      # TODO: Revert to "nixpkgs" once inetutils-2.7 build issue is fixed in nixos-25.11
-      # inetutils-2.7 fails to build on macOS due to gnulib/clang incompatibility
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixos-unified.url = "github:srid/nixos-unified";

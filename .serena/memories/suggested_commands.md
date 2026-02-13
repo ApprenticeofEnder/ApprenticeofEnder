@@ -18,6 +18,11 @@
 | `dotfiles` | Symlink dotfiles (starship, nvim) into home using GNU Stow |
 | `nvidia-drivers` | Prefetch Nvidia driver hash for Nix |
 
+## devenv Tasks (automatic)
+| Task | Description |
+|------|-------------|
+| `readme:generate` | Auto-runs on shell entry if templates changed (`README.j2.md`, `readme.json`, `techtable.j2.html`) |
+
 ## Testing
 | Command | Description |
 |---------|-------------|
@@ -31,11 +36,14 @@
 | `nix flake update` | Update inputs |
 | `nix fmt .` | Format with Alejandra |
 
-## System Utils (Linux)
-| Command | Description |
-|---------|-------------|
-| `git` | Version control |
-| `ls` / `eza` | List files (eza is the preferred aliased version) |
-| `grep` / `rg` | Search (ripgrep preferred) |
-| `find` / `fd` | Find files (fd preferred) |
-| `cat` / `bat` | View files (bat preferred) |
+## System Utils (Preferred alternatives)
+| Standard | Preferred | Notes |
+|----------|-----------|-------|
+| `ls` | `eza` | Aliased |
+| `grep` | `rg` (ripgrep) | |
+| `find` | `fd` | |
+| `cat` | `bat` | |
+| `top` | `btop` | Nordic themed |
+| File browsing | `yazi` | TUI file manager |
+| Fuzzy find | `television` / `fzf` | |
+| Nix search | `nix-search-tv` | Integrated with television |

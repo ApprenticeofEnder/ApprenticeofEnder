@@ -1,46 +1,40 @@
 {
   lib,
   pkgs,
-  pkgs-unstable,
   ...
 }: let
-  dev = with pkgs;
-    [
-      gh # Github CLI
-      shfmt # shell formatter
-      typst # latex alternative
-      httpie # better http client
-      gnumake
-      vi-mongo # mongodb tui
-      shellcheck # shell linter
-      mermaid-cli
+  dev = with pkgs; [
+    gh # Github CLI
+    shfmt # shell formatter
+    typst # latex alternative
+    httpie # better http client
+    gnumake
+    vi-mongo # mongodb tui
+    shellcheck # shell linter
+    mermaid-cli
 
-      # nix-specific
-      nil # lsp
-      nix-info # system information
-      nix-tree # dependency navigation
-      alejandra # formatter
-    ]
-    ++ [
-      pkgs-unstable.omnix
-      pkgs-unstable.cachix
-      pkgs-unstable.devenv
-    ];
+    # nix-specific
+    nil # lsp
+    nix-info # system information
+    nix-tree # dependency navigation
+    alejandra # formatter
 
-  security = with pkgs;
-    [
-      nmap # recon
-      snyk # vuln management
-      gnutls
-      tcpdump # network forensics
-      wireshark # network forensics
-      pulumi-esc # secrets management
-      # _1password-gui # TODO: Work out the whole user/group requirement thing
-      # _1password-cli
-    ]
-    ++ [
-      pkgs-unstable.semgrep
-    ];
+    omnix
+    cachix
+    devenv
+  ];
+
+  security = with pkgs; [
+    nmap # recon
+    snyk # vuln management
+    gnutls
+    tcpdump # network forensics
+    wireshark # network forensics
+    pulumi-esc # secrets management
+    # _1password-gui # TODO: Work out the whole user/group requirement thing
+    # _1password-cli
+    semgrep
+  ];
 
   devops = with pkgs; [
     act # local CI/CD testing
