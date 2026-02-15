@@ -9,7 +9,6 @@
     system = pkgs.stdenv.hostPlatform.system;
     config = {
       allowUnfree = true;
-      allowBroken = true;
     };
   };
 in {
@@ -21,10 +20,10 @@ in {
   nix.package = lib.mkDefault pkgs.lix;
   home.packages = [config.nix.package];
 
+  imports = [flake.inputs.walker.homeManagerModules.default];
   nixpkgs = {
     config = {
       allowUnfree = true;
-      allowBroken = true;
       nvidia.acceptLicense = true;
     };
 

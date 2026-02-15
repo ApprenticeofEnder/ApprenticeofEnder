@@ -35,6 +35,12 @@
     # nixvim.inputs.nixpkgs.follows = "nixpkgs";
     # nixvim.inputs.flake-parts.follows = "flake-parts";
     Terramaid.url = "github:RoseSecurity/Terramaid";
+    elephant.url = "github:abenz1267/elephant";
+
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs.elephant.follows = "elephant";
+    };
   };
 
   # Wired using https://nixos-unified.org/guide/autowiring
