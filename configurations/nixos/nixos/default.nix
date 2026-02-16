@@ -3,10 +3,15 @@
 {flake, ...}: let
   inherit (flake) inputs;
   inherit (inputs) self;
+  homeMod = self + /modules/home;
 in {
   imports = [
     self.nixosModules.default
     self.nixosModules._1password
     ./configuration.nix
+  ];
+
+  home-manager.sharedModules = [
+    "${homeMod}/programs/linux-only"
   ];
 }
