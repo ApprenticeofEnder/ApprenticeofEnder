@@ -1,8 +1,12 @@
 {...}: {
   programs.tirith = {
-    enable = false;
+    enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
     enableFishIntegration = true;
+
+    allowlist = [
+      "localhost"
+    ];
   };
 }
