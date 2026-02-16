@@ -10,11 +10,15 @@ in {
   home = {
     packages = with pkgs; [
       abcde
+      cdparanoia
     ];
 
     file = {
       ".abcde.conf" = {
-        source = ./abcde.conf;
+        text = ''
+          ${builtins.readFile ./abcde.conf}
+          CDPARANOIA=${pkgs.cdparanoia}/bin/cdparanoia
+        '';
       };
     };
   };
