@@ -1,5 +1,4 @@
 {flake, ...}: {
-  imports = [flake.inputs.walker.homeManagerModules.default];
   nixpkgs = {
     config = {
       allowUnfree = true;
