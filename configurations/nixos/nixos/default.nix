@@ -6,6 +6,7 @@
 in {
   imports = [
     self.nixosModules.default
+    self.nixosModules._1password
     ./configuration.nix
   ];
 }
