@@ -30,3 +30,8 @@ dev:
 [group('Main')]
 run:
   nix run
+
+# Activate the configuration (non-NixOS)
+[group('Main')]
+run-generic:
+  nix run '.#non-nixos'
