@@ -5,7 +5,7 @@
     shellAliases = {
       # docker = "podman";
       pathlist = ''printenv PATH | tr ":" "\n"'';
-      yay = ''PATH="/usr/bin:$PATH" yay'';
+      yay = ''PATH="/usr/bin:$PATH" /usr/bin/yay'';
     };
   };
 }
