@@ -1,5 +1,5 @@
 {
   programs.calibre = {
-    enable = true;
+    enable = false;
   };
 }
