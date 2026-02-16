@@ -98,6 +98,7 @@
   programs = {
     _1password-gui = {
       enable = true;
+      polkitPolicyOwners = ["ender"];
     };
     _1password = {
       enable = true;
