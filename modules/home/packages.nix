@@ -44,7 +44,7 @@
     gama-tui # github actions manager
     opentofu # IaC
     terraform # IaC
-    terramaid
+    # terramaid
     actionlint # github actions linter
     ansible-lint # linter
   ];
