@@ -1,5 +1,10 @@
-{flake, ...}: {
-  nixpkgs = {
+{
+  flake,
+  lib,
+  osConfig,
+  ...
+}: {
+  nixpkgs = lib.mkIf (osConfig == null) {
     config = {
       allowUnfree = true;
       nvidia.acceptLicense = true;
