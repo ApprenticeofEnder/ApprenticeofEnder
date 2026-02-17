@@ -5,11 +5,18 @@
 }: let
   inherit (flake) inputs;
   inherit (inputs) self;
+
+  homeMod = "${self}/modules/home";
+
+  importHome = folder: (filenames: map (filename: "${homeMod}/${folder}/${filename}") filenames);
 in {
-  imports = [
-    self.homeModules.default
-    ../../modules/home/programs/darwin-only
-  ];
+  imports =
+    [
+      self.homeModules.default
+    ]
+    ++ importHome "programs" [
+      "darwin-only"
+    ];
 
   # Defined by /modules/home/me.nix
   # And used all around in /modules/home/*

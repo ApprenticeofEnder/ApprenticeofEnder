@@ -1,14 +1,23 @@
 {flake, ...}: let
   inherit (flake) inputs;
   inherit (inputs) self;
+
+  homeMod = "${self}/modules/home";
+
+  importHome = folder: (filenames: map (filename: "${homeMod}/${folder}/${filename}") filenames);
 in {
-  imports = [
-    self.homeModules.default
-    ../../modules/home/programs/linux-only
-    ../../modules/home/toolkits/rust.nix
-    ../../modules/home/toolkits/python.nix
-    ../../modules/home/toolkits/javascript.nix
-  ];
+  imports =
+    [
+      self.homeModules.default
+    ]
+    ++ importHome "programs" [
+      "linux-only"
+    ]
+    ++ importHome "toolkits" [
+      "rust.nix"
+      "python.nix"
+      "javascript.nix"
+    ];
 
   # Defined by /modules/home/me.nix
   # And used all around in /modules/home/*
