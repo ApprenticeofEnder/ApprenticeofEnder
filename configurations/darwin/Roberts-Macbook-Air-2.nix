@@ -1,6 +1,10 @@
 # See /modules/darwin/* for actual settings
 # This file is just *top-level* configuration.
-{flake, ...}: let
+{
+  flake,
+  config,
+  ...
+}: let
   inherit (flake) inputs;
   inherit (inputs) self;
 in {
@@ -25,6 +29,8 @@ in {
   networking.hostName = "Roberts-Macbook-Air-2";
 
   system.primaryUser = "robertbabaev";
+
+  myusers = [config.system.primaryUser];
 
   # Automatically move old dotfiles out of the way
   #
