@@ -9,6 +9,7 @@ in {
   imports =
     [
       self.homeModules.default
+      "${homeMod}/targets.nix"
     ]
     ++ importHome "programs" [
       "linux-only"

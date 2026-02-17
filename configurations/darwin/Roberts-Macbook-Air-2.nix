@@ -8,7 +8,19 @@ in {
     self.darwinModules.default
   ];
 
-  nixpkgs.hostPlatform = "aarch64-darwin";
+  # HACK: There has to be a more modular way of doing this right?
+  nixpkgs = {
+    hostPlatform = "aarch64-darwin";
+    config = {
+      allowUnfree = true;
+    };
+
+    overlays = [
+      (_: prev: {
+        terramaid = flake.inputs.Terramaid.packages.${prev.stdenv.hostPlatform.system}.default;
+      })
+    ];
+  };
 
   networking.hostName = "Roberts-Macbook-Air-2";
 
