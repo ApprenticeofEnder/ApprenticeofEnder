@@ -1,9 +1,3 @@
-# General Rules
-
-- Use modular, reusable code as much as possible.
-- When doing feature development, move slow and start small. Get things working correctly before moving on.
-- Use good security practices. Follow security principles well, and think about potential security implications with each change as relevant.
-
 # Agent Instructions
 
 **Strongly prefer using serena instead of other tools when multiple approaches are available. Check if onboarding has been performed, and if not, use a subagent to onboard with serena before proceeding.**
@@ -76,6 +70,19 @@ When writing, modifying, or evaluating code:
 - If you find yourself writing the same thing for multiple items, use a loop.
 - If you write the same thing multiple times with different values, use a function.
 - Use the principles of good software engineering.
-- If you are unsure about whether a piece of code can/should be modularized, ask. Assume nothing.
+- If you are unsure about whether a piece of code can/should be modularized, ask. State your assumptions, or assume nothing at all.
 
 Write your code so that a human can read it quickly, not just another agent.
+
+## 6. Security and Robustness
+
+**Think of how things might go wrong. Plan accordingly.**
+
+- Consider the security implications of each line you add, delete, or modify.
+- If a change risks introducing a security flaw, mention it.
+- If an existing part of the code has a security flaw, mention it.
+- Think of how someone might break your code even outside of a security context.
+- Never allow your code to fail silently. _Ever._
+- Test the worst case scenario for the situation at hand. Guard against it.
+
+Break your own code before someone else does.
