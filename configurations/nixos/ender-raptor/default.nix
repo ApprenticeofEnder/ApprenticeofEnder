@@ -14,4 +14,6 @@ in {
   home-manager.sharedModules = [
     "${homeMod}/programs/linux-only"
   ];
+
+  myusers = ["ender"];
 }
