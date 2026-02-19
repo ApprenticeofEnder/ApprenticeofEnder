@@ -77,7 +77,7 @@
   users.users.ender = {
     isNormalUser = true;
     description = "Robert Babaev";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "docker"];
     packages = with pkgs; [
       kdePackages.kate
       docker
