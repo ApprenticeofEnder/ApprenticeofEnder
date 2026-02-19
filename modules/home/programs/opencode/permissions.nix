@@ -12,10 +12,10 @@
       )
   );
 
-  toolList = prefix: (tools: (map (tool: "${prefix}_${tool}") tools));
+  mcpToolList = prefix: (tools: (map (tool: "${prefix}_${tool}") tools));
 
   serenaAllow = buildAccessList "allow" (
-    toolList "serena" [
+    mcpToolList "serena" [
       "check_onboarding_performed"
       "find_*"
       "get_*"
@@ -26,6 +26,16 @@
     ]
   );
 
+  serenaPerms =
+    {
+      "serena_*" = "ask";
+    }
+    // serenaAllow;
+
+  bashAllow = buildAccessList "allow" [
+    "head *"
+  ];
+
   permissions =
     {
       read = {
@@ -33,15 +43,15 @@
         "*.env" = "deny";
       };
       edit = "ask";
-      bash = {
-        "*" = "ask";
-      };
+      bash =
+        {
+          "*" = "ask";
+        }
+        // bashAllow;
 
       webfetch = "ask";
-
-      "serena_*" = "ask";
     }
-    // serenaAllow;
+    // serenaPerms;
 in {
   programs.opencode = {
     settings = {
