@@ -1,15 +1,9 @@
 {pkgs, ...}: {
-  imports = [
-    # ./lsp.nix
-    # ./linters.nix
-    # ./formatters.nix
-  ];
-
   programs = {
     neovim = {
       enable = true;
-      viAlias = false;
-      vimAlias = false;
+      viAlias = true;
+      vimAlias = true;
       withRuby = true;
       withNodeJs = true;
       withPython3 = true;
