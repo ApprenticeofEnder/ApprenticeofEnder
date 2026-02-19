@@ -14,6 +14,8 @@
 
   mcpToolList = prefix: (tools: (map (tool: "${prefix}_${tool}") tools));
 
+  # Serena
+
   serenaAllow = buildAccessList "allow" (
     mcpToolList "serena" [
       "check_onboarding_performed"
@@ -32,9 +34,17 @@
     }
     // serenaAllow;
 
+  # Bash
+
   bashAllow = buildAccessList "allow" [
     "head *"
   ];
+
+  bashPerms =
+    {
+      "*" = "ask";
+    }
+    // bashAllow;
 
   permissions =
     {
@@ -43,11 +53,7 @@
         "*.env" = "deny";
       };
       edit = "ask";
-      bash =
-        {
-          "*" = "ask";
-        }
-        // bashAllow;
+      bash = bashPerms;
 
       webfetch = "ask";
     }
