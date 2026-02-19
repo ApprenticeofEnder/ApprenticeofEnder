@@ -1,4 +1,28 @@
-{...}: {
+{...}: let
+  # lak = field: list:
+  #   builtins.listToAttrs (map (v: {
+  #       name = v.${field};
+  #       value = v;
+  #     })
+  #     list);
+  permissions = {
+    read = {
+      "*" = "allow";
+    };
+    edit = "ask";
+    bash = {
+      "*" = "ask";
+    };
+    webfetch = "ask";
+    "serena_*" = {
+      "*" = "ask";
+      "check_onboarding_performed" = "allow";
+      "find_*" = "allow";
+      "get_*" = "allow";
+      "initial_instructions" = "allow";
+    };
+  };
+in {
   programs.opencode = {
     enable = true;
     enableMcpIntegration = true;
@@ -6,14 +30,10 @@
     rules = builtins.readFile ./AGENTS.md;
 
     settings = {
-      # theme = "system";
+      theme = "nord";
       autoshare = false;
       autoupdate = false;
-      permission = {
-        edit = "ask";
-        bash = "ask";
-        webfetch = "ask";
-      };
+      permission = permissions;
 
       # disabled_providers= ["openai" "gemini"];
       # instructions = ["CONTRIBUTING.md" "docs/guidelines.md" ".cursor/rules/*.md"];
