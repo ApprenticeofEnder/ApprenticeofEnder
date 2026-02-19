@@ -1,4 +1,7 @@
 {pkgs, ...}: {
+  home.packages = with pkgs; [
+    python313
+  ];
   programs = {
     ruff = {
       enable = true;
