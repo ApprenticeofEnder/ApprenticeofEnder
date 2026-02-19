@@ -63,6 +63,7 @@
     tree
     ttyd # terminal sharing
     procs # better ps
+    unzip
     lazyssh
     macchina
     libnotify
