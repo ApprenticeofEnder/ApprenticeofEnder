@@ -38,6 +38,7 @@
 
   bashAllow = buildAccessList "allow" [
     "head *"
+    "wc *"
   ];
 
   bashPerms =
