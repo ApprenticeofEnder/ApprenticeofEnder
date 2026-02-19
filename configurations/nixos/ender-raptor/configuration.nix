@@ -6,6 +6,7 @@
   pkgs,
   ...
 }: {
+  # TODO: Refactor this big time
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -79,6 +80,7 @@
     extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       kdePackages.kate
+      docker
       #  thunderbird
     ];
   };

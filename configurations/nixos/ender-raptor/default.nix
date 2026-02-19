@@ -11,6 +11,11 @@ in {
     ./configuration.nix
   ];
 
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+  };
+
   home-manager.sharedModules = [
     "${homeMod}/programs/linux-only"
   ];
