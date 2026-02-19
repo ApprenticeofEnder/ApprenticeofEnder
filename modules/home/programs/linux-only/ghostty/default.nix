@@ -23,6 +23,7 @@
         "ctrl+shift+k=goto_split:up"
         "ctrl+shift+j=goto_split:down"
         "ctrl+shift+v=paste_from_selection"
+        "ctrl+v=paste_from_clipboard"
       ];
 
       copy-on-select = "clipboard";
