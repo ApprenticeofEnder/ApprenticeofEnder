@@ -1,48 +1,5 @@
-{...}: let
-  buildAccessList = accessValue: (
-    list:
-      builtins.listToAttrs (
-        map (
-          permission: {
-            name = permission;
-            value = accessValue;
-          }
-        )
-        list
-      )
-  );
-
-  toolList = prefix: (tools: (map (tool: "${prefix}_${tool}") tools));
-
-  serenaAllow = buildAccessList "allow" (
-    toolList "serena" [
-      "check_onboarding_performed"
-      "find_*"
-      "get_*"
-      "initial_instructions"
-      "list_*"
-      "read_*"
-      "search_*"
-    ]
-  );
-
-  permissions =
-    {
-      read = {
-        "*" = "allow";
-        "*.env" = "deny";
-      };
-      edit = "ask";
-      bash = {
-        "*" = "ask";
-      };
-
-      webfetch = "ask";
-
-      "serena_*" = "ask";
-    }
-    // serenaAllow;
-in {
+{...}: {
+  imports = [./permissions.nix];
   programs.opencode = {
     enable = true;
     enableMcpIntegration = true;
@@ -53,7 +10,6 @@ in {
       theme = "nord";
       autoshare = false;
       autoupdate = false;
-      permission = permissions;
 
       # disabled_providers= ["openai" "gemini"];
       # instructions = ["CONTRIBUTING.md" "docs/guidelines.md" ".cursor/rules/*.md"];
