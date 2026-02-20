@@ -31,9 +31,13 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # nixvim.url = "github:nix-community/nixvim";
-    # nixvim.inputs.nixpkgs.follows = "nixpkgs";
-    # nixvim.inputs.flake-parts.follows = "flake-parts";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
+    };
     Terramaid.url = "github:RoseSecurity/Terramaid";
     elephant.url = "github:abenz1267/elephant";
 
