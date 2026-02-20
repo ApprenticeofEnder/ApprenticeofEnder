@@ -10,6 +10,7 @@
 in {
   imports = [
     self.darwinModules.default
+    self.darwinModules._1password
   ];
 
   # HACK: There has to be a more modular way of doing this right?

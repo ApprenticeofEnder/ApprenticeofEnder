@@ -46,7 +46,7 @@ lib.mkMerge [
       };
       shellInit = ''
         fish_add_path ~/.local/bin
-        fish_add_path ~/.nix-profile/bin
+        # fish_add_path ~/.nix-profile/bin
         fish_add_path ${config.xdg.dataHome}/pnpm/global/bin
         source "$HOME/.config/op/plugins-nix.sh"
 
