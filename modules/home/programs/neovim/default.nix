@@ -10,7 +10,6 @@
       defaultEditor = true;
       plugins = with pkgs.vimPlugins; [
         LazyVim
-        qmk-nvim
       ];
     };
   };
