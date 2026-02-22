@@ -16,9 +16,12 @@ in {
     enableOnBoot = true;
   };
 
-  home-manager.sharedModules = [
-    "${homeMod}/programs/linux-only"
-  ];
+  home-manager = {
+    sharedModules = [
+      "${homeMod}/programs/linux-only"
+    ];
+    backupFileExtension = "nixos-backup";
+  };
 
   myusers = ["ender"];
 }

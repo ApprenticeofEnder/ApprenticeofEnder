@@ -9,7 +9,7 @@ in {
   imports =
     [
       self.homeModules.default
-      self.homeModules.nixvim
+      inputs.nixvim.homeModules.nixvim
     ]
     ++ importHome "programs" [
       "linux-only"
