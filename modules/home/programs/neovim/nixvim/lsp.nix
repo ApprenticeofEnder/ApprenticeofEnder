@@ -32,12 +32,5 @@
     lspList
   );
 in {
-  lsp.servers =
-    enabledLsps
-    // {
-      rust_analyzer = {
-        installCargo = true;
-        installRustc = true;
-      };
-    };
+  lsp.servers = enabledLsps;
 }
