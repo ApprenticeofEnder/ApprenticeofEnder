@@ -98,7 +98,6 @@
     impala # wifi management
     audacity # audio editing
     handbrake # video file conversions
-    # protonvpn-gui # VPN
   ];
 
   darwin = with pkgs; [
