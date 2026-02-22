@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   programs = {
+    nixvim.imports = [./nixvim];
     neovim = {
       enable = true;
       viAlias = true;
