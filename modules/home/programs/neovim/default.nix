@@ -2,10 +2,12 @@
   pkgs,
   nixosConfig,
   ...
-}: {
+}: let
+  isNixOS = nixosConfig != null;
+in {
   home.sessionVariables = {
     NIX_NEOVIM =
-      if nixosConfig != null
+      if isNixOS
       then "1"
       else "0";
   };
@@ -20,6 +22,9 @@
       defaultEditor = true;
       plugins = with pkgs.vimPlugins; [
         LazyVim
+      ];
+
+      extraPackages = [
       ];
     };
   };
