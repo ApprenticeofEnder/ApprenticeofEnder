@@ -1,4 +1,4 @@
-{...}: let
+{lib, ...}: let
   lspList = [
     "basedpyright"
     "bashls"
@@ -21,16 +21,31 @@
     "stylua"
     "terraform_lsp"
   ];
-  enabledLsps = builtins.listToAttrs (
-    map
-    (lsp: {
-      name = lsp;
-      value = {
-        enable = true;
-      };
-    })
-    lspList
-  );
+  defaultActivatedLsps = [
+    "bashls"
+    "docker_language_server"
+    "docker_compose_language_service"
+    "fish_lsp"
+    "jqls"
+    "jsonls"
+    "lua_ls"
+    "marksman"
+    "nil_ls"
+    "prettier"
+    "stylua"
+  ];
+  enabledLsps = with builtins;
+    listToAttrs (
+      map
+      (lsp: {
+        name = lsp;
+        value = {
+          enable = true;
+          activate = lib.mkDefault (elem lsp defaultActivatedLsps);
+        };
+      })
+      lspList
+    );
 in {
   lsp.servers = enabledLsps;
 }
