@@ -1,4 +1,14 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  nixosConfig,
+  ...
+}: {
+  home.sessionVariables = {
+    NIX_NEOVIM =
+      if nixosConfig != null
+      then "1"
+      else "0";
+  };
   programs = {
     neovim = {
       enable = true;
