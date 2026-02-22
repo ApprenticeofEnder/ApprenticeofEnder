@@ -4,7 +4,6 @@
   ...
 }: let
   dev = with pkgs; [
-    gh # Github CLI
     shfmt # shell formatter
     typst # latex alternative
     httpie # better http client
