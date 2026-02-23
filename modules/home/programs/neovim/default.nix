@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   nixosConfig,
   ...
 }: let
@@ -24,8 +25,34 @@ in {
         LazyVim
       ];
 
-      extraPackages = [
-      ];
+      extraPackages = with pkgs;
+        lib.mkIf isNixOS [
+          nil
+          taplo
+          biome
+          hclfmt
+          jq-lsp
+          tflint
+          rustfmt
+          fish-lsp
+          marksman
+          prettier
+          tinymist
+          ansible-lint
+          basedpyright
+          terraform-ls
+          rust-analyzer
+          lua-language-server
+          vue-language-server
+          bash-language-server
+          yaml-language-server
+          docker-language-server
+          svelte-language-server
+          vscode-css-languageserver
+          typescript-language-server
+          vscode-json-languageserver
+          tailwindcss-language-server
+        ];
     };
   };
 
