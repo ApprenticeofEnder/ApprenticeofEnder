@@ -34,13 +34,13 @@ There is no single-test command. `devenv test` is the only test suite and it run
 
 These run automatically on commit. Do NOT edit `.pre-commit-config.yaml` (auto-generated).
 
-| Hook | What it does |
-|------|--------------|
-| `alejandra` | Formats `.nix` files |
-| `deadnix` | Detects unused Nix bindings |
-| `vale` | Prose linting (proselint + write-good) on markdown |
-| `shellcheck` | Lints shell scripts (excludes `.zsh`) |
-| `convco` | Enforces conventional commit messages |
+| Hook         | What it does                                       |
+| ------------ | -------------------------------------------------- |
+| `alejandra`  | Formats `.nix` files                               |
+| `deadnix`    | Detects unused Nix bindings                        |
+| `vale`       | Prose linting (proselint + write-good) on markdown |
+| `shellcheck` | Lints shell scripts (excludes `.zsh`)              |
+| `convco`     | Enforces conventional commit messages              |
 
 ## Commit Message Convention
 
@@ -79,12 +79,14 @@ docs: update README template
 ### Module Patterns
 
 **Auto-import pattern** (used in most module directories):
+
 ```nix
 imports = with builtins;
   map (fn: ./${fn}) (filter (fn: fn != "default.nix") (attrNames (readDir ./.)));
 ```
 
 Variants:
+
 1. **Simple auto-import** -- `modules/home/`, `linux-only/`, `darwin-only/`
 2. **Filtered** -- `modules/home/programs/` excludes `linux-only`/`darwin-only` dirs
 3. **Backup-filtered** -- `modules/home/services/` excludes `.bak.nix` files
@@ -117,6 +119,7 @@ Managed via **Pulumi ESC** (loaded in `.envrc`). Never commit secrets to the rep
 ## nixpkgs Channel Strategy
 
 This is **reversed from typical convention**:
+
 - `pkgs` = **nixos-unstable** (primary, used for most packages)
 - `pkgs-stable` = **nixos-25.11** (stable fallback, via `_module.args.pkgs-stable`)
 
@@ -130,12 +133,14 @@ This is **reversed from typical convention**:
 ## General Coding Guidelines
 
 ### Simplicity First
+
 - No features beyond what was asked
 - No abstractions for single-use code
 - No speculative "flexibility" or "configurability"
 - If 200 lines could be 50, rewrite it
 
 ### Surgical Changes
+
 - Don't "improve" adjacent code, comments, or formatting
 - Don't refactor things that aren't broken
 - Match existing style exactly
@@ -143,15 +148,18 @@ This is **reversed from typical convention**:
 - Every changed line should trace directly to the request
 
 ### Never Nesting
+
 - Do not nest more than 3 layers deep (counting from class or function level)
 - Use guard clauses to avoid unnecessary nesting
 - Extract to a function if nesting exceeds 2 layers
 
 ### Modularity
+
 - If writing the same thing with minor tweaks more than twice, refactor
 - Use loops for repetitive patterns, functions for repeated logic
 
 ### Security and Robustness
+
 - Consider security implications of every change
 - Never allow code to fail silently
 - Test and guard against the worst case scenario
