@@ -3,6 +3,7 @@
 {
   flake,
   config,
+  pkgs,
   ...
 }: let
   inherit (flake) inputs;
@@ -12,6 +13,8 @@ in {
     self.darwinModules.default
     self.darwinModules._1password
   ];
+
+  nix.package = pkgs.lix;
 
   # HACK: There has to be a more modular way of doing this right?
   nixpkgs = {
