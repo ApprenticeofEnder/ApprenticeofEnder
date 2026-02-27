@@ -11,7 +11,7 @@
 in {
   imports = [
     self.darwinModules.default
-    self.darwinModules._1password
+    # self.darwinModules._1password
   ];
 
   nix.package = pkgs.lix;
