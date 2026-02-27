@@ -35,6 +35,15 @@
 
     permission = serenaPlanDeny;
   };
+  /*
+  Agents:
+  - Diagnostic/Debug
+  - Code Reviewer
+  - Terraform/IaC
+  - Security Analyst
+  - Docs
+  - Testing
+  */
 in {
   programs.opencode = {
     settings = {
