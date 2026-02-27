@@ -25,6 +25,7 @@
       "list_*"
       "read_*"
       "search_*"
+      "think_*"
     ]
   );
 
