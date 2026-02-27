@@ -3,7 +3,8 @@
   buildAccessList = accessValue: (
     list:
       builtins.listToAttrs (
-        map (
+        map
+        (
           permission: {
             name = permission;
             value = accessValue;
@@ -15,7 +16,7 @@
 
   mcpToolList = prefix: (tools: (map (tool: "${prefix}_${tool}") tools));
 
-  serenaPlanDeny = buildAccessList "deny" [
+  serenaPlanDeny = buildAccessList "deny" (
     mcpToolList
     "serena"
     [
@@ -23,7 +24,7 @@
       "insert_*"
       "replace_*"
     ]
-  ];
+  );
 
   plan = {
     mode = "primary";
