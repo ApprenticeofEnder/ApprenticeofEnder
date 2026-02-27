@@ -1,5 +1,8 @@
 {...}: {
-  imports = [./permissions.nix];
+  imports = [
+    ./agents
+    ./permissions.nix
+  ];
   programs.opencode = {
     enable = true;
     enableMcpIntegration = true;

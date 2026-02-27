@@ -26,6 +26,7 @@
       "read_*"
       "search_*"
       "think_*"
+      "write_memory"
     ]
   );
 
