@@ -69,7 +69,6 @@
     cargo-seek
 
     # Research
-    zotero # citation and document management
     wiki-tui # wikipedia TUI
 
     # Routine
@@ -91,6 +90,9 @@
     # fun that only works on Linux
     spotify
     hollywood
+
+    # Research
+    zotero # citation and document management
   ];
 
   x86Linux = with pkgs; [
