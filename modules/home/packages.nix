@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  pkgs-stable,
   ...
 }: let
   dev = with pkgs; [
@@ -77,23 +78,26 @@
     ispell # spelling
   ];
 
-  linux = with pkgs; [
-    ksnip # screenshots
-    krita # drawing
-    termscp # scp tui, broken on darwin because of some samba library
-    # TODO: Figure out how to get Docker working properly here
-    kdePackages.okular
-    lazyjournal
-    systemctl-tui
-    nvtopPackages.full
+  linux = with pkgs;
+    [
+      ksnip # screenshots
+      termscp # scp tui, broken on darwin because of some samba library
+      # TODO: Figure out how to get Docker working properly here
+      kdePackages.okular
+      lazyjournal
+      systemctl-tui
+      nvtopPackages.full
 
-    # fun that only works on Linux
-    spotify
-    hollywood
+      # fun that only works on Linux
+      spotify
+      hollywood
 
-    # Research
-    zotero # citation and document management
-  ];
+      # Research
+      zotero # citation and document management
+    ]
+    ++ [
+      pkgs-stable.krita
+    ];
 
   x86Linux = with pkgs; [
     godot # game engine
