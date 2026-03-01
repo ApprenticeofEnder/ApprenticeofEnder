@@ -1,6 +1,5 @@
 {pkgs, ...}: let
   makeLanguageServer = language: pkgs."${language}-language-server";
-  makeTsGrammar = language: pkgs.tree-sitter-grammars."tree-sitter-${language}";
   languageServers = with pkgs;
     [
       nil
@@ -39,23 +38,26 @@
     terraform-ls
   ];
 
-  tsGrammars = map makeTsGrammar [
-    "css"
-    "hcl"
-    "lua"
-    "html"
-    "just"
-    "rust"
-    "yaml"
-    "python"
-    "svelte"
-    "dockerfile"
-    "javascript"
-    "typescript"
-    "rust-format-args"
+  tsGrammars = with pkgs.vimPlugins.nvim-treesitter-parsers; [
+    css
+    hcl
+    lua
+    html
+    just
+    json
+    rust
+    yaml
+    toml
+    python
+    svelte
+    terraform
+    dockerfile
+    javascript
+    typescript
   ];
 in {
   programs.neovim = {
-    extraPackages = languageServers ++ formatters ++ linters ++ tsGrammars;
+    plugins = tsGrammars;
+    extraPackages = languageServers ++ formatters ++ linters;
   };
 }
