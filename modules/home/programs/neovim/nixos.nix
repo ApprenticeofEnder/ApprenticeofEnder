@@ -57,7 +57,11 @@
   ];
 in {
   programs.neovim = {
-    plugins = tsGrammars;
+    plugins = with pkgs.vimPlugins;
+      [
+        nvim-treesitter
+      ]
+      ++ tsGrammars;
     extraPackages = languageServers ++ formatters ++ linters;
   };
 }
