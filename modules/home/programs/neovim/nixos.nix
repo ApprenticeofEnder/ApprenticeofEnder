@@ -1,6 +1,6 @@
 {pkgs, ...}: let
-  makeLanguageServer = language: "${language}-language-server";
-  makeTsGrammar = language: "tree-sitter-${language}";
+  makeLanguageServer = language: pkgs."${language}-language-server";
+  makeTsGrammar = language: pkgs.tree-sitter-grammars."tree-sitter-${language}";
   languageServers = with pkgs;
     [
       nil
@@ -11,6 +11,8 @@
       tinymist
       terraform-ls
       rust-analyzer
+      vscode-css-languageserver
+      vscode-json-languageserver
     ]
     ++ map makeLanguageServer [
       "lua"
@@ -19,9 +21,7 @@
       "yaml"
       "docker"
       "svelte"
-      "vscode-css"
       "typescript"
-      "vscode-json"
       "tailwindcss"
     ];
 
@@ -39,22 +39,21 @@
     terraform-ls
   ];
 
-  tsGrammars = with pkgs.tree-sitter-grammars;
-    map makeTsGrammar [
-      css
-      hcl
-      lua
-      html
-      just
-      rust
-      yaml
-      python
-      svelte
-      dockerfile
-      javascript
-      typescript
-      rust-format-args
-    ];
+  tsGrammars = map makeTsGrammar [
+    "css"
+    "hcl"
+    "lua"
+    "html"
+    "just"
+    "rust"
+    "yaml"
+    "python"
+    "svelte"
+    "dockerfile"
+    "javascript"
+    "typescript"
+    "rust-format-args"
+  ];
 in {
   programs.neovim = {
     extraPackages = languageServers ++ formatters ++ linters ++ tsGrammars;

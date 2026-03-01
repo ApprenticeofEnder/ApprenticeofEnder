@@ -13,7 +13,7 @@ in {
       else "0";
   };
 
-  imports = lib.mkIf isNixOS [./nixos.nix];
+  imports = [] ++ lib.optionals isNixOS [./nixos.nix];
   programs = {
     neovim = {
       enable = true;
