@@ -1,4 +1,10 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  lib,
+  nixosConfig,
+  ...
+}: let
+  isNixOS = nixosConfig != null;
   makeLanguageServer = language: pkgs."${language}-language-server";
   languageServers = with pkgs;
     [
@@ -55,13 +61,14 @@
     javascript
     typescript
   ];
-in {
-  programs.neovim = {
-    plugins = with pkgs.vimPlugins;
-      [
-        nvim-treesitter
-      ]
-      ++ tsGrammars;
-    extraPackages = languageServers ++ formatters ++ linters;
-  };
-}
+in
+  lib.mkIf isNixOS {
+    programs.neovim = {
+      plugins = with pkgs.vimPlugins;
+        [
+          nvim-treesitter
+        ]
+        ++ tsGrammars;
+      extraPackages = languageServers ++ formatters ++ linters;
+    };
+  }

@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   nixosConfig,
   ...
 }: let
@@ -13,7 +12,7 @@ in {
       else "0";
   };
 
-  imports = [] ++ lib.optionals isNixOS [./nixos.nix];
+  imports = [./nixos.nix];
   programs = {
     neovim = {
       enable = true;
