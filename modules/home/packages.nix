@@ -49,34 +49,37 @@
     ansible-lint # linter
   ];
 
-  utility = with pkgs; [
-    # System
-    sd # better sed
-    duf # disk usage
-    pik # process info
-    just # make for commands
-    less # needed for Ubuntu
-    mosh # better SSH
-    ncdu # disk usage (baobab-like tui)
-    ntfy-sh # notifications when commands finish
-    tldr # man with examples
-    tree
-    ttyd # terminal sharing
-    procs # better ps
-    unzip
-    lazyssh
-    macchina
-    libnotify
-    cargo-seek
+  utility = with pkgs;
+    [
+      # System
+      sd # better sed
+      duf # disk usage
+      pik # process info
+      just # make for commands
+      less # needed for Ubuntu
+      mosh # better SSH
+      ncdu # disk usage (baobab-like tui)
+      tldr # man with examples
+      tree
+      ttyd # terminal sharing
+      procs # better ps
+      unzip
+      lazyssh
+      macchina
+      libnotify
+      cargo-seek
 
-    # Research
-    wiki-tui # wikipedia TUI
+      # Research
+      wiki-tui # wikipedia TUI
 
-    # Routine
-    lynx # text web browser
-    md-tui # markdown reader
-    ispell # spelling
-  ];
+      # Routine
+      lynx # text web browser
+      md-tui # markdown reader
+      ispell # spelling
+    ]
+    ++ [
+      pkgs-stable.ntfy-sh # notifications when commands finish
+    ];
 
   linux = with pkgs;
     [
