@@ -37,22 +37,15 @@
   mcpToolList = prefix: (tools: (map (tool: "${prefix}_${tool}") tools));
 
   permissions = {};
-  permissions.plan =
-    buildAccessList "deny" (
-      mcpToolList
-      "serena"
-      [
-        "delete_*"
-        "insert_*"
-        "replace_*"
-      ]
-    )
-    // {
-      "serena_create_text_file" = {
-        "*" = "ask";
-        ".opencode/plans/*" = "allow";
-      };
-    };
+  permissions.plan = buildAccessList "deny" (
+    mcpToolList
+    "serena"
+    [
+      "delete_*"
+      "insert_*"
+      "replace_*"
+    ]
+  );
 
   plan = {
     mode = "primary";
