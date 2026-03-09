@@ -19,7 +19,9 @@ Add prompts, permissions, and tooling for the **build** and **debug** agents in 
 ```nix
 permissions.build = buildAccessList "allow" (
   mcpToolList "serena" [
+    "create_*"
     "delete_*"
+    "edit_*"
     "insert_*"
     "replace_*"
     "rename_*"
