@@ -16,7 +16,8 @@
 
   mcpToolList = prefix: (tools: (map (tool: "${prefix}_${tool}") tools));
 
-  serenaPlanDeny = buildAccessList "deny" (
+  permissions = {};
+  permissions.plan = buildAccessList "deny" (
     mcpToolList
     "serena"
     [
@@ -33,7 +34,8 @@
       edit = false;
     };
 
-    permission = serenaPlanDeny;
+    permission = permissions.plan;
+    prompt = builtins.readFile ./plan.md;
   };
   /*
   Agents:
