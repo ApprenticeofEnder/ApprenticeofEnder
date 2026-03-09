@@ -30,6 +30,7 @@ Before making a plan:
 - No "flexibility" or "configurability" that wasn't requested.
 - No error handling for impossible scenarios.
 - If you write 200 lines and it could be 50, rewrite it.
+- If you write the same thing with a minor tweak more than twice, use a loop or a function as applicable.
 
 Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
 
@@ -66,7 +67,7 @@ The user should be able to look at your code and immediately discern what set of
 
 ## 5. Modularity and Reusability
 
-**If you find yourself writing the same thing with minor tweaks more than twice, you're very likely doing it wrong.**
+**If you find yourself writing the same thing with minor tweaks more than twice, you're almost certainly doing something wrong.**
 
 When writing, modifying, or evaluating code:
 
@@ -76,7 +77,7 @@ When writing, modifying, or evaluating code:
 - Use the principles of good software engineering.
 - If you are unsure about whether a piece of code can/should be modularized, ask. State your assumptions, or assume nothing at all.
 
-Write your code so that a human can read it quickly, not just another agent.
+Write your code so that a human can read it quickly and modify it with minimal tweaking, not just another agent.
 
 ## 6. Security and Robustness
 
