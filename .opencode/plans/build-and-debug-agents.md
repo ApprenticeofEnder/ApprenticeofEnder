@@ -6,11 +6,11 @@ Add prompts, permissions, and tooling for the **build** and **debug** agents in 
 
 ## Files Touched
 
-| File | Change |
-|------|--------|
+| File                                                | Change                                                                                                               |
+| --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | `modules/home/programs/opencode/agents/default.nix` | Add `build` and `debug` attrsets with tools, permissions, prompt refs. Wire into `programs.opencode.settings.agent`. |
-| `modules/home/programs/opencode/agents/build.md` | Write full build agent prompt (currently empty). |
-| `modules/home/programs/opencode/agents/debug.md` | Write full debug agent prompt (currently 5-line skeleton). |
+| `modules/home/programs/opencode/agents/build.md`    | Write full build agent prompt (currently empty).                                                                     |
+| `modules/home/programs/opencode/agents/debug.md`    | Write full debug agent prompt (currently 5-line skeleton).                                                           |
 
 ## 1. `agents/default.nix` Changes
 
@@ -45,6 +45,21 @@ build = {
 ### Debug Agent (Nix)
 
 ```nix
+debugBashAllow = buildAccessList "allow" {
+  "head *"
+  "tail *"
+  "wc *"
+  "ls *"
+  "grep *"
+  "cat *"
+  "find *"
+  "rg *"
+  "git log*"
+  "git diff*"
+  "git status*"
+  "git show*"
+};
+
 permissions.debug =
   buildAccessList "deny" (
     mcpToolList "serena" [
@@ -57,19 +72,7 @@ permissions.debug =
   // {
     bash = {
       "*" = "ask";
-      "head *" = "allow";
-      "tail *" = "allow";
-      "wc *" = "allow";
-      "ls *" = "allow";
-      "grep *" = "allow";
-      "cat *" = "allow";
-      "find *" = "allow";
-      "rg *" = "allow";
-      "git log*" = "allow";
-      "git diff*" = "allow";
-      "git status*" = "allow";
-      "git show*" = "allow";
-    };
+    } // debugBashAllow;
   };
 
 debug = {
