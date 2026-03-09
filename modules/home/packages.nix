@@ -4,25 +4,28 @@
   pkgs-stable,
   ...
 }: let
-  dev = with pkgs; [
-    shfmt # shell formatter
-    typst # latex alternative
-    httpie # better http client
-    gnumake
-    vi-mongo # mongodb tui
-    shellcheck # shell linter
-    mermaid-cli
+  dev = with pkgs;
+    [
+      shfmt # shell formatter
+      typst # latex alternative
+      httpie # better http client
+      gnumake
+      vi-mongo # mongodb tui
+      shellcheck # shell linter
+      mermaid-cli
 
-    # nix-specific
-    nil # lsp
-    nix-info # system information
-    nix-tree # dependency navigation
-    alejandra # formatter
+      # nix-specific
+      nil # lsp
+      nix-info # system information
+      nix-tree # dependency navigation
+      alejandra # formatter
 
-    omnix
-    cachix
-    devenv
-  ];
+      omnix
+    ]
+    ++ [
+      pkgs-stable.devenv
+      pkgs-stable.cachix
+    ];
 
   security = with pkgs; [
     nmap # recon
