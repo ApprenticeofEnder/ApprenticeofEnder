@@ -7,8 +7,6 @@
     enable = true;
     enableMcpIntegration = true;
 
-    rules = builtins.readFile ./AGENTS.md;
-
     settings = {
       theme = "nord";
       autoshare = false;
