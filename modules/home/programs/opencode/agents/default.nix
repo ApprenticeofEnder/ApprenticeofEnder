@@ -50,8 +50,14 @@
   plan = {
     mode = "primary";
     tools = {
-      write = false;
-      edit = false;
+      write = {
+        "*" = false;
+        ".opencode/plans" = true;
+      };
+      edit = {
+        "*" = false;
+        ".opencode/plans" = true;
+      };
     };
 
     permission = permissions.plan;
