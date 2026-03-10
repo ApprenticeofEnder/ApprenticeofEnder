@@ -37,27 +37,32 @@
 
   # --- Plan Agent ---
 
-  permissions.plan = buildAccessList "deny" (
-    mcpToolList
-    "serena"
-    [
-      "delete_*"
-      "insert_*"
-      "replace_*"
-    ]
-  );
+  permissions.plan =
+    buildAccessList "deny" (
+      mcpToolList
+      "serena"
+      [
+        "delete_*"
+        "insert_*"
+        "replace_*"
+      ]
+    )
+    // {
+      write = {
+        "*" = "deny";
+        ".opencode/plans/*" = "allow";
+      };
+      edit = {
+        "*" = "deny";
+        ".opencode/plans/*" = "allow";
+      };
+    };
 
   plan = {
     mode = "primary";
     tools = {
-      write = {
-        "*" = false;
-        ".opencode/plans" = true;
-      };
-      edit = {
-        "*" = false;
-        ".opencode/plans" = true;
-      };
+      write = true;
+      edit = true;
     };
 
     permission = permissions.plan;
