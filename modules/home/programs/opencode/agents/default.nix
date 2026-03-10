@@ -1,4 +1,3 @@
-# TODO: Create other agents based on needs
 {...}: let
   /*
   Builds an access control list for OpenCode permissions.
@@ -36,7 +35,8 @@
   */
   mcpToolList = prefix: (tools: (map (tool: "${prefix}_${tool}") tools));
 
-  permissions = {};
+  # --- Plan Agent ---
+
   permissions.plan = buildAccessList "deny" (
     mcpToolList
     "serena"
@@ -63,20 +63,81 @@
     permission = permissions.plan;
     prompt = builtins.readFile ./plan.md;
   };
-  /*
-  Agents:
-  - Diagnostic/Debug
-  - Code Reviewer
-  - Terraform/IaC
-  - Security Analyst
-  - Docs
-  - Testing
-  */
+
+  # --- Build Agent ---
+
+  permissions.build = buildAccessList "allow" (
+    mcpToolList "serena" [
+      "create_*"
+      "delete_*"
+      "edit_*"
+      "insert_*"
+      "replace_*"
+      "rename_*"
+      "write_memory"
+    ]
+  );
+
+  build = {
+    mode = "primary";
+    tools = {
+      write = true;
+      edit = true;
+    };
+    permission = permissions.build;
+    prompt = builtins.readFile ./build.md;
+  };
+
+  # --- Debug Agent ---
+
+  debugBashAllow = buildAccessList "allow" [
+    "head *"
+    "tail *"
+    "wc *"
+    "ls *"
+    "grep *"
+    "cat *"
+    "find *"
+    "rg *"
+    "git log*"
+    "git diff*"
+    "git status*"
+    "git show*"
+  ];
+
+  permissions.debug =
+    buildAccessList "deny" (
+      mcpToolList "serena" [
+        "delete_*"
+        "insert_*"
+        "replace_*"
+        "rename_*"
+      ]
+    )
+    // {
+      bash =
+        {
+          "*" = "ask";
+        }
+        // debugBashAllow;
+    };
+
+  debug = {
+    mode = "primary";
+    tools = {
+      write = false;
+      edit = false;
+    };
+    permission = permissions.debug;
+    prompt = builtins.readFile ./debug.md;
+  };
 in {
   programs.opencode = {
     settings = {
       agent = {
         plan = plan;
+        build = build;
+        debug = debug;
       };
     };
   };
