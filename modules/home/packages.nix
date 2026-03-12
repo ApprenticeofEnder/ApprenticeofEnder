@@ -37,6 +37,7 @@
     # _1password-gui # TODO: Work out the whole user/group requirement thing
     # _1password-cli
     semgrep
+    zizmor
   ];
 
   devops = with pkgs; [
