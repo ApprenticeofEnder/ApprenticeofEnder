@@ -26,6 +26,7 @@
       "read_*"
       "search_*"
       "think_*"
+      "edit_memory"
       "write_memory"
     ]
   );
@@ -53,14 +54,12 @@
 
   permissions =
     {
-      read = {
-        "*" = "allow";
-        "*.env" = "deny";
-      };
-      edit = "ask";
+      read = "deny";
+      edit = "deny";
       bash = bashPerms;
 
       webfetch = "ask";
+      grep = "ask";
     }
     // serenaPerms;
 in {

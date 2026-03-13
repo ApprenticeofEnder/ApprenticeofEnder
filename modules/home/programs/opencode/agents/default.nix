@@ -37,34 +37,29 @@
 
   # --- Plan Agent ---
 
-  permissions.plan =
-    buildAccessList "deny" (
-      mcpToolList
-      "serena"
-      [
+  planFilePermissions = {
+    "*" = "deny";
+    ".opencode/plans/*" = "allow";
+  };
+
+  permissions.plan = builtins.listToAttrs (
+    map (
+      tool: {
+        name = tool;
+        value = planFilePermissions;
+      }
+    ) (
+      mcpToolList "serena" [
+        "create_*"
         "delete_*"
         "insert_*"
         "replace_*"
       ]
     )
-    // {
-      write = {
-        "*" = "deny";
-        ".opencode/plans/*" = "allow";
-      };
-      edit = {
-        "*" = "deny";
-        ".opencode/plans/*" = "allow";
-      };
-    };
+  );
 
   plan = {
     mode = "primary";
-    tools = {
-      write = true;
-      edit = true;
-    };
-
     permission = permissions.plan;
     prompt = builtins.readFile ./plan.md;
   };
@@ -79,16 +74,11 @@
       "insert_*"
       "replace_*"
       "rename_*"
-      "write_memory"
     ]
   );
 
   build = {
     mode = "primary";
-    tools = {
-      write = true;
-      edit = true;
-    };
     permission = permissions.build;
     prompt = builtins.readFile ./build.md;
   };
@@ -100,7 +90,6 @@
     "tail *"
     "wc *"
     "ls *"
-    "grep *"
     "cat *"
     "find *"
     "rg *"
@@ -123,6 +112,7 @@
       bash =
         {
           "*" = "ask";
+          "grep *" = "deny"; # We want to use the grep tool
         }
         // debugBashAllow;
     };
