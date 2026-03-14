@@ -3,7 +3,7 @@
   Builds an access control list for OpenCode permissions.
 
   Inputs:
-    accessValue: The level of access to give to the given values list. Value options: "ask" | "allow" | "deny"
+    accessValue: The level of access to give to the given values list. Can be a string or attribute set.
     resources: The list of resources to assign access values.
   Output:
     Attribute set of the form: {
@@ -42,20 +42,13 @@
     ".opencode/plans/*" = "allow";
   };
 
-  permissions.plan = builtins.listToAttrs (
-    map (
-      tool: {
-        name = tool;
-        value = planFilePermissions;
-      }
-    ) (
-      mcpToolList "serena" [
-        "create_*"
-        "delete_*"
-        "insert_*"
-        "replace_*"
-      ]
-    )
+  permissions.plan = buildAccessList planFilePermissions (
+    mcpToolList "serena" [
+      "create_*"
+      "delete_*"
+      "insert_*"
+      "replace_*"
+    ]
   );
 
   plan = {
@@ -90,7 +83,6 @@
     "tail *"
     "wc *"
     "ls *"
-    "cat *"
     "find *"
     "rg *"
     "git log*"

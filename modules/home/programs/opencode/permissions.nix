@@ -43,7 +43,6 @@
     "head *"
     "wc *"
     "ls *"
-    "grep *"
   ];
 
   bashPerms =
