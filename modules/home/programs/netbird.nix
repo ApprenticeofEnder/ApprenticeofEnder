@@ -1,5 +1,5 @@
-{pkgs, ...}: {
-  home.packages = with pkgs; [
-    netbird-ui
+{pkgs-stable, ...}: {
+  home.packages = [
+    pkgs-stable.netbird-ui
   ];
 }
