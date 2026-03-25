@@ -16,8 +16,8 @@ lib.mkMerge [
         enable = true;
         gpu.nvidia = {
           enable = true;
-          version = "580.126.09";
-          sha256 = "sha256-TKxT5I+K3/Zh1HyHiO0kBZokjJ/YCYzq/QiKSYmG7CY=";
+          version = "595.58.03";
+          sha256 = "sha256-jA1Plnt5MsSrVxQnKu6BAzkrCnAskq+lVRdtNiBYKfk=";
         };
       };
     };
