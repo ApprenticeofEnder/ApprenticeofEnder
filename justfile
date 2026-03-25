@@ -29,9 +29,9 @@ dev:
 # Activate the configuration
 [group('Main')]
 run:
-  nix run
+  cachix watch-exec rbabaev -- nix run
 
 # Activate the configuration (non-NixOS)
 [group('Main')]
 run-generic:
-  nix run '.#non-nixos'
+  cachix watch-exec rbabaev -- nix run '.#non-nixos'
