@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   config,
   ...
@@ -6,8 +7,6 @@
   name = "Robert Babaev";
   domain = "robertbabaev.tech";
   pushCache = "rbabaev";
-
-  nvidiaDriverVersion = "595.58.03";
 
   devicon = icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${icon}/${icon}-original.svg";
 in {
@@ -177,12 +176,53 @@ in {
         prettier README.md
       '';
     };
-    nvidia-drivers = {
+    fetch-nvidia-drivers = let
+      graphicsCardSeriesId = "120"; # GeForce RTX 30 series
+      graphicsCardId = "965"; # RTX 3070 Ti
+      osId = "12"; # Linux, 64-bit
+      languageCode = "1033"; # en-US
+
+      queryParameters = {
+        func = "DriverManualLookup";
+        psid = graphicsCardSeriesId;
+        pfid = graphicsCardId;
+        osID = osId;
+        languageCode = languageCode;
+        beta = "null";
+        isWHQL = "0";
+        dlType = "-1";
+        dch = "0";
+        upCRD = "null";
+        qnf = "0";
+        ctk = "null";
+        sort1 = "1";
+        numberOfResults = "1";
+      };
+
+      makeQueryString = parameter: let
+        parameterValue = queryParameters."${parameter}";
+      in "${parameter}=${parameterValue}";
+
+      queryString = lib.strings.join "&" (map makeQueryString (builtins.attrNames queryParameters));
+
+      driverFilePath = "${config.devenv.root}/modules/home/drivers.json";
+    in {
       exec = ''
-        nix store prefetch-file \
-          "https://download.nvidia.com/XFree86/Linux-x86_64/${nvidiaDriverVersion}/NVIDIA-Linux-x86_64-${nvidiaDriverVersion}.run"
+        NVIDIA_URL="https://gfwsl.geforce.com/services_toolkit/services/com/nvidia/services/AjaxDriverService.php?${queryString}"
+        NEW_DRIVER_VERSION="$(curl "$NVIDIA_URL" | jq -r '.IDS[0].downloadInfo.DisplayVersion')"
+        echo "New NVIDIA driver version is $NEW_DRIVER_VERSION"
+        NEW_DRIVER_HASH="$(nix store prefetch-file \
+          --json \
+          "https://download.nvidia.com/XFree86/Linux-x86_64/$NEW_DRIVER_VERSION/NVIDIA-Linux-x86_64-$NEW_DRIVER_VERSION.run" |
+          jq -r '.hash'
+          )"
+        echo "SHA256 is $NEW_DRIVER_HASH"
+
+        jq -n \
+          --arg "version" "$NEW_DRIVER_VERSION" \
+          --arg "sha256" "$NEW_DRIVER_HASH" \
+          '$ARGS.named' > ${driverFilePath}
       '';
-      description = "Prefetch hash for Nvidia drivers";
     };
     dotfiles = {
       exec = ''

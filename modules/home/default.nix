@@ -4,6 +4,7 @@ let
     filename
     != "default.nix"
     && filename != "targets.nix"
+    && filename != "drivers.json"
   );
 in {
   imports = with builtins;
