@@ -60,7 +60,6 @@
       duf # disk usage
       pik # process info
       just # make for commands
-      less # needed for Ubuntu
       mosh # better SSH
       ncdu # disk usage (baobab-like tui)
       tldr # man with examples
@@ -94,6 +93,8 @@
       lazyjournal
       systemctl-tui
       nvtopPackages.full
+
+      less # needed for Ubuntu
 
       # fun that only works on Linux
       spotify
