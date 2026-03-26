@@ -1,5 +1,5 @@
 {
   programs.mu = {
-    enable = true;
+    enable = false;
   };
 }
