@@ -17,6 +17,7 @@
 
     "editor.formatOnSave" = true;
     "editor.wordWrap" = "on";
+    "editor.lineNumbers" = "relative";
 
     "workbench.colorTheme" = "Nord";
     "workbench.iconTheme" = "material-icon-theme";
