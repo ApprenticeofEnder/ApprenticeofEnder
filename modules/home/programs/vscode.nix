@@ -109,6 +109,9 @@ in
                 "[typescriptreact]" = biomeDefault;
                 "[vue]" = prettierDefault;
                 "[svelte]" = prettierDefault;
+                "[cobol]" = {
+                  "editor.defaultFormatter" = "OCamlPro.SuperBOL";
+                };
               };
               extensions = with pkgs.vscode-extensions; [
                 # languages
