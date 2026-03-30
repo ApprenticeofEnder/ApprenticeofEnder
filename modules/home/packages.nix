@@ -21,10 +21,12 @@
       alejandra # formatter
 
       omnix
+      devenv
+      cachix
     ]
     ++ [
-      pkgs-stable.devenv
-      pkgs-stable.cachix
+      # pkgs-stable.devenv
+      # pkgs-stable.cachix
     ];
 
   security = with pkgs; [
