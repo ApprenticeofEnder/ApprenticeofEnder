@@ -47,7 +47,7 @@
 
   bashPerms =
     {
-      "*" = "ask";
+      "*" = "deny";
     }
     // bashAllow;
 

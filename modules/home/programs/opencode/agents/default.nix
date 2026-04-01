@@ -42,14 +42,18 @@
     ".opencode/plans/*" = "allow";
   };
 
-  permissions.plan = buildAccessList planFilePermissions (
-    mcpToolList "serena" [
-      "create_*"
-      "delete_*"
-      "insert_*"
-      "replace_*"
-    ]
-  );
+  permissions.plan =
+    buildAccessList planFilePermissions (
+      mcpToolList "serena" [
+        "create_*"
+        "delete_*"
+        "insert_*"
+        "replace_*"
+      ]
+    )
+    // {
+      bash = "deny";
+    };
 
   plan = {
     mode = "primary";
