@@ -7,8 +7,11 @@
     enable = true;
     enableMcpIntegration = true;
 
-    settings = {
+    tui = {
       theme = "nord";
+    };
+
+    settings = {
       autoshare = false;
       autoupdate = false;
 
