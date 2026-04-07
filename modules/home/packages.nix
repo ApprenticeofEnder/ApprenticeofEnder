@@ -12,6 +12,7 @@
       gnumake
       vi-mongo # mongodb tui
       shellcheck # shell linter
+      keep-sorted # line sorting
       mermaid-cli
 
       # nix-specific
