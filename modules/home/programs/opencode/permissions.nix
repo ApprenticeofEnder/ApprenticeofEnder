@@ -53,7 +53,6 @@
 
   permissions =
     {
-      read = "deny";
       edit = "deny";
       bash = bashPerms;
 
