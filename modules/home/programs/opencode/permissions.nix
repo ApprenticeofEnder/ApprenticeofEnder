@@ -53,7 +53,7 @@
 
   permissions =
     {
-      edit = "deny";
+      edit = "ask";
       bash = bashPerms;
 
       webfetch = "ask";
