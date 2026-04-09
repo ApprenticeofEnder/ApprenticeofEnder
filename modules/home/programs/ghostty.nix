@@ -11,7 +11,7 @@ lib.mkMerge [
       enableZshIntegration = true;
       enableFishIntegration = true;
       settings = {
-        command = "fish";
+        command = "${pkgs.fish}/bin/fish";
         scrollback-limit = 10000;
         window-decoration = "client";
         window-height = 3000;
