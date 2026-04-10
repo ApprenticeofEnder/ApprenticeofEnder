@@ -276,6 +276,7 @@ in {
         "pre-push"
       ];
     };
+    keep-sorted.enable = true;
     convco.enable = true;
   };
 }

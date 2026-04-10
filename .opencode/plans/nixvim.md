@@ -8,7 +8,7 @@
 
 ## User
 
-Okay, I have a crazy idea. I have a neovim config in my dotfiles that allows me to have a flexible config between VSCode and Neovim. 
+Okay, I have a crazy idea. I have a neovim config in my dotfiles that allows me to have a flexible config between VSCode and Neovim.
 
 I want to achieve something similar using NixVim. How can I go about that?
 
@@ -246,18 +246,18 @@ Here's the full plan. Let me walk you through it:
 
 ### Overview of What Changes
 
-| Component | Before | After |
-|-----------|--------|-------|
-| Standalone Neovim config | Stow-managed Lua (`dotfiles/nvim/…/neovim-config/`) | NixVim Nix module in `modules/home/programs/neovim/` |
-| VSCode Neovim config | Stow-managed Lua (`dotfiles/nvim/…/vscode-config/`) | **Unchanged** — still Stow-managed |
-| `dotfiles/nvim` stow target | Links entire `~/.config/nvim/` | **Trimmed**: only links `vscode-config/` subtree |
-| `init.lua` dispatch | Routes `vim.g.vscode` branch in Stow | Still needed for VSCode side — lives as a `home.file` entry |
-| Plugin management | Lazy.nvim (for both) | NixVim for standalone; Lazy.nvim still used by VSCode side |
-| NvChad | Standalone UI framework | **Dropped** — replaced with NixVim-native equivalents |
-| Colorscheme | NvChad's `onenord` | `onenord-nvim` via `extraPlugins` (it's in nixpkgs) |
-| LSP | Mason + `nvchad.configs.lspconfig` | `plugins.lsp.servers.*` + `extraPackages` |
-| Formatter | conform.nvim via Lazy | `plugins.conform-nvim` |
-| Treesitter | nvim-treesitter via Lazy | `plugins.treesitter` |
+| Component                   | Before                                              | After                                                       |
+| --------------------------- | --------------------------------------------------- | ----------------------------------------------------------- |
+| Standalone Neovim config    | Stow-managed Lua (`dotfiles/nvim/…/neovim-config/`) | NixVim Nix module in `modules/home/programs/neovim/`        |
+| VSCode Neovim config        | Stow-managed Lua (`dotfiles/nvim/…/vscode-config/`) | **Unchanged** — still Stow-managed                          |
+| `dotfiles/nvim` stow target | Links entire `~/.config/nvim/`                      | **Trimmed**: only links `vscode-config/` subtree            |
+| `init.lua` dispatch         | Routes `vim.g.vscode` branch in Stow                | Still needed for VSCode side — lives as a `home.file` entry |
+| Plugin management           | Lazy.nvim (for both)                                | NixVim for standalone; Lazy.nvim still used by VSCode side  |
+| NvChad                      | Standalone UI framework                             | **Dropped** — replaced with NixVim-native equivalents       |
+| Colorscheme                 | NvChad's `onenord`                                  | `onenord-nvim` via `extraPlugins` (it's in nixpkgs)         |
+| LSP                         | Mason + `nvchad.configs.lspconfig`                  | `plugins.lsp.servers.*` + `extraPackages`                   |
+| Formatter                   | conform.nvim via Lazy                               | `plugins.conform-nvim`                                      |
+| Treesitter                  | nvim-treesitter via Lazy                            | `plugins.treesitter`                                        |
 
 ---
 
@@ -268,9 +268,11 @@ Here's the full plan. Let me walk you through it:
 Add `nixvim.homeModules.nixvim` to home-manager modules. The `nixvim` input is already present in the flake. It needs to be passed down to the home-manager module system.
 
 In `modules/flake/toplevel.nix` (or wherever `homeModules.default` is assembled), add:
+
 ```nix
 inputs.nixvim.homeModules.nixvim
 ```
+
 to the `modules` list passed to home-manager.
 
 > **Note**: Per NixVim's docs, do **not** use `inputs.nixpkgs.follows` for the nixvim input — it should use its own pinned nixpkgs. Your `flake.nix` already follows nixpkgs for it, which may cause issues. This should be removed.
@@ -282,6 +284,7 @@ to the `modules` list passed to home-manager.
 Currently `dotfiles/nvim/.config/nvim/` contains both `neovim-config/` and `vscode-config/`. After migration, NixVim owns `~/.config/nvim/` and Stow must not conflict.
 
 Two options:
+
 - **(A) Keep stow for VSCode files only**: restructure `dotfiles/nvim` so it only contains the `vscode-config/` folder and a minimal `init.lua` that dispatches only for VSCode (the `else` branch becomes a no-op or is removed).
 - **(B) Manage VSCode files via `home.file`**: drop stow for nvim entirely, manage `vscode-config/` Lua files as `home.file` entries.
 
@@ -342,6 +345,7 @@ in {
 ```
 
 For cleanliness, this can be split into sub-files imported via `programs.nixvim.imports`:
+
 - `nixvim/options.nix`
 - `nixvim/plugins.nix`
 - `nixvim/keymaps.nix`
@@ -353,6 +357,7 @@ For cleanliness, this can be split into sub-files imported via `programs.nixvim.
 ### Step 4 — Translate `neovim-config/` components
 
 #### options.lua → `opts`
+
 ```nix
 opts = {
   relativenumber = true;
@@ -364,21 +369,27 @@ opts = {
 ```
 
 #### mappings.lua → `keymaps`
+
 Translate all `map("n", ";", ":", ...)` etc. to the `keymaps` list. The NvChad default mappings (`require "nvchad.mappings"`) must be manually replicated or dropped (they cover things like buffer switching, NvimTree toggle, etc. — NixVim-native plugins will provide their own).
 
 #### autocmds.lua → `autoCmd`
+
 Translate the Terraform/typst file detection, BufWritePre format-on-save, and comment string autocmds. The conform.nvim format-on-save can be handled via `plugins.conform-nvim.settings.format_on_save` instead.
 
 #### hover.lua → `extraConfigLua`
+
 The custom LSP hover handler is pure Lua. Include it verbatim in `extraConfigLua`.
 
 #### plugins/lspconfig.lua → `plugins.lsp.servers`
+
 Translate each server. The Vue/TS plugin interop (`@vue/typescript-plugin`) needs special handling via `plugins.lsp.servers.ts_ls.extraOptions` or `extraConfigLua`.
 
 #### plugins/conform.lua → `plugins.conform-nvim`
+
 The `Prettier_or_biome` function is Lua logic — it can be expressed as a `__raw` Lua function in `formatters_by_ft`, or translated into NixVim's native `stop_after_first` pattern (check for biome config, fall back to prettier).
 
 #### plugins/nvim-treesitter.lua → `plugins.treesitter`
+
 Translate `ensure_installed` to `grammarPackages`. The `vim.filetype.add` calls go in `extraConfigLua`.
 
 ---
@@ -387,16 +398,16 @@ Translate `ensure_installed` to `grammarPackages`. The `vim.filetype.add` calls 
 
 NvChad provided: a statusline, bufline, dashboard, and NvimTree config. Without it, we need equivalents:
 
-| NvChad feature | NixVim replacement |
-|---|---|
-| Statusline | `plugins.lualine` |
-| Tab/buffer line | `plugins.bufferline` |
-| Dashboard | `plugins.dashboard-nvim` or `plugins.alpha` |
-| NvimTree | `plugins.nvim-tree` (already in plan) |
-| Autocomplete | `plugins.cmp` (nvim-cmp) |
-| Snippets | `plugins.luasnip` + `plugins.cmp-luasnip` |
-| Icons | `plugins.web-devicons` (nvim-web-devicons) |
-| Telescope | `plugins.telescope` |
+| NvChad feature  | NixVim replacement                          |
+| --------------- | ------------------------------------------- |
+| Statusline      | `plugins.lualine`                           |
+| Tab/buffer line | `plugins.bufferline`                        |
+| Dashboard       | `plugins.dashboard-nvim` or `plugins.alpha` |
+| NvimTree        | `plugins.nvim-tree` (already in plan)       |
+| Autocomplete    | `plugins.cmp` (nvim-cmp)                    |
+| Snippets        | `plugins.luasnip` + `plugins.cmp-luasnip`   |
+| Icons           | `plugins.web-devicons` (nvim-web-devicons)  |
+| Telescope       | `plugins.telescope`                         |
 
 These are all native NixVim modules.
 
@@ -405,11 +416,13 @@ These are all native NixVim modules.
 ### Step 6 — Clean up `default.nix` and `nixos.nix`
 
 `modules/home/programs/neovim/default.nix`:
+
 - Remove the `programs.neovim` block (NixVim sets this up)
 - Remove `NIX_NEOVIM` env var (Mason detection no longer needed — Mason is gone)
 - Import `./nixvim.nix` instead of `./nixos.nix`
 
 `modules/home/programs/neovim/nixos.nix`:
+
 - Can be kept or merged into `nixvim.nix` since `extraPackages` in NixVim replaces the LSP/formatter packages that were conditionally added on NixOS.
 - Actually, `extraPackages` in NixVim always adds to PATH — you may still want the NixOS guard for LSP servers (on non-NixOS, Mason handles them). This becomes a `lib.mkIf isNixOS` block on `plugins.lsp.servers.*.package`.
 
@@ -418,27 +431,29 @@ These are all native NixVim modules.
 ### Key Tradeoff to Note
 
 The **`nixpkgs.follows`** concern: your current `flake.nix` has:
+
 ```nix
 nixvim = {
   url = "github:nix-community/nixvim";
   inputs.nixpkgs.follows = "nixpkgs";
 };
 ```
+
 NixVim's docs say not to do this (their IFD and build machinery is pinned to their own nixpkgs). You'll want to **remove the `inputs.nixpkgs.follows` line** from the nixvim input. This means nixvim will use its own nixpkgs version — a slight duplication but the safe approach.
 
 ---
 
 ### Files Changed
 
-| File | Change |
-|------|--------|
-| `flake.nix` | Remove `inputs.nixpkgs.follows` from nixvim input |
-| `modules/flake/toplevel.nix` | Add `nixvim.homeModules.nixvim` to home-manager modules |
-| `modules/home/programs/neovim/default.nix` | Remove `programs.neovim` block; import `nixvim.nix` |
-| `modules/home/programs/neovim/nixos.nix` | Convert to `lib.mkIf isNixOS` guard on nixvim LSP packages |
-| `modules/home/programs/neovim/nixvim.nix` (new) | Full NixVim config (or split into sub-files) |
-| `dotfiles/nvim/.config/nvim/init.lua` | Retain only VSCode dispatch (`vim.g.vscode` branch) or manage via `home.file` |
-| `dotfiles/nvim/.config/nvim/lua/neovim-config/` | **Deleted** (replaced by NixVim) |
+| File                                            | Change                                                                        |
+| ----------------------------------------------- | ----------------------------------------------------------------------------- |
+| `flake.nix`                                     | Remove `inputs.nixpkgs.follows` from nixvim input                             |
+| `modules/flake/toplevel.nix`                    | Add `nixvim.homeModules.nixvim` to home-manager modules                       |
+| `modules/home/programs/neovim/default.nix`      | Remove `programs.neovim` block; import `nixvim.nix`                           |
+| `modules/home/programs/neovim/nixos.nix`        | Convert to `lib.mkIf isNixOS` guard on nixvim LSP packages                    |
+| `modules/home/programs/neovim/nixvim.nix` (new) | Full NixVim config (or split into sub-files)                                  |
+| `dotfiles/nvim/.config/nvim/init.lua`           | Retain only VSCode dispatch (`vim.g.vscode` branch) or manage via `home.file` |
+| `dotfiles/nvim/.config/nvim/lua/neovim-config/` | **Deleted** (replaced by NixVim)                                              |
 
 ---
 
@@ -465,4 +480,3 @@ Plan approved. Let me save it:
 **Tool: task**
 
 ---
-
