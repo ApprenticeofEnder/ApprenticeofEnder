@@ -12,18 +12,13 @@
       ./autocmds.nix
       ./lsp.nix
       ./options.nix
+      ./mappings.nix
     ];
 
     colorschemes = {
       nord.enable = true;
     };
 
-    # TODO: Add Keymaps
-    keymaps = [
-      /*
-      all keymaps from mappings.lua
-      */
-    ];
     # extraConfigLua = ''/* hover.lua inline */ '';
   };
 }
