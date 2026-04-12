@@ -1,4 +1,4 @@
-{...}: let
+{pkgs, ...}: let
   filterFiles = filename: (
     filename
     != "default.nix"
@@ -16,9 +16,7 @@ in {
     # keep-sorted end
   };
 
-  # extraPlugins = with pkgs.vimPlugins; [
-  #   onenord-nvim
-  #   treewalker-nvim
-  #   nvim-hlslens
-  # ];
+  extraPlugins = with pkgs.vimPlugins; [
+    plenary-nvim
+  ];
 }
