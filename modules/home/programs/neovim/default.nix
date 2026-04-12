@@ -6,23 +6,11 @@ in {
       if isNixOS
       then "1"
       else "0";
+    EDITOR = "nvim";
+    VISUAL = "nvim";
   };
 
   imports = [./nixvim];
-  # programs = {
-  #   neovim = {
-  #     enable = true;
-  #     viAlias = true;
-  #     vimAlias = true;
-  #     withRuby = true;
-  #     withNodeJs = true;
-  #     withPython3 = true;
-  #     defaultEditor = true;
-  #     plugins = with pkgs.vimPlugins; [
-  #       LazyVim
-  #     ];
-  #   };
-  # };
 
   # home = {
   #   file = {
