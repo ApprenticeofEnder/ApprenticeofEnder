@@ -2,10 +2,10 @@
   plugins = {
     telescope = {
       enabled = true;
-      enabledExtensions = [
-        "themes"
-        "terms"
-      ];
+      # enabledExtensions = [
+      #   "themes"
+      #   "terms"
+      # ];
       settings = {
         defaults = {
           prompt_prefix = "   ";

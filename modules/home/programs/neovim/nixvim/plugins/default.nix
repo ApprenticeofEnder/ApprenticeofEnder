@@ -1,6 +1,4 @@
-{...}:
-# this automatically imports everything else in the parent folder
-let
+{...}: let
   filterFiles = filename: (
     filename
     != "default.nix"
@@ -10,6 +8,7 @@ in {
     map (fn: ./${fn}) (filter filterFiles (attrNames (readDir ./.)));
   plugins = {
     # keep-sorted start block=yes
+    autoclose.enable = true;
     todo-comments.enable = true;
     ts-autotag.enable = true;
     ts-context-commentstring.enable = true;
