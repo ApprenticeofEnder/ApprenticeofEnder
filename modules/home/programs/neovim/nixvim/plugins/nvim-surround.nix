@@ -1,9 +1,9 @@
-{...}: {
+{lib, ...}: {
   plugins = {
     nvim-surround = {
       enable = true;
       settings = {
-        aliases = ''
+        aliases = lib.nixvim.mkRaw ''
           {
             ["b"] = "**",
             ["i"] = "_",

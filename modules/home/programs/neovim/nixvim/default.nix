@@ -9,6 +9,7 @@
 
     imports = [
       ./plugins
+      ./lsp.nix
     ];
 
     opts = {
