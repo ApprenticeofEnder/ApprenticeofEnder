@@ -56,14 +56,10 @@ in {
         basedpyright = {
           config = {
             settings = {
-              pyright = {
+              basedpyright = {
                 disableOrganizeImports = true;
-              };
-              python = {
                 analysis = {
-                  ignore = [
-                    "*"
-                  ];
+                  ignore = ["*"];
                 };
               };
             };
