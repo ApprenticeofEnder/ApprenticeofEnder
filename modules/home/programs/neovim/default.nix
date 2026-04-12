@@ -12,7 +12,7 @@ in {
       else "0";
   };
 
-  imports = [./nixos.nix];
+  imports = [./nixvim];
   programs = {
     neovim = {
       enable = true;

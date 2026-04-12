@@ -3,6 +3,7 @@
 {flake, ...}: let
   inherit (flake) inputs;
   inherit (inputs) self;
+  inherit (inputs) nixvim;
   homeMod = self + /modules/home;
 in {
   imports = [
@@ -17,6 +18,7 @@ in {
   };
 
   home-manager.sharedModules = [
+    nixvim.homeModules.default
     "${homeMod}/programs/linux-only"
   ];
 

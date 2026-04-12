@@ -23,10 +23,5 @@ in {
     onenord-nvim
     treewalker-nvim
     nvim-hlslens
-    (buildVimPlugin {
-      /*
-      vim-highlighter
-      */
-    })
   ];
 }

@@ -8,6 +8,7 @@
 in {
   imports =
     [
+      inputs.nixvim.homeModules.default
       self.homeModules.default
       "${homeMod}/targets.nix"
     ]
