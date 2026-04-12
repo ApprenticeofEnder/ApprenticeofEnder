@@ -1,11 +1,11 @@
-{pkgs, ...}: {
+{config, ...}: {
   plugins = {
     treesitter = {
       enable = true;
       highlight.enable = true;
       indent.enable = true;
       folding.enable = false;
-      grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+      grammarPackages = with config.plugins.treesitter.package.builtGrammars; [
         # keep-sorted start
         bash
         css

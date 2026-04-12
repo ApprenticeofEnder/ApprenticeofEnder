@@ -14,10 +14,11 @@
       ./options.nix
     ];
 
-    # colorschemes = {
-    #   nord.enable = true;
-    # };
+    colorschemes = {
+      nord.enable = true;
+    };
 
+    # TODO: Add Keymaps
     keymaps = [
       /*
       all keymaps from mappings.lua
