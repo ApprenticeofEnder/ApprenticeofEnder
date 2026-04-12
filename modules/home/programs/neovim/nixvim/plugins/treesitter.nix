@@ -1,6 +1,4 @@
-{pkgs, ...}:
-# this automatically imports everything else in the parent folder
-{
+{pkgs, ...}: {
   plugins = {
     treesitter = {
       enable = true;
