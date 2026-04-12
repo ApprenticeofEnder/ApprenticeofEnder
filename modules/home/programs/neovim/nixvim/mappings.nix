@@ -44,71 +44,83 @@ let
     (makeMapping "<C-n>" "<cmd>NvimTreeToggle<CR>" "nvimtree toggle window")
     (makeMapping "<leader>e" "<cmd>NvimTreeFocus<CR>" "nvimtree focus window")
 
-    # TODO: Barbar keymaps
-    # TODO: Telescope (once that actually works)
+    # Barbar
+    (makeMapping "<tab>" "<cmd>BufferNext<CR>" "buffer goto next")
+    (makeMapping "<S-tab>" "<cmd>BufferPrevious<CR>" "buffer goto prev")
+    (makeMapping "<leader>x" "<cmd>BufferClose<CR>" "buffer close")
+    (makeMapping "<A->>" "<cmd>BufferMoveNext<CR>" "buffer reorder right")
+    (makeMapping "<A-<>" "<cmd>BufferMovePrevious<CR>" "buffer reorder left")
+
+    # Telescope
+    (makeMapping "<leader>fw" "<cmd>Telescope live_grep<CR>" "telescope live grep")
+    (makeMapping "<leader>fb" "<cmd>Telescope buffers<CR>" "telescope find buffers")
+    (makeMapping "<leader>fh" "<cmd>Telescope help_tags<CR>" "telescope help page")
+    (makeMapping "<leader>ma" "<cmd>Telescope marks<CR>" "telescope find marks")
+    (makeMapping "<leader>fo" "<cmd>Telescope oldfiles<CR>" "telescope find oldfiles")
+    (makeMapping "<leader>fz" "<cmd>Telescope current_buffer_fuzzy_find<CR>" "telescope find in current buffer")
+    (makeMapping "<leader>cm" "<cmd>Telescope git_commits<CR>" "telescope git commits")
+    (makeMapping "<leader>gt" "<cmd>Telescope git_status<CR>" "telescope git status")
+    (makeMapping "<leader>pt" "<cmd>Telescope terms<CR>" "telescope pick hidden term")
+    (makeMapping "<leader>ff" "<cmd>Telescope find_files<cr>" "telescope find files")
+    (
+      makeMapping
+      "<leader>fa"
+      "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>"
+      "telescope find all files"
+    )
+
+    # Comments
+    {
+      action = "gcc";
+      key = "<leader>/";
+      options = {
+        desc = "toggle comment";
+        remap = true;
+      };
+    }
+
+    # whichkey
+    (makeMapping "<leader>wK" "<cmd>WhichKey <CR>" "whichkey all keymaps")
+    (makeMapping "<leader>wk" {
+      __raw = ''
+        function()
+          vim.cmd("WhichKey " .. vim.fn.input "WhichKey: ")
+        end
+      '';
+    } "whichkey query lookup")
   ];
-  # TODO: Insert mappings
+
+  insertMaps = mapModes ["i"] [
+    (makeMapping "jk" "<ESC>" "Escape insert mode")
+
+    (makeMapping "<C-b>" "<ESC>^i" "Move to beginning of line")
+    (makeMapping "<C-e>" "<End>" "Move to end of line")
+    (makeMapping "<C-h>" "<Left>" "Move left")
+    (makeMapping "<C-l>" "<Right>" "Move right")
+    (makeMapping "<C-j>" "<Down>" "Move down")
+    (makeMapping "<C-k>" "<Up>" "Move up")
+  ];
+
+  visualMaps = mapModes ["v"] [
+    {
+      action = "gc";
+      key = "<leader>/";
+      options = {
+        desc = "toggle comment";
+        remap = true;
+      };
+    }
+  ];
 in {
-  keymaps = normalMaps;
+  keymaps =
+    normalMaps
+    ++ insertMaps
+    ++ visualMaps;
 }
-# map("i", "<C-b>", "<ESC>^i", { desc = "move beginning of line" })
-# map("i", "<C-e>", "<End>", { desc = "move end of line" })
-# map("i", "<C-h>", "<Left>", { desc = "move left" })
-# map("i", "<C-l>", "<Right>", { desc = "move right" })
-# map("i", "<C-j>", "<Down>", { desc = "move down" })
-# map("i", "<C-k>", "<Up>", { desc = "move up" })
 #
 # map({ "n", "x" }, "<leader>fm", function()
 #   require("conform").format { lsp_fallback = true }
 # end, { desc = "general format file" })
-#
-# -- global lsp mappings
-# map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "LSP diagnostic loclist" })
-#
-# -- tabufline
-# if require("nvconfig").ui.tabufline.enabled then
-#   map("n", "<leader>b", "<cmd>enew<CR>", { desc = "buffer new" })
-#
-#   map("n", "<tab>", function()
-#     require("nvchad.tabufline").next()
-#   end, { desc = "buffer goto next" })
-#
-#   map("n", "<S-tab>", function()
-#     require("nvchad.tabufline").prev()
-#   end, { desc = "buffer goto prev" })
-#
-#   map("n", "<leader>x", function()
-#     require("nvchad.tabufline").close_buffer()
-#   end, { desc = "buffer close" })
-# end
-#
-# -- Comment
-# map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
-# map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
-#
-#
-# -- telescope
-# map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
-# map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "telescope find buffers" })
-# map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "telescope help page" })
-# map("n", "<leader>ma", "<cmd>Telescope marks<CR>", { desc = "telescope find marks" })
-# map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "telescope find oldfiles" })
-# map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "telescope find in current buffer" })
-# map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
-# map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
-# map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
-#
-# map("n", "<leader>th", function()
-#   require("nvchad.themes").open()
-# end, { desc = "telescope nvchad themes" })
-#
-# map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
-# map(
-#   "n",
-#   "<leader>fa",
-#   "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
-#   { desc = "telescope find all files" }
-# )
 #
 # -- terminal
 # map("t", "<C-x>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
@@ -135,10 +147,4 @@ in {
 #   require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
 # end, { desc = "terminal toggle floating term" })
 #
-# -- whichkey
-# map("n", "<leader>wK", "<cmd>WhichKey <CR>", { desc = "whichkey all keymaps" })
-#
-# map("n", "<leader>wk", function()
-#   vim.cmd("WhichKey " .. vim.fn.input "WhichKey: ")
-# end, { desc = "whichkey query lookup" })
 
