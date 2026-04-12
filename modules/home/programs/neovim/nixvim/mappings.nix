@@ -19,7 +19,6 @@ let
 
   normalMaps = mapModes ["n"] [
     (makeMapping ";" ":" "CMD enter command mode")
-    (makeMapping "jk" "<ESC>" "Escape insert mode")
     (makeMapping "<SPACE>" "" "Preparing leader key")
 
     # Window switching
