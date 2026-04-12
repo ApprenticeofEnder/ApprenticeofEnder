@@ -85,6 +85,7 @@
         show_start = false;
       };
     };
+    precognition.enable = true;
     snacks.enable = true;
     # keep-sorted end
   };

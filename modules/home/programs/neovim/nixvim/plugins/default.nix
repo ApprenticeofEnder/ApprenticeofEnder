@@ -9,14 +9,12 @@ in {
   imports = with builtins;
     map (fn: ./${fn}) (filter filterFiles (attrNames (readDir ./.)));
   plugins = {
-    lsp = {
-      /*
-      translated from lspconfig.lua
-      */
-    };
-    /*
-    + telescope, lualine, etc. to replace NvChad UI bits
-    */
+    # keep-sorted start block=yes
+    todo-comments.enable = true;
+    ts-autotag.enable = true;
+    ts-context-commentstring.enable = true;
+    which-key.enable = true;
+    # keep-sorted end
   };
 
   extraPlugins = with pkgs.vimPlugins; [

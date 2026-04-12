@@ -23,6 +23,7 @@
     "ruff"
     "rust_analyzer"
     "svelte"
+    "systemd_lsp"
     "tailwindcss"
     "taplo"
     "terraformls"
