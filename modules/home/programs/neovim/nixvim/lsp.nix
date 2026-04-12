@@ -34,6 +34,7 @@
     # keep-sorted end
   ];
 in {
+  plugins.lspconfig.enable = true;
   lsp =
     {
       # keep-sorted start block=yes
