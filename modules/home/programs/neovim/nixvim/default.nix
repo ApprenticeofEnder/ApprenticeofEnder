@@ -14,14 +14,15 @@
       ./options.nix
     ];
 
-    colorscheme = "onenord";
-    extraConfigLuaPre = ''require('onenord').setup() '';
+    colorschemes = {
+      nord.enable = true;
+    };
 
     keymaps = [
       /*
       all keymaps from mappings.lua
       */
     ];
-    extraConfigLua = ''/* hover.lua inline */ '';
+    # extraConfigLua = ''/* hover.lua inline */ '';
   };
 }

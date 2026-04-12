@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{...}:
 # this automatically imports everything else in the parent folder
 let
   filterFiles = filename: (
@@ -17,9 +17,9 @@ in {
     # keep-sorted end
   };
 
-  extraPlugins = with pkgs.vimPlugins; [
-    onenord-nvim
-    treewalker-nvim
-    nvim-hlslens
-  ];
+  # extraPlugins = with pkgs.vimPlugins; [
+  #   onenord-nvim
+  #   treewalker-nvim
+  #   nvim-hlslens
+  # ];
 }
