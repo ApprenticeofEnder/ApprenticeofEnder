@@ -140,7 +140,7 @@ in {
       map (server: {
         name = server;
         value = {
-          enabled = true;
+          enable = true;
         };
       })
       enabledServers
