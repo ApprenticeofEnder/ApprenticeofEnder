@@ -57,6 +57,10 @@
       };
     };
     eyeliner.enable = true;
+    eyeliner.settings = {
+      highlight_on_key = true;
+      dim = true;
+    };
     harpoon.enable = true;
     indent-blankline.enable = true;
     indent-blankline.settings = {
