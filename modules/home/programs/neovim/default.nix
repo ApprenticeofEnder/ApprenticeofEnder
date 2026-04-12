@@ -1,8 +1,4 @@
-{
-  pkgs,
-  nixosConfig,
-  ...
-}: let
+{nixosConfig, ...}: let
   isNixOS = nixosConfig != null;
 in {
   home.sessionVariables = {
@@ -13,20 +9,20 @@ in {
   };
 
   imports = [./nixvim];
-  programs = {
-    neovim = {
-      enable = true;
-      viAlias = true;
-      vimAlias = true;
-      withRuby = true;
-      withNodeJs = true;
-      withPython3 = true;
-      defaultEditor = true;
-      plugins = with pkgs.vimPlugins; [
-        LazyVim
-      ];
-    };
-  };
+  # programs = {
+  #   neovim = {
+  #     enable = true;
+  #     viAlias = true;
+  #     vimAlias = true;
+  #     withRuby = true;
+  #     withNodeJs = true;
+  #     withPython3 = true;
+  #     defaultEditor = true;
+  #     plugins = with pkgs.vimPlugins; [
+  #       LazyVim
+  #     ];
+  #   };
+  # };
 
   # home = {
   #   file = {

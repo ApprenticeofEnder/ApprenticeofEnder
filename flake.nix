@@ -33,9 +33,6 @@
     };
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-      };
     };
     Terramaid.url = "github:RoseSecurity/Terramaid";
     elephant.url = "github:abenz1267/elephant";

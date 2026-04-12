@@ -14,9 +14,9 @@
       ./options.nix
     ];
 
-    colorschemes = {
-      nord.enable = true;
-    };
+    # colorschemes = {
+    #   nord.enable = true;
+    # };
 
     keymaps = [
       /*
