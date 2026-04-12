@@ -1,8 +1,7 @@
 {...}: {
   plugins = {
     telescope = {
-      # TODO: Why the hell is Telescope not getting loaded in
-      enabled = true;
+      enable = true;
       # enabledExtensions = [
       #   "themes"
       #   "terms"
