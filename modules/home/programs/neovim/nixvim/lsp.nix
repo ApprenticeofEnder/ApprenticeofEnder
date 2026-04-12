@@ -36,7 +36,7 @@
 in {
   plugins.lspconfig.enable = true;
   lsp = {
-    servers =
+    servers = lib.mkMerge [
       {
         # keep-sorted start block=yes
         "*" = {
@@ -105,9 +105,6 @@ in {
             nodePath = "${pkgs.eslint}/lib/node_modules";
           };
         };
-        nil_ls = {
-          enable = true;
-        };
         tailwindcss = {
           config.filetypes = [
             "css"
@@ -140,7 +137,7 @@ in {
         };
         # keep-sorted end
       }
-      // builtins.listToAttrs (
+      (builtins.listToAttrs (
         map (server: {
           name = server;
           value = {
@@ -148,6 +145,7 @@ in {
           };
         })
         enabledServers
-      );
+      ))
+    ];
   };
 }
