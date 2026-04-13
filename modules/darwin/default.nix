@@ -9,6 +9,9 @@
   # Use TouchID for `sudo` authentication
   security.pam.services.sudo_local.touchIdAuth = true;
 
+  services.tailscale = {
+    enable = true;
+  };
   # Configure macOS system
   # More Roberts-Macbook-Air-2s => https://github.com/ryan4yin/nix-darwin-kickstarter/blob/main/rich-demo/modules/system.nix
   system = {
