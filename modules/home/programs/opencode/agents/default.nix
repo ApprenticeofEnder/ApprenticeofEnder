@@ -53,9 +53,6 @@
     )
     // {
       bash = "deny";
-      skill = {
-        caveman = "allow";
-      };
     };
 
   plan = {
@@ -66,22 +63,16 @@
 
   # --- Build Agent ---
 
-  permissions.build =
-    buildAccessList "allow" (
-      mcpToolList "serena" [
-        "create_*"
-        "delete_*"
-        "edit_*"
-        "insert_*"
-        "replace_*"
-        "rename_*"
-      ]
-    )
-    // {
-      skill = {
-        caveman = "allow";
-      };
-    };
+  permissions.build = buildAccessList "allow" (
+    mcpToolList "serena" [
+      "create_*"
+      "delete_*"
+      "edit_*"
+      "insert_*"
+      "replace_*"
+      "rename_*"
+    ]
+  );
 
   build = {
     mode = "primary";
@@ -120,9 +111,6 @@
           "grep *" = "deny"; # We want to use the grep tool
         }
         // debugBashAllow;
-      skill = {
-        caveman = "allow";
-      };
     };
 
   debug = {

@@ -67,6 +67,10 @@
 
       webfetch = "ask";
       grep = fileReadPerms;
+
+      skill = {
+        caveman = "allow";
+      };
     }
     // serenaPerms;
 in {
