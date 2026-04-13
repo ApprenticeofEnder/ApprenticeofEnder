@@ -13,6 +13,10 @@
 
     skills = ./skills;
 
+    rules = ''
+      use caveman
+    '';
+
     settings = {
       autoshare = false;
       autoupdate = false;
