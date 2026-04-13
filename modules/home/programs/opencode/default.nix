@@ -11,6 +11,8 @@
       theme = "nord";
     };
 
+    skills = ./skills;
+
     settings = {
       autoshare = false;
       autoupdate = false;
