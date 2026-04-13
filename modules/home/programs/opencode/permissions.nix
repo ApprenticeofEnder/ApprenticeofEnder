@@ -53,6 +53,14 @@
 
   permissions =
     {
+      read = {
+        "*" = "allow";
+        "*.vars" = "deny";
+        "*.env" = "deny";
+        "*.secrets" = "deny";
+        "*.env.*" = "deny";
+        "*.env.example" = "allow";
+      };
       edit = "ask";
       bash = bashPerms;
 
