@@ -51,13 +51,26 @@
     }
     // bashAllow;
 
+  fileReadPerms = {
+    "*" = "allow";
+    "*.vars" = "deny";
+    "*.env" = "deny";
+    "*.secrets" = "deny";
+    "*.env.*" = "deny";
+    "*.env.example" = "allow";
+  };
   permissions =
     {
+      read = fileReadPerms;
       edit = "ask";
       bash = bashPerms;
 
       webfetch = "ask";
-      grep = "ask";
+      grep = fileReadPerms;
+
+      skill = {
+        caveman = "allow";
+      };
     }
     // serenaPerms;
 in {
