@@ -12,6 +12,10 @@ in {
       else "0";
   };
 
+  home.packages = with pkgs; [
+    tree-sitter
+  ];
+
   imports = [./nixos.nix];
   programs = {
     neovim = {
