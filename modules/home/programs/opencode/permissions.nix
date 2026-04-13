@@ -51,21 +51,22 @@
     }
     // bashAllow;
 
+  fileReadPerms = {
+    "*" = "allow";
+    "*.vars" = "deny";
+    "*.env" = "deny";
+    "*.secrets" = "deny";
+    "*.env.*" = "deny";
+    "*.env.example" = "allow";
+  };
   permissions =
     {
-      read = {
-        "*" = "allow";
-        "*.vars" = "deny";
-        "*.env" = "deny";
-        "*.secrets" = "deny";
-        "*.env.*" = "deny";
-        "*.env.example" = "allow";
-      };
+      read = fileReadPerms;
       edit = "ask";
       bash = bashPerms;
 
       webfetch = "ask";
-      grep = "ask";
+      grep = fileReadPerms;
     }
     // serenaPerms;
 in {
