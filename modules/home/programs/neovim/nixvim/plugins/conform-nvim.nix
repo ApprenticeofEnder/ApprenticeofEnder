@@ -6,6 +6,7 @@
   plugins = {
     conform-nvim = {
       enable = true;
+      autoInstall.enable = true;
       settings = {
         formatters_by_ft = let
           jsFormatting = {
@@ -28,9 +29,10 @@
         in
           {
             # keep-sorted start block=yes
-            c = [
-              "clangd-format"
-            ];
+            # TODO: Work out what's going on here
+            # c = [
+            #   "clangd-format"
+            # ];
             hcl = [
               "hclfmt"
             ];
