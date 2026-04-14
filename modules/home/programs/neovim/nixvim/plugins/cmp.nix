@@ -2,8 +2,16 @@
   plugins = {
     cmp = {
       enable = true;
+      luaConfig = {
+        pre = ''
+          local cmp = require("cmp")
+        '';
+      };
       autoEnableSources = true;
       settings = {
+        completion = {
+          completeopt = "menu,menuone";
+        };
         snippet = {
           expand = ''
             function(args)
@@ -50,7 +58,6 @@
           {name = "nvim_lsp";}
           {name = "luasnip";}
           {name = "buffer";}
-          {name = "cmdline";}
           {name = "async_path";}
         ];
       };

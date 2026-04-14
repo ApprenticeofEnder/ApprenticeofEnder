@@ -13,6 +13,18 @@ in {
     ts-autotag.enable = true;
     ts-context-commentstring.enable = true;
     which-key.enable = true;
+    which-key.settings = {
+      keys = [
+        "<leader>"
+        "<c-w>"
+        ''"''
+        "'"
+        "`"
+        "c"
+        "v"
+        "g"
+      ];
+    };
     # keep-sorted end
   };
 
