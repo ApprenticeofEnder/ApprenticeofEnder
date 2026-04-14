@@ -48,7 +48,7 @@
         '';
         sources = [
           {name = "nvim_lsp";}
-          {name = "path";}
+          {name = "luasnip";}
           {name = "buffer";}
           {name = "cmdline";}
           {name = "async_path";}
