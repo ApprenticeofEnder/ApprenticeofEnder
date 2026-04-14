@@ -70,6 +70,7 @@
       ttyd # terminal sharing
       procs # better ps
       unzip
+      xclip
       lazyssh
       macchina
       libnotify
