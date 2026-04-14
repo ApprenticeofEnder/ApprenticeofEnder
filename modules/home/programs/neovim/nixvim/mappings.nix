@@ -1,4 +1,4 @@
-let
+{lib, ...}: let
   mapModes = modes: keymaps:
     map (
       keymap:
@@ -17,15 +17,75 @@ let
     };
   };
 
+  actions = ''
+    _M.vscode = require("vscode")
+
+    _M.make_vscode_mapping = function(
+      vscode_action,
+      nvim_action
+    )
+      if not vim.g.vscode then
+        return nvim_action
+      end
+
+      return function()
+        _M.vscode.action(vscode_action)
+      end
+    end
+
+    _M.make_vscode_mapping_advanced = function(
+      vscode_cb,
+      nvim_cb
+    )
+      return function()
+        if not vim.g.vscode then
+          return nvim_cb()
+        end
+
+        return vscode_cb()
+      end
+    end
+  '';
+
+  makeVsCodeMapping = key: vscodeAction: nvimAction: desc:
+    (
+      makeMapping
+      key
+      (
+        lib.nixvim.mkRaw ''
+          _M.make_vscode_mapping("${vscodeAction}", "${nvimAction}")
+        ''
+      )
+      desc
+    )
+    // {
+      options.noremap = true;
+    };
+
+  makeVsCodeMappingAdvanced = key: vscodeCallbackLua: nvimCallbackLua: desc:
+    (
+      makeMapping
+      key
+      (
+        lib.nixvim.mkRaw ''
+          _M.make_vscode_mapping_advanced(${vscodeCallbackLua}, ${nvimCallbackLua})
+        ''
+      )
+      desc
+    )
+    // {
+      options.noremap = true;
+    };
+
   normalMaps = mapModes ["n"] [
     (makeMapping ";" ":" "CMD enter command mode")
     (makeMapping "<SPACE>" "" "Preparing leader key")
 
     # Window switching
-    (makeMapping "<C-h>" "<C-w>h" "Switch window left")
-    (makeMapping "<C-l>" "<C-w>l" "Switch window right")
-    (makeMapping "<C-j>" "<C-w>j" "Switch window up")
-    (makeMapping "<C-k>" "<C-w>k" "Switch window down")
+    (makeVsCodeMapping "<C-h>" "workbench.action.navigateLeft" "<C-w>h" "Switch window left")
+    (makeVsCodeMapping "<C-l>" "workbench.action.navigateRight" "<C-w>l" "Switch window right")
+    (makeVsCodeMapping "<C-j>" "workbench.action.navigateUp" "<C-w>j" "Switch window up")
+    (makeVsCodeMapping "<C-k>" "workbench.action.navigateDown" "<C-w>k" "Switch window down")
 
     (makeMapping "<ESC>" "<cmd>noh<CR>" "General clear highlights")
     (makeMapping "<C-s>" "<cmd>w<CR>" "General save file")
@@ -36,20 +96,30 @@ let
     (makeMapping "<leader>ch" "<cmd>NvCheatsheet<CR>" "Toggle NvCheatsheet")
 
     # Global LSP Mappings
-    (makeMapping "<leader>ds" {
-      __raw = "vim.diagnostic.setloclist";
-    } "LSP diagnostic loclist")
+    (
+      makeVsCodeMappingAdvanced
+      "<leader>ds"
+      ''
+        function()
+          _M.vscode.action("workbench.actions.view.problems")
+        end
+      ''
+      "vim.diagnostic.setloclist"
+      "LSP diagnostic loclist"
+    )
 
-    # NvimTree
-    (makeMapping "<C-n>" "<cmd>NvimTreeToggle<CR>" "nvimtree toggle window")
-    (makeMapping "<leader>e" "<cmd>NvimTreeFocus<CR>" "nvimtree focus window")
+    # File Explorer
+    (makeVsCodeMapping "<C-n>" "workbench.view.explorer" "<cmd>NvimTreeToggle<CR>" "nvimtree toggle window")
+    (makeVsCodeMapping "<leader>e" "workbench.files.action.focusFilesExplorer" "<cmd>NvimTreeFocus<CR>" "nvimtree focus window")
 
-    # Barbar
-    (makeMapping "<tab>" "<cmd>BufferNext<CR>" "buffer goto next")
-    (makeMapping "<S-tab>" "<cmd>BufferPrevious<CR>" "buffer goto prev")
-    (makeMapping "<leader>x" "<cmd>BufferClose<CR>" "buffer close")
-    (makeMapping "<A->>" "<cmd>BufferMoveNext<CR>" "buffer reorder right")
-    (makeMapping "<A-<>" "<cmd>BufferMovePrevious<CR>" "buffer reorder left")
+    # Tabs
+    (makeVsCodeMapping "<tab>" "workbench.action.nextEditor" "<cmd>BufferNext<CR>" "buffer goto next")
+    (makeVsCodeMapping "<S-tab>" "workbench.action.previousEditor" "<cmd>BufferPrevious<CR>" "buffer goto prev")
+    (makeVsCodeMapping "<leader>x" "workbench.action.closeActiveEditor" "<cmd>BufferClose<CR>" "buffer close")
+    (makeVsCodeMapping "<A->>" "workbench.action.moveEditorRightInGroup" "<cmd>BufferMoveNext<CR>" "buffer reorder right")
+    (makeVsCodeMapping "<A-<>" "workbench.action.moveEditorLeftInGroup" "<cmd>BufferMovePrevious<CR>" "buffer reorder left")
+
+    # TODO: Port over some of the remaining VSCode bindings like file search, etc.
 
     # Telescope
     (makeMapping "<leader>fw" "<cmd>Telescope live_grep<CR>" "telescope live grep")
@@ -110,41 +180,17 @@ let
         remap = true;
       };
     }
+
+    (makeMapping "p" ''"_dP'' "Paste preserves primal yanked piece")
+
+    # Better indent handling
+    (makeMapping "<" "<gv" "Indent left")
+    (makeMapping ">" ">gv" "Indent right")
   ];
 in {
+  extraConfigLuaPre = actions;
   keymaps =
     normalMaps
     ++ insertMaps
     ++ visualMaps;
 }
-#
-# map({ "n", "x" }, "<leader>fm", function()
-#   require("conform").format { lsp_fallback = true }
-# end, { desc = "general format file" })
-#
-# -- terminal
-# map("t", "<C-x>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
-#
-# -- new terminals
-# map("n", "<leader>h", function()
-#   require("nvchad.term").new { pos = "sp" }
-# end, { desc = "terminal new horizontal term" })
-#
-# map("n", "<leader>v", function()
-#   require("nvchad.term").new { pos = "vsp" }
-# end, { desc = "terminal new vertical term" })
-#
-# -- toggleable
-# map({ "n", "t" }, "<A-v>", function()
-#   require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
-# end, { desc = "terminal toggleable vertical term" })
-#
-# map({ "n", "t" }, "<A-h>", function()
-#   require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
-# end, { desc = "terminal toggleable horizontal term" })
-#
-# map({ "n", "t" }, "<A-i>", function()
-#   require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
-# end, { desc = "terminal toggle floating term" })
-#
-
