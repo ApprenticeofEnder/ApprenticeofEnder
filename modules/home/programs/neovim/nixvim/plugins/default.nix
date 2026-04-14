@@ -14,15 +14,17 @@ in {
     ts-context-commentstring.enable = true;
     which-key.enable = true;
     which-key.settings = {
-      keys = [
-        "<leader>"
-        "<c-w>"
-        ''"''
-        "'"
-        "`"
-        "c"
-        "v"
-        "g"
+      cmd = "WhichKey";
+      triggers = [
+        {
+          __unkeyed-1 = "<leader>";
+          mode = ["n" "v"];
+        }
+
+        {
+          __unkeyed-1 = "<c-w>";
+          mode = ["n" "v"];
+        }
       ];
     };
     # keep-sorted end
