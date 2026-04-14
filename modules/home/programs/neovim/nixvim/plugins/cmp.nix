@@ -1,13 +1,25 @@
 {...}: {
-  plugins.cmp = {
-    autoEnableSources = true;
-    settings.sources = [
-      {name = "nvim_lsp";}
-      {name = "path";}
-      {name = "buffer";}
-      {name = "cmdline";}
-      {name = "async_path";}
-    ];
+  plugins = {
+    cmp = {
+      autoEnableSources = true;
+      settings = {
+        snippet = {
+          expand = ''
+            function(args)
+              require("luasnip").lsp_expand(args.body)
+            end
+          '';
+        };
+        sources = [
+          {name = "nvim_lsp";}
+          {name = "path";}
+          {name = "buffer";}
+          {name = "cmdline";}
+          {name = "async_path";}
+        ];
+      };
+    };
+    luasnip.enable = true;
   };
 }
 # dofile(vim.g.base46_cache .. "cmp")
