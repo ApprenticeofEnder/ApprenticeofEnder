@@ -1,6 +1,7 @@
 {...}: {
   plugins = {
     cmp = {
+      enable = true;
       autoEnableSources = true;
       settings = {
         snippet = {
