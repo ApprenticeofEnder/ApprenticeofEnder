@@ -9,6 +9,9 @@ in {
   plugins = {
     # keep-sorted start block=yes
     autoclose.enable = true;
+    neoscroll.enable = true;
+    precognition.enable = true;
+    snacks.enable = true;
     todo-comments.enable = true;
     ts-autotag.enable = true;
     ts-context-commentstring.enable = true;

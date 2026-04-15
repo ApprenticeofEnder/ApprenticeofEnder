@@ -1,11 +1,14 @@
 {
   /*
   Plugins to look at:
-  https://nix-community.github.io/nixvim/plugins/fastaction/index.html
+  # keep-sorted start
   https://github.com/folke/flash.nvim/
+  https://github.com/wintermute-cell/gitignore.nvim/
+  https://nix-community.github.io/nixvim/plugins/fastaction/index.html
   https://nix-community.github.io/nixvim/plugins/flutter-tools/index.html
   https://nix-community.github.io/nixvim/plugins/friendly-snippets/index.html
-  https://github.com/wintermute-cell/gitignore.nvim/
+  https://nix-community.github.io/nixvim/plugins/opencode/index.html
+  # keep-sorted end
   */
   plugins = {
     # keep-sorted start block=yes
@@ -28,70 +31,7 @@
       };
     };
     debugprint.enable = true;
-    diagram = {
-      enable = true;
-      settings = {
-        integrations = [
-          {
-            __raw = "require('diagram.integrations.markdown')";
-          }
-          {
-            __raw = "require('diagram.integrations.neorg')";
-          }
-        ];
-        renderer_options = {
-          d2 = {
-            theme_id = 1;
-          };
-          gnuplot = {
-            size = "800,600";
-            theme = "dark";
-          };
-          mermaid = {
-            theme = "forest";
-          };
-          plantuml = {
-            charset = "utf-8";
-          };
-        };
-      };
-    };
-    eyeliner.enable = true;
-    eyeliner.settings = {
-      highlight_on_key = true;
-      dim = true;
-    };
     harpoon.enable = true;
-    indent-blankline.enable = true;
-    indent-blankline.settings = {
-      exclude = {
-        buftypes = [
-          "terminal"
-          "quickfix"
-        ];
-        filetypes = [
-          ""
-          "checkhealth"
-          "help"
-          "lspinfo"
-          "packer"
-          "TelescopePrompt"
-          "TelescopeResults"
-          "yaml"
-        ];
-      };
-      indent = {
-        char = "│";
-      };
-      scope = {
-        show_end = false;
-        show_exact_scope = true;
-        show_start = false;
-      };
-    };
-    neoscroll.enable = true;
-    precognition.enable = true;
-    snacks.enable = true;
     # keep-sorted end
   };
 }
