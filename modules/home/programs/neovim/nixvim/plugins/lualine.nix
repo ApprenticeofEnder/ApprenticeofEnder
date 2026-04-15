@@ -118,7 +118,7 @@
                 sections = { "warn" },
                 diagnostics_color = { warn = colors.danger },
               },
-              { "filename", file_status = false, path = 1 },
+              { "filename", file_status = false, path = 4 },
               { modified, color = { bg = colors.danger.bg } },
               {
                 "%w",
