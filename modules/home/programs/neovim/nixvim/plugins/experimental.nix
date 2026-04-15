@@ -36,6 +36,17 @@
     };
     debugprint.enable = true;
     harpoon.enable = true;
+    smartcolumn.enable = true;
+    smartcolumn.settings = {
+      disabled_filetypes = [
+        # keep-sorted start
+        "dashboard"
+        "help"
+        "markdown"
+        "text"
+        # keep-sorted end
+      ];
+    };
     # keep-sorted end
   };
 }
