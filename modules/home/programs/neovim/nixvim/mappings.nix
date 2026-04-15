@@ -18,7 +18,7 @@
   };
 
   actions = ''
-    _M.vscode = require("vscode")
+    vim.opt.whichwrap:append "<>[]hl"
 
     _M.make_vscode_mapping = function(
       vscode_action,
@@ -29,7 +29,7 @@
       end
 
       return function()
-        _M.vscode.action(vscode_action)
+        require("vscode").action(vscode_action)
       end
     end
 
@@ -101,7 +101,7 @@
       "<leader>ds"
       ''
         function()
-          _M.vscode.action("workbench.actions.view.problems")
+          require("vscode").action("workbench.actions.view.problems")
         end
       ''
       "vim.diagnostic.setloclist"
@@ -119,11 +119,11 @@
     (makeVsCodeMapping "<A->>" "workbench.action.moveEditorRightInGroup" "<cmd>BufferMoveNext<CR>" "buffer reorder right")
     (makeVsCodeMapping "<A-<>" "workbench.action.moveEditorLeftInGroup" "<cmd>BufferMovePrevious<CR>" "buffer reorder left")
 
-    # TODO: Port over some of the remaining VSCode bindings like file search, etc.
-
     # Telescope
-    (makeMapping "<leader>fw" "<cmd>Telescope live_grep<CR>" "telescope live grep")
-    (makeMapping "<leader>fb" "<cmd>Telescope buffers<CR>" "telescope find buffers")
+    (makeVsCodeMapping "<leader>fw" "periscope.search" "<cmd>Telescope live_grep<CR>" "telescope live grep")
+    (makeVsCodeMapping "<leader>fb" "periscope.searchBuffers" "<cmd>Telescope buffers<CR>" "telescope find buffers")
+    (makeVsCodeMapping "<leader>ff" "periscope.searchFiles" "<cmd>Telescope find_files<cr>" "telescope find files")
+    # TODO: How do I even go about these . . .
     (makeMapping "<leader>fh" "<cmd>Telescope help_tags<CR>" "telescope help page")
     (makeMapping "<leader>ma" "<cmd>Telescope marks<CR>" "telescope find marks")
     (makeMapping "<leader>fo" "<cmd>Telescope oldfiles<CR>" "telescope find oldfiles")
@@ -131,7 +131,6 @@
     (makeMapping "<leader>cm" "<cmd>Telescope git_commits<CR>" "telescope git commits")
     (makeMapping "<leader>gt" "<cmd>Telescope git_status<CR>" "telescope git status")
     (makeMapping "<leader>pt" "<cmd>Telescope terms<CR>" "telescope pick hidden term")
-    (makeMapping "<leader>ff" "<cmd>Telescope find_files<cr>" "telescope find files")
     (
       makeMapping
       "<leader>fa"
