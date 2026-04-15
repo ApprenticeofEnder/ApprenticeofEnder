@@ -50,6 +50,12 @@ in {
       nord.enable = true;
     };
 
+    extraConfigLuaPost = ''
+      pcall(
+        require "experimental"
+      )
+    '';
+
     # extraConfigLua = ''/* hover.lua inline */ '';
   };
 }
