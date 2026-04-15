@@ -3,8 +3,29 @@
     lualine = {
       enable = true;
       luaConfig.pre = ''
+        local function get_colors(highlight_name)
+          local highlight_data = vim.api.nvim_get_hl(0, {name=highlight_name})
+          local result = {
+            fg = string.format("%x", highlight_data.fg),
+          }
+
+          if highlight_data.bg then
+            result.bg = string.format("%x", highlight_data.bg)
+          end
+          return result
+        end
+
+
         local colors = {
           red = "#ca1243",
+          danger = get_colors("DiffDelete"),
+          warning = get_colors("DiffChange"),
+          success = get_colors("DiffAdd"),
+          replace = get_colors("DiffText"),
+          level1 = get_colors("Search"),
+          level2 = get_colors("TabLine"),
+          normal = get_colors("Normal"),
+
           grey = "#a0a1a7",
           black = "#383a42",
           white = "#f3f3f3",
@@ -15,14 +36,14 @@
 
         local theme = {
           normal = {
-            a = { fg = colors.white, bg = colors.black },
-            b = { fg = colors.white, bg = colors.grey },
-            c = { fg = colors.black, bg = colors.white },
-            z = { fg = colors.white, bg = colors.black },
+            a = colors.level1,
+            b = colors.level2,
+            c = colors.level2,
+            z = colors.level1,
           },
-          insert = { a = { fg = colors.black, bg = colors.light_green } },
-          visual = { a = { fg = colors.black, bg = colors.orange } },
-          replace = { a = { fg = colors.black, bg = colors.green } },
+          insert = { a = { fg = colors.black, bg = colors.success.fg } },
+          visual = { a = { fg = colors.black, bg = colors.warning.fg } },
+          replace = { a = { fg = colors.black, bg = colors.replace.fg } },
         }
 
         local empty = require("lualine.component"):extend()
@@ -39,7 +60,7 @@
           for name, section in pairs(sections) do
             local left = name:sub(9, 10) < "x"
             for pos = 1, name ~= "lualine_z" and #section or #section - 1 do
-              table.insert(section, pos * 2, { empty, color = { fg = colors.white, bg = colors.white } })
+              table.insert(section, pos * 2, { empty, color = { fg = colors.normal.bg, bg = colors.normal.bg } })
             end
             for id, comp in ipairs(section) do
               if type(comp) ~= "table" then
@@ -89,16 +110,16 @@
                 "diagnostics",
                 source = { "nvim" },
                 sections = { "error" },
-                diagnostics_color = { error = { bg = colors.red, fg = colors.white } },
+                diagnostics_color = { error = colors.danger },
               },
               {
                 "diagnostics",
                 source = { "nvim" },
                 sections = { "warn" },
-                diagnostics_color = { warn = { bg = colors.orange, fg = colors.white } },
+                diagnostics_color = { warn = colors.danger },
               },
               { "filename", file_status = false, path = 1 },
-              { modified, color = { bg = colors.red } },
+              { modified, color = { bg = colors.danger.bg } },
               {
                 "%w",
                 cond = function()
@@ -119,8 +140,8 @@
               },
             },
             lualine_c = {},
-            lualine_x = {},
-            lualine_y = { search_result, "filetype" },
+            lualine_x = { },
+            lualine_y = { search_result, "lsp_status", "filetype" },
             lualine_z = { "%l:%c", "%p%%/%L" },
           },
           inactive_sections = {
@@ -129,67 +150,6 @@
           },
         }
       '';
-
-      # settings = {
-      #   options = {
-      #     icons_enabled = true;
-      #     theme = "auto";
-      #     component_separators = {
-      #       left = "|";
-      #       right = "|";
-      #     };
-      #     section_separators = {
-      #       left = "";
-      #       right = "";
-      #     };
-      #     disabled_filetypes = {
-      #       statusline = {};
-      #       winbar = {};
-      #     };
-      #     ignore_focus = {};
-      #     always_divide_middle = true;
-      #     always_show_tabline = true;
-      #     globalstatus = false;
-      #     refresh = {
-      #       statusline = 1000;
-      #       tabline = 1000;
-      #       winbar = 1000;
-      #       refresh_time = 16; # ~60fps
-      #       events = [
-      #         "WinEnter"
-      #         "BufEnter"
-      #         "BufWritePost"
-      #         "SessionLoadPost"
-      #         "FileChangedShellPost"
-      #         "VimResized"
-      #         "Filetype"
-      #         "CursorMoved"
-      #         "CursorMovedI"
-      #         "ModeChanged"
-      #       ];
-      #     };
-      #   };
-      #   sections = {
-      #     lualine_a = ["mode"];
-      #     lualine_b = ["filename"];
-      #     lualine_c = ["branch" "diff" "diagnostics"];
-      #     lualine_x = ["lsp_status"];
-      #     lualine_y = ["progress"];
-      #     lualine_z = ["progress"];
-      #   };
-      #   inactive_sections = {
-      #     lualine_a = [];
-      #     lualine_b = [];
-      #     lualine_c = ["filename"];
-      #     lualine_x = ["location"];
-      #     lualine_y = [];
-      #     lualine_z = [];
-      #   };
-      #   tabline = {};
-      #   winbar = {};
-      #   inactive_winbar = {};
-      #   extensions = {};
-      # };
     };
   };
 }
