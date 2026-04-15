@@ -185,6 +185,28 @@
     # Better indent handling
     (makeMapping "<" "<gv" "Indent left")
     (makeMapping ">" ">gv" "Indent right")
+
+    # keep-sorted macro!
+    (makeMapping "<leader>ks" (lib.nixvim.mkRaw ''
+      function()
+        local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+        vim.api.nvim_feedkeys(esc, "x", false)
+
+        local start_line = vim.fn.line("'<")
+        local end_line = vim.fn.line("'>")
+
+         -- Get indentation from first selected line
+        local first_line = vim.api.nvim_buf_get_lines(0, start_line - 1, start_line, false)[1]
+        local indent = first_line:match("^(%s*)") or ""
+        -- Build commented strings
+        local cs = vim.bo.commentstring
+        local start_comment = indent .. cs:format("keep-sorted start")
+        local end_comment = indent .. cs:format("keep-sorted end")
+        -- Insert end first so line numbers for start don't shift
+        vim.api.nvim_buf_set_lines(0, end_line, end_line, false, {end_comment})
+        vim.api.nvim_buf_set_lines(0, start_line - 1, start_line - 1, false, {start_comment})
+      end
+    '') "keep selection sorted")
   ];
 in {
   extraConfigLuaPre = actions;
