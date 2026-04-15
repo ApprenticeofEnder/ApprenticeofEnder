@@ -1,4 +1,4 @@
-{
+{lib, ...}: {
   autoCmd = [
     {
       pattern = [
@@ -9,15 +9,13 @@
       event = [
         "BufWritePre"
       ];
-      callback = {
-        __raw = ''
-          function()
-            vim.lsp.buf.format {
-              async = false,
-            }
-          end
-        '';
-      };
+      callback = lib.nixvim.mkRaw ''
+        function()
+          vim.lsp.buf.format {
+            async = false,
+          }
+        end
+      '';
     }
     {
       pattern = "terraform";
@@ -25,13 +23,11 @@
       event = [
         "FileType"
       ];
-      callback = {
-        __raw = ''
-          function()
-            vim.bo.commentstring = "# %s"
-          end
-        '';
-      };
+      callback = lib.nixvim.mkRaw ''
+        function()
+          vim.bo.commentstring = "# %s"
+        end
+      '';
     }
     {
       pattern = ["*"];
@@ -39,13 +35,11 @@
       event = [
         "BufWritePre"
       ];
-      callback = {
-        __raw = ''
-          function(args)
-            require("conform").format { bufnr = args.buf }
-          end
-        '';
-      };
+      callback = lib.nixvim.mkRaw ''
+        function(args)
+          require("conform").format { bufnr = args.buf }
+        end
+      '';
     }
     {
       pattern = ["*"];
@@ -53,13 +47,27 @@
       event = [
         "FileType"
       ];
-      callback = {
-        __raw = ''
-          function(args)
-            pcall(vim.treesitter.start)
-          end
-        '';
-      };
+      callback = lib.nixvim.mkRaw ''
+        function(args)
+          pcall(vim.treesitter.start)
+        end
+      '';
+    }
+    {
+      pattern = "TSUpdate";
+      event = [
+        "User"
+      ];
+      callback = lib.nixvim.mkRaw ''
+        function()
+          require('nvim-treesitter.parsers').ghactions = {
+            install_info = {
+              url = 'https://github.com/rmuir/tree-sitter-ghactions',
+              queries = 'queries',
+            },
+          }
+        end
+      '';
     }
   ];
   autoGroup = [

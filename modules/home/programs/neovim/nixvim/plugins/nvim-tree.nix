@@ -1,4 +1,7 @@
-{...}: {
+{pkgs, ...}: {
+  extraPackages = with pkgs; [
+    tree-sitter
+  ];
   plugins = {
     nvim-tree = {
       enable = true;
