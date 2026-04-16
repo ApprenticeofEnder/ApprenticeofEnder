@@ -13,7 +13,7 @@
 
     skills = ./skills;
 
-    rules = ''
+    context = ''
       use caveman
     '';
 

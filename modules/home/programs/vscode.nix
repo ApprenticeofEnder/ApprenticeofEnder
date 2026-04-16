@@ -32,34 +32,48 @@ in
         profiles = {
           default = {
             userSettings = userSettings;
-            extensions = with pkgs.vscode-extensions; [
-              # languages
-              bbenoist.nix
-              hashicorp.hcl
-              redhat.ansible
-              ms-python.python
-              redhat.vscode-yaml
-              hashicorp.terraform
-
-              # formatters and linters
-              mkhl.shfmt
-              charliermarsh.ruff
-              esbenp.prettier-vscode
-              detachhead.basedpyright
-
-              # theme
-              pkief.material-icon-theme
-              pkief.material-product-icons
-              arcticicestudio.nord-visual-studio-code
-
-              # utilities
-              docker.docker
-              tomoki1207.pdf
-              eamodio.gitlens
-              usernamehw.errorlens
-              asvetliakov.vscode-neovim
-              github.vscode-github-actions
-            ];
+            extensions = with pkgs.vscode-extensions; let
+              languages = [
+                # keep-sorted start
+                bbenoist.nix
+                hashicorp.hcl
+                hashicorp.terraform
+                ms-python.python
+                redhat.ansible
+                redhat.vscode-yaml
+                # keep-sorted end
+              ];
+              formattersAndLinters = [
+                # keep-sorted start
+                charliermarsh.ruff
+                detachhead.basedpyright
+                esbenp.prettier-vscode
+                mkhl.shfmt
+                # keep-sorted end
+              ];
+              theme = [
+                # keep-sorted start
+                arcticicestudio.nord-visual-studio-code
+                pkief.material-icon-theme
+                pkief.material-product-icons
+                # keep-sorted end
+              ];
+              utilities = [
+                # keep-sorted start
+                asvetliakov.vscode-neovim
+                docker.docker
+                eamodio.gitlens
+                github.vscode-github-actions
+                joshmu.periscope
+                tomoki1207.pdf
+                usernamehw.errorlens
+                # keep-sorted end
+              ];
+            in
+              languages
+              ++ formattersAndLinters
+              ++ theme
+              ++ utilities;
           };
         };
       };
