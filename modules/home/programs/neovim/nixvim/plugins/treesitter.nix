@@ -9,7 +9,9 @@
         # keep-sorted start
         bash
         css
+        dart
         dockerfile
+        fish
         hcl
         html
         javascript
