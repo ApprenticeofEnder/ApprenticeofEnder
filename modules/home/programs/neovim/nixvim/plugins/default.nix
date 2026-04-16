@@ -12,6 +12,9 @@ in {
     neoscroll.enable = true;
     precognition.enable = true;
     snacks.enable = true;
+    snacks.settings = {
+      input.enable = true;
+    };
     todo-comments.enable = true;
     ts-autotag.enable = true;
     ts-context-commentstring.enable = true;
