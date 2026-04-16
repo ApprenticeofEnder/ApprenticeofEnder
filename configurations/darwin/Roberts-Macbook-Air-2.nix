@@ -8,6 +8,7 @@
 }: let
   inherit (flake) inputs;
   inherit (inputs) self;
+  inherit (inputs) nixvim;
 in {
   imports = [
     self.darwinModules.default
@@ -44,6 +45,10 @@ in {
   # will complain "Existing file .. would be clobbered by backing up". To mitigate this,
   # we try to use as unique a backup file extension as possible.
   home-manager.backupFileExtension = "nixos-unified-template-backup";
+
+  home-manager.sharedModules = [
+    nixvim.homeModules.default
+  ];
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
