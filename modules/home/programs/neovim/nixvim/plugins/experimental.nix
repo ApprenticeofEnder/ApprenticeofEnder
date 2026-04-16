@@ -36,6 +36,8 @@
     };
     debugprint.enable = true;
     harpoon.enable = true;
+    lazygit.enable = true;
+    opencode.enable = true;
     smartcolumn.enable = true;
     smartcolumn.settings = {
       disabled_filetypes = [
