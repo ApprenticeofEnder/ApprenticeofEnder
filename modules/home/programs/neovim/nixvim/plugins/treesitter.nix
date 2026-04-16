@@ -1,4 +1,11 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
+  extraPackages = with pkgs; [
+    tree-sitter
+  ];
   plugins = {
     treesitter = {
       enable = true;
