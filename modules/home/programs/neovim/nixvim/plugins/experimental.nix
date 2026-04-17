@@ -2,14 +2,11 @@
   /*
   Plugins to look at:
   # keep-sorted start
-  https://github.com/folke/flash.nvim/
+  https://github.com/alexpasmantier/tv.nvim/
   https://github.com/wintermute-cell/gitignore.nvim/
   https://nix-community.github.io/nixvim/plugins/fastaction/index.html
   https://nix-community.github.io/nixvim/plugins/flutter-tools/index.html
   https://nix-community.github.io/nixvim/plugins/friendly-snippets/index.html
-  https://nix-community.github.io/nixvim/plugins/glow/index.html
-  https://nix-community.github.io/nixvim/plugins/lazygit/index.html
-  https://nix-community.github.io/nixvim/plugins/opencode/index.html
   https://nix-community.github.io/nixvim/plugins/overseer/index.html
 
   # keep-sorted end
@@ -35,8 +32,9 @@
       };
     };
     # TODO: Test these out
-    debugprint.enable = false;
-    harpoon.enable = false;
+    debugprint.enable = true;
+    glow.enable = true;
+    harpoon.enable = true;
     opencode.enable = true;
     # keep-sorted end
   };

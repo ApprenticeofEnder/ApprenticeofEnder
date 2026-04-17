@@ -1,0 +1,5 @@
+{
+  plugins.fastaction = {
+    enable = true;
+  };
+}

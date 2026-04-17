@@ -119,6 +119,9 @@
     (makeVsCodeMapping "<A->>" "workbench.action.moveEditorRightInGroup" "<cmd>BufferMoveNext<CR>" "buffer reorder right")
     (makeVsCodeMapping "<A-<>" "workbench.action.moveEditorLeftInGroup" "<cmd>BufferMovePrevious<CR>" "buffer reorder left")
 
+    # Actions
+    (makeVsCodeMapping "<leader>a" "workbench.action.showCommands" "<cmd>lua require('fastaction').code_action()<CR>" "Open quick actions")
+
     # Telescope
     (makeVsCodeMapping "<leader>fw" "periscope.search" "<cmd>Telescope live_grep<CR>" "telescope live grep")
     (makeVsCodeMapping "<leader>fb" "periscope.searchBuffers" "<cmd>Telescope buffers<CR>" "telescope find buffers")
