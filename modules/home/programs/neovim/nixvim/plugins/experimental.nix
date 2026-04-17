@@ -4,8 +4,6 @@
   # keep-sorted start
   https://github.com/alexpasmantier/tv.nvim/
   https://github.com/wintermute-cell/gitignore.nvim/
-  https://nix-community.github.io/nixvim/plugins/fastaction/index.html
-  https://nix-community.github.io/nixvim/plugins/flutter-tools/index.html
   https://nix-community.github.io/nixvim/plugins/friendly-snippets/index.html
   https://nix-community.github.io/nixvim/plugins/overseer/index.html
 
@@ -31,8 +29,9 @@
         jsonls_integration = true;
       };
     };
-    # TODO: Test these out
     debugprint.enable = true;
+    flutter-tools.enable = true;
+    gitignore.enable = true;
     glow.enable = true;
     harpoon.enable = true;
     opencode.enable = true;
