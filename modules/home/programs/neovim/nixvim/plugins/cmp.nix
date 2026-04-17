@@ -1,7 +1,7 @@
 {lib, ...}: {
   plugins = {
     cmp = {
-      enable = true;
+      enable = false;
       luaConfig = {
         pre = ''
           local cmp = require("cmp")
