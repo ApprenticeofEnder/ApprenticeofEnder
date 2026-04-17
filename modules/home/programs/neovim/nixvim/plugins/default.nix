@@ -18,6 +18,7 @@ in {
     snacks.enable = true;
     snacks.settings = {
       input.enable = true;
+      picker.enable = true;
     };
     ts-autotag = {
       enable = true;
