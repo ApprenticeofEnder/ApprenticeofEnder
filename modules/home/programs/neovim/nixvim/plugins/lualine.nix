@@ -140,7 +140,7 @@
               },
             },
             lualine_c = {},
-            lualine_x = { },
+            lualine_x = {},
             lualine_y = { search_result, "lsp_status", "filetype" },
             lualine_z = { "%l:%c", "%p%%/%L" },
           },
