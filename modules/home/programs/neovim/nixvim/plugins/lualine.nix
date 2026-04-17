@@ -4,6 +4,12 @@
       enable = true;
       luaConfig.pre = ''
         local function get_colors(highlight_name)
+          if vim.g.vscode then
+            return {
+              fg = "x000000",
+              bg ="x000000"
+            }
+          end
           local highlight_data = vim.api.nvim_get_hl(0, {name=highlight_name})
           local result = {
             fg = string.format("%x", highlight_data.fg),
@@ -14,7 +20,6 @@
           end
           return result
         end
-
 
         local colors = {
           red = "#ca1243",
