@@ -5,5 +5,8 @@
       highlight_on_key = true;
       dim = true;
     };
+    lazyLoad = {
+      settings.event = ["BufRead"];
+    };
   };
 }

@@ -37,19 +37,7 @@
     # TODO: Test these out
     debugprint.enable = false;
     harpoon.enable = false;
-    lazygit.enable = true;
     opencode.enable = true;
-    smartcolumn.enable = true;
-    smartcolumn.settings = {
-      disabled_filetypes = [
-        # keep-sorted start
-        "dashboard"
-        "help"
-        "markdown"
-        "text"
-        # keep-sorted end
-      ];
-    };
     # keep-sorted end
   };
 }

@@ -2,10 +2,9 @@
   plugins = {
     telescope = {
       enable = true;
-      # enabledExtensions = [
-      #   "themes"
-      #   "terms"
-      # ];
+      lazyLoad = {
+        settings.cmd = ["Telescope"];
+      };
       settings = {
         defaults = {
           prompt_prefix = "   ";

@@ -1,6 +1,9 @@
 {...}: {
   plugins.indent-blankline = {
     enable = true;
+    lazyLoad = {
+      settings.event = ["BufRead"];
+    };
     settings = {
       exclude = {
         buftypes = [

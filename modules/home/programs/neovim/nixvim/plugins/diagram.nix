@@ -1,6 +1,9 @@
 {...}: {
   plugins.diagram = {
     enable = true;
+    lazyLoad = {
+      settings.ft = ["markdown" "norg"];
+    };
     settings = {
       integrations = [
         {

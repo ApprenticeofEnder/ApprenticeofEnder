@@ -1,6 +1,9 @@
 {
   plugins.cloak = {
     enable = true;
+    lazyLoad = {
+      settings.event = ["BufRead"];
+    };
     settings = {
       cloak_character = "*";
       enabled = true;

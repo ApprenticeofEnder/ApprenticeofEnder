@@ -8,15 +8,23 @@ in {
     map (fn: ./${fn}) (filter filterFiles (attrNames (readDir ./.)));
   plugins = {
     # keep-sorted start block=yes
-    autoclose.enable = true;
-    neoscroll.enable = true;
-    precognition.enable = true;
+    autoclose = {
+      enable = true;
+      lazyLoad = {
+        settings.event = ["InsertEnter"];
+      };
+    };
+    lz-n.enable = true;
     snacks.enable = true;
     snacks.settings = {
       input.enable = true;
     };
-    todo-comments.enable = true;
-    ts-autotag.enable = true;
+    ts-autotag = {
+      enable = true;
+      lazyLoad = {
+        settings.event = ["BufRead"];
+      };
+    };
     ts-context-commentstring.enable = true;
     which-key.enable = true;
     which-key.settings = {

@@ -2,6 +2,12 @@
   plugins = {
     nvim-tree = {
       enable = true;
+      lazyLoad = {
+        settings.cmd = [
+          "NvimTreeToggle"
+          "NvimTreeFocus"
+        ];
+      };
       settings = {
         filters = {
           dotfiles = false;
