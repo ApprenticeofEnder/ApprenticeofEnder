@@ -42,18 +42,6 @@
       '';
     }
     {
-      pattern = ["*"];
-      desc = "Treesitter Spool Up";
-      event = [
-        "FileType"
-      ];
-      callback = lib.nixvim.mkRaw ''
-        function(args)
-          pcall(vim.treesitter.start)
-        end
-      '';
-    }
-    {
       pattern = "TSUpdate";
       event = [
         "User"
