@@ -9,9 +9,13 @@
         {
           cloak_pattern = "=.+";
           file_pattern = [
-            ".env*"
-            "wrangler.toml"
+            # keep-sorted start
+            ".act/secrets"
             ".dev.vars"
+            ".env*"
+            ".secrets"
+            "wrangler.toml"
+            # keep-sorted end
           ];
         }
       ];
