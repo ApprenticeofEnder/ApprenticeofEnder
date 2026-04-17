@@ -9,9 +9,6 @@
   plugins = {
     treesitter = {
       enable = true;
-      lazyLoad = {
-        settings.cmd = ["Telescope"];
-      };
       highlight.enable = true;
       indent.enable = true;
       folding.enable = false;
