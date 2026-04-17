@@ -34,8 +34,9 @@
         jsonls_integration = true;
       };
     };
-    debugprint.enable = true;
-    harpoon.enable = true;
+    # TODO: Test these out
+    debugprint.enable = false;
+    harpoon.enable = false;
     lazygit.enable = true;
     opencode.enable = true;
     smartcolumn.enable = true;
