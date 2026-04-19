@@ -6,7 +6,7 @@
     shellIntegration = {
       enableZshIntegration = true;
       enableBashIntegration = true;
-      enableFishIntegration = true;
+      # enableFishIntegration = true;
     };
 
     # themeFile = "SpaceGray_Eighties";
