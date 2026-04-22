@@ -35,6 +35,7 @@
     glow.enable = true;
     harpoon.enable = true;
     opencode.enable = true;
+    wrapping.enable = true;
     # keep-sorted end
   };
 }
