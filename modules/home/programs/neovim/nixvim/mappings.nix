@@ -1,4 +1,9 @@
 {lib, ...}: let
+  leader = "<leader>";
+  cmd = "<cmd>";
+  enter = "<CR>";
+  luaCmd = code: "${cmd}lua ${code}${enter}";
+
   mapModes = modes: keymaps:
     map (
       keymap:
@@ -62,20 +67,20 @@
       options.noremap = true;
     };
 
-  makeVsCodeMappingAdvanced = key: vscodeCallbackLua: nvimCallbackLua: desc:
-    (
-      makeMapping
-      key
-      (
-        lib.nixvim.mkRaw ''
-          _M.make_vscode_mapping_advanced(${vscodeCallbackLua}, ${nvimCallbackLua})
-        ''
-      )
-      desc
-    )
-    // {
-      options.noremap = true;
-    };
+  # makeVsCodeMappingAdvanced = key: vscodeCallbackLua: nvimCallbackLua: desc:
+  #   (
+  #     makeMapping
+  #     key
+  #     (
+  #       lib.nixvim.mkRaw ''
+  #         _M.make_vscode_mapping_advanced(${vscodeCallbackLua}, ${nvimCallbackLua})
+  #       ''
+  #     )
+  #     desc
+  #   )
+  #   // {
+  #     options.noremap = true;
+  #   };
 
   normalMaps = mapModes ["n"] [
     (makeMapping ";" ":" "CMD enter command mode")
@@ -87,64 +92,59 @@
     (makeVsCodeMapping "<C-j>" "workbench.action.navigateUp" "<C-w>j" "Switch window up")
     (makeVsCodeMapping "<C-k>" "workbench.action.navigateDown" "<C-w>k" "Switch window down")
 
-    (makeMapping "<ESC>" "<cmd>noh<CR>" "General clear highlights")
-    (makeMapping "<C-s>" "<cmd>w<CR>" "General save file")
-    (makeMapping "<C-c>" "<cmd>%y+<CR>" "General copy whole file")
+    (makeMapping "<ESC>" "${cmd}noh${enter}" "General clear highlights")
+    (makeMapping "<C-s>" "${cmd}w${enter}" "General save file")
+    (makeMapping "<C-c>" "${cmd}%y+${enter}" "General copy whole file")
 
-    (makeMapping "<leader>n" "<cmd>set nu!<CR>" "Toggle line number")
-    (makeMapping "<leader>rn" "<cmd>set rnu!<CR>" "Toggle relative line number")
-    (makeMapping "<leader>ch" "<cmd>NvCheatsheet<CR>" "Toggle NvCheatsheet")
+    (makeMapping "${leader}n" "${cmd}set nu!${enter}" "Toggle line number")
+    (makeMapping "${leader}rn" "${cmd}set rnu!${enter}" "Toggle relative line number")
+    (makeMapping "${leader}ch" "${cmd}NvCheatsheet${enter}" "Toggle NvCheatsheet")
 
     # Global LSP Mappings
-    (
-      makeVsCodeMappingAdvanced
-      "<leader>ds"
-      ''
-        function()
-          require("vscode").action("workbench.actions.view.problems")
-        end
-      ''
-      "vim.diagnostic.setloclist"
-      "LSP diagnostic loclist"
-    )
+    (makeVsCodeMapping "${leader}ds" "workbench.actions.view.problems" (luaCmd "vim.diagnostic.setloclist()") "LSP diagnostic loclist")
+    (makeVsCodeMapping "gd" "editor.action.revealDefinition" (luaCmd "vim.lsp.buf.definition()") "Go to definition")
+    (makeVsCodeMapping "gD" "editor.action.revealDeclaration" (luaCmd "vim.lsp.buf.declaration()") "Go to declaration")
+    (makeVsCodeMapping "gi" "editor.action.goToImplementation" (luaCmd "vim.lsp.buf.implementation()") "Go to implementation(s)")
+    (makeVsCodeMapping "gr" "editor.action.goToReferences" (luaCmd "vim.lsp.buf.references()") "Go to references")
 
     # File Explorer
-    (makeVsCodeMapping "<C-n>" "workbench.view.explorer" "<cmd>NvimTreeToggle<CR>" "nvimtree toggle window")
-    (makeVsCodeMapping "<leader>e" "workbench.files.action.focusFilesExplorer" "<cmd>NvimTreeFocus<CR>" "nvimtree focus window")
+    (makeVsCodeMapping "<C-n>" "workbench.view.explorer" "${cmd}NvimTreeToggle${enter}" "nvimtree toggle window")
+    (makeVsCodeMapping "${leader}e" "workbench.files.action.focusFilesExplorer" "${cmd}NvimTreeFocus${enter}" "nvimtree focus window")
 
     # Tabs
-    (makeVsCodeMapping "<tab>" "workbench.action.nextEditor" "<cmd>BufferNext<CR>" "buffer goto next")
-    (makeVsCodeMapping "<S-tab>" "workbench.action.previousEditor" "<cmd>BufferPrevious<CR>" "buffer goto prev")
-    (makeVsCodeMapping "<leader>x" "workbench.action.closeActiveEditor" "<cmd>BufferClose<CR>" "buffer close")
-    (makeVsCodeMapping "<A->>" "workbench.action.moveEditorRightInGroup" "<cmd>BufferMoveNext<CR>" "buffer reorder right")
-    (makeVsCodeMapping "<A-<>" "workbench.action.moveEditorLeftInGroup" "<cmd>BufferMovePrevious<CR>" "buffer reorder left")
+    (makeVsCodeMapping "<tab>" "workbench.action.nextEditor" "${cmd}BufferNext${enter}" "buffer goto next")
+    (makeVsCodeMapping "<S-tab>" "workbench.action.previousEditor" "${cmd}BufferPrevious${enter}" "buffer goto prev")
+    (makeVsCodeMapping "${leader}x" "workbench.action.closeActiveEditor" "${cmd}BufferClose${enter}" "buffer close")
+    (makeVsCodeMapping "<A->>" "workbench.action.moveEditorRightInGroup" "${cmd}BufferMoveNext${enter}" "buffer reorder right")
+    (makeVsCodeMapping "<A-<>" "workbench.action.moveEditorLeftInGroup" "${cmd}BufferMovePrevious${enter}" "buffer reorder left")
 
     # Actions
-    (makeVsCodeMapping "<leader>a" "workbench.action.showCommands" "<cmd>lua require('fastaction').code_action()<CR>" "Open quick actions")
+    (makeVsCodeMapping "${leader}a" "workbench.action.showCommands" (luaCmd "require('fastaction').code_action()") "Open quick actions")
+    (makeVsCodeMapping "${leader}lg" "lazygit.openLazygit" "${cmd}LazyGit${enter}" "Open LazyGit")
 
     # Telescope
-    (makeVsCodeMapping "<leader>fw" "periscope.search" "<cmd>Telescope live_grep<CR>" "telescope live grep")
-    (makeVsCodeMapping "<leader>fb" "periscope.searchBuffers" "<cmd>Telescope buffers<CR>" "telescope find buffers")
-    (makeVsCodeMapping "<leader>ff" "periscope.searchFiles" "<cmd>Telescope find_files<cr>" "telescope find files")
+    (makeVsCodeMapping "${leader}fw" "periscope.search" "${cmd}Telescope live_grep${enter}" "telescope live grep")
+    (makeVsCodeMapping "${leader}fb" "periscope.searchBuffers" "${cmd}Telescope buffers${enter}" "telescope find buffers")
+    (makeVsCodeMapping "${leader}ff" "periscope.searchFiles" "${cmd}Telescope find_files<cr>" "telescope find files")
     # TODO: How do I even go about these . . .
-    (makeMapping "<leader>fh" "<cmd>Telescope help_tags<CR>" "telescope help page")
-    (makeMapping "<leader>ma" "<cmd>Telescope marks<CR>" "telescope find marks")
-    (makeMapping "<leader>fo" "<cmd>Telescope oldfiles<CR>" "telescope find oldfiles")
-    (makeMapping "<leader>fz" "<cmd>Telescope current_buffer_fuzzy_find<CR>" "telescope find in current buffer")
-    (makeMapping "<leader>cm" "<cmd>Telescope git_commits<CR>" "telescope git commits")
-    (makeMapping "<leader>gt" "<cmd>Telescope git_status<CR>" "telescope git status")
-    (makeMapping "<leader>pt" "<cmd>Telescope terms<CR>" "telescope pick hidden term")
+    (makeMapping "${leader}fh" "${cmd}Telescope help_tags${enter}" "telescope help page")
+    (makeMapping "${leader}ma" "${cmd}Telescope marks${enter}" "telescope find marks")
+    (makeMapping "${leader}fo" "${cmd}Telescope oldfiles${enter}" "telescope find oldfiles")
+    (makeMapping "${leader}fz" "${cmd}Telescope current_buffer_fuzzy_find${enter}" "telescope find in current buffer")
+    (makeMapping "${leader}cm" "${cmd}Telescope git_commits${enter}" "telescope git commits")
+    (makeMapping "${leader}gt" "${cmd}Telescope git_status${enter}" "telescope git status")
+    (makeMapping "${leader}pt" "${cmd}Telescope terms${enter}" "telescope pick hidden term")
     (
       makeMapping
-      "<leader>fa"
-      "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>"
+      "${leader}fa"
+      "${cmd}Telescope find_files follow=true no_ignore=true hidden=true${enter}"
       "telescope find all files"
     )
 
     # Comments
     {
       action = "gcc";
-      key = "<leader>/";
+      key = "${leader}/";
       options = {
         desc = "toggle comment";
         remap = true;
@@ -152,8 +152,8 @@
     }
 
     # whichkey
-    (makeMapping "<leader>wK" "<cmd>WhichKey <CR>" "whichkey all keymaps")
-    (makeMapping "<leader>wk" {
+    (makeMapping "${leader}wK" "${cmd}WhichKey ${enter}" "whichkey all keymaps")
+    (makeMapping "${leader}wk" {
       __raw = ''
         function()
           vim.cmd("WhichKey " .. vim.fn.input "WhichKey: ")
@@ -176,7 +176,7 @@
   visualMaps = mapModes ["v"] [
     {
       action = "gc";
-      key = "<leader>/";
+      key = "${leader}/";
       options = {
         desc = "toggle comment";
         remap = true;
@@ -190,7 +190,7 @@
     (makeMapping ">" ">gv" "Indent right")
 
     # keep-sorted macro!
-    (makeMapping "<leader>ks" (lib.nixvim.mkRaw ''
+    (makeMapping "${leader}ks" (lib.nixvim.mkRaw ''
       function()
         local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
         vim.api.nvim_feedkeys(esc, "x", false)
