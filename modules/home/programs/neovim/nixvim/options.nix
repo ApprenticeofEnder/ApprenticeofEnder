@@ -60,7 +60,7 @@
     incsearch = true;
     ignorecase = true; # Case-insensitive search
     smartcase = true; # Unless pattern contains uppercase
-    iskeyword = "@,48-57,_,192-255,-"; # Treat dash-separated text as a single word
+    iskeyword = "@,48-57,_,192-255";
 
     # Files & Buffers
     swapfile = false;
