@@ -1,0 +1,4 @@
+.callout[data-callout="audio-log"] {
+  --callout-color: 46, 192, 70;
+  --callout-icon: lucide-audio-lines;
+}
