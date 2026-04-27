@@ -11,5 +11,10 @@ in {
   ];
   nixpkgs.overlays = [
     terramaidOverlay
+    (_: prev: {
+      direnv = prev.direnv.overrideAttrs (_: {
+        doCheck = false;
+      });
+    })
   ];
 }

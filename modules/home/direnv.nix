@@ -1,6 +1,7 @@
-{...}: {
+{pkgs, ...}: {
   # https://nixos.asia/en/direnv
   programs.direnv = {
+    package = pkgs.direnv;
     enable = true;
     silent = true;
     nix-direnv = {
