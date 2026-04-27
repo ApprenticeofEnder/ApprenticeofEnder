@@ -41,6 +41,10 @@
       url = "github:abenz1267/walker";
       inputs.elephant.follows = "elephant";
     };
+    obsidian-plugins = {
+      url = "github:cjavad/nixpille-obsidian-community-plugins";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # Wired using https://nixos-unified.org/guide/autowiring

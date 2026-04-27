@@ -3,7 +3,13 @@
   lib,
   osConfig,
   ...
-}: {
+}: let
+  terramaidOverlay = _: prev: let
+    system = prev.stdenv.hostPlatform.system;
+  in {
+    terramaid = flake.inputs.Terramaid.packages.${system}.default;
+  };
+in {
   nixpkgs = lib.mkIf (osConfig == null) {
     config = {
       allowUnfree = true;
@@ -11,9 +17,8 @@
     };
 
     overlays = [
-      (_: prev: {
-        terramaid = flake.inputs.Terramaid.packages.${prev.stdenv.hostPlatform.system}.default;
-      })
+      terramaidOverlay
+      flake.inputs.obsidian-plugins.overlays.default
     ];
   };
 }
