@@ -6,24 +6,30 @@
 }: let
   dev = with pkgs;
     [
-      shfmt # shell formatter
-      typst # latex alternative
-      httpie # better http client
+      # keep-sorted start
       gnumake
-      vi-mongo # mongodb tui
-      shellcheck # shell linter
+      httpie # better http client
       keep-sorted # line sorting
       mermaid-cli
+      shellcheck # shell linter
+      shfmt # shell formatter
+      typst # latex alternative
+      vi-mongo # mongodb tui
+      # keep-sorted end
 
       # nix-specific
+      # keep-sorted start
+      alejandra # formatter
       nil # lsp
       nix-info # system information
       nix-tree # dependency navigation
-      alejandra # formatter
+      # keep-sorted end
 
-      omnix
-      devenv
+      # keep-sorted start
       cachix
+      devenv
+      omnix
+      # keep-sorted end
     ]
     ++ [
       # pkgs-stable.devenv
@@ -31,50 +37,57 @@
     ];
 
   security = with pkgs; [
-    nmap # recon
-    snyk # vuln management
+    # keep-sorted start
     gnutls
-    tcpdump # network forensics
-    wireshark # network forensics
+    nmap # recon
     pulumi-esc # secrets management
     # _1password-gui # TODO: Work out the whole user/group requirement thing
     # _1password-cli
     semgrep
+    snyk # vuln management
+    tcpdump # network forensics
+    wireshark # network forensics
     zizmor
+    # keep-sorted end
   ];
 
   devops = with pkgs; [
+    # keep-sorted start
     act # local CI/CD testing
-    pulumi # IaC
-    ansible # deployment automation
-    kubectl # k8s
-    gama-tui # github actions manager
-    opentofu # IaC
-    terraform # IaC
-    # terramaid
     actionlint # github actions linter
+    ansible # deployment automation
     ansible-lint # linter
+    gama-tui # github actions manager
+    kubectl # k8s
+    opentofu # IaC
+    pulumi # IaC
+    terraform # IaC
+    terramaid
+    # keep-sorted end
   ];
 
   utility = with pkgs;
     [
       # System
-      sd # better sed
+      # keep-sorted start
+      cargo-seek
       duf # disk usage
-      pik # process info
+      exiftool
       just # make for commands
+      lazyssh
+      libnotify
+      macchina
       mosh # better SSH
       ncdu # disk usage (baobab-like tui)
+      pik # process info
+      procs # better ps
+      sd # better sed
       tldr # man with examples
       tree
       ttyd # terminal sharing
-      procs # better ps
       unzip
       xclip
-      lazyssh
-      macchina
-      libnotify
-      cargo-seek
+      # keep-sorted end
 
       # Research
       wiki-tui # wikipedia TUI
@@ -90,15 +103,15 @@
 
   linux = with pkgs;
     [
-      ksnip # screenshots
-      termscp # scp tui, broken on darwin because of some samba library
-      # TODO: Figure out how to get Docker working properly here
+      # keep-sorted start
       kdePackages.okular
+      ksnip # screenshots
       lazyjournal
-      systemctl-tui
-      nvtopPackages.full
-
       less # needed for Ubuntu
+      nvtopPackages.full
+      systemctl-tui
+      termscp # scp tui, broken on darwin because of some samba library
+      # keep-sorted end
 
       # fun that only works on Linux
       spotify
@@ -112,27 +125,33 @@
     ];
 
   x86Linux = with pkgs; [
-    godot # game engine
-    impala # wifi management
+    # keep-sorted start
     audacity # audio editing
+    godot # game engine
     handbrake # video file conversions
+    impala # wifi management
+    # keep-sorted end
   ];
 
   darwin = with pkgs; [
-    utm
+    # keep-sorted start
     docker
     docker-compose
     podman
+    utm
+    # keep-sorted end
 
     # libraries
     libiconv
   ];
 
   fun = with pkgs; [
+    # keep-sorted start
+    asciiquarium
+    cmatrix
     genact
     smassh
-    cmatrix
-    asciiquarium
+    # keep-sorted end
   ];
 in {
   home.packages = with pkgs;
