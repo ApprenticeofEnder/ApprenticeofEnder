@@ -115,6 +115,15 @@ in {
             "svelte"
           ];
         };
+        terraformls = {
+          config = {
+            root_markers = [
+              ".terraform"
+              ".terraform.lock.hcl"
+              ".git"
+            ];
+          };
+        };
         yamlls = {
           config = {
             settings = {

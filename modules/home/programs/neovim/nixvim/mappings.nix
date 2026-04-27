@@ -64,7 +64,7 @@
       desc
     )
     // {
-      options.noremap = true;
+      options.remap = true;
     };
 
   # makeVsCodeMappingAdvanced = key: vscodeCallbackLua: nvimCallbackLua: desc:
@@ -163,7 +163,7 @@
   ];
 
   insertMaps = mapModes ["i"] [
-    (makeMapping "jk" "<ESC>" "Escape insert mode")
+    (makeVsCodeMapping "jk" "vscode-neovim.escape" "<ESC>" "Escape insert mode")
 
     (makeMapping "<C-b>" "<ESC>^i" "Move to beginning of line")
     (makeMapping "<C-e>" "<End>" "Move to end of line")

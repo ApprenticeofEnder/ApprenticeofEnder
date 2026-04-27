@@ -1,6 +1,16 @@
-{...}: {
+{lib, ...}: {
   plugins.obsidian = {
     enable = true;
+    lazyLoad = {
+      settings = {
+        lazy = true;
+        enabled = lib.nixvim.mkRaw ''
+          function()
+            return not vim.g.vscode
+          end
+        '';
+      };
+    };
     settings = {
       # keep-sorted start block=yes
       completion = {

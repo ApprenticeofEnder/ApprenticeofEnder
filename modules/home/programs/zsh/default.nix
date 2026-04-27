@@ -1,10 +1,12 @@
 {
   pkgs,
+  pkgs-stable,
   lib,
   ...
 }: {
   programs.zsh = {
     enable = true;
+    package = pkgs-stable.zsh;
     autocd = false;
     enableCompletion = true;
     shellAliases = {
