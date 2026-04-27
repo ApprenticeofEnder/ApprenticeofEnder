@@ -39,11 +39,14 @@ in {
       );
 
     imports = [
-      ./plugins
+      # keep-sorted start
       ./autocmds.nix
+      ./filetypes.nix
       ./lsp.nix
-      ./options.nix
       ./mappings.nix
+      ./options.nix
+      ./plugins
+      # keep-sorted end
     ];
 
     colorschemes = {
