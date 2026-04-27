@@ -5,7 +5,15 @@
     enableZshIntegration = true;
     enableBashIntegration = true;
     enableFishIntegration = true;
-    # keymap = {};
+    keymap = {
+      mgr.prepend_keymap = [
+        {
+          run = "plugin lazygit";
+          on = ["g" "i"];
+          desc = "lazygit";
+        }
+      ];
+    };
     # flavors = { inherit (pkgs.yaziPlugins); };
     # theme = {};
     plugins = {
@@ -41,10 +49,11 @@
     };
     initLua = ''
       require("yatline"):setup()
+      require("yatline-githead"):setup()
       require("full-border"):setup()
       require("git"):setup()
       require("smart-enter"):setup {
-      open_multi = true,
+        open_multi = true,
       }
     '';
   };
