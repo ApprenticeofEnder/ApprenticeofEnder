@@ -16,5 +16,6 @@ in {
         doCheck = false;
       });
     })
+    flake.inputs.obsidian-plugins.overlays.default
   ];
 }
