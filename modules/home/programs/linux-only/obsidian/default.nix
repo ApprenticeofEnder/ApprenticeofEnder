@@ -1,4 +1,4 @@
-{...}: let
+{pkgs, ...}: let
   obsidianRoot = "Obsidian";
   systemFolder = name: "_system/${name}";
   cssSnippet = name: "./snippets/${name}.css";
@@ -14,6 +14,9 @@
 in {
   imports = [
     ./plugins.nix
+  ];
+  home.packages = with pkgs; [
+    obsidian
   ];
   programs.obsidian = {
     enable = false;
