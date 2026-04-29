@@ -57,6 +57,17 @@
         end
       '';
     }
+    {
+      pattern = ["*"];
+      event = [
+        "TermOpen"
+      ];
+      callback = lib.nixvim.mkRaw ''
+        function()
+          vim.cmd('startinsert')
+        end
+      '';
+    }
   ];
   autoGroup = [
   ];

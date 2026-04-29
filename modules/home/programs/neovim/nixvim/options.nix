@@ -1,4 +1,8 @@
 {
+  pkgs,
+  lib,
+  ...
+}: {
   # -------------------------------------- options ------------------------------------------
   #
   #
@@ -84,6 +88,9 @@
     linebreak = true;
     wrap = false;
     # "whichwrap:append" = "<>[]hl";
+
+    # Shell
+    shell = "${lib.getExe pkgs.fish}";
   };
   clipboard = {
     register = "unnamedplus";
