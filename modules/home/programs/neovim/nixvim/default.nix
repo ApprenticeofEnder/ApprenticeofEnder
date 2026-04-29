@@ -43,6 +43,7 @@ in {
       ./autocmds.nix
       ./filetypes.nix
       ./lsp.nix
+      ./macros.nix
       ./mappings.nix
       ./options.nix
       ./plugins
