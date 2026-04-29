@@ -17,5 +17,10 @@
     (mkMacro "h" "iHello, world!${esc}o:D${esc}")
   ];
 in {
-  extraLuaConfigPre = consolidateMacros macros;
+  extraLuaConfigPost = ''
+    pcall(
+      require "experimental"
+    )
+    ${consolidateMacros macros}
+  '';
 }
