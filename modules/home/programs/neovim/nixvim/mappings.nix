@@ -121,7 +121,7 @@
     # Actions
     (makeVsCodeMapping "${leader}a" "workbench.action.showCommands" (luaCmd "require('fastaction').code_action()") "Open quick actions")
     (makeVsCodeMapping "${leader}lg" "lazygit-vscode.toggle" "${cmd}LazyGit${enter}" "Open LazyGit")
-    (makeVsCodeMapping "${leader}ot" "workbench.action.terminal.toggleTerminal" "${cmd}hor te${enter}i" "Open terminal")
+    (makeVsCodeMapping "${leader}ot" "workbench.action.terminal.toggleTerminal" "${cmd}hor te${enter}" "Open terminal")
 
     # Telescope
     (makeVsCodeMapping "${leader}fw" "periscope.search" "${cmd}Telescope live_grep${enter}" "telescope live grep")
