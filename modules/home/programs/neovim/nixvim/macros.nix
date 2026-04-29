@@ -1,8 +1,9 @@
 {lib, ...}: let
-  # leader = "<leader>";
-  # cmd = "<cmd>";
-  # enter = "<CR>";
-  esc = "<ESC>";
+  interpolateTermcode = termcode: ''" .. ${termcode} .. "'';
+  # cmd = interpolateTermcode "cmd";
+  # enter = interpolateTermcode "enter";
+  esc = interpolateTermcode "esc";
+
   mkMacro = register: sequence:
     lib.nixvim.mkRaw ''
       vim.fn.setreg("${register}", "${sequence}")
@@ -14,10 +15,13 @@
     );
 
   macros = [
-    (mkMacro "h" "iHello, world!${esc}o:D${esc}")
+    (mkMacro "h" "iHello, world!${esc}o:D${esc}:w")
   ];
 in {
-  extraLuaConfigPost = ''
+  extraConfigLuaPost = ''
+    local esc = vim.api.nvim_replace_termcodes("<ESC>", true, true, true)
+    local cmd = vim.api.nvim_replace_termcodes("<cmd>", true, true, true)
+    local enter = vim.api.nvim_replace_termcodes("<CR>", true, true, true)
     pcall(
       require "experimental"
     )
