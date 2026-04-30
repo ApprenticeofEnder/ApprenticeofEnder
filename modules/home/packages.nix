@@ -62,7 +62,7 @@
     opentofu # IaC
     pulumi # IaC
     terraform # IaC
-    terramaid
+    # terramaid
     # keep-sorted end
   ];
 
