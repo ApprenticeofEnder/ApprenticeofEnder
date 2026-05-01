@@ -1,7 +1,7 @@
 {pkgs, ...}: let
   obsidianRoot = "Obsidian";
   systemFolder = name: "_system/${name}";
-  cssSnippet = name: "./snippets/${name}.css";
+  cssSnippet = name: ./snippets/${builtins.toString (builtins.replaceStrings [" "] ["-"] name)}.css;
   enabledCssSnippets = [
     # keep-sorted start
     "MCL Gallery Cards"
@@ -19,7 +19,7 @@ in {
     obsidian
   ];
   programs.obsidian = {
-    enable = false;
+    enable = true;
     defaultSettings = {
       # keep-sorted start block=yes
 
@@ -57,7 +57,8 @@ in {
       };
       cssSnippets =
         map (name: {
-          source = cssSnippet name;
+          inherit name;
+          text = builtins.readFile (cssSnippet name);
           enable = true;
         })
         enabledCssSnippets;
@@ -74,6 +75,12 @@ in {
         enable = false;
         target = "${obsidianRoot}/Hub";
         # settings = {};
+      };
+      hubTest = {
+        enable = true;
+        target = "${obsidianRoot}/HubTest";
+        settings = {
+        };
       };
       # TODO: Add work, RPG, gaming, homelab, personal
     };
