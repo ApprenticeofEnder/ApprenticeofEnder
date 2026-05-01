@@ -1,5 +1,5 @@
-{lib, ...}: {
-  autoCmd = [
+{lib, ...}: let
+  terraform = [
     {
       pattern = [
         "*.tf"
@@ -29,46 +29,51 @@
         end
       '';
     }
-    {
-      pattern = ["*"];
-      desc = "Autoformat using Conform";
-      event = [
-        "BufWritePre"
-      ];
-      callback = lib.nixvim.mkRaw ''
-        function(args)
-          require("conform").format { bufnr = args.buf }
-        end
-      '';
-    }
-    {
-      pattern = "TSUpdate";
-      event = [
-        "User"
-      ];
-      callback = lib.nixvim.mkRaw ''
-        function()
-          require('nvim-treesitter.parsers').ghactions = {
-            install_info = {
-              url = 'https://github.com/rmuir/tree-sitter-ghactions',
-              queries = 'queries',
-            },
-          }
-        end
-      '';
-    }
-    {
-      pattern = ["*"];
-      event = [
-        "TermOpen"
-      ];
-      callback = lib.nixvim.mkRaw ''
-        function()
-          vim.cmd('startinsert')
-        end
-      '';
-    }
   ];
+in {
+  autoCmd =
+    terraform
+    ++ [
+      {
+        pattern = ["*"];
+        desc = "Autoformat using Conform";
+        event = [
+          "BufWritePre"
+        ];
+        callback = lib.nixvim.mkRaw ''
+          function(args)
+            require("conform").format { bufnr = args.buf }
+          end
+        '';
+      }
+      {
+        pattern = "TSUpdate";
+        event = [
+          "User"
+        ];
+        callback = lib.nixvim.mkRaw ''
+          function()
+            require('nvim-treesitter.parsers').ghactions = {
+              install_info = {
+                url = 'https://github.com/rmuir/tree-sitter-ghactions',
+                queries = 'queries',
+              },
+            }
+          end
+        '';
+      }
+      {
+        pattern = ["*"];
+        event = [
+          "TermOpen"
+        ];
+        callback = lib.nixvim.mkRaw ''
+          function()
+            vim.cmd('startinsert')
+          end
+        '';
+      }
+    ];
   autoGroup = [
   ];
 }

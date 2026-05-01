@@ -1,9 +1,9 @@
-local esc = vim.api.nvim_replace_termcodes("<ESC>", true, true, true)
-local enter = vim.api.nvim_replace_termcodes("<CR>", true, true, true)
-
-vim.api.nvim_create_autocmd("BufEnter", {
-	pattern = { "*" },
-	callback = function()
-		vim.fn.setreg("s", ":!keep-sorted " .. vim.api.nvim_buf_get_name(0) .. enter)
-	end,
-})
+-- local esc = vim.api.nvim_replace_termcodes("<ESC>", true, true, true)
+-- local enter = vim.api.nvim_replace_termcodes("<CR>", true, true, true)
+--
+-- vim.api.nvim_create_autocmd("BufEnter", {
+-- 	pattern = { "*" },
+-- 	callback = function()
+-- 		vim.fn.setreg("s", ":!keep-sorted " .. vim.api.nvim_buf_get_name(0) .. enter)
+-- 	end,
+-- })
