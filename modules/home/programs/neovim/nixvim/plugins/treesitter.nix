@@ -32,6 +32,7 @@
         python
         regex
         rust
+        sql
         svelte
         terraform
         toml
