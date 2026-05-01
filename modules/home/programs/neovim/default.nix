@@ -1,68 +1,63 @@
-{nixosConfig, ...}: let
-  isNixOS = nixosConfig != null;
+{...}: let
+  # Recursively find leaf files under a directory, returning list of relative paths
+  collectLeafFiles = with builtins;
+    dir: prefix: let
+      entries = readDir dir;
+    in
+      concatLists (
+        attrValues (
+          mapAttrs (
+            name: type:
+              if type == "directory"
+              then collectLeafFiles (dir + "/${name}") "${prefix}${name}/"
+              else ["${prefix}${name}"]
+          )
+          entries
+        )
+      );
+
+  queryFiles = collectLeafFiles ./queries "";
 in {
   home.sessionVariables = {
-    NIX_NEOVIM =
-      if isNixOS
-      then "1"
-      else "0";
     EDITOR = "nvim";
     VISUAL = "nvim";
   };
+  programs.nixvim = {
+    enable = true;
 
-  imports = [./nixvim];
+    globals = {
+      mapleader = " ";
+      maplocalleader = "\\";
+    };
 
-  # home = {
-  #   file = {
-  #     ".config/nvim/init.lua" = {
-  #       enable = false;
-  #       text = ''
-  #         -- bootstrap lazy.nvim, LazyVim and your plugins
-  #         require("config.lazy")
-  #       '';
-  #     };
-  #     ".config/nvim/lua/plugins" = {
-  #       enable = false;
-  #       source = ./plugins;
-  #       recursive = true;
-  #     };
-  #     ".config/nvim/lua/config" = {
-  #       enable = false;
-  #       source = ./config;
-  #       recursive = true;
-  #     };
-  #     ".config/nvim/lazyvim.json" = {
-  #       enable = false;
-  #       source = ./lazyvim.json;
-  #     };
-  #     ".config/nvim/.neoconf.json" = {
-  #       enable = false;
-  #       text = ''
-  #         {
-  #           "neodev": {
-  #             "library": {
-  #               "enabled": true,
-  #               "plugins": true
-  #             }
-  #           },
-  #           "neoconf": {
-  #             "plugins": {
-  #               "lua_ls": {
-  #                 "enabled": true
-  #               }
-  #             }
-  #           }
-  #         }
-  #       '';
-  #     };
-  #     ".config/nvim/stylua.toml" = {
-  #       enable = false;
-  #       text = ''
-  #         indent_width = 2
-  #         column_width = 120
-  #         indent_type = "Spaces"
-  #       '';
-  #     };
-  #   };
-  # };
+    extraFiles = with builtins;
+      listToAttrs (
+        map (fn: {
+          name = "queries/${fn}";
+          value = {
+            enable = true;
+            text = readFile (./queries + "/${fn}");
+          };
+        })
+        queryFiles
+      );
+
+    imports = [
+      # keep-sorted start
+      ./autocmds.nix
+      ./filetypes.nix
+      ./lsp.nix
+      ./macros.nix
+      ./mappings.nix
+      ./options.nix
+      ./plugins
+      # keep-sorted end
+    ];
+
+    colorschemes = {
+      nord.enable = true;
+    };
+
+    # extraConfigLua = ''/* hover.lua inline */ '';
+  };
 }
