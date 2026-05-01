@@ -34,6 +34,7 @@
     gitignore.enable = true;
     glow.enable = true;
     harpoon.enable = true;
+    octo.enable = true;
     opencode.enable = true;
     wrapping.enable = true;
     # keep-sorted end
