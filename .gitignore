@@ -13,3 +13,6 @@ devenv.local.yaml
 
 # generated files
 templates/readme.json
+
+# opencode
+.opencode/package-lock.json
