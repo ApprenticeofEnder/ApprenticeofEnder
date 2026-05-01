@@ -76,12 +76,6 @@ in {
         target = "${obsidianRoot}/Hub";
         # settings = {};
       };
-      hubTest = {
-        enable = true;
-        target = "${obsidianRoot}/HubTest";
-        settings = {
-        };
-      };
       # TODO: Add work, RPG, gaming, homelab, personal
     };
   };
