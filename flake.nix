@@ -45,6 +45,10 @@
       url = "github:cjavad/nixpille-obsidian-community-plugins";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # Wired using https://nixos-unified.org/guide/autowiring
