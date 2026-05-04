@@ -26,7 +26,7 @@ in {
   };
 
   programs.opencode.settings = {
-    model = "ollama-ender/${builtins.elemAt models 0}";
+    # model = "ollama-ender/${builtins.elemAt models 0}";
     provider = {
       ollama-ender = {
         npm = "@ai-sdk/openai-compatible";
