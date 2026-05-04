@@ -4,6 +4,10 @@
       devFile = "cd-rday";
       idSerialShort = "RF6XA16";
     };
+    ender = {
+      devFile = "cd-ender";
+      idSerialShort = "K0JP7MD5526";
+    };
   };
   ntfyTopic = "6N3gGuklnOsWbO4R-cdrip";
 in {
@@ -28,6 +32,7 @@ in {
       "udev/rules.d/cd.rules" = {
         text = ''
           ACTION=="add", KERNEL=="sr[0-9]", ENV{ID_SERIAL_SHORT}=="${readers.robDay.idSerialShort}", SYMLINK+="${readers.robDay.devFile}"
+          ACTION=="add", KERNEL=="sr[0-9]", ENV{ID_SERIAL_SHORT}=="${readers.ender.idSerialShort}", SYMLINK+="${readers.ender.devFile}"
         '';
       };
     };
