@@ -31,4 +31,19 @@ in {
   };
 
   home.stateVersion = "25.05";
+
+  programs.fish.functions = {
+    sudo = ''
+      set -l -a banned_commands "nala install steam"
+      set -l -a banned_commands "apt install steam"
+      for command in $banned_commands;
+          if test "$argv" != "$command"
+              continue
+          end
+          echo "Command not allowed: sudo $command" >&2
+          return 1
+      end
+      command sudo $argv
+    '';
+  };
 }
