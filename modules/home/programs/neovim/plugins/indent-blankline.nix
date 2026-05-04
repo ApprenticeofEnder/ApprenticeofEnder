@@ -23,8 +23,11 @@
       };
       indent = {
         char = "│";
+        highlight = "IblChar";
       };
       scope = {
+        char = "│";
+        highlight = "IblScopeChar";
         show_end = false;
         show_exact_scope = true;
         show_start = false;
