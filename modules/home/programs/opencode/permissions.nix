@@ -58,6 +58,7 @@
     "*.secrets" = "deny";
     "*.env.*" = "deny";
     "*.env.example" = "allow";
+    "~/.aws/*" = "deny";
   };
   permissions =
     {
