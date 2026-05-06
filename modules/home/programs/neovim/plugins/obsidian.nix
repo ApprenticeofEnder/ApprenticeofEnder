@@ -23,7 +23,6 @@
       ui.enable = false;
       workspaces = [
         # TODO: Start leveraging multiple vaults
-        # - Work
         # - Homelab
         # - RPG
         # - Personal
@@ -31,6 +30,10 @@
         {
           name = "Hub";
           path = "~/Obsidian/Hub";
+        }
+        {
+          name = "Work";
+          path = "~/Obsidian/Work";
         }
       ];
       # keep-sorted end
