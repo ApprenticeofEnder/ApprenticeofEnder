@@ -9,7 +9,13 @@
     "deepseek-coder:1.3b"
     "qwen2.5-coder:3b"
     "deepcoder:1.5b"
+    "granite4.1:3b"
   ];
+
+  # TODO: Investigate the following models:
+  # - https://ollama.com/library/gemma4
+  # - https://ollama.com/library/qwen3.5
+  # - https://ollama.com/library/laguna-xs.2
 
   modelListBash = lib.concatStringsSep " " models;
 in {
