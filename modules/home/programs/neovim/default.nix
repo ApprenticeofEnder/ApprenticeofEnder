@@ -24,6 +24,7 @@ in {
   };
   programs.nixvim = {
     enable = true;
+    nixpkgs.config.allowUnfree = true;
 
     globals = {
       mapleader = " ";
