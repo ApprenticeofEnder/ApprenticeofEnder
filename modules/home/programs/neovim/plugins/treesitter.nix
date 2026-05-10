@@ -19,6 +19,7 @@
         dart
         dockerfile
         fish
+        go
         groovy
         hcl
         html
