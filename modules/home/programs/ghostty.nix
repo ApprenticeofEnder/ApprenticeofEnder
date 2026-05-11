@@ -12,7 +12,7 @@ lib.mkMerge [
       enableFishIntegration = true;
       settings = {
         command = "${pkgs.fish}/bin/fish";
-        scrollback-limit = 50000;
+        scrollback-limit = 30000000;
         window-decoration = "client";
         window-height = 3000;
         window-width = 3000;
