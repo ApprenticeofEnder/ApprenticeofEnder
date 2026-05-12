@@ -15,13 +15,7 @@ in {
 
   cachix = {
     pull = [
-      "cachix"
-      "mfarabi"
-      "nixpkgs"
-      "oxalica"
-      "rbabaev"
       "nix-darwin"
-      "nix-community"
       "pre-commit-hooks"
     ];
   };
