@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   # TODO: Investigate these MCP servers:
   # https://github.com/augmnt/augments-mcp-server
   # https://github.com/securityfortech/secops-mcp
@@ -11,6 +11,21 @@
 
   # Need this for uvx
   programs.uv.enable = true;
+
+  # TODO: Create scripts for spooling up MCP servers in the current dir
+
+  home.packages = with pkgs; [
+    (writeShellScriptBin "docker-mcp" ''
+      #!/usr/bin/env bash
+      set -euo pipefail
+
+      local SERVER_NAME="$1"
+      local SERVER_IMAGE="$2"
+
+      docker run --rm --interactive --name "$SERVER_NAME" "$SERVER_IMAGE"
+    '')
+  ];
+
   programs.mcp = {
     enable = true;
     servers = {
