@@ -105,7 +105,6 @@
     [
       # keep-sorted start
       kdePackages.okular
-      ksnip # screenshots
       lazyjournal
       less # needed for Ubuntu
       nvtopPackages.full
