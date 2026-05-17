@@ -56,11 +56,13 @@
             ms-python.python
             redhat.ansible
             redhat.vscode-yaml
+            tamasfe.even-better-toml
             # keep-sorted end
           ];
           formattersAndLinters = [
             # keep-sorted start
             charliermarsh.ruff
+            davidanson.vscode-markdownlint
             detachhead.basedpyright
             esbenp.prettier-vscode
             mkhl.shfmt
@@ -75,14 +77,18 @@
           ];
           utilities = [
             # keep-sorted start
+            aaron-bond.better-comments
             alefragnani.project-manager
             asvetliakov.vscode-neovim
+            christian-kohler.path-intellisense
             docker.docker
             eamodio.gitlens
             github.vscode-github-actions
+            gruntfuggly.todo-tree
             joshmu.periscope
             tomoki1207.pdf
             usernamehw.errorlens
+            vspacecode.whichkey
             # keep-sorted end
           ];
         in
@@ -117,6 +123,8 @@
       languages = [
         # keep-sorted start
         geequlim.godot-tools
+        graphql.vscode-graphql
+        graphql.vscode-graphql-syntax
         rust-lang.rust-analyzer
         svelte.svelte-vscode
         unifiedjs.vscode-mdx
@@ -128,6 +136,7 @@
         biomejs.biome
         dbaeumer.vscode-eslint
         formulahendry.auto-close-tag
+        formulahendry.auto-rename-tag
         # keep-sorted end
       ];
     in
