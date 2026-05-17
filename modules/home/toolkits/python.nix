@@ -44,16 +44,5 @@
       enable = true;
       settings = {};
     };
-    vscode = {
-      profiles = {
-        default = {
-          extensions = with pkgs.vscode-extensions; [
-            ms-python.python
-            charliermarsh.ruff
-            detachhead.basedpyright
-          ];
-        };
-      };
-    };
   };
 }
