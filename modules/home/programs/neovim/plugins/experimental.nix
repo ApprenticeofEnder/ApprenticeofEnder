@@ -30,6 +30,7 @@
       };
     };
     debugprint.enable = true;
+    easy-vscode.enable = true;
     flutter-tools.enable = true;
     gitignore.enable = true;
     glow.enable = true;
