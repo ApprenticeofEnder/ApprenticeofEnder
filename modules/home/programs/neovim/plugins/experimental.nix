@@ -30,7 +30,7 @@
       };
     };
     debugprint.enable = true;
-    easy-vscode.enable = true;
+    easy-dotnet.enable = true;
     flutter-tools.enable = true;
     gitignore.enable = true;
     glow.enable = true;
