@@ -129,6 +129,7 @@
     godot # game engine
     handbrake # video file conversions
     impala # wifi management
+    slack
     # keep-sorted end
   ];
 
