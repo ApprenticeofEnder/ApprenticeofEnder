@@ -1,15 +1,28 @@
 {pkgs, ...}: let
-  identityAgent =
+  defaultIdentityAgent =
     if pkgs.stdenv.isLinux
     then "~/.1password/agent.sock"
     else "'~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock'";
 
-  hostDefaults = {
-    port = 22;
-    checkHostIP = true;
-    identityAgent = [identityAgent];
+  sshHost = {
+    user,
+    port ? 22,
+    host,
+    hostname ? host,
+    checkHostIP ? true,
+    identityAgent ? [defaultIdentityAgent],
+    identityFile,
+  }: {
+    host = host;
+    port = port;
+    user = user;
+    hostname = hostname;
+    checkHostIP = checkHostIP;
+    identityAgent = identityAgent;
     identitiesOnly = true;
+    identityFile = identityFile;
   };
+  # TODO: Convert this nonsense to match blocks
 in {
   programs.ssh = {
     enable = true;
@@ -42,39 +55,31 @@ in {
         setEnv.TERM = "xterm-kitty";
       };
 
-      github =
-        hostDefaults
-        // {
-          user = "git";
-          host = "github.com";
-          identityFile = ["~/.ssh/github.pub"];
-        };
+      github = sshHost {
+        user = "git";
+        host = "github.com";
+        identityFile = ["~/.ssh/github.pub"];
+      };
 
-      github-gist =
-        hostDefaults
-        // {
-          user = "git";
-          host = "gist.github.com";
-          identityFile = ["~/.ssh/github.pub"];
-        };
+      github-gist = sshHost {
+        user = "git";
+        host = "gist.github.com";
+        identityFile = ["~/.ssh/github.pub"];
+      };
 
-      homelab-pi =
-        hostDefaults
-        // {
-          user = "ender";
-          host = "homelab-pi";
-          hostname = "192.168.18.100";
-          identityFile = ["~/.ssh/pi_master.pub"];
-        };
+      homelab-pi = sshHost {
+        user = "ender";
+        host = "homelab-pi";
+        hostname = "192.168.18.100";
+        identityFile = ["~/.ssh/pi_master.pub"];
+      };
 
-      poc-mongodb =
-        hostDefaults
-        // {
-          user = "ec2-user";
-          host = "poc-mongodb";
-          hostname = "ec2-98-92-185-213.compute-1.amazonaws.com";
-          identityFile = ["~/.ssh/robert_poc.pub"];
-        };
+      poc-mongodb = sshHost {
+        user = "ec2-user";
+        host = "poc-mongodb";
+        hostname = "ec2-98-92-185-213.compute-1.amazonaws.com";
+        identityFile = ["~/.ssh/robert_poc.pub"];
+      };
 
       # rpi5 = {
       #   port = 22;
