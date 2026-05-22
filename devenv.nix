@@ -173,7 +173,7 @@ in {
     fetch-nvidia-drivers = let
       sd = lib.getExe pkgs.sd;
       rg = lib.getExe pkgs.ripgrep;
-      driverFilePath = "${config.devenv.root}/modules/home/drivers.json";
+      targetPath = "${config.devenv.root}/modules/home/targets.nix";
     in {
       exec = ''
         NEW_DRIVER_VERSION="$(modinfo nvidia | ${rg} "^version" | ${sd} "version:\s+" "")"
@@ -185,10 +185,8 @@ in {
           )"
         echo "SHA256 is $NEW_DRIVER_HASH"
 
-        jq -n \
-          --arg "version" "$NEW_DRIVER_VERSION" \
-          --arg "sha256" "$NEW_DRIVER_HASH" \
-          '$ARGS.named' > ${driverFilePath}
+        sd 'version = "[0-9.]+"' "version = \"$NEW_DRIVER_VERSION\"" ${targetPath}
+        sd 'sha256 = "sha256-[A-Za-z0-9/+=]+"' "sha256 = \"$NEW_DRIVER_HASH\"" ${targetPath}
       '';
     };
     dotfiles = {
