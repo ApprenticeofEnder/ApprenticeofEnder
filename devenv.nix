@@ -171,39 +171,12 @@ in {
       '';
     };
     fetch-nvidia-drivers = let
-      graphicsCardSeriesId = "120"; # GeForce RTX 30 series
-      graphicsCardId = "965"; # RTX 3070 Ti
-      osId = "12"; # Linux, 64-bit
-      languageCode = "1033"; # en-US
-
-      queryParameters = {
-        func = "DriverManualLookup";
-        psid = graphicsCardSeriesId;
-        pfid = graphicsCardId;
-        osID = osId;
-        languageCode = languageCode;
-        beta = "null";
-        isWHQL = "0";
-        dlType = "-1";
-        dch = "0";
-        upCRD = "null";
-        qnf = "0";
-        ctk = "null";
-        sort1 = "1";
-        numberOfResults = "1";
-      };
-
-      makeQueryString = parameter: let
-        parameterValue = queryParameters."${parameter}";
-      in "${parameter}=${parameterValue}";
-
-      queryString = lib.strings.join "&" (map makeQueryString (builtins.attrNames queryParameters));
-
+      sd = lib.getExe pkgs.sd;
+      rg = lib.getExe pkgs.ripgrep;
       driverFilePath = "${config.devenv.root}/modules/home/drivers.json";
     in {
       exec = ''
-        NVIDIA_URL="https://gfwsl.geforce.com/services_toolkit/services/com/nvidia/services/AjaxDriverService.php?${queryString}"
-        NEW_DRIVER_VERSION="$(curl "$NVIDIA_URL" | jq -r '.IDS[0].downloadInfo.DisplayVersion')"
+        NEW_DRIVER_VERSION="$(modinfo nvidia | ${rg} "^version" | ${sd} "version:\s+" "")"
         echo "New NVIDIA driver version is $NEW_DRIVER_VERSION"
         NEW_DRIVER_HASH="$(nix store prefetch-file \
           --json \
