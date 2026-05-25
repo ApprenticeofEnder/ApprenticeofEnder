@@ -31,20 +31,15 @@
 
   sshKeyPath = name: "~/.ssh/${name}";
 
-  sshKeyFile = name: publicKey: {
-    name = sshKeyPath name;
-    value = {
-      text = publicKey;
-    };
-  };
-
   sshKeys = with builtins; let
     # ./keys contains only public keys
     keyNames = attrNames (readDir ./keys);
-    readKey = keyName:
-      sshKeyFile keyName (
-        builtins.readFile ./keys/${keyName}
-      );
+    readKey = keyName: {
+      name = ".ssh/${keyName}";
+      value = {
+        text = readFile ./keys/${keyName};
+      };
+    };
   in
     builtins.listToAttrs (map readKey keyNames);
 in {
