@@ -14,17 +14,42 @@
     hostname ? null,
     checkHostIP ? true,
     identityAgent ? defaultIdentityAgent,
-    identityFile,
-  }: {
-    Port = port;
-    User = user;
-    HostName = hostname;
-    CheckHostIP = checkHostIP;
-    IdentityAgent = identityAgent;
-    IdentitiesOnly = true;
-    IdentityFile = identityFile;
+    publicKeyName,
+    identitiesOnly ? true,
+    options ? {},
+  }:
+    {
+      Port = port;
+      User = user;
+      HostName = hostname;
+      CheckHostIP = checkHostIP;
+      IdentityAgent = identityAgent;
+      IdentitiesOnly = identitiesOnly;
+      IdentityFile = sshKeyPath publicKeyName;
+    }
+    // options;
+
+  sshKeyPath = name: "~/.ssh/${name}";
+
+  sshKeyFile = name: publicKey: {
+    name = sshKeyPath name;
+    value = {
+      text = publicKey;
+    };
   };
+
+  sshKeys = with builtins; let
+    # ./keys contains only public keys
+    keyNames = attrNames (readDir ./keys);
+    readKey = keyName:
+      sshKeyFile keyName (
+        builtins.readFile ./keys/${keyName}
+      );
+  in
+    builtins.listToAttrs (map readKey keyNames);
 in {
+  home.file = sshKeys;
+
   programs.ssh = {
     enable = true;
     # includes = [];
@@ -34,17 +59,29 @@ in {
     settings = {
       "github.com" = sshHost {
         user = "git";
-        identityFile = "~/.ssh/github.pub";
+        publicKeyName = "github.pub";
       };
 
       "gist.github.com" = sshHost {
         user = "git";
-        identityFile = "~/.ssh/github.pub";
+        publicKeyName = "github.pub";
       };
 
       "homelab-pi" = sshHost {
         hostname = "192.168.18.100";
-        identityFile = "~/.ssh/pi_master.pub";
+        publicKeyName = "pi_master.pub";
+      };
+
+      "deployment-hell" = sshHost {
+        user = "vpcadmin";
+        hostname = "10.0.2.93";
+        publicKeyName = "cybersci_2026_nationals.pub";
+      };
+
+      "assault-and-battery" = sshHost {
+        user = "vpcadmin";
+        hostname = "10.0.2.71";
+        publicKeyName = "cybersci_2026_nationals.pub";
       };
     };
 
