@@ -113,7 +113,6 @@
       # keep-sorted end
 
       # fun that only works on Linux
-      spotify
       hollywood
 
       # Research
@@ -151,6 +150,7 @@
     cmatrix
     genact
     smassh
+    spotify
     # keep-sorted end
   ];
 in {
