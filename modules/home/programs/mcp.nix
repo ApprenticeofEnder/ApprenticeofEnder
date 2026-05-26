@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: {
   # TODO: Investigate these MCP servers:
   # https://github.com/augmnt/augments-mcp-server
   # https://github.com/securityfortech/secops-mcp
@@ -25,6 +30,17 @@
       docker run --rm --interactive --name "$SERVER_NAME" "$SERVER_IMAGE"
     '')
   ];
+
+  home = {
+    activation.serena = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      ${lib.getExe config.programs.uv.package} tool install -p 3.13 serena-agent
+    '';
+    shellAliases = {
+      claude = ''
+        claude --system-prompt="$(serena prompts print-cc-system-prompt-override)"
+      '';
+    };
+  };
 
   programs.mcp = {
     enable = true;
@@ -59,14 +75,11 @@
         };
       };
       serena = {
-        command = "uvx";
+        command = "serena";
         args = [
-          "--from"
-          "git+https://github.com/oraios/serena"
-          "serena"
           "start-mcp-server"
           "--context"
-          "ide"
+          "claude-code"
           "--project-from-cwd"
         ];
         type = "stdio";
