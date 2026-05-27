@@ -71,12 +71,22 @@ in {
         user = "vpcadmin";
         hostname = "10.0.2.93";
         publicKeyName = "cybersci_2026_nationals.pub";
+        options = {
+          SetEnv = {
+            TERM = "xterm-256color";
+          };
+        };
       };
 
       "assault-and-battery" = sshHost {
         user = "vpcadmin";
         hostname = "10.0.2.71";
         publicKeyName = "cybersci_2026_nationals.pub";
+        options = {
+          SetEnv = {
+            TERM = "xterm-256color";
+          };
+        };
       };
     };
   };
