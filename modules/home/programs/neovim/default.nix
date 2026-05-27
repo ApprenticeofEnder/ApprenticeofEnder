@@ -23,7 +23,7 @@ in {
     VISUAL = "nvim";
   };
   home.packages = with pkgs; [
-    dotnet-sdk
+    dotnet-sdk_10
   ];
   programs.nixvim = {
     enable = true;
