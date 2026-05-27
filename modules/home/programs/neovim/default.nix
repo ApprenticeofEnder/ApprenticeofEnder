@@ -1,4 +1,4 @@
-{...}: let
+{pkgs, ...}: let
   # Recursively find leaf files under a directory, returning list of relative paths
   collectLeafFiles = with builtins;
     dir: prefix: let
@@ -22,6 +22,9 @@ in {
     EDITOR = "nvim";
     VISUAL = "nvim";
   };
+  home.packages = with pkgs; [
+    dotnet-sdk
+  ];
   programs.nixvim = {
     enable = true;
     nixpkgs.config.allowUnfree = true;
