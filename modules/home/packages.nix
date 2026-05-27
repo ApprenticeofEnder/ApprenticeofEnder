@@ -73,6 +73,7 @@
       cargo-seek
       duf # disk usage
       exiftool
+      imagemagick
       just # make for commands
       lazyssh
       libnotify
