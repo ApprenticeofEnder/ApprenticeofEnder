@@ -20,9 +20,8 @@
 in {
   mkAgents = agent_name: let
     agentFile = file: ./agents/${agent_name}/${file};
-    claude_frontmatter = builtins.fromJSON (
-      builtins.readFile (agentFile "claude-config.json")
-    );
+    claude_frontmatter =
+      builtins.readFile (agentFile "claude-config.yml");
     opencode_frontmatter = builtins.fromJSON (
       builtins.readFile (agentFile "opencode-config.json")
     );

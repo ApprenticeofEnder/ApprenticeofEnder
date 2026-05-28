@@ -34,6 +34,10 @@ in {
 
     skills = ../skills;
 
+    context = ''
+      use caveman
+    '';
+
     settings = {
       autoshare = false;
       autoupdate = false;

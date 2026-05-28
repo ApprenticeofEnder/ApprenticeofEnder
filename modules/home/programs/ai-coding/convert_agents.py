@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 from typing import Any, TypedDict
 
-from yaml import safe_load
+from yaml import safe_dump, safe_load
 from copy import deepcopy
 
 
@@ -31,24 +31,26 @@ class AgentConfig(TypedDict):
 
 
 model_mappings = {
-    "haiku": "anthropic/claude-haiku-4-5",
-    "sonnet": "anthropic/claude-sonnet-4-6",
-    "opus": "anthropic/claude-opus-4-6",
+    "haiku": "github-copilot/claude-haiku-4.5",
+    "sonnet": "github-copilot/claude-sonnet-4.6",
+    "opus": "github-copilot/claude-opus-4.6",
 }
 
 
 agents: dict[str, AgentConfig] = dict()
 
 for agent in (CLAUDE_DIR / "agents").iterdir():
-    sections = agent.open().read().split("---")
-    _, frontmatter_raw, content = sections
+    full = agent.open().read()
+    sections = full.split("---")
+    _, frontmatter_raw, prompt = sections
     frontmatter_claude: dict[str, Any] = safe_load(frontmatter_raw)
     frontmatter_opencode = deepcopy(frontmatter_claude)
     frontmatter_opencode["model"] = model_mappings[frontmatter_claude["model"]]
     del frontmatter_opencode["tools"]
 
     agents[agent.stem] = {
-        "content": content.strip(),
+        "reference": full.strip(),
+        "content": prompt.strip(),
         "frontmatter_claude": frontmatter_claude,
         "frontmatter_opencode": frontmatter_opencode,
     }
@@ -59,11 +61,13 @@ for name, agent in agents.items():
     if not agent_dir.exists():
         agent_dir.mkdir()
     with (
+        open(agent_dir / "reference.md", "w+") as reference_file,
         open(agent_dir / "agent.md", "w+") as agent_file,
-        open(agent_dir / "claude-config.json", "w+") as claude_config_file,
+        open(agent_dir / "claude-config.yml", "w+") as claude_config_file,
         open(agent_dir / "opencode-config.json", "w+") as opencode_config_file,
     ):
+        reference_file.write(agent["reference"])
         agent_file.write(agent["content"])
 
-        json.dump(agent["frontmatter_claude"], claude_config_file)
+        safe_dump(agent["frontmatter_claude"], claude_config_file)
         json.dump(agent["frontmatter_opencode"], opencode_config_file)
