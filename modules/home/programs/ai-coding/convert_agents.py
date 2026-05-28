@@ -39,8 +39,9 @@ model_mappings = {
 
 agents: dict[str, AgentConfig] = dict()
 
-for agent in (CLAUDE_DIR / "agents").iterdir():
-    full = agent.open().read()
+for agent in (AI_CODING_DIR / "agents").iterdir():
+    ref_file = agent / "reference.md"
+    full = ref_file.open().read()
     sections = full.split("---")
     _, frontmatter_raw, prompt = sections
     frontmatter_claude: dict[str, Any] = safe_load(frontmatter_raw)

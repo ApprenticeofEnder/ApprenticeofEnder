@@ -1,1 +1,1 @@
-{"name": "error-detective", "description": "Use this agent when you need to diagnose why errors are occurring in your system, correlate errors across services, identify root causes, and prevent future failures.", "model": "anthropic/claude-sonnet-4-6"}
+{"name": "error-detective", "description": "Use this agent when you need to diagnose why errors are occurring in your system, correlate errors across services, identify root causes, and prevent future failures.", "model": "github-copilot/claude-sonnet-4.6"}

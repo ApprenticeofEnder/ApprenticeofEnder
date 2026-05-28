@@ -1,1 +1,1 @@
-{"name": "websocket-engineer", "description": "Use this agent when implementing real-time bidirectional communication features using WebSockets, Socket.IO, or similar technologies at scale.", "model": "anthropic/claude-sonnet-4-6"}
+{"name": "websocket-engineer", "description": "Use this agent when implementing real-time bidirectional communication features using WebSockets, Socket.IO, or similar technologies at scale.", "model": "github-copilot/claude-sonnet-4.6"}

@@ -1,1 +1,1 @@
-{"name": "agent-organizer", "description": "Use when assembling and optimizing multi-agent teams to execute complex projects that require careful task decomposition, agent capability matching, and workflow coordination.", "model": "anthropic/claude-sonnet-4-6"}
+{"name": "agent-organizer", "description": "Use when assembling and optimizing multi-agent teams to execute complex projects that require careful task decomposition, agent capability matching, and workflow coordination.", "model": "github-copilot/claude-sonnet-4.6"}

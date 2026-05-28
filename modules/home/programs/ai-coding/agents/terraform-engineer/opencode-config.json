@@ -1,1 +1,1 @@
-{"name": "terraform-engineer", "description": "Use when building, refactoring, or scaling infrastructure as code using Terraform with focus on multi-cloud deployments, module architecture, and enterprise-grade state management.", "model": "anthropic/claude-sonnet-4-6"}
+{"name": "terraform-engineer", "description": "Use when building, refactoring, or scaling infrastructure as code using Terraform with focus on multi-cloud deployments, module architecture, and enterprise-grade state management.", "model": "github-copilot/claude-sonnet-4.6"}

@@ -1,1 +1,1 @@
-{"name": "performance-monitor", "description": "Use when establishing observability infrastructure to track system metrics, detect performance anomalies, and optimize resource usage across multi-agent environments.", "model": "anthropic/claude-haiku-4-5"}
+{"name": "performance-monitor", "description": "Use when establishing observability infrastructure to track system metrics, detect performance anomalies, and optimize resource usage across multi-agent environments.", "model": "github-copilot/claude-haiku-4.5"}

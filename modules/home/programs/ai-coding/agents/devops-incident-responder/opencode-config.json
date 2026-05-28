@@ -1,1 +1,1 @@
-{"name": "devops-incident-responder", "description": "Use when actively responding to production incidents, diagnosing critical service failures, or conducting incident postmortems to implement permanent fixes and preventative measures.", "model": "anthropic/claude-sonnet-4-6"}
+{"name": "devops-incident-responder", "description": "Use when actively responding to production incidents, diagnosing critical service failures, or conducting incident postmortems to implement permanent fixes and preventative measures.", "model": "github-copilot/claude-sonnet-4.6"}

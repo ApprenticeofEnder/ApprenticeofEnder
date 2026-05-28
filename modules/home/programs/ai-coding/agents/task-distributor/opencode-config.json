@@ -1,1 +1,1 @@
-{"name": "task-distributor", "description": "Use when distributing tasks across multiple agents or workers, managing queues, and balancing workloads to maximize throughput while respecting priorities and deadlines.", "model": "anthropic/claude-haiku-4-5"}
+{"name": "task-distributor", "description": "Use when distributing tasks across multiple agents or workers, managing queues, and balancing workloads to maximize throughput while respecting priorities and deadlines.", "model": "github-copilot/claude-haiku-4.5"}

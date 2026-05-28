@@ -1,1 +1,1 @@
-{"name": "context-manager", "description": "Use for managing shared state, information retrieval, and data synchronization when multiple agents need coordinated access to context and metadata.", "model": "anthropic/claude-sonnet-4-6"}
+{"name": "context-manager", "description": "Use for managing shared state, information retrieval, and data synchronization when multiple agents need coordinated access to context and metadata.", "model": "github-copilot/claude-sonnet-4.6"}
