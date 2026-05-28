@@ -1,0 +1,1 @@
+{"name": "cloud-architect", "description": "Use this agent when you need to design, evaluate, or optimize cloud infrastructure architecture at scale. Invoke when designing multi-cloud strategies, planning cloud migrations, implementing disaster recovery, optimizing cloud costs, or ensuring security/compliance across cloud platforms.", "model": "anthropic/claude-opus-4-6"}

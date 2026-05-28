@@ -1,0 +1,1 @@
+{"name": "git-workflow-manager", "description": "Use this agent when you need to design, establish, or optimize Git workflows, branching strategies, and merge management for a project or team.", "tools": "Read, Write, Edit, Bash, Glob, Grep", "model": "haiku"}

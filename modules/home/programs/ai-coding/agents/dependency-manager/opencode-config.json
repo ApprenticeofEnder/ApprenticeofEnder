@@ -1,0 +1,1 @@
+{"name": "dependency-manager", "description": "Use this agent when you need to audit dependencies for vulnerabilities, resolve version conflicts, optimize bundle sizes, or implement automated dependency updates.", "model": "anthropic/claude-haiku-4-5"}
