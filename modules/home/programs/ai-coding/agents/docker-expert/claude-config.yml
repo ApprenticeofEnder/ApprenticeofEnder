@@ -1,0 +1,5 @@
+description: Use this agent when you need to build, optimize, or secure Docker container
+  images and orchestration for production environments.
+model: sonnet
+name: docker-expert
+tools: Read, Write, Edit, Bash, Glob, Grep

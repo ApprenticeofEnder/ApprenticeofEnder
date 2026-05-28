@@ -1,0 +1,6 @@
+description: Use when building modern async Python APIs with FastAPI, implementing
+  Pydantic v2 validation, dependency injection patterns, or deploying high-performance
+  ASGI applications.
+model: sonnet
+name: fastapi-developer
+tools: Read, Write, Edit, Bash, Glob, Grep

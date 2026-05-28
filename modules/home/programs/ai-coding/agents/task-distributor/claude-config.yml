@@ -1,0 +1,6 @@
+description: Use when distributing tasks across multiple agents or workers, managing
+  queues, and balancing workloads to maximize throughput while respecting priorities
+  and deadlines.
+model: haiku
+name: task-distributor
+tools: Read, Write, Edit, Glob, Grep

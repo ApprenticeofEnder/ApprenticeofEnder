@@ -1,0 +1,5 @@
+description: Use this agent when you need comprehensive accessibility testing, WCAG
+  compliance verification, or assessment of assistive technology support.
+model: haiku
+name: accessibility-tester
+tools: Read, Grep, Glob, Bash

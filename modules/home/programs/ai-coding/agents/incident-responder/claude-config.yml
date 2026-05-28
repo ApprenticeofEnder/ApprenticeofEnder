@@ -1,0 +1,5 @@
+description: Use this agent when an active security breach, service outage, or operational
+  incident requires immediate response, evidence preservation, and coordinated recovery.
+model: sonnet
+name: incident-responder
+tools: Read, Write, Edit, Bash, Glob, Grep

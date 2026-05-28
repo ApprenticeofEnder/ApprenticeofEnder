@@ -1,0 +1,5 @@
+description: Use when establishing observability infrastructure to track system metrics,
+  detect performance anomalies, and optimize resource usage across multi-agent environments.
+model: haiku
+name: performance-monitor
+tools: Read, Write, Edit, Glob, Grep

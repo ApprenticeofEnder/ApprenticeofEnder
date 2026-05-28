@@ -1,0 +1,6 @@
+description: Use this agent when modernizing legacy systems that need incremental
+  migration strategies, technical debt reduction, and risk mitigation while maintaining
+  business continuity.
+model: sonnet
+name: legacy-modernizer
+tools: Read, Write, Edit, Bash, Glob, Grep
