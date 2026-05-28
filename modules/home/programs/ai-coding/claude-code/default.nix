@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   aiCodingLib = import ../lib.nix {inherit pkgs;};
   inherit (aiCodingLib) mkAgents;
   # inherit (aiCodingLib) mcpToolList;
@@ -11,9 +15,7 @@
   );
 in {
   home.shellAliases = {
-    claude = ''
-      claude --system-prompt="$(serena prompts print-cc-system-prompt-override)"
-    '';
+    claude = lib.removeSuffix "\n" ''CC_SYSTEM_PROMPT=$(serena prompts print-cc-system-prompt-override) ${lib.getExe pkgs.claude-code} --system-prompt="$CC_SYSTEM_PROMPT"'';
   };
   programs.claude-code = {
     enable = true;
