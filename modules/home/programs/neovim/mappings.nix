@@ -123,6 +123,23 @@
     (makeVsCodeMapping "${leader}lg" "lazygit-vscode.toggle" "${cmd}LazyGit${enter}" "Open LazyGit")
     (makeVsCodeMapping "${leader}ot" "workbench.action.terminal.toggleTerminal" "${cmd}hor te${enter}" "Open terminal")
 
+    # Debugging
+    (makeMapping "<F5>" (luaCmd "require('dap').continue()") "DAP: Continue")
+    (makeMapping "<F10>" (luaCmd "require('dap').step_over()") "DAP: Step over")
+    (makeMapping "<F11>" (luaCmd "require('dap').step_into()") "DAP: Step into")
+    (makeMapping "<F12>" (luaCmd "require('dap').step_out()") "DAP: Step out")
+    (makeMapping "${leader}b" (luaCmd "require('dap').toggle_breakpoint()") "DAP: Toggle breakpoint")
+    (makeMapping "${leader}B" (luaCmd "require('dap').set_breakpoint()") "DAP: Set breakpoint")
+    (
+      makeMapping
+      "${leader}lp"
+      (luaCmd "require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))")
+      "DAP: Set breakpoint with log point message"
+    )
+    (makeMapping "${leader}dr" (luaCmd "require('dap').repl.open()") "DAP: Open REPL")
+    (makeMapping "${leader}dl" (luaCmd "require('dap').run_last()") "DAP: Run last")
+    (makeMapping "${leader}dh" (luaCmd "require('dap.ui.widgets').hover()") "DAP: Hover widgets")
+
     # Telescope
     (makeVsCodeMapping "${leader}fw" "periscope.search" "${cmd}Telescope live_grep${enter}" "telescope live grep")
     (makeVsCodeMapping "${leader}fb" "periscope.searchBuffers" "${cmd}Telescope buffers${enter}" "telescope find buffers")
