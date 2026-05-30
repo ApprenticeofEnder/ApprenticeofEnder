@@ -1,18 +1,13 @@
-let
-  lazyLoad = {
-    settings.cmd = ["DapContinue" "DapToggleBreakpoint"];
-  };
-in {
+{
   plugins = {
-    dap =
-      lazyLoad
-      // {
-        enable = true;
-      };
-    dap-python =
-      lazyLoad
-      // {
-        enable = true;
-      };
+    dap = {
+      enable = true;
+    };
+    dap-python = {
+      enable = true;
+    };
+    dap-ui = {
+      enable = true;
+    };
   };
 }
