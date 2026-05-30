@@ -112,23 +112,22 @@
         }
         // debugBashAllow;
     };
-
-  debug = {
-    mode = "primary";
-    tools = {
-      write = false;
-      edit = false;
-    };
-    permission = permissions.debug;
-    prompt = builtins.readFile ./debug.md;
-  };
+  # debug = {
+  #   mode = "primary";
+  #   tools = {
+  #     write = false;
+  #     edit = false;
+  #   };
+  #   permission = permissions.debug;
+  #   prompt = builtins.readFile ./debug.md;
+  # };
 in {
   programs.opencode = {
     settings = {
       agent = {
         plan = plan;
         build = build;
-        debug = debug;
+        # debug = debug;
       };
     };
   };

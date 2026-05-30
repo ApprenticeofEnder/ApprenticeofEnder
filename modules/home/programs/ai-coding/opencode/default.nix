@@ -21,7 +21,7 @@
     map (name: {
       name = name;
       value = (mkAgents name).opencode;
-    }) ["terraform-engineer"]
+    }) ["terraform-engineer" "debugger"]
   );
 in {
   programs.opencode = {
