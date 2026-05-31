@@ -1,6 +1,0 @@
-description: Use when you need to extract actionable patterns from agent interactions,
-  synthesize insights across multiple workflows, and enable organizational learning
-  from collective experience.
-model: sonnet
-name: knowledge-synthesizer
-tools: Read, Write, Edit, Glob, Grep

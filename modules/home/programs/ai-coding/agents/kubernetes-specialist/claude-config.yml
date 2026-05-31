@@ -1,5 +1,0 @@
-description: Use this agent when you need to design, deploy, configure, or troubleshoot
-  Kubernetes clusters and workloads in production environments.
-model: sonnet
-name: kubernetes-specialist
-tools: Read, Write, Edit, Bash, Glob, Grep

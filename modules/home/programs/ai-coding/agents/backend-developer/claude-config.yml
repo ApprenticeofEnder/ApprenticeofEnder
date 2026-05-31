@@ -1,6 +1,0 @@
-description: Use this agent when building server-side APIs, microservices, and backend
-  systems that require robust architecture, scalability planning, and production-ready
-  implementation.
-model: sonnet
-name: backend-developer
-tools: Read, Write, Edit, Bash, Glob, Grep

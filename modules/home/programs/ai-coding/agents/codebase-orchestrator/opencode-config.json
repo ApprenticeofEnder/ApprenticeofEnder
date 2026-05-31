@@ -1,1 +1,0 @@
-{"name": "codebase-orchestrator", "description": "Use this agent when you need repository-wide refactor governance with explicit approval loops, weighted risk prioritization, diff previews, and deterministic fallback strategies.", "model": "github-copilot/claude-opus-4.6"}

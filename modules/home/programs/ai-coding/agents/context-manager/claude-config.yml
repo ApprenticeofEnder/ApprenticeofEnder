@@ -1,5 +1,0 @@
-description: Use for managing shared state, information retrieval, and data synchronization
-  when multiple agents need coordinated access to context and metadata.
-model: sonnet
-name: context-manager
-tools: Read, Write, Edit, Glob, Grep

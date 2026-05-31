@@ -1,7 +1,10 @@
-{
+{...}: {
   imports = [
+    # keep-sorted start
+    ./claude-code
+    ./cursor
     ./mcp.nix
     ./opencode
-    ./claude-code
+    # keep-sorted end
   ];
 }

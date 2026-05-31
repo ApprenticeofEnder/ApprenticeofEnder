@@ -1,6 +1,0 @@
-description: Use when building Rust systems where memory safety, ownership patterns,
-  zero-cost abstractions, and performance optimization are critical for systems programming,
-  embedded development, async applications, or high-performance services.
-model: sonnet
-name: rust-engineer
-tools: Read, Write, Edit, Bash, Glob, Grep

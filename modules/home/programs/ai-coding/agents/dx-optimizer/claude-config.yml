@@ -1,6 +1,0 @@
-description: Use this agent when optimizing the complete developer workflow including
-  build times, feedback loops, testing efficiency, and developer satisfaction metrics
-  across the entire development environment.
-model: sonnet
-name: dx-optimizer
-tools: Read, Write, Edit, Bash, Glob, Grep

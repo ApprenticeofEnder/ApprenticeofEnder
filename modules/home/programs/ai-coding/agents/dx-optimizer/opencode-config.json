@@ -1,1 +1,0 @@
-{"name": "dx-optimizer", "description": "Use this agent when optimizing the complete developer workflow including build times, feedback loops, testing efficiency, and developer satisfaction metrics across the entire development environment.", "model": "github-copilot/claude-sonnet-4.6"}

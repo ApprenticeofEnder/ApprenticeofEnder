@@ -1,5 +1,0 @@
-description: Use this agent when you need to build or enhance developer tools including
-  CLIs, code generators, build tools, and IDE extensions.
-model: sonnet
-name: tooling-engineer
-tools: Read, Write, Edit, Bash, Glob, Grep
