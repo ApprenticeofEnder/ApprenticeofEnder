@@ -3,31 +3,45 @@
   lib,
   ...
 }: let
-  aiCodingLib = import ../lib.nix {inherit pkgs;};
-  inherit (aiCodingLib) mkAgents;
-  # inherit (aiCodingLib) mcpToolList;
-
-  agents = builtins.listToAttrs (
-    map (name: {
-      name = name;
-      value = (mkAgents name).claude;
-    }) ["terraform-engineer"]
-  );
+  ai_coding_lib = import ../lib {inherit lib;};
+  inherit (ai_coding_lib) mkClaudePermissionList;
+  inherit (ai_coding_lib) global_bash;
+  inherit (ai_coding_lib) sensitive_files;
+  inherit (ai_coding_lib) lockfiles;
 in {
   home.shellAliases = {
     claude = lib.removeSuffix "\n" ''CC_SYSTEM_PROMPT=$(serena prompts print-cc-system-prompt-override) ${lib.getExe pkgs.claude-code} --system-prompt="$CC_SYSTEM_PROMPT"'';
   };
+
   programs.claude-code = {
     enable = true;
     enableMcpIntegration = true;
     skills = {
       caveman = ../skills/caveman/SKILL.md;
     };
-    agents = agents;
+    # agents = agents;
 
     settings = {
       env = {
         CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = 1;
+      };
+      permissions = {
+        allow = lib.concatLists [
+          (mkClaudePermissionList ["Read" "Grep" "Glob"] [
+            "*"
+            "**/*.env.example"
+          ])
+          (mkClaudePermissionList ["Bash"] [
+            "git status"
+            "git diff"
+          ])
+        ];
+        # ask = [];
+        deny = lib.concatLists [
+          (mkClaudePermissionList ["Read" "Grep" "Glob"] sensitive_files.claude)
+          (mkClaudePermissionList ["Write" "Edit"] sensitive_files.claude ++ lockfiles.claude)
+          (mkClaudePermissionList ["Bash"] global_bash.deny)
+        ];
       };
     };
   };

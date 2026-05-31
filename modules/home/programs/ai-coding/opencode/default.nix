@@ -1,28 +1,29 @@
-{pkgs, ...}: let
-  aiCodingLib = import ../lib.nix {inherit pkgs;};
-  inherit (aiCodingLib) mkAgents;
+{lib, ...}: let
+  aiCodingLib = import ../lib {inherit lib;};
   inherit (aiCodingLib) mcpToolList;
-  inherit (aiCodingLib) buildAccessList;
-  fileReadList = buildAccessList {
-    deny = [
-      "*.env"
-      "*.env.*"
-      "*.vars"
-      "*.secrets"
-      "~/.aws/"
-    ];
+  inherit (aiCodingLib) mkOpencodePermissionList;
+  inherit (aiCodingLib) sensitive_files;
+  inherit (aiCodingLib) lockfiles;
+  inherit (aiCodingLib) global_bash;
+
+  read_perms = mkOpencodePermissionList {
+    deny = sensitive_files.opencode;
     allow = [
       "*"
       "*.env.example"
     ];
   };
 
-  agents = builtins.listToAttrs (
-    map (name: {
-      name = name;
-      value = (mkAgents name).opencode;
-    }) ["terraform-engineer" "debugger"]
-  );
+  edit_perms = mkOpencodePermissionList {
+    deny = sensitive_files.opencode ++ lockfiles.opencode;
+    ask = ["*"];
+  };
+
+  bash_perms = mkOpencodePermissionList {
+    deny = global_bash.deny;
+    ask = global_bash.ask;
+    allow = global_bash.allow;
+  };
 in {
   programs.opencode = {
     enable = true;
@@ -47,32 +48,19 @@ in {
       #   model = "anthropic/claude-sonnet-4-20250514";
       #   model= "{env:OPENCODE_MODEL}";
       # };
-      agent = agents;
 
+      # TODO: Make these deny by default
       permission =
         {
-          read = fileReadList;
-          edit = "ask";
-          bash =
-            {"*" = "ask";}
-            // buildAccessList {
-              deny = [
-                "curl *"
-                "wget *"
-                "nc *"
-                "git push *"
-              ];
-              allow = [
-                "git status"
-                "git diff"
-              ];
-            };
+          read = read_perms;
+          edit = edit_perms;
+          bash = bash_perms;
           webfetch = "allow";
           websearch = "ask";
-          grep = fileReadList;
-          glob = fileReadList;
+          grep = read_perms;
+          glob = read_perms;
 
-          skill = buildAccessList {
+          skill = mkOpencodePermissionList {
             allow = ["caveman"];
           };
         }
@@ -83,7 +71,7 @@ in {
               style = "opencode";
             };
           in
-            buildAccessList {
+            mkOpencodePermissionList {
               allow = mcpToolList serena_mcp [
                 "edit_memory"
                 "find_*"
