@@ -7,6 +7,7 @@
   inherit (ai_coding_lib) mkAgent;
   inherit (ai_coding_lib) claude_permission_groups;
   inherit (ai_coding_lib) opencode_permission_groups;
+  inherit (ai_coding_lib) mergeClaudePermissionGroups;
 
   description = ''
     Use this agent when you need to diagnose and fix bugs,
@@ -15,7 +16,7 @@
   '';
 
   permissions = {
-    claude = lib.mergeAttrsList [
+    claude = mergeClaudePermissionGroups [
       claude_permission_groups.read
       claude_permission_groups.edit
       claude_permission_groups.bash

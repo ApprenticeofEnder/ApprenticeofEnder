@@ -68,20 +68,20 @@
     skill ? null,
   }:
     lib.mergeAttrsList [
-      (lib.mkIf (read != null) {inherit read;})
-      (lib.mkIf (edit != null) {inherit edit;})
+      (lib.optionalAttrs (read != null) {inherit read;})
+      (lib.optionalAttrs (edit != null) {inherit edit;})
 
-      (lib.mkIf (glob != null) {inherit glob;})
-      (lib.mkIf (glob == null && read != null) {glob = read;})
+      (lib.optionalAttrs (glob != null) {inherit glob;})
+      (lib.optionalAttrs (glob == null && read != null) {glob = read;})
 
-      (lib.mkIf (grep != null) {inherit grep;})
-      (lib.mkIf (grep == null && read != null) {grep = read;})
+      (lib.optionalAttrs (grep != null) {inherit grep;})
+      (lib.optionalAttrs (grep == null && read != null) {grep = read;})
 
-      (lib.mkIf (bash != null) {inherit bash;})
+      (lib.optionalAttrs (bash != null) {inherit bash;})
 
-      (lib.mkIf (webfetch != null) {inherit webfetch;})
-      (lib.mkIf (websearch != null) {inherit websearch;})
-      (lib.mkIf (skill != null) {inherit skill;})
+      (lib.optionalAttrs (webfetch != null) {inherit webfetch;})
+      (lib.optionalAttrs (websearch != null) {inherit websearch;})
+      (lib.optionalAttrs (skill != null) {inherit skill;})
     ];
 
   sensitive_files = {
@@ -136,6 +136,23 @@
     bash = mkClaudePermissionGroup {
       tools = mkClaudePermissionList ["Bash"] ["*"];
     };
+  };
+
+  mergeClaudePermissionGroups = groups: {
+    tools = builtins.concatStringsSep ", " (
+      builtins.filter (s: s != "") (map (g:
+        if g.tools == null
+        then ""
+        else g.tools)
+      groups)
+    );
+    disallowedTools = builtins.concatStringsSep ", " (
+      builtins.filter (s: s != "") (map (g:
+        if g.disallowedTools == null
+        then ""
+        else g.disallowedTools)
+      groups)
+    );
   };
 
   opencode_permission_groups = {
