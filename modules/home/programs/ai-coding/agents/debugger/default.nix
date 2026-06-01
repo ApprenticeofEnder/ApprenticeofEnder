@@ -43,6 +43,7 @@
       model = models.claude;
     }
     // permissions.claude;
+  # TODO: Convert parts of the debugger subagent into skills
 in
   mkAgent {
     inherit name;
