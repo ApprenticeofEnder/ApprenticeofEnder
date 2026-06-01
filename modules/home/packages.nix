@@ -8,6 +8,7 @@
     [
       # keep-sorted start
       gnumake
+      gopls
       httpie # better http client
       keep-sorted # line sorting
       mermaid-cli
