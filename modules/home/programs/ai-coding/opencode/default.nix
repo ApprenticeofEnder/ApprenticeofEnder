@@ -5,6 +5,7 @@
   inherit (aiCodingLib) sensitive_files;
   inherit (aiCodingLib) lockfiles;
   inherit (aiCodingLib) global_bash;
+  inherit (aiCodingLib) serena_tools;
 
   read_perms = mkOpencodePermissionList {
     deny = sensitive_files.opencode;
@@ -65,26 +66,16 @@ in {
           };
         }
         // (
-          let
-            serena_mcp = {
+          mkOpencodePermissionList {
+            allow = mcpToolList.opencode {
               name = "serena";
-              style = "opencode";
+              tools = serena_tools.basic;
             };
-          in
-            mkOpencodePermissionList {
-              allow = mcpToolList serena_mcp [
-                "edit_memory"
-                "find_*"
-                "get_*"
-                "initial_*"
-                "list_*"
-                "onboarding"
-                "read_memory"
-                "rename_memory"
-                "write_memory"
-              ];
-              ask = mcpToolList serena_mcp ["*"];
-            }
+            ask = mcpToolList.opencode {
+              name = "serena";
+              tools = ["*"];
+            };
+          }
         );
     };
   };

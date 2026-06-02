@@ -5,9 +5,11 @@
 }: let
   ai_coding_lib = import ../lib {inherit lib;};
   inherit (ai_coding_lib) mkClaudePermissionList;
+  inherit (ai_coding_lib) mcpToolList;
   inherit (ai_coding_lib) global_bash;
   inherit (ai_coding_lib) sensitive_files;
   inherit (ai_coding_lib) lockfiles;
+  inherit (ai_coding_lib) serena_tools;
 in {
   home.shellAliases = {
     claude = lib.removeSuffix "\n" ''CC_SYSTEM_PROMPT=$(serena prompts print-cc-system-prompt-override) ${lib.getExe pkgs.claude-code} --system-prompt="$CC_SYSTEM_PROMPT"'';
@@ -35,6 +37,10 @@ in {
             "git status"
             "git diff"
           ])
+          (mcpToolList.claude {
+            name = "serena";
+            tools = serena_tools.basic;
+          })
         ];
         # ask = [];
         deny = lib.concatLists [
@@ -51,15 +57,6 @@ in {
               {
                 type = "command";
                 command = "serena-hooks remind --client=claude-code";
-              }
-            ];
-          }
-          {
-            matcher = "mcp__serena__*";
-            hooks = [
-              {
-                type = "command";
-                command = "serena-hooks auto-approve --client=claude-code";
               }
             ];
           }

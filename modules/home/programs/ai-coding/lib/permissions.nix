@@ -1,16 +1,20 @@
 {lib, ...}: rec {
   mcpToolList = {
-    name,
-    style,
-  }: (
-    tools: (
-      map (tool:
-        if style == "opencode"
-        then "${name}_${tool}"
-        else "mcp__${name}__${name}_${tool}")
-      tools
-    )
-  );
+    claude = {
+      name,
+      tools,
+    }:
+      map (tool: "mcp__${name}__${tool}") tools;
+
+    opencode = {
+      name,
+      tools,
+    }:
+      map (tool: "${name}_${tool}") tools;
+
+    cursor = _:
+      throw "mcpToolList.cursor: not yet implemented";
+  };
 
   mkClaudePermissionList = tools: specifiers:
     builtins.concatLists (
@@ -123,6 +127,20 @@
     allow = [
       "git status"
       "git diff"
+    ];
+  };
+
+  serena_tools = {
+    basic = [
+      "edit_memory"
+      "find_*"
+      "get_*"
+      "initial_*"
+      "list_*"
+      "onboarding"
+      "read_memory"
+      "rename_memory"
+      "write_memory"
     ];
   };
 
