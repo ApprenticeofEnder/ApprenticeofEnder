@@ -73,15 +73,15 @@ in {
               }
             ];
           }
-          {
-            matcher = "Bash";
-            hooks = [
-              {
-                type = "command";
-                command = "$CLAUDE_PROJECT_DIR/.claude/hooks/clamp-bash-timeout.sh";
-              }
-            ];
-          }
+          # {
+          #   matcher = "Bash";
+          #   hooks = [
+          #     {
+          #       type = "command";
+          #       command = "$CLAUDE_PROJECT_DIR/.claude/hooks/clamp-bash-timeout.sh";
+          #     }
+          #   ];
+          # }
         ];
         SessionStart = [
           {
