@@ -15,7 +15,7 @@
     fish_add_path ${config.xdg.dataHome}/pnpm/global/bin
     source "$HOME/.config/op/plugins-nix.sh"
 
-    set -x PNPM_HOME "${config.xdg.dataHome}/pnpm/global/bin"
+    set -x PNPM_HOME "${config.xdg.dataHome}/pnpm/global"
   '';
 
   fullShellInit = lib.concatStrings (

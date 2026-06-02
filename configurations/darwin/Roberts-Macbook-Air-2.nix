@@ -9,6 +9,10 @@
   inherit (flake) inputs;
   inherit (inputs) self;
   inherit (inputs) nixvim;
+
+  homeMod = "${self}/modules/home";
+
+  importHome = folder: (filenames: map (filename: "${homeMod}/${folder}/${filename}") filenames);
 in {
   imports = [
     self.darwinModules.default
@@ -46,9 +50,15 @@ in {
   # we try to use as unique a backup file extension as possible.
   home-manager.backupFileExtension = "nixos-unified-template-backup";
 
-  home-manager.sharedModules = [
-    nixvim.homeModules.default
-  ];
+  home-manager.sharedModules =
+    [
+      nixvim.homeModules.default
+    ]
+    ++ importHome "toolkits" [
+      # "rust.nix"
+      # "python.nix"
+      "javascript.nix"
+    ];
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
