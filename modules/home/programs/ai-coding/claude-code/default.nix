@@ -49,6 +49,19 @@ in {
           (mkClaudePermissionList ["Bash"] global_bash.deny)
         ];
       };
+      # "hooks": {
+      #   "PreToolUse": [
+      #     {
+      #       "matcher": "Bash",
+      #       "hooks": [
+      #         {
+      #           "type": "command",
+      #           "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/clamp-bash-timeout.sh"
+      #         }
+      #       ]
+      #     }
+      #   ]
+      # }
       hooks = {
         PreToolUse = [
           {
@@ -57,6 +70,15 @@ in {
               {
                 type = "command";
                 command = "serena-hooks remind --client=claude-code";
+              }
+            ];
+          }
+          {
+            matcher = "Bash";
+            hooks = [
+              {
+                type = "command";
+                command = "$CLAUDE_PROJECT_DIR/.claude/hooks/clamp-bash-timeout.sh";
               }
             ];
           }
