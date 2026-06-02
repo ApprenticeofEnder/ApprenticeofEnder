@@ -18,6 +18,7 @@ in {
   home.file = {
     ".claude/hooks/clamp-bash-timeout.sh" = {
       source = ./hooks/clamp-bash-timeout.sh;
+      executable = true;
     };
   };
 
@@ -51,7 +52,7 @@ in {
         # ask = [];
         deny = lib.concatLists [
           (mkClaudePermissionList ["Read" "Grep" "Glob"] sensitive_files.claude)
-          (mkClaudePermissionList ["Write" "Edit"] sensitive_files.claude ++ lockfiles.claude)
+          (mkClaudePermissionList ["Write" "Edit"] (sensitive_files.claude ++ lockfiles.claude))
           (mkClaudePermissionList ["Bash"] global_bash.deny)
         ];
       };
