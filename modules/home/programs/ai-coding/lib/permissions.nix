@@ -132,11 +132,15 @@
 
   serena_tools = {
     basic = [
+      "delete_memory"
       "edit_memory"
-      "find_*"
-      "get_*"
-      "initial_*"
-      "list_*"
+      "find_declaration"
+      "find_implementations"
+      "find_referencing_symbols"
+      "find_symbol"
+      "get_diagnostics_for_file"
+      "initial_instructions"
+      "list_memories"
       "onboarding"
       "read_memory"
       "rename_memory"
