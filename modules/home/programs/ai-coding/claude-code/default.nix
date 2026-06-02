@@ -15,6 +15,12 @@ in {
     claude = lib.removeSuffix "\n" ''CC_SYSTEM_PROMPT=$(serena prompts print-cc-system-prompt-override) ${lib.getExe pkgs.claude-code} --system-prompt="$CC_SYSTEM_PROMPT"'';
   };
 
+  home.file = {
+    ".claude/hooks/clamp-bash-timeout.sh" = {
+      source = ./hooks/clamp-bash-timeout.sh;
+    };
+  };
+
   programs.claude-code = {
     enable = true;
     enableMcpIntegration = true;
@@ -56,7 +62,7 @@ in {
       #       "hooks": [
       #         {
       #           "type": "command",
-      #           "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/clamp-bash-timeout.sh"
+      #           "command": "~/.claude/hooks/clamp-bash-timeout.sh"
       #         }
       #       ]
       #     }
@@ -73,15 +79,15 @@ in {
               }
             ];
           }
-          # {
-          #   matcher = "Bash";
-          #   hooks = [
-          #     {
-          #       type = "command";
-          #       command = "$CLAUDE_PROJECT_DIR/.claude/hooks/clamp-bash-timeout.sh";
-          #     }
-          #   ];
-          # }
+          {
+            matcher = "Bash";
+            hooks = [
+              {
+                type = "command";
+                command = "~/.claude/hooks/clamp-bash-timeout.sh";
+              }
+            ];
+          }
         ];
         SessionStart = [
           {
