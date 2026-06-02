@@ -12,6 +12,7 @@
       httpie # better http client
       keep-sorted # line sorting
       mermaid-cli
+      pnpm
       shellcheck # shell linter
       shfmt # shell formatter
       typst # latex alternative

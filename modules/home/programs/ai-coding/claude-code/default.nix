@@ -43,6 +43,54 @@ in {
           (mkClaudePermissionList ["Bash"] global_bash.deny)
         ];
       };
+      hooks = {
+        PreToolUse = [
+          {
+            matcher = "";
+            hooks = [
+              {
+                type = "command";
+                command = "serena-hooks remind --client=claude-code";
+              }
+            ];
+          }
+          {
+            matcher = "mcp__serena__*";
+            hooks = [
+              {
+                type = "command";
+                command = "serena-hooks auto-approve --client=claude-code";
+              }
+            ];
+          }
+        ];
+        SessionStart = [
+          {
+            matcher = "";
+            hooks = [
+              {
+                type = "command";
+                command = "serena-hooks activate --client=claude-code";
+              }
+              {
+                type = "command";
+                command = "echo 'use caveman'";
+              }
+            ];
+          }
+        ];
+        SessionEnd = [
+          {
+            matcher = "";
+            hooks = [
+              {
+                type = "command";
+                command = "serena-hooks cleanup --client=claude-code";
+              }
+            ];
+          }
+        ];
+      };
     };
   };
 }
