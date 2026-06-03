@@ -15,7 +15,7 @@ execute.
 
 ## Reference material
 
-- Task brief template: `~/.agents/tasks/missive.md`
+- Task brief template: `~/.claude/skills/fleet-deploy/missive.md`
 - Worker agent definitions (installed): `~/.claude/agents/*.md`
 
 ## 1. Plan the deck before launching
@@ -78,7 +78,7 @@ inherit correctly. Cheap, catches misconfig in seconds.
 
 ## 3. Write the brief
 
-Every brief includes (pattern: `~/.agents/tasks/missive.md`):
+Every brief includes (pattern: `~/.claude/skills/fleet-deploy/missive.md`):
 
 1. **ENV-SANITY first line** — worker runs `pwd`, checks base contains expected files,
    probes Write + Bash. STOP and report `BASE MISSING` / `PERMISSION BLOCKED` if either
@@ -136,4 +136,4 @@ When a worker completes:
 - **Lead reviews output** before declaring done — especially when Bash was gated.
 - **Respect per-project constraints** (no cloud, local-only deploys, repo style).
 - **Foreground canary** before any large parallel fleet.
-- Worker defs live in `~/.claude/agents/`. Brief templates live in `~/.agents/tasks/`.
+- Worker defs live in `~/.claude/agents/`. Brief template is in `~/.claude/skills/fleet-deploy/missive.md`.

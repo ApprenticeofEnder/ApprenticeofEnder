@@ -20,11 +20,16 @@ in {
       source = ./hooks/clamp-bash-timeout.sh;
       executable = true;
     };
+
+    ".claude/skills/fleet-deploy/missive.md" = {
+      source = ../skills/fleet-deploy/missive.md;
+    };
   };
 
   programs.claude-code = {
     enable = true;
     enableMcpIntegration = true;
+    context = ../baseline-rules.md;
     skills = builtins.listToAttrs (map (skill: {
         name = skill;
         value = ../skills/${skill}/SKILL.md;
