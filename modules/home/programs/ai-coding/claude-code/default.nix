@@ -24,6 +24,11 @@ in {
     ".claude/skills/fleet-deploy/missive.md" = {
       source = ../skills/fleet-deploy/missive.md;
     };
+
+    ".claude/scripts/claude-hud-statusline.sh" = {
+      source = ./scripts/claude-hud-statusline.sh;
+      executable = true;
+    };
   };
 
   programs.claude-code = {
@@ -50,8 +55,17 @@ in {
     # agents = agents;
 
     settings = {
+      model = "sonnet";
       env = {
         CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = 1;
+      };
+      enabledPlugins = {
+        "claude-hud@claude-hud" = true;
+      };
+
+      statusLine = {
+        type = "command";
+        command = "~/.claude/scripts/claude-hud-statusline.sh";
       };
       permissions = {
         allow = lib.concatLists [
