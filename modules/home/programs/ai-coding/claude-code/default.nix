@@ -56,19 +56,6 @@ in {
           (mkClaudePermissionList ["Bash"] global_bash.deny)
         ];
       };
-      # "hooks": {
-      #   "PreToolUse": [
-      #     {
-      #       "matcher": "Bash",
-      #       "hooks": [
-      #         {
-      #           "type": "command",
-      #           "command": "~/.claude/hooks/clamp-bash-timeout.sh"
-      #         }
-      #       ]
-      #     }
-      #   ]
-      # }
       hooks = {
         PreToolUse = [
           {
