@@ -25,9 +25,23 @@ in {
   programs.claude-code = {
     enable = true;
     enableMcpIntegration = true;
-    skills = {
-      caveman = ../skills/caveman/SKILL.md;
-    };
+    skills = builtins.listToAttrs (map (skill: {
+        name = skill;
+        value = ../skills/${skill}/SKILL.md;
+      }) [
+        # keep-sorted start
+        "agent-canvas-usage"
+        "caveman"
+        "deslop"
+        "dotnet-code-quality"
+        "dotnet-dev-guidelines"
+        "fleet-deploy"
+        "review-and-ship"
+        "tanstack"
+        "thermo-code-quality"
+        "verify-this"
+        # keep-sorted end
+      ]);
     # agents = agents;
 
     settings = {

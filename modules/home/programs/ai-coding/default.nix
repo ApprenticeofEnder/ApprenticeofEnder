@@ -9,4 +9,10 @@
     ./opencode
     # keep-sorted end
   ];
+
+  home.file = {
+    ".agents/tasks/missive.md" = {
+      source = ./tasks/missive.md;
+    };
+  };
 }
