@@ -1,0 +1,10 @@
+Maverick -> Trigger
+Iceman -> Count
+Goose -> Wiseman
+Hollywood -> Jaeger
+Bob -> Skald
+Phoenix -> Lanza
+Hangman -> Huxian
+Payback -> Tailor
+Viper -> Fencer
+Rooster -> Tabloid
