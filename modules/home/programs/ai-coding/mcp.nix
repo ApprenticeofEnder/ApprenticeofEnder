@@ -33,7 +33,7 @@
 
   home = {
     activation.serena = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      ${lib.getExe config.programs.uv.package} tool install -p 3.13 serena-agent
+      ${lib.getExe config.programs.uv.package} tool install -p ${pkgs.python313}/bin/python3.13 serena-agent
     '';
   };
 
