@@ -29,18 +29,18 @@ within a tier are interchangeable (use distinct ones to run work in parallel). A
 carry a **domain specialization** baked into their prompt (docs, tests); prefer those for their
 domain. Add more names by copying an agent file and renaming.
 
-| Callsign   | Model  | Use for                                                        |
-|------------|--------|----------------------------------------------------------------|
-| maverick   | opus   | hardest / architectural / security-critical (auth, crypto)     |
-| iceman     | sonnet | moderate (domain types, schemas, module logic, feature slices) |
-| goose      | sonnet | moderate (scaffold, toolchain/config, feature slices)          |
-| hollywood  | sonnet | moderate (frontend/UI slices, feature work)                    |
-| bob        | sonnet | **docs generation** (READMEs, API/reference, guides) — pairs w/ phoenix |
-| phoenix    | sonnet | **docs generation** (READMEs, API/reference, guides) — pairs w/ bob |
-| hangman    | sonnet | **test generation** (unit/integration/edge cases) — pairs w/ payback |
-| payback    | sonnet | **test generation** (unit/integration/edge cases) — pairs w/ hangman |
-| viper      | haiku  | mechanical (boilerplate, config, renames, format-preserving)   |
-| rooster    | haiku  | **precision edits** (surgical, format-preserving) — pairs w/ viper |
+| Callsign  | Model  | Use for                                                                 |
+| --------- | ------ | ----------------------------------------------------------------------- |
+| trigger   | opus   | hardest / architectural / security-critical (auth, crypto)              |
+| count     | sonnet | moderate (domain types, schemas, module logic, feature slices)          |
+| wiseman   | sonnet | moderate (scaffold, toolchain/config, feature slices)                   |
+| jaeger    | sonnet | moderate (frontend/UI slices, feature work)                             |
+| skald     | sonnet | **docs generation** (READMEs, API/reference, guides) — pairs w/ lanza   |
+| lanza     | sonnet | **docs generation** (READMEs, API/reference, guides) — pairs w/ skald   |
+| huxian    | sonnet | **test generation** (unit/integration/edge cases) — pairs w/ tailor     |
+| tailor    | sonnet | **test generation** (unit/integration/edge cases) — pairs w/ huxian     |
+| fencer    | haiku  | mechanical (boilerplate, config, renames, format-preserving)            |
+| tabloid   | haiku  | **precision edits** (surgical, format-preserving) — pairs w/ fencer     |
 
 ## Dispatch a worker
 
@@ -49,8 +49,8 @@ brief file (e.g. one based on `tasks/TEMPLATE.md`) or an inline brief.
 
 ```
 Agent(
-  subagent_type    = "maverick",                 # callsign = tier
-  description       = "maverick: T-030 authorizer",
+  subagent_type    = "trigger",                  # callsign = tier
+  description       = "trigger: T-030 authorizer",
   prompt           = <contents of the task brief>,
   run_in_background = true,                       # parallel + watchable; omit for blocking
   isolation         = "worktree",                 # optional: isolated git worktree
@@ -76,6 +76,7 @@ Two common failure modes are launch-config, not task quality. Always open a brie
 `PERMISSION BLOCKED`) so a misconfig surfaces in seconds, not minutes.
 
 ### Worktree base
+
 - `isolation="worktree"` branches the plane's worktree from **`origin/<default-branch>`** (the
   pushed remote ref), **not** your local `main`/HEAD. Unpushed local commits are invisible to
   worktree planes — they get the stale remote tip.
@@ -85,14 +86,15 @@ Two common failure modes are launch-config, not task quality. Always open a brie
 - Symptom of a stale base: a plane's env-check reports `BASE MISSING` or sees only baseline files.
 
 ### Permission pairing (foreground vs background)
+
 A plane's ability to Write/Edit/Bash depends on **how it was launched**, not the agent def:
 
-| Launch | Parallel? | Write/Edit | Bash (build/test) | Use when |
-|--------|-----------|------------|-------------------|----------|
-| **foreground** (omit `run_in_background`) | no — serial, blocks | inherits session | inherits session | canary; or when session is NOT elevated |
-| **background** + default perms | yes | ❌ DENIED | ❌ DENIED | broken — plane can only author into its report |
-| **background** + `acceptEdits` | yes | ✅ | ❌ gated → lead verifies | medium-risk parallel |
-| **background** + `bypassPermissions` | yes | ✅ | ✅ (local sandbox) | full autonomous fleet, no-cloud posture |
+| Launch                                    | Parallel?           | Write/Edit       | Bash (build/test)        | Use when                                       |
+| ----------------------------------------- | ------------------- | ---------------- | ------------------------ | ---------------------------------------------- |
+| **foreground** (omit `run_in_background`) | no — serial, blocks | inherits session | inherits session         | canary; or when session is NOT elevated        |
+| **background** + default perms            | yes                 | ❌ DENIED        | ❌ DENIED                | broken — plane can only author into its report |
+| **background** + `acceptEdits`            | yes                 | ✅               | ❌ gated → lead verifies | medium-risk parallel                           |
+| **background** + `bypassPermissions`      | yes                 | ✅               | ✅ (local sandbox)       | full autonomous fleet, no-cloud posture        |
 
 - **Why:** a detached background plane cannot answer a permission prompt, so anything not
   pre-authorized by the session's permission mode is auto-denied.
