@@ -5,7 +5,7 @@
   nixosConfig,
   ...
 }: let
-  signer_pubkey = builtins.readFile /home/${config.me.username}/.ssh/github.pub;
+  signer_pubkey = builtins.readFile ./programs/ssh/keys/github.pub;
 in
   lib.mkMerge [
     {

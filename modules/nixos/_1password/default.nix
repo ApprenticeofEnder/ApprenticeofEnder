@@ -9,7 +9,7 @@
     };
 
     git = {
-      settings.gpg.ssh.program = "${pkgs._1password}/share/1password/op-ssh-sign";
+      config.gpg.ssh.program = "${pkgs._1password}/share/1password/op-ssh-sign";
     };
   };
 
