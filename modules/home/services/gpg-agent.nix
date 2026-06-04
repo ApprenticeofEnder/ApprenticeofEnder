@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   services.gpg-agent = {
-    enable = true;
+    enable = false;
     verbose = true;
     enableScDaemon = true;
     enableSshSupport = true;
