@@ -121,7 +121,6 @@
       "curl *"
       "wget *"
       "nc *"
-      "git push *"
     ];
     ask = ["*"];
     allow = [
