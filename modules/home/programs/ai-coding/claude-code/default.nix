@@ -40,6 +40,7 @@ in {
         value = ../skills/${skill}/SKILL.md;
       }) [
         # keep-sorted start
+        "1password"
         "agent-canvas-usage"
         "caveman"
         "deslop"
