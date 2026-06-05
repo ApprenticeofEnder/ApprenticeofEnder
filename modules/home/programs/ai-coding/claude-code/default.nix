@@ -1,5 +1,5 @@
 {
-  config,
+  pkgs,
   lib,
   ...
 }: let
@@ -12,7 +12,7 @@
   inherit (ai_coding_lib) serena_tools;
 in {
   home.shellAliases = {
-    claude = lib.removeSuffix "\n" ''CC_SYSTEM_PROMPT=$(serena prompts print-cc-system-prompt-override) ${lib.getExe config.programs.claude-code.finalPackage} --system-prompt="$CC_SYSTEM_PROMPT"'';
+    claude = lib.removeSuffix "\n" ''CC_SYSTEM_PROMPT=$(serena prompts print-cc-system-prompt-override) ${lib.getExe pkgs.claude-code} --system-prompt="$CC_SYSTEM_PROMPT"'';
   };
 
   home.file = {
