@@ -41,7 +41,7 @@
     enable = true;
     servers = {
       hashicorp-terraform = {
-        disabled = true;
+        # disabled = true;
         command = "docker";
         args = [
           "run"
@@ -54,7 +54,7 @@
         type = "stdio";
       };
       aws-terraform = {
-        disabled = true;
+        # disabled = true;
         command = "docker";
         args = [
           "run"
