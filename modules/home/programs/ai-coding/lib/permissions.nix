@@ -3,8 +3,17 @@
     claude = {
       name,
       tools,
-    }:
-      map (tool: "mcp__${name}__${tool}") tools;
+      home_manager ? false,
+    }: let
+      server_name =
+        if home_manager
+        then "plugin:claude-code-home-manager:${name}"
+        else name;
+    in
+      map (
+        tool: "mcp__${server_name}__${tool}"
+      )
+      tools;
 
     opencode = {
       name,
@@ -144,6 +153,14 @@
       "read_memory"
       "rename_memory"
       "write_memory"
+    ];
+    write = [
+      "insert_after_symbol"
+      "insert_before_symbol"
+      "rename_symbol"
+      "replace_content"
+      "replace_symbol_body"
+      "safe_delete_symbol"
     ];
   };
 

@@ -1,6 +1,10 @@
 {lib, ...}: let
   data = import ./data.nix {inherit lib;};
+  permissions = import ./permissions.nix {inherit lib;};
   inherit (data) toYaml;
+  inherit (permissions) mergeClaudePermissionGroups;
+  inherit (permissions) claude_permission_groups;
+  inherit (permissions) opencode_permission_groups;
 in rec {
   mkClaudeCodeAgent = {
     frontmatter,
@@ -43,8 +47,12 @@ in rec {
   mkAgent = {
     name,
     description,
-    opencode ? {},
-    claude ? {},
+    permission_groups ? ["read" "edit" "bash"],
+    claude_model ? "sonnet",
+    opencode_model ? "sonnet",
+    cursor_model ? "composer",
+    agent_mode ? "all",
+    prompt_file ? ../agents/${name}/agent.md,
     # cursor ? {},
   }: let
     baseConfig = {
@@ -52,21 +60,49 @@ in rec {
       description = description;
     };
 
-    prompt = builtins.readFile ../agents/${name}/agent.md;
+    permissions = {
+      claude = mergeClaudePermissionGroups (
+        map (group: claude_permission_groups."${group}") permission_groups
+      );
+      opencode = lib.mergeAttrsList (
+        map (group: opencode_permission_groups."${group}") permission_groups
+      );
+      cursor = {}; # idk how cursor permissions work just yet
+    };
+
+    models = selectModels {
+      cursor = cursor_model;
+      claude = claude_model;
+      opencode = opencode_model;
+    };
+
+    opencode = {
+      model = models.opencode;
+      permission = permissions.opencode;
+      mode = agent_mode;
+    };
+
+    claude =
+      {
+        model = models.claude;
+      }
+      // permissions.claude;
+
+    prompt = builtins.readFile prompt_file;
   in
     lib.mkMerge [
-      (lib.mkIf (opencode != null) {
+      {
         programs.opencode.settings.agent."${name}" = mkOpenCodeAgent {
           inherit prompt;
           frontmatter = baseConfig // opencode;
         };
-      })
-      (lib.mkIf (claude != null) {
+      }
+      {
         programs.claude-code.agents."${name}" = mkClaudeCodeAgent {
           inherit prompt;
           frontmatter = baseConfig // claude;
         };
-      })
+      }
     ];
 
   models = {
