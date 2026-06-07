@@ -63,7 +63,7 @@
     };
   };
 in
-  lib.mergeAttrsList (
+  lib.mkMerge (
     lib.mapAttrsToList (
       name: agent:
         mkAgent (
