@@ -16,6 +16,8 @@
     source "$HOME/.config/op/plugins-nix.sh"
 
     set -x PNPM_HOME "${config.xdg.dataHome}/pnpm/global"
+
+    devenv hook fish | source
   '';
 
   fullShellInit = lib.concatStrings (
