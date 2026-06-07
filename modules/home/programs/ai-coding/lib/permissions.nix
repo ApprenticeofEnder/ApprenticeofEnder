@@ -174,6 +174,12 @@
     bash = mkClaudePermissionGroup {
       tools = mkClaudePermissionList ["Bash"] ["*"];
     };
+    noedit = mkClaudePermissionGroup {
+      disallowedTools = mkClaudePermissionList ["Write" "Edit"] ["*"];
+    };
+    nobash = mkClaudePermissionGroup {
+      disallowedTools = mkClaudePermissionList ["Bash"] ["*"];
+    };
   };
 
   mergeClaudePermissionGroups = groups: {

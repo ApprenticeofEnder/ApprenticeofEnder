@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     # keep-sorted start
+    ./agents/critic
     ./agents/debugger
     ./agents/fleet.nix
     ./claude-code
