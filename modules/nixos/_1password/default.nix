@@ -7,10 +7,6 @@
     _1password = {
       enable = true;
     };
-
-    git = {
-      config.gpg.ssh.program = "${pkgs._1password}/share/1password/op-ssh-sign";
-    };
   };
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
