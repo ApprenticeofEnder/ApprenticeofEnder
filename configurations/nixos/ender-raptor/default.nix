@@ -24,6 +24,8 @@ in {
     "${homeMod}/programs/linux-only"
   ];
 
+  programs.nix-ld.enable = true;
+
   # Automatically move old dotfiles out of the way
   #
   # Note that home-manager is not very smart, if this backup file already exists it
