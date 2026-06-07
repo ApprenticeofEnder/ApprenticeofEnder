@@ -34,6 +34,7 @@
   opencodeConfig = {
     model = models.opencode;
     permission = permissions.opencode;
+    mode = "subagent";
   };
 
   claudeConfig =
