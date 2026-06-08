@@ -7,7 +7,7 @@
     }: let
       server_name =
         if home_manager
-        then "plugin:claude-code-home-manager:${name}"
+        then "plugin_claude-code-home-manager_${name}"
         else name;
     in
       map (
