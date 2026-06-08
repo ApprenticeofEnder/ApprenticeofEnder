@@ -58,6 +58,7 @@ in {
       model = "sonnet";
       env = {
         CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = 1;
+        GIT_EXTERNAL_DIFF = "difft";
       };
       enabledPlugins = {
         "claude-hud@claude-hud" = true;

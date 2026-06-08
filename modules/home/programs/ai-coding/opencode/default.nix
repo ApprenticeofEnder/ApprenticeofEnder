@@ -32,6 +32,7 @@ in {
 
     tui = {
       theme = "nord";
+      diff_style = "stacked";
     };
 
     skills = ../skills;
