@@ -4,6 +4,7 @@
     ./agents/critic
     ./agents/debugger
     ./agents/fleet.nix
+    ./agents/plan
     ./claude-code
     ./cursor
     ./mcp.nix

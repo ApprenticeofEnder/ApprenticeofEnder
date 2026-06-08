@@ -6,10 +6,10 @@
   inherit (ai_coding_lib) mkAgent;
 
   description = ''
-    Reviews overall project state and provides objective, direct feedback with constructive criticism and suggestions for improvement. Use at significant milestones, after major changes, or when reviewing a diff before it lands.
+    Drafts plans prior to implementation of a project, feature, bugfix, or other task. Use before any significant change involving multiple potential decisions.
   '';
 
-  name = "critic";
+  name = "plan";
 in
   mkAgent {
     inherit name;

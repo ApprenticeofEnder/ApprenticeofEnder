@@ -55,11 +55,11 @@
       bash = "deny";
     };
 
-  plan = {
-    mode = "primary";
-    permission = permissions.plan;
-    prompt = builtins.readFile ./plan.md;
-  };
+  # plan = {
+  #   mode = "primary";
+  #   permission = permissions.plan;
+  #   prompt = builtins.readFile ./plan.md;
+  # };
 
   # --- Build Agent ---
 
@@ -125,7 +125,7 @@ in {
   programs.opencode = {
     settings = {
       agent = {
-        plan = plan;
+        # plan = plan;
         build = build;
         # debug = debug;
       };
