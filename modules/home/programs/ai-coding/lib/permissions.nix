@@ -154,7 +154,7 @@
       "rename_memory"
       "write_memory"
     ];
-    write = [
+    edit = [
       "insert_after_symbol"
       "insert_before_symbol"
       "rename_symbol"
@@ -164,21 +164,56 @@
     ];
   };
 
+  claude_serena_tools = {
+    basic = mcpToolList.claude {
+      name = "serena";
+      tools = serena_tools.basic;
+      home_manager = true;
+    };
+
+    edit = mcpToolList.claude {
+      name = "serena";
+      tools = serena_tools.edit;
+      home_manager = true;
+    };
+  };
+
+  opencode_serena_tools = {
+    basic = mcpToolList.opencode {
+      name = "serena";
+      tools = serena_tools.basic;
+    };
+    edit = mcpToolList.opencode {
+      name = "serena";
+      tools = serena_tools.edit;
+    };
+  };
+
+  claude_tools = {
+    read = ["Read" "Grep" "Glob"] ++ claude_serena_tools.basic;
+    edit = ["Write" "Edit"] ++ claude_serena_tools.edit;
+    bash = ["Bash"];
+  };
+
   claude_permission_groups = {
     read = mkClaudePermissionGroup {
-      tools = mkClaudePermissionList ["Read" "Grep" "Glob"] ["*"];
+      tools = mkClaudePermissionList claude_tools.read ["*"];
     };
     edit = mkClaudePermissionGroup {
-      tools = mkClaudePermissionList ["Write" "Edit"] ["*"];
+      tools = mkClaudePermissionList claude_tools.edit ["*"];
     };
     bash = mkClaudePermissionGroup {
-      tools = mkClaudePermissionList ["Bash"] ["*"];
+      tools = mkClaudePermissionList claude_tools.bash ["*"];
     };
     noedit = mkClaudePermissionGroup {
-      disallowedTools = mkClaudePermissionList ["Write" "Edit"] ["*"];
+      disallowedTools = mkClaudePermissionList claude_tools.edit ["*"];
     };
     nobash = mkClaudePermissionGroup {
-      disallowedTools = mkClaudePermissionList ["Bash"] ["*"];
+      disallowedTools = mkClaudePermissionList claude_tools.bash ["*"];
+    };
+    plan = mkClaudePermissionGroup {
+      tools = mkClaudePermissionList claude_tools.edit [".claude/plans/*.md"];
+      disallowedTools = mkClaudePermissionList claude_tools.edit ["*"];
     };
   };
 
@@ -227,6 +262,12 @@
     };
     nobash = mkOpencodePermissionGroup {
       bash = "deny";
+    };
+    plan = mkOpencodePermissionGroup {
+      edit = {
+        "*" = "deny";
+        ".opencode/plans/*.md" = "allow";
+      };
     };
   };
 }

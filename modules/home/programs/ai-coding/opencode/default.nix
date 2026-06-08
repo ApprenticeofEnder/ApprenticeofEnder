@@ -5,7 +5,7 @@
   inherit (aiCodingLib) sensitive_files;
   inherit (aiCodingLib) lockfiles;
   inherit (aiCodingLib) global_bash;
-  inherit (aiCodingLib) serena_tools;
+  inherit (aiCodingLib) opencode_serena_tools;
 
   read_perms = mkOpencodePermissionList {
     deny = sensitive_files.opencode;
@@ -70,10 +70,7 @@ in {
         }
         // (
           mkOpencodePermissionList {
-            allow = mcpToolList.opencode {
-              name = "serena";
-              tools = serena_tools.basic;
-            };
+            allow = opencode_serena_tools.basic;
             ask = mcpToolList.opencode {
               name = "serena";
               tools = ["*"];
