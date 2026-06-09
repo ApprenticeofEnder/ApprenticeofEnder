@@ -99,6 +99,16 @@ in {
           };
         };
       };
+      "gitgoodgemma" = sshHost {
+        user = "vpcadmin";
+        hostname = "10.0.2.21";
+        publicKeyName = "cybersci_2026_nationals.pub";
+        options = {
+          SetEnv = {
+            TERM = "xterm-256color";
+          };
+        };
+      };
     };
   };
 }
