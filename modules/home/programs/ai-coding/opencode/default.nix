@@ -1,4 +1,8 @@
-{lib, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   aiCodingLib = import ../lib {inherit lib;};
   inherit (aiCodingLib) mcpToolList;
   inherit (aiCodingLib) mkOpencodePermissionList;
@@ -6,6 +10,7 @@
   inherit (aiCodingLib) lockfiles;
   inherit (aiCodingLib) global_bash;
   inherit (aiCodingLib) opencode_serena_tools;
+  ghContext = import ../lib/gh-context.nix {inherit lib pkgs;};
 
   read_perms = mkOpencodePermissionList {
     deny = sensitive_files.opencode;
@@ -39,6 +44,7 @@ in {
 
     context =
       (builtins.readFile ../baseline-rules.md)
+      + ghContext
       + ''
 
         use caveman

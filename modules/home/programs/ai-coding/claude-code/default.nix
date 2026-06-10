@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   ai_coding_lib = import ../lib {inherit lib;};
@@ -9,6 +10,7 @@
   inherit (ai_coding_lib) sensitive_files;
   inherit (ai_coding_lib) lockfiles;
   inherit (ai_coding_lib) claude_serena_tools;
+  ghContext = import ../lib/gh-context.nix {inherit lib pkgs;};
 in {
   home.shellAliases = {
     claude = lib.removeSuffix "\n" ''CC_SYSTEM_PROMPT=$(serena prompts print-cc-system-prompt-override) ${lib.getExe config.programs.claude-code.finalPackage} --system-prompt="$CC_SYSTEM_PROMPT"'';
@@ -33,7 +35,7 @@ in {
   programs.claude-code = {
     enable = true;
     enableMcpIntegration = true;
-    context = ../baseline-rules.md;
+    context = (builtins.readFile ../baseline-rules.md) + ghContext;
     skills = builtins.listToAttrs (map (skill: {
         name = skill;
         value = ../skills/${skill}/SKILL.md;
