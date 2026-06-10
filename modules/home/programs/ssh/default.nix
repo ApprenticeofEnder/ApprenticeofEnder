@@ -29,6 +29,26 @@
     }
     // options;
 
+  cyberSciSshHost = {
+    user ? "vpcadmin",
+    hostname,
+    checkHostIP ? true,
+    publicKeyName,
+  }:
+    sshHost {
+      inherit user;
+      inherit hostname;
+      inherit checkHostIP;
+      inherit publicKeyName;
+
+      options = {
+        SetEnv = {
+          TERM = "xterm-256color";
+        };
+        StrictHostKeyChecking = false;
+      };
+    };
+
   sshKeyPath = name: "~/.ssh/${name}";
 
   sshKeys = with builtins; let
@@ -67,57 +87,29 @@ in {
         publicKeyName = "pi_master.pub";
       };
 
-      "deployment-hell" = sshHost {
-        user = "vpcadmin";
+      "deployment-hell" = cyberSciSshHost {
         hostname = "10.0.2.93";
         publicKeyName = "cybersci_2026_nationals.pub";
-        options = {
-          SetEnv = {
-            TERM = "xterm-256color";
-          };
-        };
       };
 
-      "assault-and-battery" = sshHost {
-        user = "vpcadmin";
+      "assault-and-battery" = cyberSciSshHost {
         hostname = "10.0.2.71";
         publicKeyName = "cybersci_2026_nationals.pub";
-        options = {
-          SetEnv = {
-            TERM = "xterm-256color";
-          };
-        };
       };
 
-      "shellnet" = sshHost {
-        user = "vpcadmin";
+      "shellnet" = cyberSciSshHost {
         hostname = "10.0.2.141";
         publicKeyName = "cybersci_2026_nationals.pub";
-        options = {
-          SetEnv = {
-            TERM = "xterm-256color";
-          };
-        };
       };
-      "gitgoodgemma" = sshHost {
-        user = "vpcadmin";
+
+      "gitgoodgemma" = cyberSciSshHost {
         hostname = "10.0.2.21";
         publicKeyName = "cybersci_2026_nationals.pub";
-        options = {
-          SetEnv = {
-            TERM = "xterm-256color";
-          };
-        };
       };
-      defence = sshHost {
-        user = "vpcadmin";
+
+      defence = cyberSciSshHost {
         hostname = "10.0.2.90";
         publicKeyName = "cybersci_2026_nationals.pub";
-        options = {
-          SetEnv = {
-            TERM = "xterm-256color";
-          };
-        };
       };
     };
   };
