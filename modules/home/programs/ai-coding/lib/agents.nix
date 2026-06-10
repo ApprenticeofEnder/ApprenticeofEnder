@@ -25,25 +25,6 @@ in rec {
       prompt = prompt;
     };
 
-  mkAgents = agent_name: let
-    agentFile = file: ../agents/${agent_name}/${file};
-    claude_frontmatter =
-      builtins.readFile (agentFile "claude-config.yml");
-    opencode_frontmatter = builtins.fromJSON (
-      builtins.readFile (agentFile "opencode-config.json")
-    );
-    prompt = builtins.readFile (agentFile "agent.md");
-  in {
-    opencode = mkOpenCodeAgent {
-      inherit prompt;
-      frontmatter = opencode_frontmatter;
-    };
-    claude = mkClaudeCodeAgent {
-      inherit prompt;
-      frontmatter = claude_frontmatter;
-    };
-  };
-
   mkAgent = {
     name,
     description,
