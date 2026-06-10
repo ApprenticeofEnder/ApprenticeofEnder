@@ -24,8 +24,8 @@
       #!/usr/bin/env bash
       set -euo pipefail
 
-      local SERVER_NAME="$1"
-      local SERVER_IMAGE="$2"
+      SERVER_NAME="$1"
+      SERVER_IMAGE="$2"
 
       docker run --rm --interactive --name "$SERVER_NAME" "$SERVER_IMAGE"
     '')
