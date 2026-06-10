@@ -123,6 +123,21 @@ in {
             ];
           }
         ];
+        SubagentStart = [
+          {
+            matcher = "";
+            hooks = [
+              # {
+              #   type = "command";
+              #   command = "serena-hooks activate --client=claude-code";
+              # }
+              {
+                type = "command";
+                command = "echo 'use caveman'";
+              }
+            ];
+          }
+        ];
         SessionEnd = [
           {
             matcher = "";
