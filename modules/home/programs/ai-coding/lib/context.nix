@@ -1,7 +1,21 @@
 {
   lib,
   pkgs,
-}: ''
+}: let
+  opAliases = tools:
+    builtins.concatStringsSep "\n"
+    (
+      map (
+        tool:
+          builtins.concatStringsSep " " [
+            "- `${tool}` aliases to `op plugin run -- ${tool}`."
+            "Needs interactive auth."
+            "Use `${lib.getExe pkgs."${tool}"}` instead."
+          ]
+      )
+      tools
+    );
+in ''
   # Baseline operating rules
 
   These rules apply to every session in this environment. They are absolute.
@@ -20,5 +34,5 @@
 
   ## Tool aliases
 
-  - `gh` aliases to `op plugin run -- gh`. Needs interactive auth. Use `${lib.getExe pkgs.gh}` instead.
+  ${opAliases ["gh" "awscli"]}
 ''

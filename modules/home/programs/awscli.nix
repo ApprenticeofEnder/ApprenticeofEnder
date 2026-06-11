@@ -23,6 +23,17 @@
 in {
   programs.awscli = {
     enable = true;
+    credentials = {
+      default = {
+        credential_process = "${poc}";
+      };
+      "poc" = {
+        credential_process = "${poc}";
+      };
+      "dev" = {
+        credential_process = "${dev}";
+      };
+    };
     settings = {
       # Bare `aws` (no --profile) resolves to the poc credentials.
       default = {
