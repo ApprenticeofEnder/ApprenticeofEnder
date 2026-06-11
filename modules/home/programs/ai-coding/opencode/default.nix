@@ -10,7 +10,7 @@
   inherit (aiCodingLib) lockfiles;
   inherit (aiCodingLib) global_bash;
   inherit (aiCodingLib) opencode_serena_tools;
-  ghContext = import ../lib/gh-context.nix {inherit lib pkgs;};
+  context = import ../lib/context.nix {inherit lib pkgs;};
 
   read_perms = mkOpencodePermissionList {
     deny = sensitive_files.opencode;
@@ -44,7 +44,7 @@ in {
 
     context =
       (builtins.readFile ../baseline-rules.md)
-      + ghContext
+      + context
       + ''
 
         use caveman
