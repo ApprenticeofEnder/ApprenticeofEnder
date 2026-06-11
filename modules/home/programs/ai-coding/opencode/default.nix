@@ -3,13 +3,13 @@
   pkgs,
   ...
 }: let
-  aiCodingLib = import ../lib {inherit lib;};
-  inherit (aiCodingLib) mcpToolList;
-  inherit (aiCodingLib) mkOpencodePermissionList;
-  inherit (aiCodingLib) sensitive_files;
-  inherit (aiCodingLib) lockfiles;
-  inherit (aiCodingLib) global_bash;
-  inherit (aiCodingLib) opencode_serena_tools;
+  ai_coding_lib = import ../lib {inherit lib;};
+  inherit (ai_coding_lib) mcpToolList;
+  inherit (ai_coding_lib) mkOpencodePermissionList;
+  inherit (ai_coding_lib) sensitive_files;
+  inherit (ai_coding_lib) lockfiles;
+  inherit (ai_coding_lib) global_bash;
+  inherit (ai_coding_lib) opencode_serena_tools;
   context = import ../lib/context.nix {inherit lib pkgs;};
 
   read_perms = mkOpencodePermissionList {
