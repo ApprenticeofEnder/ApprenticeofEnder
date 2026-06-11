@@ -8,10 +8,9 @@
   homeMod = self + /modules/home;
 in {
   imports = [
-    stylix.nixosModules.stylix
     self.nixosModules.default
     self.nixosModules._1password
-    self.nixosModules.style
+    stylix.nixosModules.stylix
     ./configuration.nix
   ];
 
