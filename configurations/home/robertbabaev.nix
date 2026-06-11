@@ -26,6 +26,12 @@ in {
     email = "github@robertbabaev.tech";
   };
 
+  op = {
+    identity-agent = "'~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock'";
+    ssh-sign = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+    cli = "/opt/homebrew/bin/op";
+  };
+
   home.stateVersion = "25.05";
 
   home.shellAliases = {
