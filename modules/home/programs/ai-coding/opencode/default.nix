@@ -42,13 +42,7 @@ in {
 
     skills = ../skills;
 
-    context =
-      (builtins.readFile ../baseline-rules.md)
-      + context
-      + ''
-
-        use caveman
-      '';
+    context = context;
 
     settings = {
       autoshare = false;

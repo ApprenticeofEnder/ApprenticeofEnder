@@ -35,7 +35,7 @@ in {
   programs.claude-code = {
     enable = true;
     enableMcpIntegration = true;
-    context = (builtins.readFile ../baseline-rules.md) + context;
+    context = context;
     skills = builtins.listToAttrs (map (skill: {
         name = skill;
         value = ../skills/${skill}/SKILL.md;
