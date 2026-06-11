@@ -25,7 +25,7 @@ in {
     enable = true;
     credentials = {
       default = {
-        credential_process = "${poc}";
+        credential_process = "${dev}";
       };
       "poc" = {
         credential_process = "${poc}";
@@ -33,20 +33,25 @@ in {
       "dev" = {
         credential_process = "${dev}";
       };
+      staging = {
+        credential_process = "${dev}";
+      };
     };
     settings = {
       # Bare `aws` (no --profile) resolves to the poc credentials.
       default = {
         region = "us-east-1";
-        credential_process = "${poc}";
       };
       "profile poc" = {
         region = "us-east-1";
-        credential_process = "${poc}";
       };
       "profile dev" = {
         region = "us-east-1";
-        credential_process = "${dev}";
+      };
+      "profile staging" = {
+        source_profile = "dev";
+        role_arn = "arn:aws:iam::289189983327:role/Administrator";
+        region = "us-east-1";
       };
     };
   };
