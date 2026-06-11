@@ -22,6 +22,11 @@ in {
       executable = true;
     };
 
+    ".claude/hooks/force-skill.sh" = {
+      source = ./hooks/force-skill.sh;
+      executable = true;
+    };
+
     ".claude/skills/fleet-deploy/missive.md" = {
       source = ../skills/fleet-deploy/missive.md;
     };
@@ -118,9 +123,15 @@ in {
                 type = "command";
                 command = "serena-hooks activate --client=claude-code";
               }
+            ];
+          }
+        ];
+        UserPromptSubmit = [
+          {
+            hooks = [
               {
                 type = "command";
-                command = "echo 'use caveman'";
+                command = "~/.claude/hooks/force-skill.sh";
               }
             ];
           }
