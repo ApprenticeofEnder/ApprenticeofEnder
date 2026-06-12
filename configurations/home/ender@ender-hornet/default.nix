@@ -30,6 +30,12 @@ in {
     email = "github@robertbabaev.tech";
   };
 
+  op = {
+    identity-agent = "~/.1password/agent.sock";
+    ssh-sign = "/opt/1Password/op-ssh-sign";
+    cli = "/opt/1Password/op";
+  };
+
   home.stateVersion = "25.05";
 
   programs.fish.functions = {

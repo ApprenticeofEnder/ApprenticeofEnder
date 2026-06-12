@@ -1,13 +1,5 @@
-{
-  pkgs,
-  config,
-  ...
-}: let
-  defaultIdentityAgent =
-    if pkgs.stdenv.isLinux
-    then "~/.1password/agent.sock"
-    else "'~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock'";
-
+{config, ...}: let
+  defaultIdentityAgent = config.op.identity-agent;
   sshHost = {
     user ? config.me.username,
     port ? 22,

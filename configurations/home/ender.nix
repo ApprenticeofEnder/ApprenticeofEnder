@@ -1,4 +1,9 @@
-{flake, ...}: let
+{
+  flake,
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (flake) inputs;
   inherit (inputs) self;
 
@@ -25,6 +30,12 @@ in {
     username = "ender";
     fullname = "Robert Babaev";
     email = "github@robertbabaev.tech";
+  };
+
+  op = {
+    identity-agent = "~/.1password/agent.sock";
+    ssh-sign = "${pkgs._1password-gui}/share/1Password/op-ssh-sign";
+    cli = lib.getExe pkgs._1password-cli;
   };
 
   home.stateVersion = "25.05";

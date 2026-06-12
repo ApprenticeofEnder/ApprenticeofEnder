@@ -1,17 +1,6 @@
-{
-  config,
-  # lib,
-  pkgs,
-  nixosConfig,
-  ...
-}: let
+{config, ...}: let
   signer_pubkey = builtins.readFile ./programs/ssh/keys/github.pub;
-  op-ssh-sign =
-    if pkgs.stdenv.isDarwin
-    then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
-    else if nixosConfig != null
-    then "${pkgs._1password-gui}/share/1password/op-ssh-sign"
-    else "/opt/1Password/op-ssh-sign";
+  op-ssh-sign = config.op.ssh-sign;
 in {
   home.shellAliases = {
     g = "git";

@@ -1,11 +1,38 @@
 {
   lib,
   pkgs,
-}: ''
+}: let
+  opAliases = tools:
+    builtins.concatStringsSep "\n"
+    (
+      map (
+        tool:
+          builtins.concatStringsSep " " [
+            "- `${tool}` aliases to `op plugin run -- ${tool}`."
+            "Needs interactive auth."
+            "Use `${lib.getExe pkgs."${tool}"}` instead."
+          ]
+      )
+      tools
+    );
+in ''
+  # Baseline operating rules
+
+  These rules apply to every session in this environment. They are absolute.
+
+  ## Skills
+
+  - Use caveman mode, always.
+
+  ## Research before acting
+
+  - Before using or wiring up any external tool, library, CLI, or API, fetch
+    its current documentation via `WebFetch` / `WebSearch`. Do not rely on
+    training-data memory of API shapes, flag names, or behavior.
+  - Before editing project code, locate and read existing utilities,
+    helpers, and patterns. Prefer reuse over invention.
 
   ## Tool aliases
 
-  `gh` is an alias that runs through `op plugin run` and needs interactive
-  authentication, so the bare `gh` command will not work non-interactively.
-  Always invoke the real binary at `${lib.getExe pkgs.gh}` instead of `gh`.
+  ${opAliases ["gh" "awscli"]}
 ''
