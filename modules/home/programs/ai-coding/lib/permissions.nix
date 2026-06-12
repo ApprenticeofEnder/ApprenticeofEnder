@@ -32,10 +32,15 @@
     builtins.concatLists (
       map (
         tool:
-          map (
-            specifier: "${tool}(${specifier})"
-          )
-          specifiers
+          if lib.hasPrefix "mcp" tool
+          then lib.singleton tool
+          else
+            (
+              map (
+                specifier: "${tool}(${specifier})"
+              )
+              specifiers
+            )
       )
       tools
     );
