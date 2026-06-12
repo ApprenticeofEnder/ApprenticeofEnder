@@ -5,11 +5,15 @@
   ...
 }: let
   ai_coding_lib = import ../lib {inherit lib;};
-  inherit (ai_coding_lib) mkClaudePermissionList;
-  inherit (ai_coding_lib) global_bash;
-  inherit (ai_coding_lib) sensitive_files;
-  inherit (ai_coding_lib) lockfiles;
+  # keep-sorted start
   inherit (ai_coding_lib) claude_serena_tools;
+  inherit (ai_coding_lib) claude_tools;
+  inherit (ai_coding_lib) global_bash;
+  inherit (ai_coding_lib) lockfiles;
+  inherit (ai_coding_lib) mkClaudePermissionList;
+  inherit (ai_coding_lib) sensitive_files;
+  # keep-sorted end
+
   context = import ../lib/context.nix {inherit lib pkgs;};
 in {
   home.shellAliases = {
@@ -77,11 +81,11 @@ in {
       };
       permissions = {
         allow = lib.concatLists [
-          (mkClaudePermissionList ["Read" "Grep" "Glob"] [
+          (mkClaudePermissionList claude_tools.read [
             "*"
             "**/*.env.example"
           ])
-          (mkClaudePermissionList ["Bash"] [
+          (mkClaudePermissionList claude_tools.bash [
             "git status"
             "git diff"
           ])
@@ -89,9 +93,9 @@ in {
         ];
         # ask = [];
         deny = lib.concatLists [
-          (mkClaudePermissionList ["Read" "Grep" "Glob"] sensitive_files.claude)
-          (mkClaudePermissionList ["Write" "Edit"] (sensitive_files.claude ++ lockfiles.claude))
-          (mkClaudePermissionList ["Bash"] global_bash.deny)
+          (mkClaudePermissionList claude_tools.read sensitive_files.claude)
+          (mkClaudePermissionList claude_tools.edit (sensitive_files.claude ++ lockfiles.claude))
+          (mkClaudePermissionList claude_tools.bash global_bash.deny)
         ];
       };
       hooks = {

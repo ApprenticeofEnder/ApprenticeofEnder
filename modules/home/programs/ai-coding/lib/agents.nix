@@ -48,7 +48,12 @@ in rec {
       opencode = lib.mergeAttrsList (
         map (group: opencode_permission_groups."${group}") permission_groups
       );
-      cursor = {}; # idk how cursor permissions work just yet
+      cursor = {
+        readonly = let
+          matching_groups = lib.intersectLists permission_groups ["edit" "bash"];
+        in
+          builtins.length matching_groups <= 0;
+      };
     };
 
     models = selectModels {
@@ -69,6 +74,12 @@ in rec {
       }
       // permissions.claude;
 
+    cursor =
+      {
+        model = models.cursor;
+      }
+      // permissions.cursor;
+
     prompt = builtins.readFile prompt_file;
   in
     lib.mkMerge [
@@ -82,6 +93,14 @@ in rec {
         programs.claude-code.agents."${name}" = mkClaudeCodeAgent {
           inherit prompt;
           frontmatter = baseConfig // claude;
+        };
+      }
+      {
+        home.file."~/.cursor/agents/${name}.md" = {
+          text = mkClaudeCodeAgent {
+            inherit prompt;
+            frontmatter = baseConfig // cursor;
+          };
         };
       }
     ];
