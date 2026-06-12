@@ -26,6 +26,10 @@ in {
 
   programs.nix-ld.enable = true;
 
+  services.openvpn.servers = {
+    cybersci = {config = ''config /home/ender/Projects/CyberSci/CS2026-NTL/infrastructure/cybersci-ntl-dev.ovpn '';};
+  };
+
   # Automatically move old dotfiles out of the way
   #
   # Note that home-manager is not very smart, if this backup file already exists it
