@@ -96,7 +96,7 @@ in rec {
         };
       }
       {
-        home.file."~/.cursor/agents/${name}.md" = {
+        home.file.".cursor/agents/${name}.md" = {
           text = mkClaudeCodeAgent {
             inherit prompt;
             frontmatter = baseConfig // cursor;
