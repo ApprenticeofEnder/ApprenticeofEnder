@@ -21,18 +21,26 @@
     }:
       map (tool: "${name}_${tool}") tools;
 
-    cursor = _:
-      throw "mcpToolList.cursor: not yet implemented";
+    cursor = {
+      name,
+      tools,
+    }:
+      map (tool: "Mcp(${name}:${tool})") tools;
   };
 
   mkClaudePermissionList = tools: specifiers:
     builtins.concatLists (
       map (
         tool:
-          map (
-            specifier: "${tool}(${specifier})"
-          )
-          specifiers
+          if lib.hasPrefix "mcp" tool
+          then lib.singleton tool
+          else
+            (
+              map (
+                specifier: "${tool}(${specifier})"
+              )
+              specifiers
+            )
       )
       tools
     );
@@ -101,7 +109,9 @@
     claude = [
       "**/*.env"
       "**/*.env.*"
+      "**/*.secrets"
       "**/*.secrets.*"
+      "**/*.vars"
       "**/*.vars.*"
       "~/.aws"
       "~/.ssh"
@@ -110,7 +120,9 @@
       "*.env"
       "*.env.*"
       "*.vars"
+      "*.vars.*"
       "*.secrets"
+      "*.secrets.*"
       "~/.aws"
       "~/.ssh"
     ];
@@ -189,10 +201,27 @@
     };
   };
 
+  cursor_serena_tools = {
+    basic = mcpToolList.cursor {
+      name = "serena";
+      tools = serena_tools.basic;
+    };
+    edit = mcpToolList.cursor {
+      name = "serena";
+      tools = serena_tools.edit;
+    };
+  };
+
   claude_tools = {
     read = ["Read" "Grep" "Glob"] ++ claude_serena_tools.basic;
     edit = ["Write" "Edit"] ++ claude_serena_tools.edit;
     bash = ["Bash"];
+  };
+
+  cursor_tools = {
+    read = ["Read"] ++ cursor_serena_tools.basic;
+    edit = ["Write"] ++ cursor_serena_tools.edit;
+    bash = ["Shell"];
   };
 
   claude_permission_groups = {
