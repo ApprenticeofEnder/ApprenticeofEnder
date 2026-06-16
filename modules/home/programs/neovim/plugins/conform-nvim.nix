@@ -10,8 +10,8 @@
       settings = {
         formatters_by_ft = let
           jsFormatting = {
-            __unkeyed-1 = "biome";
-            __unkeyed-2 = "prettier";
+            __unkeyed-1 = "prettier";
+            __unkeyed-2 = "biome";
             timeout_ms = 2000;
             stop_after_first = true;
           };
