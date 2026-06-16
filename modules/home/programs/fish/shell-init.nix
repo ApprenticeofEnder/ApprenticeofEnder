@@ -4,15 +4,21 @@
   lib,
   ...
 }: let
+  additionalPaths = builtins.concatStringsSep "\n" (
+    map (path: "fish_add_path ${path}") [
+      "~/.local/bin"
+      "${config.xdg.dataHome}/pnpm/global/bin"
+      "~/.cargo/bin"
+    ]
+  );
+
   darwinShellInit = ''
     set LIBRARY_PATH ${pkgs.libiconv}/lib
     fish_add_path "/opt/homebrew/bin/"
   '';
 
   shellInit = ''
-    fish_add_path ~/.local/bin
-    # fish_add_path ~/.nix-profile/bin
-    fish_add_path ${config.xdg.dataHome}/pnpm/global/bin
+    ${additionalPaths}
     source "$HOME/.config/op/plugins-nix.sh"
 
     set -x PNPM_HOME "${config.xdg.dataHome}/pnpm/global"

@@ -55,7 +55,7 @@ in {
       nixvim.homeModules.default
     ]
     ++ importHome "toolkits" [
-      # "rust.nix"
+      "rust.nix"
       # "python.nix"
       "javascript.nix"
     ];
