@@ -1,8 +1,11 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    # keep-sorted start
     cargo
-    rustfmt
+    cargo-binstall
     cargo-seek
     rust-analyzer
+    rustfmt
+    # keep-sorted end
   ];
 }
