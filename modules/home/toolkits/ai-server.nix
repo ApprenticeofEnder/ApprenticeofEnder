@@ -19,9 +19,12 @@
 
   modelListBash = lib.concatStringsSep " " models;
 in {
+  home.packages = with pkgs; [
+    python313Packages.mlx-lm
+  ];
   services.ollama = {
     enable = true;
-    package = pkgs.ollama;
+    package = pkgs.ollama-cuda;
     port = 11434; # default
     host = "0.0.0.0"; # default
     # acceleration = "rocm";
