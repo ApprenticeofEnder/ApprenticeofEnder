@@ -133,6 +133,7 @@
     handbrake # video file conversions
     impala # wifi management
     slack
+    tor-browser
     # keep-sorted end
   ];
 
