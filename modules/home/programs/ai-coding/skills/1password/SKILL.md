@@ -9,17 +9,17 @@ description: >
 
 # 1Password CLI — Decision Router
 
-| You're seeing... | Go to |
-|---|---|
-| "Permission denied (publickey)" / git push auth fails | → Auth Recovery |
-| Need a secret value at runtime | → Runtime Access |
-| Setting up op:// in config files / .env | → Config File Patterns |
-| SSH agent not responding / wrong socket path | → SSH Agent |
-| Git commit signing setup or failures | → Git Signing |
-| `op` hangs, times out, or biometric won't appear | → Troubleshooting |
-| Wrong account / multi-account confusion | → Troubleshooting |
-| `op` not found / not installed | → Troubleshooting |
-| Specific error message | → Error Catalog |
+| You're seeing...                                      | Go to                  |
+| ----------------------------------------------------- | ---------------------- |
+| "Permission denied (publickey)" / git push auth fails | → Auth Recovery        |
+| Need a secret value at runtime                        | → Runtime Access       |
+| Setting up op:// in config files / .env               | → Config File Patterns |
+| SSH agent not responding / wrong socket path          | → SSH Agent            |
+| Git commit signing setup or failures                  | → Git Signing          |
+| `op` hangs, times out, or biometric won't appear      | → Troubleshooting      |
+| Wrong account / multi-account confusion               | → Troubleshooting      |
+| `op` not found / not installed                        | → Troubleshooting      |
+| Specific error message                                | → Error Catalog        |
 
 ## Security Rules
 
@@ -35,22 +35,27 @@ description: >
 The most common use case: SSH or git operations fail with auth errors after 1Password locked.
 
 **Step 1: Trigger biometric unlock**
+
 ```bash
 op account get
 ```
+
 Prompts appear on the desktop (NOT in the terminal). Wait for user to approve.
 
 **Important:** Do NOT use `op whoami`. From the agent's perspective, it always fails with "not signed in" even when the desktop app is unlocked and every other `op` command works. This is because `op whoami` checks CLI session state, not the desktop app daemon. `op account get` routes through the daemon and reliably returns account info from agent shell contexts.
 
 **Step 2: Verify SSH agent is alive**
+
 ```bash
 ssh-add -l
 ```
+
 Should list keys. "Could not open connection" → `SSH_AUTH_SOCK` not set. Set in shell profile: Linux `~/.1password/agent.sock`, macOS `~/.ssh/1password-agent.sock`.
 
 **Step 3: Retry the failed operation** (git push, ssh, etc.)
 
 **Multi-account:** If `op account get` returns the wrong account:
+
 ```bash
 op account list  # list all configured accounts
 eval $(op signin --account my.1password.com)  # switch active account
@@ -61,17 +66,20 @@ eval $(op signin --account my.1password.com)  # switch active account
 Three methods in preference order. Always start with `op run`.
 
 **Preferred: `op run`** — secret never in context
+
 ```bash
 op run --env-file=<(echo "API_KEY=op://VaultName/ItemName/field") -- your-command
 # Fish: op run --env-file=(echo "API_KEY=op://VaultName/ItemName/field" | psub) -- your-command
 ```
 
 **Fallback: `op read`** — prints to stdout. Warn user: "This will display the secret value in this conversation."
+
 ```bash
 op read --no-newline "op://VaultName/ItemName/credential"
 ```
 
 **`op item get`** — always `--reveal` for actual values:
+
 ```bash
 op item get "ItemName" --vault "VaultName" --fields label=password --reveal
 op item get "ItemName" --vault "VaultName" --format json  # inspect all fields
@@ -80,6 +88,7 @@ op item get "ItemName" --vault "VaultName" --format json  # inspect all fields
 Note: `--fields password` without `label=` may return wrong field. Use `label=fieldname`.
 
 **Basic auth** (username+password, not token) — never use `curl -u` (mangles special chars):
+
 ```bash
 OP_USER=$(op item get "ItemName" --vault "VaultName" --fields label=username --reveal)
 PASS=$(op item get "ItemName" --vault "VaultName" --fields label=password --reveal)
@@ -122,6 +131,7 @@ export TOKEN=$(op read --no-newline "op://Vault/Item/field")
 ```
 
 **MCP server pattern:** `.env` with `op://` references, safe to commit:
+
 ```bash
 # GITHUB_TOKEN=op://DevVault/GitHub/token
 op run --env-file=.env -- npx @modelcontextprotocol/server-github
@@ -130,6 +140,7 @@ op run --env-file=.env -- npx @modelcontextprotocol/server-github
 ## SSH Agent
 
 **Socket paths by OS:**
+
 ```bash
 # Linux (most distros)
 export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
@@ -146,6 +157,7 @@ fi
 ```
 
 **Fish shell** (`config.fish`):
+
 ```fish
 set -gx SSH_AUTH_SOCK ~/.1password/agent.sock        # Linux
 # set -gx SSH_AUTH_SOCK ~/.ssh/1password-agent.sock  # macOS
@@ -154,6 +166,7 @@ set -gx SSH_AUTH_SOCK ~/.1password/agent.sock        # Linux
 Best practice: set `SSH_AUTH_SOCK` in your shell profile (`~/.bashrc`, `~/.zshrc`, `config.fish`), not per-command. This prevents conflicts with security hooks that block commands containing `.1password/` paths.
 
 **SSH config** (`~/.ssh/config`):
+
 - Linux: `IdentityAgent ~/.1password/agent.sock`
 - macOS: `IdentityAgent ~/.ssh/1password-agent.sock`
 
@@ -166,6 +179,7 @@ Best practice: set `SSH_AUTH_SOCK` in your shell profile (`~/.bashrc`, `~/.zshrc
 Requires Git 2.34+.
 
 **Setup:**
+
 ```bash
 # Configure git to use SSH signing via 1Password
 git config --global gpg.format ssh
@@ -181,6 +195,7 @@ Copy public key from 1Password desktop app → SSH key item → public key field
 **Verify:** `git log --show-signature -1`
 
 **Common errors:**
+
 - "Couldn't find key in agent" → `op account get` to verify auth, `ssh-add -l` to confirm
 - "Load key ... invalid format" → wrong key type or corrupted `user.signingkey`
 - "Unverified" on GitHub → signing key not registered, or `user.email` mismatch
@@ -253,6 +268,7 @@ Auto-locks after inactivity (10-30 min typical). SSH fails silently with "Permis
 
 **Shell plugin conflicts:**
 1Password shell plugins for `gh` etc. don't work non-interactively (no biometric prompt). Disable in Claude sessions:
+
 ```bash
 if [[ -z "$CLAUDECODE" ]]; then
   alias gh="op plugin run -- gh"
