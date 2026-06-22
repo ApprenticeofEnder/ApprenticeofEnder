@@ -121,6 +121,15 @@ in {
               }
             ];
           }
+          {
+            matcher = "mcp__serena__*";
+            hooks = [
+              {
+                type = "command";
+                command = "serena-hooks auto-approve --client=claude-code";
+              }
+            ];
+          }
         ];
         SessionStart = [
           {

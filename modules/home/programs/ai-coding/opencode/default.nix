@@ -33,7 +33,7 @@
 in {
   programs.opencode = {
     enable = true;
-    enableMcpIntegration = true;
+    # enableMcpIntegration = true;
 
     tui = {
       theme = "nord";
@@ -48,11 +48,30 @@ in {
       autoshare = false;
       autoupdate = false;
 
-      # disabled_providers= ["openai" "gemini"];
-      # instructions = ["CONTRIBUTING.md" "docs/guidelines.md" ".cursor/rules/*.md"];
-      #   model = "anthropic/claude-sonnet-4-20250514";
-      #   model= "{env:OPENCODE_MODEL}";
-      # };
+      mcp = {
+        hashicorp-terraform = {
+          command = [
+            "docker"
+            "run"
+            "--rm"
+            "--interactive"
+            "--name"
+            "terraform-mcp"
+            "hashicorp/terraform-mcp-server:latest"
+          ];
+          type = "local";
+        };
+        serena = {
+          command = [
+            "serena"
+            "start-mcp-server"
+            "--context"
+            "claude-code"
+            "--project-from-cwd"
+          ];
+          type = "local";
+        };
+      };
 
       # TODO: Make these deny by default
       permission =

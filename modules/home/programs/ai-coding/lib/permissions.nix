@@ -32,7 +32,7 @@
     builtins.concatLists (
       map (
         tool:
-          if lib.hasPrefix "mcp" tool
+          if (lib.hasPrefix "mcp" tool || lib.hasPrefix "Mcp" tool)
           then lib.singleton tool
           else
             (
@@ -213,35 +213,38 @@
   };
 
   claude_tools = {
-    read = ["Read" "Grep" "Glob"] ++ claude_serena_tools.basic;
-    edit = ["Write" "Edit"] ++ claude_serena_tools.edit;
+    read = ["Read" "Grep" "Glob"];
+    edit = ["Write" "Edit"];
     bash = ["Bash"];
   };
 
   cursor_tools = {
-    read = ["Read"] ++ cursor_serena_tools.basic;
-    edit = ["Write"] ++ cursor_serena_tools.edit;
+    read = ["Read"];
+    edit = ["Write"];
     bash = ["Shell"];
   };
 
-  claude_permission_groups = {
+  claude_permission_groups = let
+    read = claude_tools.read ++ claude_serena_tools.basic;
+    edit = claude_tools.edit ++ claude_serena_tools.edit;
+  in {
     read = mkClaudePermissionGroup {
-      tools = mkClaudePermissionList claude_tools.read ["*"];
+      tools = mkClaudePermissionList read ["*"];
     };
     edit = mkClaudePermissionGroup {
-      tools = mkClaudePermissionList claude_tools.edit ["*"];
+      tools = mkClaudePermissionList edit ["*"];
     };
     bash = mkClaudePermissionGroup {
       tools = mkClaudePermissionList claude_tools.bash ["*"];
     };
     noedit = mkClaudePermissionGroup {
-      disallowedTools = mkClaudePermissionList claude_tools.edit ["*"];
+      disallowedTools = mkClaudePermissionList edit ["*"];
     };
     nobash = mkClaudePermissionGroup {
       disallowedTools = mkClaudePermissionList claude_tools.bash ["*"];
     };
     plan = mkClaudePermissionGroup {
-      tools = mkClaudePermissionList claude_tools.edit [".claude/plans/*.md"];
+      tools = mkClaudePermissionList edit [".claude/plans/*.md"];
       disallowedTools = mkClaudePermissionList claude_tools.edit ["*"];
     };
   };
