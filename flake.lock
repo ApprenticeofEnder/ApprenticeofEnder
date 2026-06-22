@@ -94,11 +94,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1782141092,
-        "narHash": "sha256-W6KRSBk8anfoM7v9sMh30yPdO7tLmycga/Mlw5Zr6IQ=",
+        "lastModified": 1782147263,
+        "narHash": "sha256-4Ww1KXBvQ+fsFPpp2LL3F5KHndOpXR/1lGUI46xdFhU=",
         "owner": "ApprenticeofEnder",
         "repo": "double-agent",
-        "rev": "9f919c389ab671080922989179ce1d273735790c",
+        "rev": "dccdb3c56e8494279f83960b7fc231210efbc6fd",
         "type": "github"
       },
       "original": {
@@ -592,11 +592,11 @@
         "systems": "systems_4"
       },
       "locked": {
-        "lastModified": 1782062554,
-        "narHash": "sha256-v2J6/S33H2ms6jz3qr6in0UUlGFqUW46+iB3hMJDuD4=",
+        "lastModified": 1782145918,
+        "narHash": "sha256-xYx+9aM7JzFSy7F5xCnbMgDlzjRFxoXbRl+eL4rcfMQ=",
         "owner": "nix-community",
         "repo": "nixvim",
-        "rev": "b3e7b2d2e568f29becae04217242ed18a90febc4",
+        "rev": "7f813fc7a6a2f92103208a69a98d6afa24f5bb23",
         "type": "github"
       },
       "original": {
@@ -613,11 +613,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782135927,
-        "narHash": "sha256-EL5hbWMdw6EZ5leKEv+wY3LAr55sLBt0+iXxNyXYaHM=",
+        "lastModified": 1782144702,
+        "narHash": "sha256-uSwLDZ+LXg9mAEmmSVtn4/h5RO2kW5i1gwmryAlPmKk=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "38b9726d89ce03b62d025a6846f38b2e284a14a7",
+        "rev": "1adc878434694a5615ba2f8c5a9e2387eddc21ac",
         "type": "github"
       },
       "original": {
