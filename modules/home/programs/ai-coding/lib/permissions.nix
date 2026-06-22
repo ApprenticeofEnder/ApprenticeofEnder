@@ -158,6 +158,7 @@
       "find_implementations"
       "find_referencing_symbols"
       "find_symbol"
+      "get_symbols_overview"
       "get_diagnostics_for_file"
       "initial_instructions"
       "list_memories"
