@@ -61,6 +61,7 @@
             "html"
             "javascript"
             "javascriptreact"
+            "json"
             "jsonc"
             "tsx"
             "typescript"
