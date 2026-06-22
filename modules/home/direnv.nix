@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  pkgs-stable,
+  ...
+}: {
   # https://nixos.asia/en/direnv
   programs.direnv = {
     package = pkgs.direnv;
@@ -7,7 +11,10 @@
     nix-direnv = {
       enable = true;
     };
-    mise.enable = true;
+    mise = {
+      enable = true;
+      package = pkgs-stable.mise;
+    };
     enableZshIntegration = true;
     enableBashIntegration = true;
     enableFishIntegration = true;
