@@ -50,9 +50,10 @@
         extensions = with pkgs.vscode-extensions; let
           languages = [
             # keep-sorted start
-            bbenoist.nix
+            # bbenoist.nix
             hashicorp.hcl
             hashicorp.terraform
+            jnoortheen.nix-ide
             ms-python.python
             redhat.ansible
             redhat.vscode-yaml
