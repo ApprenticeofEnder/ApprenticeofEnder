@@ -24,34 +24,34 @@
       skill_file_paths
     );
 
-  config_files = {
-    ".cursor/cli-config.json" = {
-      text = builtins.toJSON {
-        version = 1;
-        editor.vimMode = true;
-        permissions = {
-          allow = lib.concatLists [
-            (
-              mkClaudePermissionList cursor_tools.read [
-                "*"
-                "*.env.example"
-              ]
-            )
-            cursor_serena_tools.basic
-          ];
-          deny = lib.concatLists [
-            (mkClaudePermissionList cursor_tools.read sensitive_files.claude)
-            (mkClaudePermissionList cursor_tools.edit (sensitive_files.claude ++ lockfiles.claude))
-          ];
-        };
-        rewind = true;
-        display = {
-          showLineNumbers = true;
-          showThinkingBlocks = true;
-        };
-      };
+  # Cursor rewrites ~/.cursor/cli-config.json at runtime, so home-manager must not
+  # manage it directly. Seed defaults once on first install instead.
+  cliConfigSeed = pkgs.writeText "cursor-cli-config.json" (builtins.toJSON {
+    version = 1;
+    editor.vimMode = true;
+    permissions = {
+      allow = lib.concatLists [
+        (
+          mkClaudePermissionList cursor_tools.read [
+            "*"
+            "*.env.example"
+          ]
+        )
+        cursor_serena_tools.basic
+      ];
+      deny = lib.concatLists [
+        (mkClaudePermissionList cursor_tools.read sensitive_files.claude)
+        (mkClaudePermissionList cursor_tools.edit (sensitive_files.claude ++ lockfiles.claude))
+      ];
     };
+    rewind = true;
+    display = {
+      showLineNumbers = true;
+      showThinkingBlocks = true;
+    };
+  });
 
+  config_files = {
     ".cursor/hooks.json" = {
       text = builtins.toJSON {
         version = 1;
@@ -129,4 +129,13 @@ in {
   ];
 
   home.file = skill_files // config_files;
+
+  home.activation.seedCursorCliConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    target="$HOME/.cursor/cli-config.json"
+    if [ ! -e "$target" ]; then
+      $DRY_RUN_CMD mkdir -p "$(dirname "$target")"
+      $DRY_RUN_CMD install -m 0644 ${cliConfigSeed} "$target"
+      echo "Seeded $target (Cursor owns this file after first run)"
+    fi
+  '';
 }
