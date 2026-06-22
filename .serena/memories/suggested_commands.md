@@ -1,49 +1,63 @@
 # Suggested Commands
 
-## Task Runner (just)
-| Command | Description |
-|---------|-------------|
-| `just` | List all available commands |
-| `just run` | Activate the home-manager config for current user/host (`nix run`) |
-| `just update` | Update all flake inputs (`nix flake update`) |
-| `just lint` | Format all Nix files with Alejandra (`nix fmt .`) |
-| `just check` | Run flake checks including pre-commit hooks (`nix flake check`) |
-| `just dev` | Enter the development shell (`nix develop`) |
+## just (task runner)
 
-## devenv Scripts
-| Command | Description |
-|---------|-------------|
-| `upcache` | Clean garbage + push to Cachix cache |
-| `generate-readme` | Regenerate GitHub profile README from Jinja2 templates |
-| `dotfiles` | Symlink dotfiles (starship, nvim) into home using GNU Stow |
-| `nvidia-drivers` | Prefetch Nvidia driver hash for Nix |
+| Command | Runs |
+|---------|------|
+| `just` | List recipes |
+| `just run` | `cachix watch-exec rbabaev -- nix run` |
+| `just run-generic` | `cachix watch-exec rbabaev -- nix run '.#non-nixos'` |
+| `just update` | `nix flake update` |
+| `just lint` | `nix fmt .` |
+| `just check` | `nix flake check` |
+| `just dev` | `nix develop` |
 
-## devenv Tasks (automatic)
-| Task | Description |
-|------|-------------|
-| `readme:generate` | Auto-runs on shell entry if templates changed (`README.j2.md`, `readme.json`, `techtable.j2.html`) |
+## Nix / flake
 
-## Testing
-| Command | Description |
-|---------|-------------|
-| `devenv test` | Run test suite (verifies git version, pulumi-esc version) |
+| Command | Purpose |
+|---------|---------|
+| `nix run` | Activate config for current user/host |
+| `nix run .#non-nixos` | Home config with user@host → user fallback |
+| `nix run .#activate -- <ref>` | Explicit activation (hostname, user, user@host) |
+| `nix run .#activate -- --dry-run <ref>` | Dry-run |
+| `nix run .#update` | Update primary flake inputs |
+| `nix flake check` | Evaluate configs/modules/packages |
+| `nix flake check --all-systems` | All four supported systems |
+| `nix fmt .` | Alejandra format |
+| `nix develop` | Flake dev shell |
+| `nix flake show` | List outputs |
 
-## Nix Commands
-| Command | Description |
-|---------|-------------|
-| `nix run` | Activate home-manager config |
-| `nix flake check` | Run flake checks |
-| `nix flake update` | Update inputs |
-| `nix fmt .` | Format with Alejandra |
+Activation refs: `Roberts-Macbook-Air-2`, `ender-raptor`, `robertbabaev`, `ender`, `ender@ender-hornet`.
 
-## System Utils (Preferred alternatives)
-| Standard | Preferred | Notes |
-|----------|-----------|-------|
-| `ls` | `eza` | Aliased |
-| `grep` | `rg` (ripgrep) | |
-| `find` | `fd` | |
-| `cat` | `bat` | |
-| `top` | `btop` | Nordic themed |
-| File browsing | `yazi` | TUI file manager |
-| Fuzzy find | `television` / `fzf` | |
-| Nix search | `nix-search-tv` | Integrated with television |
+Darwin full system (not in justfile): `darwin-rebuild switch --flake .#Roberts-Macbook-Air-2`.
+
+## devenv / direnv
+
+Shell entry via `devenv shell` or direnv on `cd` (loads Pulumi ESC + devenv).
+
+| Command | Purpose |
+|---------|---------|
+| `devenv test` | Verify git + pulumi-esc versions |
+| `prek run --all-files` | Run all git hooks manually (inside devenv) |
+
+## devenv scripts (in shell PATH)
+
+| Command | Purpose |
+|---------|---------|
+| `upcache` | GC + push all store paths to Cachix `rbabaev` |
+| `generate-readme` | Render `templates/README.j2.md` → `README.md` |
+| `fetch-nvidia-drivers` | Prefetch NVIDIA driver hash into `modules/home/targets.nix` |
+| `dotfiles` | Stow starship + nvim from `dotfiles/` into `$HOME` |
+
+## Preferred CLI alternatives (configured in home)
+
+| Instead of | Use |
+|------------|-----|
+| ls | eza |
+| grep | rg |
+| find | fd |
+| cat | bat |
+| top | btop |
+| file browse | yazi |
+| fuzzy find | television / fzf |
+| nix search | nix-search-tv |

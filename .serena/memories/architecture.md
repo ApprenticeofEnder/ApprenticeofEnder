@@ -1,80 +1,84 @@
-# Architectural Patterns
+# Architecture
 
-## 1. nixos-unified Autowiring
-Uses `srid/nixos-unified` for flake structure. Configurations in `configurations/` are
-automatically wired to flake outputs (`homeConfigurations`, `darwinConfigurations`).
-File names in `configurations/home/` map to home-manager configuration names:
-- `ender.nix` -> `homeConfigurations.ender@`
-- `ender@ender-hornet.nix` -> `homeConfigurations.ender@ender-hornet`
-- `robertbabaev.nix` -> `homeConfigurations.robertbabaev@`
+## nixos-unified autowiring
 
-## 2. Activation Fallback
-`modules/flake/activate-home.nix` tries `user@hostname` first, falls back to `user@`.
-This allows host-specific overrides while keeping a generic default.
+`flake.nix` → `inputs.nixos-unified.lib.mkFlake { root = ./.; }`. Scans `modules/` and `configurations/` to export:
 
-## 3. Modular Auto-Import
-Adding a new module is as simple as dropping a `.nix` file in the right directory.
-The `default.nix` pattern auto-discovers and imports all siblings.
+- `homeModules.default` ← `modules/home/default.nix`
+- `darwinModules.{default,_1password}` ← `modules/darwin/`
+- `nixosModules.{default,common,_1password}` ← `modules/nixos/`
+- `*Configurations.*` ← `configurations/{home,darwin,nixos}/`
 
-There are four variants of auto-import:
-1. **Simple**: Import everything except `default.nix` (used in `modules/home/`, `linux-only/`, `darwin-only/`)
-2. **Filtered**: Import everything except `default.nix` and named exclusions like `linux-only`/`darwin-only` dirs (used in `modules/home/programs/`)
-3. **Filtered with backup exclusion**: Exclude backup files like `ntfy.bak.nix` (used in `modules/home/services/`)
-4. **Empty/No-op**: `{}` -- requires explicit import (used in `modules/home/toolkits/`)
+`modules/flake/toplevel.nix`: alejandra formatter, `packages.default = activate`.
 
-Exception: toolkits in `modules/home/toolkits/` are imported explicitly per-configuration.
+## Activation
 
-## 4. Stable + Unstable nixpkgs
-- `pkgs` = nixos-25.11 (stable)
-- `pkgs-unstable` = nixos-unstable (for bleeding-edge: omnix, cachix, devenv, semgrep, ollama, opencode)
+`modules/flake/activate-home.nix`: tries `user@hostname` first, falls back to `user@`.
 
-## 5. Custom `me` Option
-`modules/home/me.nix` defines `me.username`, `me.fullname`, `me.email` options.
-These are set in each configuration and used across git config, home-manager username, etc.
+| Command | Behavior |
+|---------|----------|
+| `nix run` / `just run` | Default activate (Cachix-wrapped in just) |
+| `nix run .#non-nixos` / `just run-generic` | Home-only with host fallback |
+| `nix run .#activate -- <ref>` | Explicit ref (hostname, user, or user@host) |
 
-## 6. Platform Guards
-- `lib.optionals stdenv.isLinux` / `stdenv.isDarwin` for conditional packages
-- Separate directories for platform-specific programs (`linux-only/`, `darwin-only/`)
-- Some programs use inline platform guards (e.g., `vscode.nix` disables VS Code on macOS)
+## myusers auto-discovery
 
-## 7. README-as-Code
-GitHub profile README generated from Jinja2 templates (`templates/README.j2.md`)
-with data defined in `devenv.nix`. Auto-regenerated on shell entry when templates change.
-Additional templates: `techtable.j2.html` for tech stack table, `readme.json` for data.
+`modules/darwin/common/myusers.nix` and `modules/nixos/common/myusers.nix` (duplicated):
+- Discover users from `configurations/home/` filenames
+- Create system user entries
+- Wire `home-manager.users.<name>.imports = [ configurations/home/<name>.nix ]`
 
-## 8. Secrets via Pulumi ESC
-Loaded in `.envrc` from `ApprenticeofEnder/HomeBase/main@latest`. Never committed to repo.
+## Modular auto-import
 
-## 9. 1Password CLI Plugin Integration
-`modules/home/files/op.sh` aliases `aws` and `gh` to run through `op plugin run --`,
-injecting credentials via 1Password CLI. Placed at `~/.config/op/plugins-nix.sh`.
+Four variants:
 
-## 10. myusers Auto-Discovery
-`modules/darwin/common/myusers.nix` and `modules/nixos/common/myusers.nix` auto-discover
-users from `configurations/home/` filenames. They create system user entries and wire up
-home-manager for each user. The code is duplicated between darwin and nixos directories.
+1. **Simple** — all siblings except `default.nix` (`modules/home/`, `linux-only/`, `darwin-only/`)
+2. **Filtered** — excludes platform subdirs (`modules/home/programs/default.nix`)
+3. **Backup-filtered** — excludes `.bak.nix` and named files (`modules/home/services/default.nix` excludes `ntfy.bak.nix`, `ssh-agent.nix`)
+4. **Empty/no-op** — `{}` in `modules/home/toolkits/`; explicit import only
 
-## 11. Configuration Hierarchy
+**Exception:** `ai-coding/default.nix` uses explicit sorted imports, not auto-import.
+
+## Configuration hierarchy
+
 ```
-flake.nix
-  -> modules/flake/toplevel.nix (autowired, brings in nixos-unified)
-  -> modules/flake/devshell.nix (autowired)
-  -> modules/flake/activate-home.nix (autowired)
-  -> configurations/darwin/Roberts-Macbook-Air-2.nix
-       -> modules/darwin/default.nix (darwinModules.default)
-            -> modules/darwin/common/myusers.nix
-                 -> configurations/home/robertbabaev.nix
-                      -> modules/home/default.nix (homeModules.default)
-                           -> [all home modules auto-imported]
-                      -> modules/home/programs/darwin-only/
-  -> configurations/home/ender.nix (standalone home-manager)
-       -> modules/home/default.nix (homeModules.default)
-       -> modules/home/programs/linux-only/
-       -> modules/home/toolkits/{rust,python,javascript}.nix
-  -> configurations/home/ender@ender-hornet.nix (host-specific)
-       -> [same as ender.nix] + modules/home/toolkits/ai-server.nix
+flake.nix → nixos-unified autowire
+  configurations/darwin/Roberts-Macbook-Air-2.nix
+    → darwinModules → myusers → configurations/home/robertbabaev.nix
+      → homeModules.default + programs/darwin-only + toolkits
+  configurations/nixos/ender-raptor/
+    → nixosModules + stylix + home-manager.sharedModules (nixvim, linux-only)
+  configurations/home/ender.nix
+    → homeModules.default + programs/linux-only + toolkits
+  configurations/home/ender@ender-hornet/default.nix
+    → same + ai-server toolkit
 ```
 
-## 12. Dotfile Hybrid Approach
-Some dotfiles are managed via home-manager (most programs), while nvim and starship configs
-are managed via GNU Stow from `dotfiles/` directory. This is a deliberate hybrid approach.
+## Per-user config pattern
+
+```nix
+imports = [ self.homeModules.default ]
+  ++ importHome "programs" [ "linux-only" ]  # or "darwin-only"
+  ++ importHome "toolkits" [ "rust.nix" "python.nix" "javascript.nix" ];
+me = { username = "..."; fullname = "..."; email = "..."; };
+```
+
+## Platform guards
+
+- `lib.optionals stdenv.isLinux/isDarwin` in package lists
+- `programs/linux-only/` and `programs/darwin-only/` subdirs
+- VS Code disabled on macOS (C# intellisense issue)
+
+## Shared Nix settings
+
+`modules/shared/nix/` — binary cache substituters/trusted keys; imported from `modules/home/home.nix`.
+
+## Secrets & credentials
+
+- Pulumi ESC in `.envrc`
+- 1Password CLI: `modules/home/files/op.sh` aliases `aws`/`gh` through `op plugin run`
+- `_1password` modules in darwin/nixos for system-level 1Password integration
+
+## README-as-code
+
+Jinja2 templates in `templates/`; `generate-readme` script renders `README.j2.md` + `readme.json` → `README.md`.

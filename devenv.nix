@@ -97,9 +97,16 @@ in {
   '';
 
   git-hooks.hooks = {
+    # keep-sorted start block=yes
     alejandra.enable = true;
+    convco.enable = true;
     deadnix.enable = true;
-    vale.enable = true;
+    keep-sorted = {
+      enable = true;
+      excludes = [
+        ".serena"
+      ];
+    };
     shellcheck = {
       enable = true;
       excludes = [".zsh$"];
@@ -111,7 +118,7 @@ in {
         "pre-push"
       ];
     };
-    keep-sorted.enable = true;
-    convco.enable = true;
+    vale.enable = true;
+    # keep-sorted end
   };
 }
