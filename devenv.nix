@@ -91,11 +91,11 @@ in {
   };
 
   enterShell = ''
-    echo "Loading environment..."
+    echo 'Loading environment...'
 
     eval "$(${lib.getExe pkgs.pulumi-esc} env open ApprenticeofEnder/HomeBase/main@latest --format shell)"
 
-    echo "Environment loaded."
+    echo 'Environment loaded.'
   '';
 
   enterTest = ''
