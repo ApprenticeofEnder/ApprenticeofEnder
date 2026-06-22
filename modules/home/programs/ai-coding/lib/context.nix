@@ -35,4 +35,13 @@ in ''
   ## Tool aliases
 
   ${opAliases ["gh" "awscli"]}
+
+  ## No Wheel Reinventions
+
+  When developing, follow the "No Wheel Inventions" philosophy:
+
+  - Only create custom elements when no fitting, pre-existing template exists.
+  - Leverage existing components, libraries, and templates wherever possible.
+  - If multiple good foundations exist, evaluate which is most suitable to build upon.
+  - Prefer solutions that benefit from upstream development and community maintenance.
 ''
