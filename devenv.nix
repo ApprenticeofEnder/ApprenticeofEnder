@@ -90,14 +90,6 @@ in {
     };
   };
 
-  enterShell = ''
-    echo 'Loading environment...'
-
-    eval "$(${lib.getExe pkgs.pulumi-esc} env open ApprenticeofEnder/HomeBase/main@latest --format shell)"
-
-    echo 'Environment loaded.'
-  '';
-
   enterTest = ''
     echo "Running tests"
     git --version | grep --color=auto "${pkgs.git.version}"
