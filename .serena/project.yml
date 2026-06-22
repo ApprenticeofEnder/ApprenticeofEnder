@@ -32,8 +32,10 @@ project_name: "ApprenticeofEnder"
 languages:
   # keep-sorted start
   - bash
+  - json
   - markdown
   - nix
+  - yaml
   # keep-sorted end
 
 # the encoding used by text files in the project
