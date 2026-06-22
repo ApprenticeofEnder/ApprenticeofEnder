@@ -15,7 +15,7 @@
       # keep-sorted start block=yes
       completion = {
         min_chars = 2;
-        blink = true;
+        # blink = true;
       };
       legacy_commands = false;
       new_notes_location = "notes_subdir";
