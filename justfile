@@ -26,6 +26,18 @@ check:
 dev:
   nix develop
 
+[group('dev')]
+nvim:
+  nix run .#nvim -- .
+
+[group('dev')]
+nvim-check:
+  #!/usr/bin/env bash
+  arch=$(uname -m)
+  [[ "$arch" == "arm64" ]] && arch=aarch64
+  os=$([[ "$(uname -s)" == "Darwin" ]] && echo darwin || echo linux)
+  nix build ".#checks.${arch}-${os}.nixvim"
+
 # Activate the configuration
 [group('Main')]
 run:

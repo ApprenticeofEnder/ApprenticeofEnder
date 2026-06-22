@@ -81,9 +81,7 @@ in
       ));
 
     extraConfigLuaPost = ''
-      pcall(
-        require "experimental"
-      )
+      pcall(require, "experimental")
       ${consolidateMacros macroDefs.global}
     '';
 

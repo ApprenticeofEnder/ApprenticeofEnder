@@ -1,7 +1,7 @@
-{...}: {
+{lib, ...}: {
   plugins = {
     image = {
-      enable = true;
+      enable = lib.mkIf lib.nixvim.enableExceptInTests true;
     };
     diagram = {
       enable = true;

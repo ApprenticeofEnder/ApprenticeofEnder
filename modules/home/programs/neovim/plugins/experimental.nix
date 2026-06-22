@@ -1,4 +1,4 @@
-{
+{lib, ...}: {
   /*
   Plugins to look at:
   # keep-sorted start
@@ -12,7 +12,7 @@
   plugins = {
     # keep-sorted start block=yes
     codesettings = {
-      enable = true;
+      enable = lib.mkIf lib.nixvim.enableExceptInTests true;
       settings = {
         config_file_paths = [
           ".vscode/settings.json"
@@ -29,15 +29,15 @@
         jsonls_integration = true;
       };
     };
-    debugprint.enable = true;
-    easy-dotnet.enable = true;
-    flutter-tools.enable = true;
-    gitignore.enable = true;
-    glow.enable = true;
-    harpoon.enable = true;
-    octo.enable = true;
-    opencode.enable = true;
-    wrapping.enable = true;
+    debugprint.enable = lib.mkIf lib.nixvim.enableExceptInTests true;
+    easy-dotnet.enable = lib.mkIf lib.nixvim.enableExceptInTests true;
+    flutter-tools.enable = lib.mkIf lib.nixvim.enableExceptInTests true;
+    gitignore.enable = lib.mkIf lib.nixvim.enableExceptInTests true;
+    glow.enable = lib.mkIf lib.nixvim.enableExceptInTests true;
+    harpoon.enable = lib.mkIf lib.nixvim.enableExceptInTests true;
+    octo.enable = lib.mkIf lib.nixvim.enableExceptInTests true;
+    opencode.enable = lib.mkIf lib.nixvim.enableExceptInTests true;
+    wrapping.enable = lib.mkIf lib.nixvim.enableExceptInTests true;
     # keep-sorted end
   };
 }
