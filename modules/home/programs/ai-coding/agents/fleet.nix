@@ -90,23 +90,19 @@ in
     lib.mapAttrsToList (
       name: agent:
         mkAgent (
-          {
-            inherit name;
-            description = agent.description;
-            agent_mode = "subagent";
-          }
-          // (
-            if
-              (
-                (lib.hasAttrByPath ["claude_model"] agent)
-                && (lib.hasAttrByPath ["opencode_model"] agent)
-              )
-            then {
-              claude_model = agent.claude_model;
-              opencode_model = agent.opencode_model;
+          lib.mergeAttrsList [
+            {
+              inherit name;
+              description = agent.description;
+              agent_mode = "subagent";
             }
-            else {}
-          )
+            (lib.optionalAttrs (lib.hasAttrByPath ["claude_model"] agent) {
+              claude_model = agent.claude_model;
+            })
+            (lib.optionalAttrs (lib.hasAttrByPath ["opencode_model"] agent) {
+              opencode_model = agent.opencode_model;
+            })
+          ]
         )
     )
     fleet_agents
