@@ -55,7 +55,6 @@
     "lua_ls"
     "marksman"
     "nil_ls"
-    "nixd"
     "ruff"
     "rust_analyzer"
     "svelte"
