@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }: let
   ai_coding_lib = import ../lib {inherit lib;};
@@ -30,7 +31,46 @@
     ask = global_bash.ask;
     allow = global_bash.allow;
   };
+
+  provider_env = lib.mergeAttrsList [
+    (lib.optionalAttrs (pkgs.stdenv.isLinux) {
+      OPENROUTER_API_KEY = "op://Private/OpenRouter API Key - 1Password/credential";
+    })
+    (lib.optionalAttrs (pkgs.stdenv.isDarwin) {
+      AWS_BEARER_TOKEN_BEDROCK = "op://Work/Amazon Bedrock API Key/credential";
+    })
+  ];
+
+  providers = lib.mergeAttrsList [
+    (lib.optionalAttrs (pkgs.stdenv.isLinux) {
+      openrouter = {
+        options = {
+          apiKey = "{env:OPENROUTER_API_KEY}";
+        };
+      };
+    })
+  ];
+
+  env_tpl = with builtins;
+    concatStringsSep "\n" (
+      attrValues (
+        mapAttrs (var_name: secret_ref: "${var_name}=${secret_ref}")
+        provider_env
+      )
+    );
+
+  env_tpl_name = "opencode/.env.tpl";
 in {
+  xdg.configFile = {
+    ${env_tpl_name} = {
+      text = env_tpl;
+    };
+  };
+
+  home.shellAliases = {
+    opencode = ''export $(op inject -i ${config.xdg.configHome}/${env_tpl_name}) && ${lib.getExe pkgs.opencode}'';
+  };
+
   programs.opencode = {
     enable = true;
     # enableMcpIntegration = true;
@@ -47,6 +87,8 @@ in {
     settings = {
       autoshare = false;
       autoupdate = false;
+
+      provider = providers;
 
       mcp = {
         hashicorp-terraform = {
