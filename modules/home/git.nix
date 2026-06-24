@@ -1,9 +1,12 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: let
-  signer_pubkey = builtins.readFile ./programs/ssh/keys/github.pub;
+  signer_pubkey = lib.replaceStrings ["\n"] [""] (
+    builtins.readFile ./programs/ssh/keys/github.pub
+  );
   op-ssh-sign = config.op.ssh-sign;
 in {
   home.shellAliases = {
