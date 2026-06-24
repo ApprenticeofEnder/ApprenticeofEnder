@@ -56,7 +56,6 @@
     "marksman"
     "nil_ls"
     "ruff"
-    "rust_analyzer"
     "svelte"
     "systemd_lsp"
     "tailwindcss"

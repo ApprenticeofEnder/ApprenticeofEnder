@@ -123,10 +123,8 @@
     extensions = with pkgs.vscode-extensions; let
       languages = [
         # keep-sorted start
-        geequlim.godot-tools
         graphql.vscode-graphql
         graphql.vscode-graphql-syntax
-        rust-lang.rust-analyzer
         svelte.svelte-vscode
         unifiedjs.vscode-mdx
         vue.volar
