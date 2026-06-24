@@ -14,19 +14,6 @@
   # - Backend Engineer (Sonnet)
   # - Frontend Engineer (Sonnet)
 
-  # TODO: Research opencode models on openrouter
-  # - Cohere North series
-  # - Kimi series
-  # - GLM series
-  # - NVIDIA Nemotron
-  # - Qwen 3.7
-  # - Minimax
-  # - OpenRouter Owl Alpha
-  # - StepFun?
-  # - Laguna
-  # - DeepSeek
-  # - Xiaomi MiMo
-
   fleet_agents = {
     count = {
       description = ''
