@@ -10,9 +10,9 @@
       gnumake
       gopls
       httpie # better http client
+      jujutsu
       keep-sorted # line sorting
       mermaid-cli
-      pnpm
       shellcheck # shell linter
       shfmt # shell formatter
       typst # latex alternative
@@ -130,7 +130,6 @@
   x86Linux = with pkgs; [
     # keep-sorted start
     audacity # audio editing
-    godot # game engine
     handbrake # video file conversions
     impala # wifi management
     slack
