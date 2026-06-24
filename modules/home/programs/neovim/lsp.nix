@@ -9,7 +9,7 @@
   vscodiumExtensions =
     if pkgs.stdenv.hostPlatform.isDarwin
     then "${pkgs.vscodium}/Applications/VSCodium.app/Contents/Resources/app/extensions"
-    else "${pkgs.vscodium}/resources/app/extensions";
+    else "${pkgs.vscodium}/lib/vscode/resources/app/extensions";
 
   mkVsCodeLspPackage = language: let
     languageServerMainSrc = "${vscodiumExtensions}/${language}-language-features/server/dist/node/${language}ServerMain.js";
