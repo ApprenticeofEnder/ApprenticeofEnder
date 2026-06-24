@@ -9,6 +9,7 @@ in {
     pnpm
     biome
     nodejs_24
+    bun
   ];
 
   xdg = {
