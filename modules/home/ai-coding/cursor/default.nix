@@ -46,7 +46,6 @@
     };
     rewind = true;
     display = {
-      showLineNumbers = true;
       showThinkingBlocks = true;
     };
   });
