@@ -10,7 +10,6 @@
       gnumake
       gopls
       httpie # better http client
-      jujutsu
       keep-sorted # line sorting
       mermaid-cli
       shellcheck # shell linter

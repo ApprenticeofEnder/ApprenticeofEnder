@@ -1,4 +1,8 @@
-{config, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   signer_pubkey = builtins.readFile ./programs/ssh/keys/github.pub;
   op-ssh-sign = config.op.ssh-sign;
 in {
@@ -7,6 +11,31 @@ in {
     lg = "lazygit";
   };
   home.file.".ssh/allowed_signers".text = "* ${signer_pubkey}";
+  home.packages = with pkgs; [
+    jujutsu
+  ];
+
+  xdg.configFile = {
+    "jj/config.toml" = {
+      text = ''
+        [user]
+        name = "${config.me.fullname}"
+        email = "${config.me.email}"
+
+        [ui]
+        # Use Difftastic by default
+        diff-formatter = ["difft", "--color=always", "$left", "$right"]
+        editor = "nvim"
+
+        [signing]
+        behavior = "own"
+        backend = "ssh"
+        backends.ssh.allowed_signers = "~/.ssh/allowed_signers"
+        backends.ssh.program = "${op-ssh-sign}"
+        key = "${signer_pubkey}"
+      '';
+    };
+  };
 
   # https://nixos.asia/en/git
   programs = {
@@ -36,12 +65,12 @@ in {
           signingkey = "${signer_pubkey}";
         };
         alias = let
-          prefix = "-c diff.external=difft";
+          difft_prefix = "-c diff.external=difft";
         in {
           ga = "git add .";
-          dl = "${prefix} log -p --ext-diff";
-          ds = "${prefix} show --ext-diff";
-          dft = "${prefix} diff";
+          dl = "${difft_prefix} log -p --ext-diff";
+          ds = "${difft_prefix} show --ext-diff";
+          dft = "${difft_prefix} diff";
         };
         # init.defaultBranch = "master";
         # pull.rebase = "false";
