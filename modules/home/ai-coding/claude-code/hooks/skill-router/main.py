@@ -106,7 +106,7 @@ class SkillRuleSet(BaseModel):
     @classmethod
     def from_user_home(cls) -> "SkillRuleSet | None":
         """
-        Attempts to load a rule set from ~/.claude/skills/skill-rules.json.
+        Attempts to load a rule set from ~/.claude/skills/skill-rules.json(c).
         """
         user_home = Path.home()
         return cls.from_project_dir(user_home)
@@ -118,10 +118,13 @@ class SkillRuleSet(BaseModel):
         """
         Attempts to load a rule set from the given project.
 
-        Relative path is $PROJECT_ROOT/.claude/skills/skill-rules.json
+        Relative path is $PROJECT_ROOT/.claude/skills/skill-rules.json(c)
         """
-        rule_file = Path(project_dir) / ".claude" / "skills" / "skill-rules.json"
-        return cls.from_file(rule_file)
+        file_names = ["skill-rules.json", "skill-rules.jsonc"]
+        skills_dir = Path(project_dir) / ".claude" / "skills"
+        for name in file_names:
+            rule_file = skills_dir / name
+            return cls.from_file(rule_file)
 
     @classmethod
     def from_file(cls, rule_file: Path | os.PathLike[str]) -> "SkillRuleSet | None":
