@@ -275,5 +275,7 @@ def main():
         sys.exit(exit_code)
 
 
+# TODO: Extract this to a dedicated plugin
+
 if __name__ == "__main__":
     main()
