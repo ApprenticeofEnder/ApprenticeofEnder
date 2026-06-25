@@ -1,4 +1,7 @@
-{
+{pkgs, ...}: {
+  home.packages = with pkgs; [
+    lazyjj
+  ];
   programs.lazygit = {
     enable = true;
     enableZshIntegration = true;
