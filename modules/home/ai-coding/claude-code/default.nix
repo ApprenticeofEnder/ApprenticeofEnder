@@ -62,6 +62,7 @@ in {
         "dotnet-code-quality"
         "dotnet-dev-guidelines"
         "fleet-deploy"
+        "grill-with-docs"
         "review-and-ship"
         "tanstack"
         "template-check"
