@@ -1,13 +1,14 @@
 {
   "version": "0.1",
+  // TODO: Add other skills
   "skills": {
     "caveman": {
       "type": "domain",
       "priority": "critical",
       "description": "Token saver",
       "promptTriggers": {
-        "intent_patterns": [".*"]
-      }
-    }
-  }
+        "intent_patterns": [".*"],
+      },
+    },
+  },
 }
