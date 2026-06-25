@@ -16,6 +16,9 @@
 
   context = import ../lib/context.nix {inherit lib pkgs;};
 in {
+  imports = [
+    ./hooks
+  ];
   home.shellAliases = {
     claude = lib.removeSuffix "\n" ''CC_SYSTEM_PROMPT=$(serena prompts print-cc-system-prompt-override) ${lib.getExe config.programs.claude-code.finalPackage} --system-prompt="$CC_SYSTEM_PROMPT"'';
   };
@@ -99,84 +102,6 @@ in {
           (mkClaudePermissionList claude_tools.read sensitive_files.claude)
           (mkClaudePermissionList claude_tools.edit (sensitive_files.claude ++ lockfiles.claude))
           (mkClaudePermissionList claude_tools.bash global_bash.deny)
-        ];
-      };
-      hooks = {
-        PreToolUse = [
-          {
-            matcher = "";
-            hooks = [
-              {
-                type = "command";
-                command = "serena-hooks remind --client=claude-code";
-              }
-            ];
-          }
-          {
-            matcher = "Bash";
-            hooks = [
-              {
-                type = "command";
-                command = "~/.claude/hooks/clamp-bash-timeout.sh";
-              }
-            ];
-          }
-          {
-            matcher = "mcp__serena__*";
-            hooks = [
-              {
-                type = "command";
-                command = "serena-hooks auto-approve --client=claude-code";
-              }
-            ];
-          }
-        ];
-        SessionStart = [
-          {
-            matcher = "";
-            hooks = [
-              {
-                type = "command";
-                command = "serena-hooks activate --client=claude-code";
-              }
-            ];
-          }
-        ];
-        UserPromptSubmit = [
-          {
-            hooks = [
-              {
-                type = "command";
-                command = "~/.claude/hooks/force-skill.sh";
-              }
-            ];
-          }
-        ];
-        SubagentStart = [
-          {
-            matcher = "";
-            hooks = [
-              # {
-              #   type = "command";
-              #   command = "serena-hooks activate --client=claude-code";
-              # }
-              {
-                type = "command";
-                command = "echo 'use caveman'";
-              }
-            ];
-          }
-        ];
-        SessionEnd = [
-          {
-            matcher = "";
-            hooks = [
-              {
-                type = "command";
-                command = "serena-hooks cleanup --client=claude-code";
-              }
-            ];
-          }
         ];
       };
     };
