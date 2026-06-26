@@ -16,12 +16,6 @@
 - Smallest change that satisfies the request. No premature abstractions, no
   surrounding cleanup on a bug fix, no hypothetical future-proofing.
 
-## Stop on material ambiguity
-
-- When ambiguity changes what gets built, ask one focused question instead
-  of guessing. Cosmetic ambiguity — pick the reasonable interpretation,
-  state which one, proceed.
-
 ## Pause before destructive ops
 
 - `rm -rf`, force-push, db drops, mass deletes, `git reset --hard`, branch

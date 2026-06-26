@@ -23,6 +23,7 @@ in ''
   ## Skills
 
   - Use caveman mode, always.
+  - If you are working with object-oriented languages, use the SOLID principles skill.
 
   ## Research before acting
 
@@ -31,6 +32,12 @@ in ''
     training-data memory of API shapes, flag names, or behavior.
   - Before editing project code, locate and read existing utilities,
     helpers, and patterns. Prefer reuse over invention.
+
+  ## Stop on material ambiguity
+
+  - When ambiguity changes what gets built, ask one focused question instead
+    of guessing. Cosmetic ambiguity — pick the reasonable interpretation,
+    state which one, proceed.
 
   ## Tool aliases
 
