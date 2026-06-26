@@ -20,7 +20,7 @@ jobs:
   job-id:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - run: echo "Hello World"
 ```
 
@@ -224,7 +224,7 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea528805ca138fa932375564195e1542332 # v4.4.0
         with:
           node-version: ${{ matrix.node-version }}
 ```
@@ -304,9 +304,9 @@ jobs:
 
 ### Use actions
 ```yaml
-- uses: actions/checkout@v4
+- uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-- uses: actions/setup-node@v4
+- uses: actions/setup-node@49933ea528805ca138fa932375564195e1542332 # v4.4.0
   with:
     node-version: '20'
     cache: 'npm'
@@ -517,7 +517,7 @@ jobs:
 
 ### Upload artifacts
 ```yaml
-- uses: actions/upload-artifact@v4
+- uses: actions/upload-artifact@b4b4815c4628a84945d9862f9259a6083a1a5497 # v4.6.2
   with:
     name: build-output
     path: dist/
@@ -526,7 +526,7 @@ jobs:
 
 ### Download artifacts
 ```yaml
-- uses: actions/download-artifact@v4
+- uses: actions/download-artifact@fa0a085b26b0e0776539a3210667e7da5e8b9612 # v4.1.8
   with:
     name: build-output
     path: dist/

@@ -66,7 +66,7 @@ sudo systemctl restart docker
 
 **Check cache key:**
 ```yaml
-- uses: actions/cache@v4
+- uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
   id: cache
   with:
     path: ~/.npm
@@ -87,7 +87,7 @@ sudo systemctl restart docker
 **Solutions:**
 ```yaml
 # Use restore-keys for fallback
-- uses: actions/cache@v4
+- uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
   with:
     path: ~/.npm
     key: v1-${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
@@ -108,10 +108,10 @@ actions/cache@v2 is deprecated
 **Solution:**
 ```yaml
 # ❌ OLD
-- uses: actions/cache@v2
+- uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
 
 # ✅ NEW (required after March 2025)
-- uses: actions/cache@v4
+- uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
 ```
 
 ## Secret Issues
@@ -167,62 +167,36 @@ jobs:
 
 ## Dependency Installation Failures
 
-### Bundler errors (Ruby)
+Load the stack skill (`dotnet-dev-guidelines`, `tanstack`, etc.) for language-specific install commands and lockfile handling.
 
-**Error:**
-```
-Your bundle is locked to mimemagic (0.3.5), but that version could not be found
-```
+### Wrong working directory
 
-**Solutions:**
-```yaml
-# Delete Gemfile.lock and regenerate
-- run: |
-    rm Gemfile.lock
-    bundle install
-
-# Or update specific gem
-- run: bundle update mimemagic
-```
-
-**Error:**
-```
-An error occurred while installing pg (1.5.4), and Bundler cannot continue
-```
+**Error:** package manager cannot find manifest or lockfile in the current directory.
 
 **Solution:**
+
 ```yaml
-# Install PostgreSQL development headers
-- run: sudo apt-get update && sudo apt-get install -y libpq-dev
-```
-
-### npm/yarn errors (Node.js)
-
-**Error:**
-```
-ENOENT: no such file or directory, open '/home/runner/work/.../package.json'
-```
-
-**Solution:**
-```yaml
-# Verify working directory
 - run: pwd && ls -la
 
-# Or set working directory
-- run: npm ci
-  working-directory: ./frontend
+- run: ./scripts/install-deps.sh
+  working-directory: ./subdir
 ```
 
-**Error:**
-```
-npm ERR! code ELIFECYCLE
-npm ERR! errno 1
-```
+### Missing native libraries
 
-**Debug:**
+**Error:** native extension or system library build fails on the runner.
+
+**Solution:**
+
 ```yaml
-- name: Install with verbose logging
-  run: npm ci --loglevel verbose
+- run: sudo apt-get update && sudo apt-get install -y <packages-from-stack-skill>
+```
+
+### Verbose install logging
+
+```yaml
+- name: Install dependencies (debug)
+  run: ./scripts/install-deps.sh --verbose
 ```
 
 ## Database Connection Issues
@@ -343,7 +317,7 @@ bash: npm: command not found
 **Solution:**
 ```yaml
 # Add setup action first
-- uses: actions/setup-node@v4
+- uses: actions/setup-node@49933ea528805ca138fa932375564195e1542332 # v4.4.0
   with:
     node-version: '20'
 
@@ -379,7 +353,7 @@ runs:
 3. **Check Docker Hub rate limits:**
 ```yaml
 # Login to Docker Hub first
-- uses: docker/login-action@v3
+- uses: docker/login-action@184bdaa0721073962dff0199f1fb9940f07167d1 # v3.5.0
   with:
     username: ${{ secrets.DOCKER_USERNAME }}
     password: ${{ secrets.DOCKER_PASSWORD }}
@@ -416,12 +390,12 @@ Error: Ref refs/heads/feature-branch does not exist
 **Solution:**
 ```yaml
 # Checkout specific branch
-- uses: actions/checkout@v4
+- uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
   with:
     ref: main
 
 # Or for PRs, use the head SHA
-- uses: actions/checkout@v4
+- uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
   with:
     ref: ${{ github.event.pull_request.head.sha }}
 ```
@@ -436,7 +410,7 @@ Error: Merge conflict in file.js
 **Solution:**
 ```yaml
 # Only checkout PR code, don't try to merge
-- uses: actions/checkout@v4
+- uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
   with:
     ref: ${{ github.event.pull_request.head.sha }}
 ```
@@ -500,7 +474,7 @@ Error: No files were found with the provided path
 - name: Check build output
   run: ls -la dist/
 
-- uses: actions/upload-artifact@v4
+- uses: actions/upload-artifact@b4b4815c4628a84945d9862f9259a6083a1a5497 # v4.6.2
   with:
     name: build
     path: dist/
@@ -521,7 +495,7 @@ Error: Artifact 'build' not found
 jobs:
   build:
     steps:
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@b4b4815c4628a84945d9862f9259a6083a1a5497 # v4.6.2
         with:
           name: dist-files  # Note the name
           path: dist/
@@ -529,7 +503,7 @@ jobs:
   deploy:
     needs: build  # Wait for build to complete
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@fa0a085b26b0e0776539a3210667e7da5e8b9612 # v4.1.8
         with:
           name: dist-files  # Must match upload name
 ```
@@ -642,7 +616,7 @@ Re-run workflow to see verbose logs.
 
 ```yaml
 - name: Setup tmate session
-  uses: mxschmitt/action-tmate@v3
+  uses: mxschmitt/action-tmate@35b54afac29c97fb54faba5b513f8fbd1882f113 # v3.24
   if: failure()  # Only on failure
 ```
 
@@ -705,11 +679,11 @@ Error: Unrecognized named-value: 'steps'. Located at position 1 within expressio
 ```yaml
 # Wrong - step hasn't run yet
 - if: steps.cache.outputs.cache-hit == 'true'
-  uses: actions/cache@v4
+  uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
   id: cache
 
 # Correct - check output after step runs
-- uses: actions/cache@v4
+- uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
   id: cache
 
 - if: steps.cache.outputs.cache-hit == 'true'
@@ -756,7 +730,7 @@ Warning: Context access might be invalid: github.event.issue.title
 ### Check cache effectiveness
 
 ```yaml
-- uses: actions/cache@v4
+- uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
   id: cache
   with:
     path: ~/.npm
@@ -803,7 +777,7 @@ For persistent issues:
 When workflow fails:
 
 - [ ] Check error message in logs
-- [ ] Verify YAML syntax (use yamllint)
+- [ ] Verify YAML syntax (run actionlint)
 - [ ] Check file paths and working directories
 - [ ] Verify environment variables are set
 - [ ] Check GITHUB_TOKEN permissions

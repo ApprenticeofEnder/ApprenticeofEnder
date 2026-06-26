@@ -15,163 +15,89 @@ Strategies to reduce workflow execution time and resource usage.
 
 Caching can reduce build times by up to 80% by reusing downloaded dependencies.
 
-### Ruby/Bundler Caching
+### Prefer official setup actions
 
-**Use ruby/setup-ruby with built-in caching** (recommended):
-
-```yaml
-- uses: ruby/setup-ruby@v1
-  with:
-    ruby-version: .ruby-version
-    bundler-cache: true # Automatically caches gems
-```
-
-This handles:
-
-- Cache key generation from Gemfile.lock
-- ABI compatibility checks
-- Old gem cleanup
-- Cross-platform caching
-
-**Manual caching** (not recommended - complex edge cases):
+Use the official setup action for your project's stack when one exists — they handle cache keys, restore, and tool installation:
 
 ```yaml
-- uses: actions/cache@v4
-  with:
-    path: vendor/bundle
-    key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-    restore-keys: |
-      ${{ runner.os }}-gems-
-
-- run: bundle config set --local path 'vendor/bundle'
-- run: bundle install --jobs 4 --retry 3
-```
-
-### Node.js/npm Caching
-
-**Use actions/setup-node with built-in caching**:
-
-```yaml
-- uses: actions/setup-node@v4
+# Node.js (this repo: .opencode/package.json)
+- uses: actions/setup-node@49933ea528805ca138fa932375564195e1542332 # v4.4.0
   with:
     node-version: "20"
-    cache: "npm" # or 'yarn' or 'pnpm'
-```
+    cache: "npm"  # auto-detects lockfiles in the working directory
 
-**For npm** (if not using setup-node):
-
-```yaml
-- uses: actions/cache@v4
-  with:
-    path: ~/.npm
-    key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-    restore-keys: |
-      ${{ runner.os }}-node-
-```
-
-**For yarn**:
-
-```yaml
-- uses: actions/cache@v4
-  with:
-    path: |
-      .yarn/cache
-      .yarn/unplugged
-    key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-    restore-keys: |
-      ${{ runner.os }}-yarn-
-```
-
-**For pnpm**:
-
-```yaml
-- uses: pnpm/action-setup@v2
-  with:
-    version: 8
-
-- uses: actions/setup-node@v4
-  with:
-    node-version: "20"
-    cache: "pnpm"
-```
-
-### Python/pip Caching
-
-```yaml
-- uses: actions/setup-python@v5
+# Python (this repo: modules/.../pyproject.toml)
+- uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
   with:
     python-version: "3.12"
-    cache: "pip" # or 'pipenv' or 'poetry'
+    cache: "pip"  # hashes requirements.txt, pyproject.toml, Pipfile, etc.
 ```
 
-Manual:
+Check each setup action's README for supported `cache` values and lock file detection.
+
+### Fallback: actions/cache
+
+When no setup action fits (e.g. Nix/flake.lock, Go modules, custom tooling), pin `actions/cache` and hash lock files:
 
 ```yaml
-- uses: actions/cache@v4
-  with:
-    path: ~/.cache/pip
-    key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-    restore-keys: |
-      ${{ runner.os }}-pip-
-```
-
-### Docker Layer Caching
-
-```yaml
-- uses: docker/setup-buildx-action@v3
-
-- uses: docker/build-push-action@v5
-  with:
-    context: .
-    cache-from: type=gha
-    cache-to: type=gha,mode=max
-```
-
-### Custom Caching
-
-**actions/cache@v4 (required as of March 2025)**:
-
-```yaml
-- uses: actions/cache@v4
+- uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
   with:
     path: |
       ~/.cache/custom
-      build/
-    key: ${{ runner.os }}-custom-${{ hashFiles('**/lockfile') }}
+      vendor/
+    key: ${{ runner.os }}-deps-${{ hashFiles('**/flake.lock', '**/go.sum', '**/*lock*', '**/*.lock') }}
     restore-keys: |
-      ${{ runner.os }}-custom-
+      ${{ runner.os }}-deps-
 ```
+
+**Lock file patterns to include in `hashFiles()`:**
+
+- `**/go.sum` — Go modules
+- `**/*lock*`, `**/*.lock` — generic (Gemfile.lock, package-lock.json, yarn.lock, pnpm-lock.yaml, poetry.lock, Cargo.lock, flake.lock, etc.)
+- Project-specific paths as needed
 
 **Cache key best practices:**
 
 - Include OS: `${{ runner.os }}`
-- Hash lock files: `${{ hashFiles('**/Gemfile.lock') }}`
+- Hash lock files with the patterns above
 - Version prefix: `v1-${{ runner.os }}-...` (for cache invalidation)
 
 **Restore keys** (fallback if exact match not found):
 
 ```yaml
 restore-keys: |
-  v1-${{ runner.os }}-gems-
+  v1-${{ runner.os }}-deps-
   v1-${{ runner.os }}-
+```
+
+### Docker Layer Caching
+
+```yaml
+- uses: docker/setup-buildx-action@e468dbeb0a198661f6a3b1a4aabe3c2a4a2b242c # v3.10.0
+
+- uses: docker/build-push-action@263435318d2637a93775f544927d396be1672c2 # v6.18.0
+  with:
+    context: .
+    cache-from: type=gha
+    cache-to: type=gha,mode=max
 ```
 
 ### Cache Limits
 
 - Maximum cache size: **10 GB per repository**
 - Caches evicted after 7 days of no access
-- actions/cache@v4+ required (v1-v2 retired March 2025)
+- Pin `actions/cache` v4.2.4+ (v1–v2 retired March 2025)
 
 ### Cache Hit Rate
 
 Monitor cache effectiveness:
 
 ```yaml
-- uses: actions/cache@v4
+- uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
   id: cache
   with:
-    path: vendor/bundle
-    key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+    path: vendor/
+    key: ${{ runner.os }}-deps-${{ hashFiles('**/*lock*', '**/*.lock', '**/go.sum') }}
 
 - name: Cache status
   run: |
@@ -195,14 +121,14 @@ jobs:
   test:
     strategy:
       matrix:
-        ruby-version: ["3.1", "3.2", "3.3"]
+        node-version: ["18", "20", "22"]
         os: [ubuntu-latest, macos-latest]
         include:
-          - ruby-version: "3.3"
+          - node-version: "22"
             experimental: true
         exclude:
           - os: macos-latest
-            ruby-version: "3.1"
+            node-version: "18"
       fail-fast: false # Continue if one fails
       max-parallel: 4 # Limit concurrent jobs
 
@@ -210,12 +136,12 @@ jobs:
     continue-on-error: ${{ matrix.experimental || false }}
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/setup-node@49933ea528805ca138fa932375564195e1542332 # v4.4.0
         with:
-          ruby-version: ${{ matrix.ruby-version }}
-          bundler-cache: true
-      - run: bundle exec rspec
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm test
 ```
 
 ### Independent Jobs
@@ -278,14 +204,14 @@ jobs:
         shard: [1, 2, 3, 4]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      # RSpec parallel
+      # Generic file-based sharding
       - run: |
-          bundle exec rspec --only-failures --next-failure \
-            $(find spec -name '*_spec.rb' | awk "NR % 4 == ${{ matrix.shard }}")
+          files=$(find tests -name '*.test.js' | awk "NR % 4 == ${{ matrix.shard }}")
+          npm test -- $files
 
-      # Jest parallel (built-in)
+      # Or use your test runner's built-in sharding (e.g. --shard=${{ matrix.shard }}/4)
       - run: npm test -- --shard=${{ matrix.shard }}/4
 ```
 
@@ -402,7 +328,7 @@ concurrency:
 Don't fetch full history if not needed:
 
 ```yaml
-- uses: actions/checkout@v4
+- uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
   with:
     fetch-depth: 1 # Only fetch latest commit (default)
 
@@ -414,7 +340,7 @@ Don't fetch full history if not needed:
 Only checkout specific paths:
 
 ```yaml
-- uses: actions/checkout@v4
+- uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
   with:
     sparse-checkout: |
       src/
@@ -471,7 +397,7 @@ jobs:
   build:
     runs-on: [self-hosted, linux, x64]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - run: npm run build
 ```
 
@@ -528,7 +454,7 @@ CMD ["node", "dist/index.js"]
 ### Reduce Artifact Size
 
 ```yaml
-- uses: actions/upload-artifact@v4
+- uses: actions/upload-artifact@b4b4815c4628a84945d9862f9259a6083a1a5497 # v4.6.2
   with:
     name: build
     path: |
@@ -594,7 +520,7 @@ jobs:
   build:
     steps:
       - run: npm run build
-      - uses: actions/cache@v4
+      - uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
         with:
           path: dist/
           key: build-${{ github.sha }}
@@ -602,7 +528,7 @@ jobs:
   test:
     needs: build
     steps:
-      - uses: actions/cache@v4
+      - uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
         with:
           path: dist/
           key: build-${{ github.sha }}
@@ -622,24 +548,24 @@ jobs:
   warm-cache:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/setup-node@49933ea528805ca138fa932375564195e1542332 # v4.4.0
         with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-      - run: echo "Cache warmed"
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci && echo "Cache warmed"
 ```
 
 ### Multi-level Caching
 
 ```yaml
-- uses: actions/cache@v4
+- uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
   with:
-    path: ~/.npm
-    key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+    path: ~/.cache/deps
+    key: ${{ runner.os }}-deps-${{ hashFiles('**/*lock*', '**/*.lock', '**/go.sum') }}
     restore-keys: |
-      ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-      ${{ runner.os }}-npm-
+      ${{ runner.os }}-deps-${{ hashFiles('**/*lock*', '**/*.lock', '**/go.sum') }}
+      ${{ runner.os }}-deps-
       ${{ runner.os }}-
 ```
 
@@ -652,7 +578,7 @@ Extract common patterns to avoid duplication:
 on:
   workflow_call:
     inputs:
-      ruby-version:
+      node-version:
         type: string
         required: true
 
@@ -660,26 +586,26 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/setup-node@49933ea528805ca138fa932375564195e1542332 # v4.4.0
         with:
-          ruby-version: ${{ inputs.ruby-version }}
-          bundler-cache: true
-      - run: bundle exec rspec
+          node-version: ${{ inputs.node-version }}
+          cache: "npm"
+      - run: npm ci && npm test
 ```
 
 ```yaml
 # .github/workflows/ci.yml
 jobs:
-  test-3-2:
+  test-20:
     uses: ./.github/workflows/reusable-test.yml
     with:
-      ruby-version: "3.2"
+      node-version: "20"
 
-  test-3-3:
+  test-22:
     uses: ./.github/workflows/reusable-test.yml
     with:
-      ruby-version: "3.3"
+      node-version: "22"
 ```
 
 **Benefits:**
@@ -691,7 +617,7 @@ jobs:
 
 ## Performance Checklist
 
-- [ ] Dependency caching enabled (ruby/setup-ruby, actions/setup-node, etc.)
+- [ ] Dependency caching enabled (official setup actions or actions/cache with lock file hashing)
 - [ ] Cache hit rate >80% after first run
 - [ ] Independent jobs run in parallel (no unnecessary `needs`)
 - [ ] Path filters used to skip irrelevant changes

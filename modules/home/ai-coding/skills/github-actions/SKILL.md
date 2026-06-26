@@ -3,130 +3,105 @@ name: github-actions
 description: Create, evaluate, and optimize GitHub Actions workflows and custom actions. Use when building CI/CD pipelines, creating workflow files, developing custom actions, troubleshooting workflow failures, performing security analysis, optimizing performance, or reviewing GitHub Actions best practices.
 ---
 
-<context>
-GitHub Actions automates software workflows with event-driven CI/CD pipelines. Workflows are YAML files in `.github/workflows/` that define jobs, steps, and actions triggered by repository events.
+# GitHub Actions Skill
 
-**Latest Updates (2024-2025):**
+Workflow-driven guidance for GitHub Actions CI/CD. Core file is a workflow; depth lives in references loaded on demand.
 
-- **November 2025**: Nested reusable workflows increased to 10 levels (was 4), total workflows to 50 (was 20)
-- **November 2025**: M2-powered macOS runners with GPU acceleration (macos-latest-xlarge, macos-15-xlarge)
-- **December 2024 - January 2025**: ubuntu-latest migrating from Ubuntu 22 to Ubuntu 24
-- **February-March 2025**: Cache storage v1-v2 retirement - must use actions/cache@v4.0.0+
+## Response Contract
 
-**Action Types:**
+Every create, review, or evaluate response **must** include:
 
-- **Workflow files**: CI/CD pipelines using existing actions (.github/workflows/\*.yml)
-- **Custom JavaScript actions**: Fast, cross-platform, use @actions/toolkit
-- **Custom Docker actions**: Full environment control, specific tooling, slower startup
-- **Composite actions**: Combine multiple steps into reusable units
-  </context>
+1. **Assumptions** — repo visibility (public/private), workflow triggers, runner type (GitHub-hosted vs self-hosted), whether online zizmor is needed for the rules under review.
+2. **Pinning policy** — all `uses:` references pin a full 40-character commit SHA with `# vX.Y.Z` comment (see Hard Rule below).
+3. **Validation commands run** — exact `actionlint` and `zizmor` invocations and their exit status.
+4. **Findings** — tool output summarized; zizmor findings ordered by severity (error → warning → note → help).
+5. **Stack deferral** — name the skill to load for language-specific CI (e.g. `terraform`, `tanstack`, `dotnet-dev-guidelines`).
 
-<workflow>
-**Creating Workflows:**
+## Hard Rule
 
-1. **Identify triggers**: push, pull_request, workflow_dispatch, schedule, etc.
-2. **Define jobs**: Specify runner OS, steps, and dependencies
-3. **Add security**: Set GITHUB_TOKEN permissions to read-only, pin actions to SHA
-4. **Optimize performance**: Enable caching, use matrix builds for parallelization
-5. **Test locally**: Use act or GitHub CLI to test before pushing
+> Every third-party and first-party `uses:` reference MUST pin a full 40-character commit SHA. Version tags (`@v4`), semver tags (`@v1.0.0`), and branch refs (`@main`) are never acceptable — including for `actions/*`.
 
-**Evaluating Workflows:**
+## Mandatory Gates
 
-1. **Security scan**: Check permissions, secrets exposure, action pinning, pull_request_target usage
-2. **Performance analysis**: Identify slow steps, missing caches, parallelization opportunities
-3. **Best practices review**: Validate naming, structure, error handling, documentation
-4. **Troubleshooting**: Review logs, check dependencies, verify secrets/environment variables
-   </workflow>
+Before finalizing any workflow change, run both commands and require zero diagnostics:
 
-<validation>
-**Pre-deployment checks:**
-
-- YAML syntax valid (use yamllint or GitHub's workflow validator)
-- Required secrets configured in repository settings
-- GITHUB_TOKEN permissions explicitly set to minimum required
-- Actions pinned to specific SHA or trusted tags
-- Caching configured for dependencies (bundler, npm, etc.)
-- Matrix builds used for multiple versions/platforms
-- Workflow triggers appropriate for use case
-
-**Post-deployment monitoring:**
-
-- First run completes successfully
-- Execution time acceptable (check for optimization opportunities if >5 minutes)
-- No secrets or credentials in logs
-- Cache hit rate >80% after first run
-  </validation>
-
-<security_checklist>
-**Critical Security Patterns:**
-
-1. **GITHUB_TOKEN permissions**: Always set to read-only by default
-
-   ```yaml
-   permissions:
-     contents: read
-   ```
-
-2. **Pin actions to commit SHA** (most secure):
-
-   ```yaml
-   - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-   ```
-
-3. **Use OIDC for cloud deployments** (credential-less authentication):
-
-   ```yaml
-   permissions:
-     id-token: write
-     contents: read
-   ```
-
-4. **Avoid pull_request_target with untrusted code**:
-   - Runs in base repository context with access to secrets
-   - Never checkout PR code without approval workflow
-
-5. **Environment secrets with required reviewers**:
-
-   ```yaml
-   jobs:
-     deploy:
-       environment: production
-   ```
-
-6. **Never log secrets**:
-   - Use `::add-mask::` for dynamic values
-   - Avoid `echo` or `print` statements with secret variables
-
-7. **Audit action sources**:
-   - Prefer verified creators (GitHub, major organizations)
-   - Review action source code before using
-   - Check for recent maintenance and security issues
-
-See [references/security-checklist.md](references/security-checklist.md) for complete security guidelines.
-</security_checklist>
-
-<common_patterns>
-**Conditional execution:**
-
-```yaml
-- name: Deploy to production
-  if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-  run: ./deploy.sh
+```bash
+actionlint .github/workflows/
+zizmor --offline .github/workflows/
 ```
 
-**Matrix builds:**
+Re-run until clean. Optionally run online zizmor when rules need GitHub API context:
 
-```yaml
-strategy:
-  matrix:
-    ruby-version: ["3.1", "3.2", "3.3"]
-    os: [ubuntu-latest, macos-latest]
-jobs:
-  test:
-    runs-on: ${{ matrix.os }}
+```bash
+GH_TOKEN=$(gh auth token) zizmor .github/workflows/
 ```
 
-**Reusable workflows:**
+See [Validation Tooling](references/validation-tooling.md) for CI integration patterns, config, and evaluation order.
+
+## Workflow
+
+1. **Capture context** — triggers, runner, repo visibility, secrets/environments involved, whether the workflow touches untrusted input (fork PRs, `pull_request_target`, `workflow_run`).
+2. **Diagnose intent** — create new workflow, security review, performance pass, troubleshoot failure, or custom action development. Load only matching references.
+3. **Apply security baseline** — minimum `permissions`, SHA-pinned actions, no secrets in logs, safe trigger patterns.
+4. **Generate or fix artifacts** — workflow YAML, composite actions, reusable workflows.
+5. **Validate** — run mandatory gates (`actionlint`, `zizmor --offline`); optional online zizmor.
+6. **Emit Response Contract** — assumptions, pinning, commands, findings, stack deferral.
+
+## Diagnose Before You Generate
+
+| Task | Symptoms / Trigger | Primary references |
+| ---- | -------------------- | ------------------ |
+| **Create workflow** | New CI/CD pipeline, deploy job, PR checks | [Common Workflows](references/common-workflows.md), [Workflow Syntax](references/workflow-syntax.md) |
+| **Security review** | Unpinned refs, broad permissions, fork PR exposure | [Validation Tooling](references/validation-tooling.md), [Security Checklist](references/security-checklist.md) |
+| **Performance pass** | Slow runs, missing cache, serial jobs | [Performance Optimization](references/performance-optimization.md) |
+| **Troubleshoot failure** | Failed job, permission errors, cache miss | [Troubleshooting](references/troubleshooting.md) |
+| **Custom action** | Reusable step logic, composite/JS/Docker action | [Custom Actions](references/custom-actions.md) |
+| **Audit / evaluate** | Pre-merge review, compliance check | [Evaluation Guide](references/evaluation-guide.md), [Validation Tooling](references/validation-tooling.md) |
+
+## When to Use This Skill
+
+**Activate when:** creating or reviewing workflow files, developing custom actions, debugging CI failures, optimizing workflow performance, or hardening Actions security posture.
+
+**Don't use for:** language-specific test/build/deploy logic — load the stack skill (`terraform`, `tanstack`, `dotnet-dev-guidelines`, etc.) for runner setup, caching keys, and deploy steps.
+
+## Core Principles
+
+### Pinning
+
+```yaml
+- uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+```
+
+Resolve SHAs from the action's release tag or commit history. Never leave `@v4`, `@main`, or semver tags in generated output.
+
+### Permissions
+
+Default to read-only. Grant write scopes only where required:
+
+```yaml
+permissions:
+  contents: read
+```
+
+Add `id-token: write` only for OIDC cloud deployments. See [Security Checklist](references/security-checklist.md).
+
+### Triggers
+
+Match triggers to intent. Use path filters and concurrency to limit run cost:
+
+```yaml
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+      - "src/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+```
+
+### Reusable Workflows
 
 ```yaml
 # .github/workflows/reusable.yml
@@ -137,6 +112,9 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -145,7 +123,6 @@ jobs:
 ```
 
 ```yaml
-# .github/workflows/main.yml
 jobs:
   call-reusable:
     uses: ./.github/workflows/reusable.yml
@@ -153,127 +130,70 @@ jobs:
       environment: production
 ```
 
-**Secrets in composite actions:**
+### Matrix Builds (stack-neutral)
 
 ```yaml
-# Pass secrets explicitly - they're not inherited
-- uses: ./.github/actions/my-action
-  with:
-    api-key: ${{ secrets.API_KEY }}
+strategy:
+  matrix:
+    os: [ubuntu-latest, macos-latest]
+    tool-version: ["1.0", "2.0"]
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - run: ./scripts/test.sh ${{ matrix.tool-version }}
 ```
 
-See [references/common-workflows.md](references/common-workflows.md) for Ruby/Rails, TypeScript, Heroku, and Fly.io patterns.
-</common_patterns>
+Defer language-specific matrix dimensions and setup actions to the stack skill.
 
-<anti_patterns>
-**Avoid these mistakes:**
+### Caching
 
-- **Running as root in Docker actions**: Use non-root user for security
-- **Hardcoded secrets**: Always use GitHub Secrets
-- **Overly broad permissions**: Set minimal required permissions
-- **No caching**: Wastes time and resources on every run
-- **Sequential jobs that could be parallel**: Use dependencies only when needed
-- **Using `master` branch references**: Pin to tags or SHAs
-- **Ignoring security alerts**: Review and address Dependabot alerts
-- **No timeout-minutes**: Jobs can run for 6 hours by default
-- **Checkout without depth control**: Use `fetch-depth: 0` only when needed
-- **Manual apt-get installs**: Use setup actions when available
-  </anti_patterns>
+Use `actions/cache` with lockfile-derived keys. Pin the cache action to a SHA:
 
-<troubleshooting>
-**Common issues and solutions:**
+```yaml
+# Pin actions/cache to a full 40-char SHA before use — see Hard Rule
+- uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
+  with:
+    path: ~/.cache/example
+    key: ${{ runner.os }}-example-${{ hashFiles('**/lockfile') }}
+```
 
-1. **"Resource not accessible by integration"**
-   - Add required permissions to GITHUB_TOKEN
-   - Check if job needs `contents: write` or `pull-requests: write`
+Stack skills define which paths and lockfiles to hash.
 
-2. **Cache not restoring**
-   - Verify cache key matches between save and restore
-   - Check if cache size exceeds 10GB limit
-   - Ensure actions/cache@v4+ for new cache backend
+## Forbidden Patterns
 
-3. **Secrets not available**
-   - Verify secret is defined in repository/organization/environment settings
-   - Check if job requires `environment` for environment secrets
-   - Ensure secret name matches exactly (case-sensitive)
+Do **not** recommend:
 
-4. **Action fails to find command**
-   - Ensure setup action runs before command usage
-   - Check PATH modifications in previous steps
-   - Verify runner OS matches requirements
+- **grep / regex secret scanning** as a workflow security control
+- **yamllint** as primary validator or security proxy
+- **Version tags, semver tags, or branch refs** in any `uses:` line
+- **`pull_request_target`** checking out untrusted PR code without an approval gate
 
-5. **Timeout after 6 hours**
-   - Add `timeout-minutes: 30` to jobs or steps
-   - Investigate why job runs so long (missing cache, inefficient scripts)
+## Anti-Patterns
 
-See [references/troubleshooting.md](references/troubleshooting.md) for detailed debugging strategies.
-</troubleshooting>
+- Overly broad `permissions:` or omitting explicit permissions
+- Hardcoded secrets instead of GitHub Secrets / OIDC
+- Sequential jobs that could run in parallel
+- Missing `timeout-minutes` (default 6-hour job limit)
+- `fetch-depth: 0` on checkout when full history is not needed
+- Unpinned third-party actions, including `actions/*`
 
-<performance_optimization>
-**Key optimization strategies:**
+See [Security Checklist](references/security-checklist.md) and [Troubleshooting](references/troubleshooting.md) for expanded lists.
 
-1. **Dependency caching** (can reduce build times by 80%):
-   - Ruby: Use `ruby/setup-ruby` with `bundler-cache: true`
-   - Node.js: Use `actions/setup-node` with `cache: 'npm'`
-   - Custom: Use `actions/cache@v4` with hash keys from lock files
+## Local Testing
 
-2. **Parallelization**:
-   - Use matrix builds for multiple versions/platforms
-   - Split independent jobs to run concurrently
-   - Avoid job dependencies unless actually required
+Use `act` for approximate local runs. Always validate with mandatory gates before push — `act` does not replace actionlint or zizmor.
 
-3. **Selective triggers**:
+## Reference Files
 
-   ```yaml
-   on:
-     push:
-       paths:
-         - "src/**"
-         - "package.json"
-   ```
+Progressive disclosure — essentials here, depth on demand:
 
-4. **Concurrency control** (cancel outdated runs):
-
-   ```yaml
-   concurrency:
-     group: ${{ github.workflow }}-${{ github.ref }}
-     cancel-in-progress: true
-   ```
-
-5. **Self-hosted runners** for heavy workloads:
-   - Persistent caching across runs
-   - Faster than GitHub-hosted for large builds
-   - More control over environment
-
-See [references/performance-optimization.md](references/performance-optimization.md) for advanced techniques.
-</performance_optimization>
-
-<reference_guides>
-For detailed information on specific topics:
-
-- **[Workflow Syntax](references/workflow-syntax.md)**: Complete YAML reference, triggers, jobs, steps, expressions
-- **[Custom Actions](references/custom-actions.md)**: Building JavaScript, Docker, and composite actions
-- **[Security Checklist](references/security-checklist.md)**: Comprehensive security patterns and OIDC setup
-- **[Performance Optimization](references/performance-optimization.md)**: Caching strategies, parallelization, profiling
-- **[Common Workflows](references/common-workflows.md)**: Ruby/Rails, TypeScript, Heroku/Fly.io deployment templates
-- **[Troubleshooting](references/troubleshooting.md)**: Debugging workflows, common errors, log analysis
-- **[Evaluation Guide](references/evaluation-guide.md)**: Security analysis, performance review, best practices audit
-  </reference_guides>
-
-<success_criteria>
-**For workflow creation:**
-
-- Workflow file is valid YAML with correct syntax
-- Triggers appropriate for use case
-- Jobs execute successfully with expected outputs
-- Security best practices applied (permissions, pinned actions, no secrets in logs)
-- Performance optimized (caching, parallelization where appropriate)
-- Documentation included (comments explaining non-obvious steps)
-
-**For workflow evaluation:**
-
-- Security issues identified and prioritized
-- Performance bottlenecks documented with recommendations
-- Best practice violations noted with fixes
-- Overall assessment: PASS/FAIL/NEEDS_IMPROVEMENT with specific action items
-  </success_criteria>
+- [Validation Tooling](references/validation-tooling.md) — actionlint + zizmor commands, CI examples, evaluation order
+- [Common Workflows](references/common-workflows.md) — generic workflow patterns and templates
+- [Workflow Syntax](references/workflow-syntax.md) — triggers, jobs, steps, expressions
+- [Custom Actions](references/custom-actions.md) — JavaScript, Docker, and composite actions
+- [Security Checklist](references/security-checklist.md) — permissions, OIDC, secret handling
+- [Performance Optimization](references/performance-optimization.md) — caching, parallelization, profiling
+- [Troubleshooting](references/troubleshooting.md) — debugging workflows, common errors
+- [Evaluation Guide](references/evaluation-guide.md) — audit checklist and review methodology

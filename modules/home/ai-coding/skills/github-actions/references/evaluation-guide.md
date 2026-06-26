@@ -64,13 +64,14 @@ env:
 ```yaml
 - uses: actions/checkout@main
 - uses: some-org/action@latest
-- uses: actions/setup-node@v4 # Not acceptable even for verified creators
+- uses: actions/setup-node@v4
 ```
 
 ✅ **PASS:**
 
 ```yaml
-- uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+- uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+- uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
 ```
 
 **4. Dangerous pull_request_target Usage**
@@ -83,10 +84,10 @@ on: pull_request_target
 jobs:
   build:
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - run: npm install && npm build # Runs untrusted code with secrets!
+      - run: ./scripts/install-deps.sh && ./scripts/build.sh # Runs untrusted code with secrets!
 ```
 
 ✅ **PASS:**
@@ -100,8 +101,8 @@ on: pull_request_target
 jobs:
   label:
     steps:
-      # Trusted action only, verified commit SHA
-      - uses: actions/labeler@f27b608878404679385c85cfa523b85ccb86e213 # 6.1.0
+      # Pinned commit SHA only — no tags or branches
+      - uses: actions/labeler@f27b608878404679385c85cfa523b85ccb86e213  # v6.1.0
 ```
 
 **5. Script Injection**
@@ -128,7 +129,7 @@ jobs:
 ⚠️ **NEEDS IMPROVEMENT:**
 
 ```yaml
-- uses: aws-actions/configure-aws-credentials@v4
+- uses: aws-actions/configure-aws-credentials@5579c002bb4778aa43395ef1df492868a9a1c83f  # v4.0.2
   with:
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -140,7 +141,7 @@ jobs:
 permissions:
   id-token: write
 
-- uses: aws-actions/configure-aws-credentials@v4
+- uses: aws-actions/configure-aws-credentials@5579c002bb4778aa43395ef1df492868a9a1c83f  # v4.0.2
   with:
     role-to-assume: arn:aws:iam::123456789012:role/GitHubActions
     aws-region: us-east-1
@@ -176,7 +177,7 @@ jobs:
 ⚠️ **REVIEW REQUIRED:**
 
 ```yaml
-- uses: random-user/unknown-action@v1
+- uses: random-user/unknown-action@a1b2c3d4e5f6789012345678901234567890abcd  # v1.0.0
 ```
 
 **Evaluation checklist:**
@@ -187,13 +188,15 @@ jobs:
 - [ ] Many stars/users?
 - [ ] Known security issues?
 
-### Security Score Calculation
+### Security Score Calculation (Optional Supplement)
+
+Use this scorecard **only after** [validation-tooling.md](validation-tooling.md) gates pass (actionlint and zizmor report no errors at your configured `--min-severity`). It supplements automated findings with qualitative review — it does not replace tool validation.
 
 | Category                       | Weight | Score     |
 | ------------------------------ | ------ | --------- |
 | No hardcoded secrets           | 25%    | \_\_\_/25 |
 | GITHUB_TOKEN read-only default | 25%    | \_\_\_/25 |
-| Actions pinned to SHA/tags     | 20%    | \_\_\_/20 |
+| Actions pinned to full SHA     | 20%    | \_\_\_/20 |
 | No dangerous triggers          | 15%    | \_\_\_/15 |
 | Input validation               | 10%    | \_\_\_/10 |
 | OIDC usage                     | 5%     | \_\_\_/5  |
@@ -224,21 +227,21 @@ Target execution times:
 ❌ **SLOW:**
 
 ```yaml
-- run: npm install # Downloads every time
+- run: ./install-dependencies.sh  # Downloads every time
 ```
 
 ✅ **FAST:**
 
 ```yaml
-- uses: actions/setup-node@v4
+- uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57  # v4.2.0
   with:
-    node-version: "20"
-    cache: "npm" # Built-in caching
+    path: ~/.cache/my-tool
+    key: ${{ runner.os }}-deps-${{ hashFiles('**/lockfile') }}
 
-- run: npm ci
+- run: ./install-dependencies.sh
 ```
 
-**Impact:** Can reduce build time by 80%
+**Impact:** Can reduce build time significantly when cache hits
 
 **2. Parallelization**
 
@@ -246,12 +249,12 @@ Target execution times:
 
 ```yaml
 jobs:
-  test:
+  ci:
     steps:
-      - run: npm run lint
-      - run: npm run typecheck
-      - run: npm test
-      - run: npm run build
+      - run: ./lint.sh
+      - run: ./typecheck.sh
+      - run: ./test.sh
+      - run: ./build.sh
 ```
 
 ✅ **FAST:**
@@ -260,19 +263,19 @@ jobs:
 jobs:
   lint:
     steps:
-      - run: npm run lint
+      - run: ./lint.sh
 
   typecheck:
     steps:
-      - run: npm run typecheck
+      - run: ./typecheck.sh
 
   test:
     steps:
-      - run: npm test
+      - run: ./test.sh
 
   build:
     steps:
-      - run: npm run build
+      - run: ./build.sh
 
 # All jobs run in parallel
 ```
@@ -322,16 +325,16 @@ concurrency:
 ❌ **SLOW:**
 
 ```yaml
-- uses: actions/checkout@v4
+- uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
   with:
-    fetch-depth: 0 # Full history - only needed for specific cases
+    fetch-depth: 0  # Full history — only needed for specific cases
 ```
 
 ✅ **FAST:**
 
 ```yaml
-- uses: actions/checkout@v4
-  # fetch-depth: 1 is default - only latest commit
+- uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+  # fetch-depth: 1 is default — only latest commit
 ```
 
 ### Performance Score Calculation
@@ -364,7 +367,7 @@ name: CI
 ✅ **GOOD:**
 
 ```yaml
-name: Ruby on Rails CI
+name: Application CI
 ```
 
 **2. Documentation**
@@ -416,23 +419,19 @@ name: Ruby on Rails CI
 ❌ **REPETITIVE:**
 
 ```yaml
-# .github/workflows/test-ruby-3-1.yml
+# .github/workflows/test-v1.yml
 jobs:
   test:
     steps:
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1'
-      - run: bundle exec rspec
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - run: ./scripts/test.sh 1.0
 
-# .github/workflows/test-ruby-3-2.yml
+# .github/workflows/test-v2.yml
 jobs:
   test:
     steps:
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2'
-      - run: bundle exec rspec
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - run: ./scripts/test.sh 2.0
 ```
 
 ✅ **DRY:**
@@ -442,29 +441,31 @@ jobs:
 on:
   workflow_call:
     inputs:
-      ruby-version:
+      tool-version:
         required: true
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   test:
+    runs-on: ubuntu-latest
     steps:
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ inputs.ruby-version }}
-      - run: bundle exec rspec
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - run: ./scripts/test.sh ${{ inputs.tool-version }}
 
 # .github/workflows/ci.yml
 jobs:
-  test-3-1:
+  test-v1:
     uses: ./.github/workflows/reusable-test.yml
     with:
-      ruby-version: '3.1'
+      tool-version: "1.0"
 
-  test-3-2:
+  test-v2:
     uses: ./.github/workflows/reusable-test.yml
     with:
-      ruby-version: '3.2'
+      tool-version: "2.0"
 ```
 
 **2. Conditional Logic**
@@ -601,7 +602,9 @@ jobs:
 
 Overall Status: ✅ PASS / ⚠️ NEEDS IMPROVEMENT / ❌ FAIL
 
-- Security Score: \_\_\_/100
+**Tool Gates:** actionlint ✅/❌ | zizmor ✅/❌
+
+- Security Score (optional): \_\_\_/100
 - Performance Score: \_\_\_/100
 - Best Practices Score: \_\_\_/100
 - Maintainability: \_\_\_/100
@@ -652,7 +655,9 @@ Priority order:
 | ----------------------- | ------- | ------- | ------ |
 | Workflow execution time | X min   | <15 min | ✅/❌  |
 | Cache hit rate          | X%      | >80%    | ✅/❌  |
-| Security score          | X/100   | >90/100 | ✅/❌  |
+| Security score (optional) | X/100   | >90/100 | ✅/❌  |
+| actionlint                | pass    | pass    | ✅/❌  |
+| zizmor                    | pass    | pass    | ✅/❌  |
 
 ## Recommendations Summary
 
@@ -674,131 +679,89 @@ Priority order:
 
 ## Automated Evaluation Tools
 
-### GitHub Action for Workflow Validation
+Run the validation pipeline documented in [validation-tooling.md](validation-tooling.md):
 
-```yaml
-name: Validate Workflows
-
-on:
-  pull_request:
-    paths:
-      - ".github/workflows/**"
-
-jobs:
-  validate:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Validate YAML syntax
-        run: |
-          for file in .github/workflows/*.yml; do
-            echo "Validating $file"
-            yamllint "$file"
-          done
-
-      - name: Check for security issues
-        run: |
-          # Check for hardcoded secrets
-          if grep -r "password\|secret\|key" .github/workflows/ | grep -v "secrets\."; then
-            echo "❌ Potential hardcoded secrets found"
-            exit 1
-          fi
-
-      - name: Check action pinning
-        run: |
-          # Warn about unpinned actions
-          if grep -r "uses:.*@main\|uses:.*@master" .github/workflows/; then
-            echo "⚠️ Actions using branch refs found (should use tags or SHAs)"
-          fi
-```
-
-### actionlint
-
-Use [actionlint](https://github.com/rhysd/actionlint) for automated validation:
+1. **actionlint** — syntax, schema, and expression validation
+2. **zizmor --offline** — security static analysis (unpinned refs, template injection, excessive permissions)
 
 ```bash
-# Install
-brew install actionlint
-
-# Run
+# Local evaluation (see validation-tooling.md for full workflow)
 actionlint .github/workflows/*.yml
+zizmor --offline --min-severity=medium .github/workflows/
 ```
 
-```yaml
-# In workflow
-- uses: reviewdog/action-actionlint@v1
-  with:
-    reporter: github-pr-review
-```
+Both tools must exit cleanly before proceeding to manual review or the optional security scorecard.
 
 ## Evaluation Workflow
 
-1. **Initial Review**
-   - Run YAML validation
-   - Check for obvious issues
+1. **Tool Gates (required)**
+   - Run actionlint — must exit 0
+   - Run zizmor --offline (with configured `--min-severity`) — must exit 0
+   - See [validation-tooling.md](validation-tooling.md) for CI integration
+
+2. **Initial Review**
    - Review workflow trigger configuration
+   - Check for obvious structural issues
 
-2. **Security Analysis**
-   - Complete security checklist
-   - Calculate security score
-   - Identify critical issues
+3. **Security Analysis**
+   - Complete [security-checklist.md](security-checklist.md) manual items
+   - Optionally calculate security score (supplement only)
 
-3. **Performance Review**
+4. **Performance Review**
    - Measure current execution time
    - Identify optimization opportunities
    - Calculate performance score
 
-4. **Best Practices Audit**
+5. **Best Practices Audit**
    - Check naming and documentation
    - Review code organization
    - Calculate best practices score
 
-5. **Generate Report**
+6. **Generate Report**
    - Document findings
    - Prioritize action items
    - Set follow-up timeline
 
-6. **Follow-up**
+7. **Follow-up**
    - Verify fixes implemented
+   - Re-run actionlint and zizmor
    - Measure improvement
-   - Update documentation
 
 ## Pass/Fail Criteria
+
+### FAIL Criteria (automatic)
+
+Workflow **fails** evaluation if either tool reports errors:
+
+- **actionlint** exits non-zero (syntax, schema, or expression errors)
+- **zizmor** exits non-zero at configured `--min-severity` (default: report all; CI typically uses `--min-severity=medium`)
+
+Critical manual findings (hardcoded secrets, unpinned actions, dangerous `pull_request_target`) also constitute FAIL regardless of score.
 
 ### PASS Criteria
 
 Workflow passes evaluation if:
 
-- Security score ≥ 90/100
-- No critical security issues
-- Performance score ≥ 70/100
+- actionlint and zizmor both exit 0
+- No critical security issues in manual review
+- Performance score ≥ 70/100 (when measured)
 - Execution time meets targets
-- Best practices score ≥ 75/100
+- Best practices score ≥ 75/100 (when measured)
 
 ### NEEDS IMPROVEMENT Criteria
 
 Workflow needs improvement if:
 
-- Security score 75-89/100
-- Important security issues present
+- Tool gates pass but important security issues remain (OIDC not used, missing environment protection)
 - Performance score 60-69/100
 - Execution time 1.5x target
 - Best practices score 60-74/100
 
-### FAIL Criteria
-
-Workflow fails evaluation if:
-
-- Security score < 75/100
-- Critical security issues present
-- Performance score < 60/100
-- Execution time >2x target
-- Best practices score < 60/100
-
 ## Resources
 
+- [Validation Tooling](validation-tooling.md) — actionlint and zizmor workflow
+- [Security Checklist](security-checklist.md) — manual review after tool gates
 - [GitHub Actions Security Hardening](https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions)
 - [actionlint](https://github.com/rhysd/actionlint)
+- [zizmor](https://docs.zizmor.sh/)
 - [Awesome Actions Security](https://github.com/step-security/supply-chain-goat)

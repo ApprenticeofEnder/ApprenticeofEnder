@@ -1,1004 +1,297 @@
 # Common Workflows
 
-Production-ready workflow templates for Ruby/Rails, TypeScript, and deployment to Heroku/Fly.io.
+Stack-agnostic GitHub Actions patterns — structure, security defaults, and CI/CD mechanics. Not language runtimes or cloud SDKs.
 
-## Ruby on Rails CI/CD
+**Conventions:** SHA-pinned `uses:` with `# vX.Y.Z` comments (never mutable tags/branches); explicit `permissions`; named steps; `./scripts/ci-*.sh` placeholders for stack work.
 
-### Complete Rails CI with PostgreSQL
+---
+
+## 1. Minimal CI Skeleton
 
 ```yaml
-name: Rails CI
-
+name: CI
 on:
-  push:
-    branches: [main, develop]
+  push: { branches: [main] }
+  pull_request: { branches: [main] }
+permissions: { contents: read }
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Restore cache
+        uses: actions/cache@0a38140700be2b45c665b798487e87558f4ade18 # v4.2.4
+        with:
+          path: .cache
+          key: deps-${{ runner.os }}-${{ hashFiles('**/lockfile') }}
+          restore-keys: deps-${{ runner.os }}-
+      - name: Install dependencies
+        run: ./scripts/ci-install.sh
+      - name: Build
+        run: ./scripts/ci-build.sh
+      - name: Test
+        run: ./scripts/ci-test.sh
+```
+
+Always set `timeout-minutes`. Split phases so logs pinpoint failures.
+
+---
+
+## 2. Matrix Builds
+
+OS × configurable target (via matrix or `workflow_dispatch` input). Keep language versions in env/vars, not matrix keys.
+
+```yaml
+on:
+  workflow_dispatch:
+    inputs:
+      target: { type: choice, options: [stable, canary, lts], required: true }
   pull_request:
-    branches: [main]
-
-permissions:
-  contents: read
-
-env:
-  RUBY_VERSION: .ruby-version
-
+permissions: { contents: read }
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-
-      redis:
-        image: redis:7-alpine
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 6379:6379
-
-    env:
-      RAILS_ENV: test
-      DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
-      REDIS_URL: redis://localhost:6379/0
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ env.RUBY_VERSION }}
-          bundler-cache: true
-
-      - name: Setup Node (for assets)
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "yarn"
-
-      - name: Install Node dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Setup database
-        run: |
-          bin/rails db:create
-          bin/rails db:schema:load
-
-      - name: Precompile assets
-        run: bin/rails assets:precompile
-
-      - name: Run tests
-        run: bundle exec rspec
-
-      - name: Upload coverage
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: coverage/
-          retention-days: 7
-
-  lint:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ env.RUBY_VERSION }}
-          bundler-cache: true
-
-      - name: Run RuboCop
-        run: bundle exec rubocop --parallel
-
-      - name: Run Brakeman
-        run: bundle exec brakeman --no-pager
-
-  deploy:
-    needs: [test, lint]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    environment: production
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Deploy to Fly.io
-        run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-```
-
-### Rails with MySQL
-
-```yaml
-services:
-  mysql:
-    image: mysql:8.0
-    env:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: test
-    options: >-
-      --health-cmd "mysqladmin ping -h localhost"
-      --health-interval 10s
-      --health-timeout 5s
-      --health-retries 5
-    ports:
-      - 3306:3306
-
-env:
-  DATABASE_URL: mysql2://root:password@127.0.0.1:3306/test
-```
-
-### Rails with SQLite (simple projects)
-
-```yaml
-steps:
-  - uses: actions/checkout@v4
-
-  - uses: ruby/setup-ruby@v1
-    with:
-      ruby-version: .ruby-version
-      bundler-cache: true
-
-  - name: Run tests
-    env:
-      RAILS_ENV: test
-    run: |
-      bin/rails db:setup
-      bundle exec rspec
-```
-
-### Rails Matrix Testing (multiple Ruby versions)
-
-```yaml
-jobs:
-  test:
+  matrix-test:
+    name: Test (${{ matrix.os }} / ${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
-        ruby-version: ["3.1", "3.2", "3.3"]
-        rails-version: ["7.0", "7.1", "7.2"]
-        exclude:
-          - ruby-version: "3.1"
-            rails-version: "7.2"
-
-    runs-on: ubuntu-latest
-
-    env:
-      RAILS_VERSION: ${{ matrix.rails-version }}
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby-version }}
-          bundler-cache: true
-
-      - name: Run tests
-        run: bundle exec rspec
-```
-
-## TypeScript/Node.js CI/CD
-
-### Complete TypeScript CI
-
-```yaml
-name: TypeScript CI
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
-permissions:
-  contents: read
-
-jobs:
-  lint-and-type-check:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Type check
-        run: npm run typecheck
-
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-
-      - run: npm ci
-
-      - name: Run tests
-        run: npm test -- --coverage
-
-      - name: Upload coverage
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: coverage/
-
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-
-      - run: npm ci
-
-      - name: Build
-        run: npm run build
-
-      - name: Upload build
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/
-
-  deploy:
-    needs: [lint-and-type-check, test, build]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    environment: production
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-```
-
-### TypeScript with Yarn
-
-```yaml
-- uses: actions/setup-node@v4
-  with:
-    node-version: "20"
-    cache: "yarn"
-
-- run: yarn install --frozen-lockfile
-- run: yarn lint
-- run: yarn typecheck
-- run: yarn test
-- run: yarn build
-```
-
-### TypeScript with pnpm
-
-```yaml
-- uses: pnpm/action-setup@v2
-  with:
-    version: 8
-
-- uses: actions/setup-node@v4
-  with:
-    node-version: "20"
-    cache: "pnpm"
-
-- run: pnpm install --frozen-lockfile
-- run: pnpm lint
-- run: pnpm typecheck
-- run: pnpm test
-- run: pnpm build
-```
-
-### TypeScript Matrix Testing
-
-```yaml
-jobs:
-  test:
-    strategy:
-      matrix:
-        node-version: [18, 20, 22]
         os: [ubuntu-latest, macos-latest, windows-latest]
-
-    runs-on: ${{ matrix.os }}
-
+        target: [stable, canary]
+        exclude: [{ os: windows-latest, target: canary }]
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-
-      - run: npm ci
-      - run: npm test
-```
-
-### Next.js Deployment
-
-```yaml
-name: Next.js CI/CD
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-
-      - run: npm ci
-
-      - name: Build Next.js app
-        run: npm run build
-        env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Run tests
-        run: npm test
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: nextjs-build
-          path: .next/
+        env: { CI_TARGET: ${{ matrix.target }} }
+        run: ./scripts/ci-test.sh
 ```
 
-## Heroku Deployment
+---
 
-### Deploy to Heroku (using Action)
+## 3. Reusable Workflows
+
+`.github/workflows/reusable-test.yml`:
 
 ```yaml
-name: Deploy to Heroku
-
 on:
-  push:
-    branches: [main]
-
-permissions:
-  contents: read
-
+  workflow_call:
+    inputs:
+      target: { required: true, type: string }
+      working-directory: { type: string, default: . }
+    outputs:
+      test-result: { value: ${{ jobs.test.outputs.result }} }
+    secrets:
+      REGISTRY_TOKEN: { required: false }
+permissions: { contents: read }
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
-    environment: production
-
+    timeout-minutes: 30
+    outputs: { result: ${{ steps.test.outputs.result }} }
+    defaults: { run: { working-directory: ${{ inputs.working-directory }} } }
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: akhileshns/heroku-deploy@v3.14.15
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
-
-      - name: Run database migrations
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: test
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          heroku run rails db:migrate --app ${{ secrets.HEROKU_APP_NAME }}
+          CI_TARGET: ${{ inputs.target }}
+          REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+        run: ./scripts/ci-test.sh && echo "result=pass" >> "$GITHUB_OUTPUT"
 ```
 
-### Deploy with Heroku CLI
+Caller: `uses: ./.github/workflows/reusable-test.yml` with `with:` / `secrets:` / `needs:` as required.
+
+---
+
+## 4. Service Containers
+
+Postgres + Redis health-check pattern for integration tests.
 
 ```yaml
-- name: Deploy to Heroku
-  env:
-    HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  run: |
-    git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-    git push heroku main
-
-- name: Run migrations
-  env:
-    HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  run: |
-    heroku run rails db:migrate --app ${{ secrets.HEROKU_APP_NAME }}
-```
-
-### Heroku with Docker
-
-```yaml
-- name: Build and push to Heroku Container Registry
-  env:
-    HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  run: |
-    heroku container:login
-    heroku container:push web --app ${{ secrets.HEROKU_APP_NAME }}
-    heroku container:release web --app ${{ secrets.HEROKU_APP_NAME }}
-```
-
-### Heroku with Review Apps
-
-```yaml
-name: Deploy Review App
-
-on:
-  pull_request:
-    types: [opened, synchronize]
-
 jobs:
-  deploy-review:
+  integration:
     runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Create Review App
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          APP_NAME="${{ secrets.HEROKU_APP_NAME }}-pr-${{ github.event.pull_request.number }}"
-          heroku apps:create $APP_NAME --team ${{ secrets.HEROKU_TEAM }} || true
-          git remote add heroku https://git.heroku.com/$APP_NAME.git
-          git push heroku HEAD:main --force
-
-      - name: Comment PR
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const appName = '${{ secrets.HEROKU_APP_NAME }}-pr-${{ github.event.pull_request.number }}';
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: `🚀 Review app deployed: https://${appName}.herokuapp.com`
-            });
-```
-
-## Fly.io Deployment
-
-### Basic Fly.io Deployment
-
-```yaml
-name: Deploy to Fly.io
-
-on:
-  push:
-    branches: [main]
-
-permissions:
-  contents: read
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    environment: production
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Deploy to Fly.io
-        run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-```
-
-### Fly.io with Database Migrations (Rails)
-
-```yaml
-- uses: superfly/flyctl-actions/setup-flyctl@master
-
-- name: Deploy to Fly.io
-  run: flyctl deploy --remote-only
-  env:
-    FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-
-- name: Run database migrations
-  run: flyctl ssh console --command "bin/rails db:migrate"
-  env:
-    FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-```
-
-### Fly.io Review Apps
-
-```yaml
-name: Fly.io Preview
-
-on:
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-
-jobs:
-  deploy-preview:
-    runs-on: ubuntu-latest
-
-    # Only run on opened/sync, not on close
-    if: github.event.action != 'closed'
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Create preview app
-        run: |
-          APP_NAME="myapp-pr-${{ github.event.pull_request.number }}"
-          flyctl apps create $APP_NAME --org personal || true
-          flyctl deploy --app $APP_NAME --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-
-      - name: Comment PR
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const appName = `myapp-pr-${{ github.event.pull_request.number }}`;
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: `🚀 Preview deployed: https://${appName}.fly.dev`
-            });
-
-  cleanup-preview:
-    runs-on: ubuntu-latest
-
-    if: github.event.action == 'closed'
-
-    steps:
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Destroy preview app
-        run: |
-          APP_NAME="myapp-pr-${{ github.event.pull_request.number }}"
-          flyctl apps destroy $APP_NAME --yes || true
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-```
-
-### Fly.io Multi-Region Deployment
-
-```yaml
-- name: Deploy to multiple regions
-  run: |
-    flyctl deploy --remote-only --region iad  # US East
-    flyctl deploy --remote-only --region lhr  # London
-    flyctl deploy --remote-only --region nrt  # Tokyo
-  env:
-    FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-```
-
-### Fly.io with Docker Build
-
-```yaml
-- uses: docker/setup-buildx-action@v3
-
-- uses: docker/login-action@v3
-  with:
-    registry: registry.fly.io
-    username: x
-    password: ${{ secrets.FLY_API_TOKEN }}
-
-- name: Build and push
-  uses: docker/build-push-action@v5
-  with:
-    context: .
-    push: true
-    tags: registry.fly.io/myapp:${{ github.sha }}
-    cache-from: type=gha
-    cache-to: type=gha,mode=max
-
-- uses: superfly/flyctl-actions/setup-flyctl@master
-
-- name: Deploy
-  run: flyctl deploy --image registry.fly.io/myapp:${{ github.sha }}
-  env:
-    FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-```
-
-## Monorepo Workflows
-
-### Nx Monorepo
-
-```yaml
-name: Nx Monorepo CI
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
-jobs:
-  main:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Nx needs git history
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-
-      - run: npm ci
-
-      - uses: nrwl/nx-set-shas@v4
-
-      - name: Run affected tests
-        run: npx nx affected -t test --parallel=3
-
-      - name: Run affected builds
-        run: npx nx affected -t build --parallel=3
-
-      - name: Run affected lint
-        run: npx nx affected -t lint --parallel=3
-```
-
-### Turborepo Monorepo
-
-```yaml
-name: Turborepo CI
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-
-      - run: npm ci
-
-      - name: Build
-        run: npx turbo run build
-
-      - name: Test
-        run: npx turbo run test
-
-      - name: Lint
-        run: npx turbo run lint
-```
-
-## Code Quality & Security
-
-### RuboCop + Brakeman + Bundler Audit
-
-```yaml
-name: Security & Quality
-
-on: [push, pull_request]
-
-jobs:
-  security:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Run RuboCop
-        run: bundle exec rubocop --parallel
-
-      - name: Run Brakeman (security scanner)
-        run: bundle exec brakeman --no-pager --format json --output brakeman.json
-
-      - name: Check for vulnerable gems
-        run: bundle exec bundle-audit check --update
-
-      - name: Upload Brakeman report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: brakeman-report
-          path: brakeman.json
-```
-
-### ESLint + TypeScript + Prettier
-
-```yaml
-name: Code Quality
-
-on: [push, pull_request]
-
-jobs:
-  quality:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-
-      - run: npm ci
-
-      - name: Run ESLint
-        run: npm run lint
-
-      - name: Run Prettier
-        run: npm run format:check
-
-      - name: Run TypeScript compiler
-        run: npm run typecheck
-```
-
-### CodeQL Security Scanning
-
-```yaml
-name: CodeQL
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-  schedule:
-    - cron: "0 12 * * 1" # Weekly on Monday
-
-permissions:
-  security-events: write
-  contents: read
-
-jobs:
-  analyze:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        language: [javascript, typescript, ruby]
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: github/codeql-action/init@v3
-        with:
-          languages: ${{ matrix.language }}
-
-      - uses: github/codeql-action/autobuild@v3
-
-      - uses: github/codeql-action/analyze@v3
-```
-
-## Release Automation
-
-### Semantic Release
-
-```yaml
-name: Release
-
-on:
-  push:
-    branches: [main]
-
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
-
-jobs:
-  release:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - run: npm ci
-
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
-```
-
-### Create GitHub Release
-
-```yaml
-name: Create Release
-
-on:
-  push:
-    tags:
-      - "v*"
-
-permissions:
-  contents: write
-
-jobs:
-  release:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Build artifacts
-        run: npm run build
-
-      - name: Create Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/bundle.zip
-          asset_name: bundle.zip
-          asset_content_type: application/zip
-```
-
-## Complete Full-Stack Example
-
-### Rails API + TypeScript Frontend
-
-```yaml
-name: Full-Stack CI/CD
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
-permissions:
-  contents: read
-
-jobs:
-  backend-test:
-    runs-on: ubuntu-latest
-
+    timeout-minutes: 30
     services:
       postgres:
         image: postgres:16
-        env:
-          POSTGRES_PASSWORD: postgres
+        env: { POSTGRES_USER: ci, POSTGRES_PASSWORD: ci, POSTGRES_DB: app_test }
+        ports: ['5432:5432']
         options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-
+          --health-cmd "pg_isready -U ci -d app_test"
+          --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      DATABASE_URL: postgres://ci:ci@localhost:5432/app_test
+      REDIS_URL: redis://localhost:6379
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-          working-directory: backend
-
-      - name: Run backend tests
-        working-directory: backend
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
-        run: |
-          bin/rails db:setup
-          bundle exec rspec
-
-  frontend-test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Run frontend tests
-        working-directory: frontend
-        run: |
-          npm ci
-          npm run lint
-          npm run typecheck
-          npm test
-          npm run build
-
-  deploy:
-    needs: [backend-test, frontend-test]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    environment: production
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Deploy backend
-        run: flyctl deploy --remote-only --config backend/fly.toml
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-
-      - name: Deploy frontend
-        run: flyctl deploy --remote-only --config frontend/fly.toml
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - run: ./scripts/ci-integration.sh
 ```
 
-## Resources
+---
 
-- [Ruby/Rails CI Examples](https://github.com/rails/rails/tree/main/.github/workflows)
-- [Node.js CI Examples](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs)
-- [Heroku Deployment](https://devcenter.heroku.com/articles/github-integration)
-- [Fly.io CI/CD](https://fly.io/docs/launch/continuous-deployment-with-github-actions/)
+## 5. Artifacts — Upload / Download Between Jobs
+
+```yaml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - run: ./scripts/ci-build.sh
+      - uses: actions/upload-artifact@b4b4815c4628a84945d9862f9259a6083a1a5497 # v4.6.2
+        with:
+          name: dist-${{ github.sha }}
+          path: dist/
+          retention-days: 7
+          if-no-files-found: error
+  deploy-preview:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@fa0a085b26b0e0776539a3210667e7da5e8b9612 # v4.1.8
+        with: { name: dist-${{ github.sha }}, path: dist/ }
+      - run: ./scripts/ci-publish-preview.sh dist/
+```
+
+Name artifacts with `${{ github.sha }}` or matrix coords to avoid collisions.
+
+---
+
+## 6. Concurrency — Cancel In Progress
+
+```yaml
+# CI feedback loops
+concurrency: { group: ${{ github.workflow }}-${{ github.ref }}, cancel-in-progress: true }
+# Stateful deploys
+concurrency: { group: deploy-production, cancel-in-progress: false }
+```
+
+---
+
+## 7. Path Filters
+
+```yaml
+on:
+  pull_request:
+    paths: ['src/**', 'packages/**', '.github/workflows/ci.yml']
+    paths-ignore: ['**/*.md', 'docs/**']
+  push:
+    branches: [main]
+    paths: ['src/**', 'packages/**']
+```
+
+Filters apply to the latest push commit, not full PR diffs — pair with monorepo detection (§9).
+
+---
+
+## 8. Deployment Skeleton — OIDC + Environment Protection
+
+```yaml
+name: Deploy
+on:
+  push: { branches: [main] }
+  workflow_dispatch:
+    inputs:
+      environment: { type: choice, options: [staging, production], required: true }
+permissions:
+  contents: read
+  id-token: write
+  deployments: write
+concurrency:
+  group: deploy-${{ inputs.environment || 'staging' }}
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: ${{ inputs.environment || 'staging' }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Assume cloud role via OIDC
+        run: echo "Use provider OIDC action from stack skill"
+      - run: ./scripts/deploy.sh
+```
+
+Configure environment protection rules: required reviewers, branch limits, env-scoped secrets, optional wait timer.
+
+---
+
+## 9. Monorepo — Path Filter + workflow_call
+
+```yaml
+on: { pull_request: {}, push: { branches: [main] } }
+permissions: { contents: read }
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs: { packages: ${{ steps.filter.outputs.changes }} }
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: filter
+        run: echo "changes=$(./scripts/changed-packages.sh)" >> "$GITHUB_OUTPUT"
+  test:
+    needs: changes
+    if: needs.changes.outputs.packages != '[]'
+    strategy:
+      fail-fast: false
+      matrix: { package: ${{ fromJSON(needs.changes.outputs.packages) }} }
+    uses: ./.github/workflows/reusable-test.yml
+    with: { target: stable, working-directory: ${{ matrix.package }} }
+```
+
+`changed-packages.sh` emits a JSON array of package directory paths — no Nx-specific actions.
+
+---
+
+## 10. CI Meta-Workflow — actionlint + zizmor
+
+```yaml
+name: Lint workflows
+on:
+  pull_request:
+    paths: ['.github/workflows/**', '.github/actions/**']
+permissions: { contents: read }
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Run actionlint
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash | bash -s -- 1.7.12
+          ./actionlint -color
+      - uses: zizmorcore/zizmor-action@5f14fd08f7cf1cb1609c1e344975f152c7ee938d # v0.5.6
+        with: { workflows: .github/workflows }
+```
+
+actionlint has no official Action — pin the CLI. zizmor scans for supply-chain and permissions issues.
+
+---
+
+## Stack-Specific CI
+
+**Never embed language- or platform-specific CI in the github-actions skill.** Load the relevant skill first.
+
+| Stack | Reference |
+|-------|-----------|
+| Terraform / OpenTofu | [terraform/references/ci-cd-workflows.md](../../terraform/references/ci-cd-workflows.md) |
+| TanStack | [tanstack skill](../../tanstack/SKILL.md) |
+| .NET / C# | [dotnet-dev-guidelines skill](../../dotnet-dev-guidelines/SKILL.md) |
+
+1. Use this file for workflow structure and security defaults.
+2. Load the stack skill for install/test/deploy and cloud OIDC actions.
+3. Pin all third-party actions to commit SHAs.
+4. Keep reusable `inputs`/`outputs`/`secrets` stable; put stack logic in `./scripts/`.

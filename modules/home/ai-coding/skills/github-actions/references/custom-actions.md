@@ -417,45 +417,43 @@ my-composite-action/
 ### action.yml
 
 ```yaml
-name: "Setup Ruby on Rails"
-description: "Sets up Ruby, installs gems, and prepares database"
+name: "Setup Project Dependencies"
+description: "Checks out code, installs Node dependencies, and runs build"
 
 inputs:
-  ruby-version:
-    description: "Ruby version to use"
+  node-version:
+    description: "Node.js version to use"
     required: false
-    default: ".ruby-version"
-  database-url:
-    description: "Database URL"
-    required: true
+    default: "20"
 
 outputs:
-  ruby-version:
-    description: "Installed Ruby version"
-    value: ${{ steps.setup-ruby.outputs.ruby-version }}
+  node-version:
+    description: "Installed Node.js version"
+    value: ${{ steps.setup-node.outputs.node-version }}
 
 runs:
   using: "composite"
   steps:
-    - name: Setup Ruby
-      id: setup-ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ inputs.ruby-version }}
-        bundler-cache: true
+    - name: Checkout
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-    - name: Setup database
+    - name: Setup Node.js
+      id: setup-node
+      uses: actions/setup-node@49933ea528805ca138fa932375564195e1542332 # v4.4.0
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: "npm"
+
+    - name: Install and build
       shell: bash
-      env:
-        DATABASE_URL: ${{ inputs.database-url }}
       run: |
-        bundle exec rails db:create
-        bundle exec rails db:schema:load
+        npm ci
+        npm run build
 
     - name: Print summary
       shell: bash
       run: |
-        echo "✅ Rails environment ready" >> $GITHUB_STEP_SUMMARY
+        echo "✅ Build environment ready" >> $GITHUB_STEP_SUMMARY
 ```
 
 ### Important Notes
@@ -479,6 +477,8 @@ runs:
 
 4. **Can reference other actions** including other composite actions
 
+5. **Pin third-party action refs to commit SHAs** — local `./.github/actions/...` path references do not need a SHA, but any third-party `owner/repo@...` ref used inside a composite action must be pinned to a full 40-character commit SHA (with an optional `# vX.Y.Z` comment)
+
 ## Publishing Actions
 
 ### To GitHub Marketplace
@@ -490,14 +490,19 @@ runs:
 
 ### Versioning Strategy
 
-Users reference actions by tag:
+Users should pin third-party actions to a full commit SHA (add a `# vX.Y.Z` comment for readability):
 
 ```yaml
-- uses: username/action@v1 # Major version (recommended)
-- uses: username/action@v1.0.0 # Specific version
-- uses: username/action@main # Branch (not recommended)
-- uses: username/action@sha # Commit SHA (most secure)
+- uses: username/action@0123456789abcdef0123456789abcdef012345678 # v1.0.0
 ```
+
+Local repository actions do not need a SHA — reference by path:
+
+```yaml
+- uses: ./.github/actions/my-action
+```
+
+Avoid floating tags (`@v1`), branches (`@main`, `@master`), and semver-only refs in production workflows.
 
 Maintain major version tags:
 
@@ -605,7 +610,7 @@ curl -X GET https://api.example.com
 
 ```yaml
 # Composite action
-- uses: actions/upload-artifact@v4
+- uses: actions/upload-artifact@b4b4815c4628a84945d9862f9259a6083a1a5497 # v4.6.2
   with:
     name: build-output
     path: dist/

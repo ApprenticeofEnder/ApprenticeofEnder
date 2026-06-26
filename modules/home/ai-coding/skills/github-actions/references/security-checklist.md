@@ -4,18 +4,26 @@ Comprehensive security best practices for GitHub Actions workflows.
 
 ## Quick Security Audit
 
-Run through this checklist when reviewing any workflow:
+**Step 1 — Automated scan (run first):**
+
+```bash
+zizmor --offline .github/workflows/
+```
+
+Fix all zizmor errors before manual review. Use `--min-severity=medium` in CI to fail on medium-and-above findings (see [validation-tooling.md](validation-tooling.md)).
+
+**Step 2 — Manual checklist (policy zizmor cannot judge):**
 
 - [ ] GITHUB_TOKEN permissions set to minimum required (default: read-only)
-- [ ] Actions pinned to commit SHA or trusted tags (not branches)
+- [ ] Actions pinned to full commit SHA (not tags or branches)
 - [ ] No secrets in logs or outputs
 - [ ] No use of pull_request_target with untrusted code execution
-- [ ] Environment secrets protected with required reviewers for production
+- [ ] Production environments have required reviewers configured in repository settings
+- [ ] Secret rotation cadence documented (expiration reminders, OIDC preferred over long-lived tokens)
 - [ ] OIDC used for cloud provider authentication (no long-lived credentials)
 - [ ] Self-hosted runner restrictions applied (if using self-hosted)
-- [ ] Third-party actions from verified creators or source reviewed
+- [ ] Third-party actions source-reviewed before use
 - [ ] No hardcoded credentials or API keys
-- [ ] Secrets rotated regularly
 
 ## GITHUB_TOKEN Permissions
 
@@ -81,20 +89,23 @@ jobs:
 
 ## Action Pinning
 
-### Always Pin to Commit SHA (Most Secure)
+### Always Pin to Commit SHA
 
 ```yaml
-# ✅ RECOMMENDED: Pin to commit SHA with comment showing version
+# ✅ REQUIRED: Full commit SHA with version comment
+- uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+
+# ✅ OK for older examples: still use full SHA, not tags
 - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
 
-# ⚠️ ACCEPTABLE: Pin to version tag (if you trust the creator)
+# ❌ FAIL: Version tag (mutable, can be force-pushed)
 - uses: actions/checkout@v4
 
-# ❌ DANGEROUS: Branch reference (can change at any time)
+# ❌ FAIL: Branch reference (can change at any time)
 - uses: actions/checkout@main
 ```
 
-### Why Pin to SHA?
+### Why SHA-Only?
 
 - Tags can be force-pushed and changed
 - Branch refs can be updated maliciously
@@ -105,17 +116,18 @@ jobs:
 
 ```bash
 # Get SHA for a specific tag
-git ls-remote https://github.com/actions/checkout v4.1.1
+git ls-remote https://github.com/actions/checkout v6.0.2
 
 # Or browse releases on GitHub
 ```
 
-### Exception: Trusted Organizations
+### zizmor Rule Mapping
 
-For actions from GitHub and other major organizations, version tags are acceptable:
-- `actions/*` - GitHub official actions
-- `docker/*` - Docker official actions
-- Major verified creators
+| Finding | zizmor rule | Fix |
+|---------|-------------|-----|
+| `uses: org/action@v4` or `@main` | `unpinned-uses` | Pin to full commit SHA + `# vX.Y.Z` comment |
+| `${{ github.event.* }}` in `run:` | `template-injection` | Move expression to `env:` block, reference shell variable |
+| Missing or broad `permissions:` | `excessive-permissions` | Add workflow-level `permissions:` with minimal scopes |
 
 ## Secrets Management
 
@@ -221,7 +233,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@5579c002bb4778aa43395ef1df492868a9a1c83f  # v4.0.2
         with:
           role-to-assume: arn:aws:iam::123456789012:role/GitHubActionsRole
           aws-region: us-east-1
@@ -262,7 +274,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: google-github-actions/auth@v2
+      - uses: google-github-actions/auth@f112390a2df9932162083945e46d439060d66ec2  # v2.1.4
         with:
           workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/github/providers/github'
           service_account: 'github-actions@project.iam.gserviceaccount.com'
@@ -281,7 +293,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: azure/login@v2
+      - uses: azure/login@d19a4f1b3c068b799dff7574ac265b0144f415fe  # v2.2.0
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -312,7 +324,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}  # PR code
       - run: npm install && npm build  # Could execute malicious code!
@@ -332,7 +344,7 @@ jobs:
   label:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/labeler@v5  # Trusted action only
+      - uses: actions/labeler@f27b608878404679385c85cfa523b85ccb86e213  # v6.1.0
 
 # ✅ SAFE: Use pull_request instead
 on: pull_request  # Runs in fork context, no secrets
@@ -341,7 +353,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
       - run: npm install && npm build
 ```
 
@@ -410,7 +422,7 @@ Instead of untrusted third-party actions, consider:
 1. **Official actions** from GitHub, Docker, cloud providers
 2. **Inline scripts** with explicit commands
 3. **Custom actions** in your own repository
-4. **Composite actions** combining trusted actions
+4. **Composite actions** combining vetted, SHA-pinned actions
 
 ## Input Validation
 
@@ -478,15 +490,15 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
 
-      - uses: github/codeql-action/init@v3
+      - uses: github/codeql-action/init@8c78abb9b62512e3c45dea6559ffd924ed8549c8  # v3.28.0
         with:
           languages: javascript, typescript
 
-      - uses: github/codeql-action/autobuild@v3
+      - uses: github/codeql-action/autobuild@8c78abb9b62512e3c45dea6559ffd924ed8549c8  # v3.28.0
 
-      - uses: github/codeql-action/analyze@v3
+      - uses: github/codeql-action/analyze@8c78abb9b62512e3c45dea6559ffd924ed8549c8  # v3.28.0
 ```
 
 ### Secret Scanning
@@ -564,8 +576,8 @@ jobs:
   security:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: github/codeql-action/analyze@v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+      - uses: github/codeql-action/analyze@8c78abb9b62512e3c45dea6559ffd924ed8549c8  # v3.28.0
 ```
 
 ### Branch protection rules
@@ -583,14 +595,14 @@ Use this for every workflow review:
 ### Critical (Must Fix)
 - [ ] Workflow-level permissions set to read-only (or minimal required)
 - [ ] No hardcoded secrets/credentials
-- [ ] Actions pinned to SHA or trusted tags
+- [ ] Actions pinned to full commit SHA (not tags or branches)
 - [ ] No pull_request_target with untrusted code execution
 - [ ] Input validation for user-controlled data
 
 ### Important (Should Fix)
 - [ ] OIDC used for cloud deployments (vs long-lived credentials)
 - [ ] Environment secrets protected with reviewers for production
-- [ ] Third-party actions reviewed and from trusted sources
+- [ ] Third-party actions source-reviewed before use
 - [ ] Secrets masked in logs
 - [ ] Regular secret rotation plan
 
@@ -606,4 +618,5 @@ Use this for every workflow review:
 - [GitHub Actions Security Hardening](https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions)
 - [OIDC with GitHub Actions](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
 - [Keeping your GitHub Actions secure](https://github.blog/2021-04-22-keeping-your-github-actions-secure/)
-- [GitHub Actions Security Best Practices](https://www.stepsecurity.io/blog/github-actions-security-best-practices)
+- [zizmor](https://docs.zizmor.sh/)
+- [Validation Tooling](validation-tooling.md)
