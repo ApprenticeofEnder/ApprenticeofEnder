@@ -8,6 +8,7 @@
   # keep-sorted start
   inherit (ai_coding_lib) claude_serena_tools;
   inherit (ai_coding_lib) claude_tools;
+  inherit (ai_coding_lib) collectLeafFiles;
   inherit (ai_coding_lib) global_bash;
   inherit (ai_coding_lib) lockfiles;
   inherit (ai_coding_lib) mkClaudePermissionList;
@@ -15,6 +16,19 @@
   # keep-sorted end
 
   context = import ../lib/context.nix {inherit lib pkgs;};
+
+  skill_file_paths = collectLeafFiles ../skills "";
+
+  skill_files = with builtins;
+    listToAttrs (
+      map (fn: {
+        name = ".claude/skills/${fn}";
+        value = {
+          text = readFile (../skills + "/${fn}");
+        };
+      })
+      skill_file_paths
+    );
 in {
   imports = [
     ./hooks
@@ -23,54 +37,19 @@ in {
     claude = lib.removeSuffix "\n" ''CC_SYSTEM_PROMPT=$(serena prompts print-cc-system-prompt-override) ${lib.getExe config.programs.claude-code.finalPackage} --system-prompt="$CC_SYSTEM_PROMPT"'';
   };
 
-  home.file = {
-    ".claude/hooks/clamp-bash-timeout.sh" = {
-      source = ./hooks/clamp-bash-timeout.sh;
-      executable = true;
+  home.file =
+    skill_files
+    // {
+      ".claude/scripts/claude-hud-statusline.sh" = {
+        source = ./scripts/claude-hud-statusline.sh;
+        executable = true;
+      };
     };
-
-    ".claude/hooks/force-skill.sh" = {
-      source = ./hooks/force-skill.sh;
-      executable = true;
-    };
-
-    ".claude/skills/fleet-deploy/missive.md" = {
-      source = ../skills/fleet-deploy/missive.md;
-    };
-
-    ".claude/scripts/claude-hud-statusline.sh" = {
-      source = ./scripts/claude-hud-statusline.sh;
-      executable = true;
-    };
-  };
 
   programs.claude-code = {
     enable = true;
     enableMcpIntegration = true;
     context = context;
-    skills = builtins.listToAttrs (map (skill: {
-        name = skill;
-        value = ../skills/${skill}/SKILL.md;
-      }) [
-        # keep-sorted start
-        "1password"
-        "agent-canvas-usage"
-        "caveman"
-        "component-search"
-        "dependency-audit"
-        "deslop"
-        "dotnet-code-quality"
-        "dotnet-dev-guidelines"
-        "fleet-deploy"
-        "grill-with-docs"
-        "review-and-ship"
-        "tanstack"
-        "template-check"
-        "thermo-code-quality"
-        "verify-this"
-        # keep-sorted end
-      ]);
-    # agents = agents;
 
     settings = {
       model = "sonnet";
