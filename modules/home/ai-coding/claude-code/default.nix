@@ -100,7 +100,7 @@ in {
             "git diff"
           ])
           mcp_tools.serena.basic
-          mcp_tools.atlassian.issue
+          mcp_tools.atlassian.issues
         ];
         # ask = [];
         deny = lib.concatLists [
