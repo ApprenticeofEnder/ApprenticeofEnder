@@ -36,7 +36,7 @@
     };
     Terramaid.url = "github:RoseSecurity/Terramaid";
     elephant.url = "github:abenz1267/elephant";
-    double-agent.url = "github:ApprenticeofEnder/double-agent";
+    double-agent.url = "github:ApprenticeofEnder/double-agent-nix";
 
     walker = {
       url = "github:abenz1267/walker";
