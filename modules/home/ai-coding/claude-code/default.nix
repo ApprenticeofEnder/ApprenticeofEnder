@@ -49,6 +49,13 @@
           "getTransitionsForJiraIssue"
           "transitionIssue"
         ];
+        confluence = [
+          "getAccessibleAtlassianResources"
+          "getConfluenceSpaces"
+          "getPagesInConfluenceSpace"
+          "getConfluencePage"
+          "searchConfluenceUsingCql"
+        ];
       };
       agent = "claude";
     };
@@ -101,6 +108,7 @@ in {
           ])
           mcp_tools.serena.basic
           mcp_tools.atlassian.issues
+          mcp_tools.atlassian.confluence
         ];
         # ask = [];
         deny = lib.concatLists [
