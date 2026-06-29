@@ -6,13 +6,14 @@
 }: let
   ai_coding_lib = import ../lib {inherit lib;};
   # keep-sorted start
-  inherit (ai_coding_lib) claude_serena_tools;
   inherit (ai_coding_lib) claude_tools;
   inherit (ai_coding_lib) collectLeafFiles;
   inherit (ai_coding_lib) global_bash;
   inherit (ai_coding_lib) lockfiles;
+  inherit (ai_coding_lib) mcpToolSet;
   inherit (ai_coding_lib) mkClaudePermissionList;
   inherit (ai_coding_lib) sensitive_files;
+  inherit (ai_coding_lib) serena_tools;
   # keep-sorted end
 
   context = import ../lib/context.nix {inherit lib pkgs;};
@@ -29,6 +30,29 @@
       })
       skill_file_paths
     );
+
+  mcp_tools = {
+    serena = mcpToolSet {
+      name = "serena";
+      tools = {
+        basic = serena_tools.basic;
+        edit = serena_tools.edit;
+      };
+      home_manager = true;
+      agent = "claude";
+    };
+
+    atlassian = mcpToolSet {
+      name = "claude_ai_Atlassian";
+      tools = {
+        issues = [
+          "getTransitionsForJiraIssue"
+          "transitionIssue"
+        ];
+      };
+      agent = "claude";
+    };
+  };
 in {
   imports = [
     ./hooks
@@ -75,7 +99,8 @@ in {
             "git status"
             "git diff"
           ])
-          claude_serena_tools.basic
+          mcp_tools.serena.basic
+          mcp_tools.atlassian.issue
         ];
         # ask = [];
         deny = lib.concatLists [

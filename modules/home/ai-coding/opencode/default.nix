@@ -5,12 +5,14 @@
   ...
 }: let
   ai_coding_lib = import ../lib {inherit lib;};
-  inherit (ai_coding_lib) mcpToolList;
   inherit (ai_coding_lib) mkOpencodePermissionList;
   inherit (ai_coding_lib) sensitive_files;
   inherit (ai_coding_lib) lockfiles;
   inherit (ai_coding_lib) global_bash;
-  inherit (ai_coding_lib) opencode_serena_tools;
+  inherit (ai_coding_lib) serena_tools;
+  inherit (ai_coding_lib) mcpToolSet;
+  inherit (ai_coding_lib) mcpToolList;
+
   context = import ../lib/context.nix {inherit lib pkgs;};
 
   read_perms = mkOpencodePermissionList {
@@ -123,6 +125,17 @@
     );
 
   env_tpl_name = "opencode/.env.tpl";
+
+  mcp_tools = {
+    serena = mcpToolSet {
+      name = "serena";
+      tools = {
+        basic = serena_tools.basic;
+        edit = serena_tools.edit;
+      };
+      agent = "opencode";
+    };
+  };
 in {
   xdg.configFile = {
     ${env_tpl_name} = {
@@ -195,7 +208,7 @@ in {
         }
         // (
           mkOpencodePermissionList {
-            allow = opencode_serena_tools.basic;
+            allow = mcp_tools.serena.basic;
             ask = mcpToolList.opencode {
               name = "serena";
               tools = ["*"];

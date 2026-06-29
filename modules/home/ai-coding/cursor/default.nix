@@ -5,7 +5,8 @@
 }: let
   ai_coding_lib = import ../lib {inherit lib pkgs;};
   inherit (ai_coding_lib) collectLeafFiles;
-  inherit (ai_coding_lib) cursor_serena_tools;
+  inherit (ai_coding_lib) mcpToolSet;
+  inherit (ai_coding_lib) serena_tools;
   inherit (ai_coding_lib) cursor_tools;
   inherit (ai_coding_lib) sensitive_files;
   inherit (ai_coding_lib) mkClaudePermissionList;
@@ -24,6 +25,17 @@
       skill_file_paths
     );
 
+  mcp_tools = {
+    serena = mcpToolSet {
+      name = "serena";
+      tools = {
+        basic = serena_tools.basic;
+        edit = serena_tools.edit;
+      };
+      agent = "cursor";
+    };
+  };
+
   # Cursor rewrites ~/.cursor/cli-config.json at runtime, so home-manager must not
   # manage it directly. Seed defaults once on first install instead.
   cliConfigSeed = pkgs.writeText "cursor-cli-config.json" (builtins.toJSON {
@@ -37,7 +49,7 @@
             "*.env.example"
           ]
         )
-        cursor_serena_tools.basic
+        mcp_tools.serena.basic
       ];
       deny = lib.concatLists [
         (mkClaudePermissionList cursor_tools.read sensitive_files.claude)

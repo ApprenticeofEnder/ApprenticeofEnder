@@ -28,6 +28,25 @@
       map (tool: "Mcp(${name}:${tool})") tools;
   };
 
+  mcpToolSet = {
+    name,
+    tools,
+    agent,
+    home_manager ? false,
+  }:
+    builtins.mapAttrs (
+      # deadnix: skip
+      tool_set: tool_list:
+        mcpToolList.${agent} (
+          {
+            inherit name;
+            tools = tool_list;
+          }
+          // lib.optionalAttrs (agent == "claude") {inherit home_manager;}
+        )
+    )
+    tools;
+
   mkClaudePermissionList = tools: specifiers:
     builtins.concatLists (
       map (
