@@ -27,6 +27,7 @@ for permission** — that prompt is the publish gate, on top of the in-dialogue 
 | `title` | page title |
 | `contentFormat` | `markdown` or `html` — **use the value the template declares** (`adf` also accepted) |
 | `status` | **`draft`** by default; `current` only if the user explicitly asks |
+| `subtype` | **`"live"`** for working documents (Live Doc); omit for all other page types |
 | `parentId` | from step 3, if nesting |
 
 Return the draft URL from the response so the user can review and publish.

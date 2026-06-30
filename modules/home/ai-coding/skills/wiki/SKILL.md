@@ -18,10 +18,11 @@ on demand.
 | **Investigation** | Recording a debugging effort, RCA, or research dig: evidence → root cause → recommendation | Markdown | [investigation](references/investigation.md) |
 | **Guide** | A how-to / runbook others will follow step by step | Markdown | [guide](references/guide.md) |
 | **DACI** | Capturing a decision with roles (Driver/Approver/Contributors/Informed) and options weighed | HTML | [daci](references/daci.md) |
-| **Working document** | A *living* page that tracks an in-flight task/project — updated as work progresses | Markdown | [working-doc](references/working-doc.md) |
+| **Working document** | A *Confluence Live Doc* that tracks an in-flight task/project — updated as work progresses; **never** a regular page | Markdown | [working-doc](references/working-doc.md) |
 
-A **working document** is a Confluence page, not a local file. It is created once and
-**updated** repeatedly as the task moves; treat re-runs on the same task as updates.
+A **working document** is a Confluence **Live Doc** (`subtype: "live"`), not a regular page
+and not a local file. It is created once and **updated** repeatedly as the task moves; treat
+re-runs on the same task as updates.
 
 ## Workflow
 

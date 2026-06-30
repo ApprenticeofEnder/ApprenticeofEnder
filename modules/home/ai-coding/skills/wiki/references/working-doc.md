@@ -1,8 +1,12 @@
 # Working document template
 
-A *living* page that tracks an in-flight task or project. Created once, then **updated** as
-work progresses (see the update flow in [confluence](confluence.md)). **Publish format:
-Markdown** (`contentFormat: "markdown"`).
+A **Confluence Live Doc** — not a regular page — that tracks an in-flight task or project.
+Created once, then **updated** as work progresses (see the update flow in
+[confluence](confluence.md)). **Publish format: Markdown** (`contentFormat: "markdown"`).
+
+> **RULE: always pass `subtype: "live"` when calling `createConfluencePage` for this type.**
+> Regular pages are forbidden for working documents. Live Docs autosave and are immediately
+> visible to all viewers without a publish step.
 
 On each update, append to the progress log and refresh **Status** + last-updated rather than
 rewriting history. Use a short `versionMessage` per update.
