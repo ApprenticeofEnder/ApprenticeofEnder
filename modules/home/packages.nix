@@ -136,17 +136,20 @@
     # keep-sorted end
   ];
 
-  darwin = with pkgs; [
-    # keep-sorted start
-    docker
-    docker-compose
-    podman
-    utm
-    # keep-sorted end
+  darwin = with pkgs;
+    [
+      # keep-sorted start
+      docker
+      docker-compose
+      utm
+      # keep-sorted end
 
-    # libraries
-    libiconv
-  ];
+      # libraries
+      libiconv
+    ]
+    ++ [
+      pkgs-stable.podman
+    ];
 
   fun = with pkgs; [
     # keep-sorted start
