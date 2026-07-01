@@ -9,13 +9,6 @@
       autoInstall.enable = true;
       settings = {
         formatters_by_ft = let
-          jsFormatting = {
-            __unkeyed-1 = "prettier";
-            __unkeyed-2 = "biome";
-            timeout_ms = 2000;
-            stop_after_first = true;
-          };
-
           assignFormatters = formatters: languages:
             builtins.listToAttrs (
               map (
@@ -55,7 +48,7 @@
             ];
             # keep-sorted end
           }
-          // assignFormatters jsFormatting [
+          // assignFormatters ["js_formatting"] [
             # keep-sorted start
             "css"
             "html"
@@ -91,6 +84,20 @@
           shellcheck = {
             command = lib.getExe pkgs.shellcheck;
           };
+
+          js_formatting = lib.nixvim.mkRaw ''
+            function(bufnr)
+              local prettier_config = require("conform.formatters.prettier")
+              local biome_config = require("conform.formatters.biome")
+              local config = prettier_config
+              config.command = "${lib.getExe pkgs.prettier}"
+              if require("conform").get_formatter_info("biome", bufnr).available then
+                config = biome_config
+                config.command = "${lib.getExe pkgs.biome}"
+              end
+              return config
+            end
+          '';
         };
         format_on_save = {
           # These options will be passed to conform.format()
