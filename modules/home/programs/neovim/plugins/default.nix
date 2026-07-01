@@ -8,6 +8,7 @@ in {
     map (fn: ./${fn}) (filter filterFiles (attrNames (readDir ./.)));
   plugins = {
     # keep-sorted start block=yes
+    godot.enable = true;
     lz-n.enable = true;
     nvim-autopairs = {
       enable = true;
