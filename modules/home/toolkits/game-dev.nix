@@ -22,5 +22,9 @@
         };
       };
     };
+    nixvim = {
+      lsp.servers.gdscript.enable = true;
+      plugins.godot.enable = true;
+    };
   };
 }
