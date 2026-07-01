@@ -1,7 +1,10 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [
-    godot # game engine
-  ];
+  home = {
+    packages = with pkgs; [
+      godot # game engine
+      gdtoolkit_4
+    ];
+  };
 
   programs = let
     extensions = with pkgs.vscode-extensions; [
