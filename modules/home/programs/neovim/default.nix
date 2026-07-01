@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  vscode-langservers = pkgs.vscode-langservers-extracted;
+in {
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
@@ -12,5 +14,17 @@
     enable = true;
     nixpkgs.config.allowUnfree = true;
     imports = [./nixvim-config.nix];
+    # HACK: Nixvim hasn't updated nixpkgs yet
+    lsp.servers = {
+      cssls = {
+        package = vscode-langservers;
+      };
+      html = {
+        package = vscode-langservers;
+      };
+      jsonls = {
+        package = vscode-langservers;
+      };
+    };
   };
 }

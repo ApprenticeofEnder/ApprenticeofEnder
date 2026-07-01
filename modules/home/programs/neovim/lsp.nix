@@ -3,39 +3,6 @@
   pkgs,
   ...
 }: let
-  # vscode-langservers-extracted ships a babel bundle whose jsonServerMain.js mixes
-  # CommonJS require() with import.meta.url, so Node treats it as ESM and crashes.
-  # Use VSCodium's native bundled server instead (see nix-community/nixvim#4431).
-  vscodiumExtensions =
-    if pkgs.stdenv.hostPlatform.isDarwin
-    then "${pkgs.vscodium}/Applications/VSCodium.app/Contents/Resources/app/extensions"
-    else "${pkgs.vscodium}/lib/vscode/resources/app/extensions";
-
-  mkVsCodeLspPackage = language: let
-    languageServerMainSrc = "${vscodiumExtensions}/${language}-language-features/server/dist/node/${language}ServerMain.js";
-    languageServerMain = "$out/lib/${language}ServerMain.js";
-    binary = "$out/bin/vscode-${language}-language-server";
-  in
-    pkgs.runCommand "vscode-${language}-language-server" {
-      nativeBuildInputs = [pkgs.makeWrapper pkgs.nodejs];
-      meta.mainProgram = "vscode-${language}-language-server";
-    } ''
-      mkdir -p $out/lib $out/bin
-      cp ${languageServerMainSrc} ${languageServerMain}
-      makeWrapper ${lib.getExe pkgs.nodejs} ${binary} \
-        --add-flags ${languageServerMain} \
-        --append-flags "--stdio"
-    '';
-
-  mkVsCodeLspCmd = package: [
-    (lib.getExe package)
-    "--stdio"
-  ];
-
-  jsonLanguageServerPackage = mkVsCodeLspPackage "json";
-  cssLanguageServerPackage = mkVsCodeLspPackage "css";
-  htmlLanguageServerPackage = mkVsCodeLspPackage "html";
-
   enabledServers = [
     # keep-sorted start
     "ansiblels"
@@ -119,9 +86,7 @@ in {
           ];
         };
         cssls = {
-          package = cssLanguageServerPackage;
           config = {
-            cmd = mkVsCodeLspCmd cssLanguageServerPackage;
             settings = {
               css.lint = {
                 unknownAtRules = "ignore";
@@ -138,14 +103,6 @@ in {
             # but Nix-managed projects need an explicit global fallback.
             nodePath = "${pkgs.eslint}/lib/node_modules";
           };
-        };
-        html = {
-          package = htmlLanguageServerPackage;
-          config.cmd = mkVsCodeLspCmd htmlLanguageServerPackage;
-        };
-        jsonls = {
-          package = jsonLanguageServerPackage;
-          config.cmd = mkVsCodeLspCmd jsonLanguageServerPackage;
         };
         tailwindcss = {
           config.filetypes = [
