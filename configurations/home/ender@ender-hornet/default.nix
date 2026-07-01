@@ -16,10 +16,13 @@ in {
       "linux-only"
     ]
     ++ importHome "toolkits" [
+      # keep-sorted start
       "ai-server.nix"
-      "rust.nix"
-      "python.nix"
+      "game-dev.nix"
       "javascript.nix"
+      "python.nix"
+      "rust.nix"
+      # keep-sorted end
     ];
 
   # Defined by /modules/home/me.nix
