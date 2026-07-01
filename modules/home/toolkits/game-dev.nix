@@ -44,12 +44,16 @@ in
               formatters = {
                 gdtoolkit_format = {
                   command = "${pkgs.gdtoolkit_4}/bin/gdformat";
+                  args = ["$FILENAME"];
+                  stdin = false;
                 };
               };
 
               linters = {
                 gdtoolkit_lint = {
                   command = "${pkgs.gdtoolkit_4}/bin/gdlint";
+                  args = ["$FILENAME"];
+                  stdin = false;
                 };
               };
             };
