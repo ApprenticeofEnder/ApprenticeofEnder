@@ -15,8 +15,6 @@ in {
   # Make pkgs-stable available to all modules
   _module.args.pkgs-stable = pkgs-stable;
 
-  # TODO: Add helper functions that can be used across the module
-
   # `nix.package` is already set if on `NixOS` or `nix-darwin`.
   # TODO: Avoid setting `nix.package` in two places. Does https://github.com/juspay/nixos-unified-template/issues/93 help here?
   nix.package = lib.mkDefault pkgs.lix;

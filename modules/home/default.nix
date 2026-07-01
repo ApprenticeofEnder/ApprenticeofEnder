@@ -4,6 +4,7 @@ let
     # keep-sorted start
     "default.nix"
     "drivers.json"
+    "lib"
     "targets.nix"
     # keep-sorted end
   ];
