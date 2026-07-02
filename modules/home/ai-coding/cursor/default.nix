@@ -63,48 +63,6 @@
   });
 
   config_files = {
-    ".cursor/hooks.json" = {
-      text = builtins.toJSON {
-        version = 1;
-
-        hooks = {
-          preToolUse = [
-            {
-              matcher = "";
-              hooks = [
-                {
-                  type = "command";
-                  command = "serena-hooks remind --client=claude-code";
-                }
-              ];
-            }
-          ];
-          sessionStart = [
-            {
-              matcher = "";
-              hooks = [
-                {
-                  type = "command";
-                  command = "serena-hooks activate --client=claude-code";
-                }
-              ];
-            }
-          ];
-          sessionEnd = [
-            {
-              matcher = "";
-              hooks = [
-                {
-                  type = "command";
-                  command = "serena-hooks cleanup --client=claude-code";
-                }
-              ];
-            }
-          ];
-        };
-      };
-    };
-
     ".cursor/mcp.json" = {
       text = builtins.toJSON {
         mcpServers = {
@@ -135,6 +93,9 @@
     };
   };
 in {
+  imports = [
+    ./hooks
+  ];
   home.packages = with pkgs; [
     cursor-cli
   ];
