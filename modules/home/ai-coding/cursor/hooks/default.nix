@@ -37,7 +37,7 @@
               hooks = [
                 {
                   type = "command";
-                  command = "~/.claude/hooks/force-skill.sh";
+                  command = "./hooks/force-skill.sh";
                 }
               ];
             }
