@@ -127,7 +127,9 @@ class SkillRuleSet(BaseModel):
             return cls.from_file(rule_file)
 
     @classmethod
-    def from_file(cls, rule_file: Path | os.PathLike[str]) -> "SkillRuleSet | None":
+    def from_file(
+        cls, rule_file: Path | os.PathLike[str]
+    ) -> "SkillRuleSet | None":
         """
         Attempts to load a `skill-rules.json` file, either user- or project-level.
         """
@@ -157,7 +159,9 @@ class MatchedSkill(SkillRule):
     def from_rule(
         cls, name: str, match_type: MatchType, rule: SkillRule
     ) -> "MatchedSkill":
-        assert match_type != MatchType.NO_MATCH, "Cannot use a non-matched skill!"
+        assert match_type != MatchType.NO_MATCH, (
+            "Cannot use a non-matched skill!"
+        )
         model_dict = rule.model_dump()
         model_dict.update(name=name, match_type=match_type)
         return cls.model_validate(model_dict)
@@ -171,12 +175,16 @@ class MatchedSkillSet(BaseModel):
     skills: list[MatchedSkill] = []
 
     def add_match(self, name: str, match_type: MatchType, rule: SkillRule):
-        assert match_type != MatchType.NO_MATCH, "Cannot add a non-matched skill!"
+        assert match_type != MatchType.NO_MATCH, (
+            "Cannot add a non-matched skill!"
+        )
         skill = MatchedSkill.from_rule(name, match_type, rule)
         self.skills.append(skill)
 
     def _filter_skills(
-        self, priority: SkillPriority | None = None, skill_type: SkillType | None = None
+        self,
+        priority: SkillPriority | None = None,
+        skill_type: SkillType | None = None,
     ) -> list[MatchedSkill]:
         result: list[MatchedSkill] = []
         for skill in self.skills:
@@ -207,7 +215,9 @@ class MatchedSkillSet(BaseModel):
     def optional_skills(self) -> list[MatchedSkill]:
         return self._filter_skills(priority=SkillPriority.LOW)
 
-    def render_skills(self, section_name: str, skills: list[MatchedSkill]) -> str:
+    def render_skills(
+        self, section_name: str, skills: list[MatchedSkill]
+    ) -> str:
         rendered_skills = "\n".join(f"- {skill}" for skill in skills)
         return f"""
         ## {section_name}
@@ -225,7 +235,9 @@ class MatchedSkillSet(BaseModel):
         suggested_section = self.render_skills(
             "Suggested Skills", self.suggested_skills
         )
-        optional_section = self.render_skills("Optional Skills", self.optional_skills)
+        optional_section = self.render_skills(
+            "Optional Skills", self.optional_skills
+        )
 
         return f"""
         # SKILL ACTIVATION CHECK
@@ -260,7 +272,9 @@ def main():
         matched_skills = rule_set.match_rules(hook_input.prompt)
         print(matched_skills.render())
     except RulesetLoadFailed:
-        print("Failed to load rule set. Check if a skill-rules.json file exists.")
+        print(
+            "Failed to load rule set. Check if a skill-rules.json file exists."
+        )
         exit_code = 1
     except ValidationError as e:
         print("Validation errors occurred:")
