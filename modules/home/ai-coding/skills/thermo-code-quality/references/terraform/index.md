@@ -1,11 +1,49 @@
-## Rules Index
+# Terraform / OpenTofu Review Rules
 
-- [block-ordering-and-structure](./block-ordering-and-structure.md): Assess for overall block structure, variable definitions, etc.
-- [count-vs-for-each](./count-vs-for-each.md): Assess the usage of count vs for_each.
-- [modern-terraform-features](./modern-features.md): Assess the usage of post 1.0 Terraform features.
-- [version-management](./version-management.md): Assess version management.
-- [refactoring-patterns](./refactoring-patterns.md): Assess version upgrades and secrets remediation.
-- [locals](./locals.md): Assess the adherence to using locals for dependency management.
+Layered under `thermo-code-quality`. Apply thermo's structural rules first, then use these
+Terraform-specific rules for HCL in the diff. Flag a finding for each rule violated and cite
+it by ID. Full rule text and Bad/Good examples live in the linked files.
+
+## Rule Index
+
+### [block-ordering-and-structure](./block-ordering-and-structure.md)
+`resource-block-ordering`, `variable-block-ordering`, `missing-variable-description`,
+`variable-type-preference`, `output-naming`
+
+### [count-vs-for-each](./count-vs-for-each.md)
+`count-index-identity`, `prefer-foreach-stable-keys`, `count-for-boolean-only`,
+`foreach-keys-known-at-plan`, `missing-moved-on-count-migration`
+
+### [modern-features](./modern-features.md)
+`feature-version-floor`, `prefer-try-over-concat`, `nullable-false`, `optional-with-defaults`,
+`moved-not-destroy`, `moved-boundary-limits`, `ignore-changes-scope`, `check-is-advisory`,
+`writeonly-secrets`, `nonsensitive-leak`, `ephemeral-vs-sensitive`,
+`dynamic-iterator-shadowing`, `dynamic-set-ordering`
+
+### [version-management](./version-management.md)
+`version-constraint-syntax`, `pin-strategy-by-component`, `commit-lock-file`,
+`separate-upgrade-pr`
+
+### [refactoring-patterns](./refactoring-patterns.md)
+`legacy-to-modern-migration`, `secrets-remediation`
+
+### [locals](./locals.md)
+`locals-force-deletion-order`
+
+### [provisioners](./provisioners.md)
+`provisioners-last-resort`, `provisioner-cost-awareness`
+
+## Review Priority
+
+When reviewing HCL in a diff, prioritize findings in this order:
+
+1. **Secret / state exposure** — `writeonly-secrets`, `secrets-remediation`, `nonsensitive-leak`, `ephemeral-vs-sensitive`.
+2. **Identity churn & blast radius** — `count-index-identity`, `missing-moved-on-count-migration`, `moved-not-destroy`, `moved-boundary-limits`, `foreach-keys-known-at-plan`.
+3. **Drift & version discipline** — `ignore-changes-scope`, `feature-version-floor`, `version-constraint-syntax`, `pin-strategy-by-component`, `commit-lock-file`, `separate-upgrade-pr`.
+4. **Correctness gotchas** — `check-is-advisory`, `dynamic-iterator-shadowing`, `dynamic-set-ordering`, `provisioners-last-resort`, `provisioner-cost-awareness`.
+5. **Structure & legibility** — block/variable/output ordering, typing, naming, `optional-with-defaults`, `prefer-try-over-concat`, `legacy-to-modern-migration`, `locals-force-deletion-order`.
+
+Prefer a small number of high-conviction findings over a long list of ordering nits.
 
 ## LLM Mistake Checklist — Code Patterns
 

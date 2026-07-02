@@ -1,17 +1,26 @@
-## Block Ordering & Structure
+# Block Ordering & Structure
 
-### Resource Block Structure
+Flag a finding for each rule violated in the diff. Cite the rule by ID.
 
-**Strict argument ordering:**
+#### `resource-block-ordering`
 
-1. `count` or `for_each` FIRST (blank line after)
-2. Other arguments (alphabetical or logical grouping)
-3. `tags` as last real argument
-4. `depends_on` after tags (if needed)
-5. `lifecycle` at the very end (if needed)
+Resource arguments must follow a strict order: `count`/`for_each` first (blank line after) → arguments → `tags` → `depends_on` → `lifecycle`. Flag out-of-order blocks; they make resources harder to scan and diff.
+
+Bad:
 
 ```hcl
-# ✅ GOOD - Correct ordering
+resource "aws_nat_gateway" "this" {
+  allocation_id = aws_eip.this[0].id
+  tags          = { Name = "nat" }
+  count         = var.create_nat_gateway ? 1 : 0  # should be first
+  subnet_id     = aws_subnet.public[0].id
+  depends_on    = [aws_internet_gateway.this]     # should be after tags
+}
+```
+
+Good:
+
+```hcl
 resource "aws_nat_gateway" "this" {
   count = var.create_nat_gateway ? 1 : 0
 
@@ -29,40 +38,17 @@ resource "aws_nat_gateway" "this" {
     create_before_destroy = true
   }
 }
-
-# ❌ BAD - Wrong ordering
-resource "aws_nat_gateway" "this" {
-  allocation_id = aws_eip.this[0].id
-
-  tags = { Name = "nat" }
-
-  count = var.create_nat_gateway ? 1 : 0  # Should be first
-
-  subnet_id = aws_subnet.public[0].id
-
-  lifecycle {
-    create_before_destroy = true
-  }
-
-  depends_on = [aws_internet_gateway.this]  # Should be after tags
-}
 ```
 
-> Pattern applies identically on Azure/GCP; for resource equivalents see [Module Patterns: Cross-cloud resource map](module-patterns.md#cross-cloud-resource-map).
+The same ordering applies on Azure/GCP resources.
 
-### Variable Definition Structure
+#### `variable-block-ordering`
 
-**Variable block ordering:**
+Variable blocks must order: `description` → `type` → `default` → `sensitive` → `nullable` → `validation`. Flag reordered or scattered variable definitions.
 
-1. `description` (ALWAYS required)
-2. `type`
-3. `default`
-4. `sensitive` (when setting to true)
-5. `nullable` (when setting to false)
-6. `validation`
+Good:
 
 ```hcl
-# ✅ GOOD - Correct ordering and structure
 variable "environment" {
   description = "Environment name for resource tagging"
   type        = string
@@ -76,75 +62,65 @@ variable "environment" {
 }
 ```
 
-### Variable Type Preferences
+#### `missing-variable-description`
 
-- Prefer **simple types** (`string`, `number`, `list()`, `map()`) over `object()` unless strict validation needed
-- Use `optional()` for optional object attributes (Terraform 1.3+)
-- Use `any` to disable validation at certain depths or support multiple types
+Every `variable` and `output` must have a `description`. Flag any missing one — this is a maintainability regression on a module contract.
 
-**Modern variable patterns (Terraform 1.3+):**
+#### `variable-type-preference`
+
+Prefer simple types (`string`, `number`, `list()`, `map()`) and `optional()` typed object attributes (1.3+) over untyped `map(any)` / `any` on long-lived contracts. Reserve `any` for cases that genuinely support multiple types. Flag loose typing that erodes the module contract.
+
+Bad:
 
 ```hcl
-# ✅ GOOD - Using optional() for object attributes
+variable "mixed_config" {
+  description = "Configuration with varying types"
+  type        = any            # loose contract, no validation
+}
+```
+
+Good:
+
+```hcl
 variable "database_config" {
   description = "Database configuration with optional parameters"
   type = object({
     name               = string
     engine             = string
     instance_class     = string
-    backup_retention   = optional(number, 7)      # Default: 7
-    monitoring_enabled = optional(bool, true)     # Default: true
-    tags               = optional(map(string), {}) # Default: {}
+    backup_retention   = optional(number, 7)
+    monitoring_enabled = optional(bool, true)
+    tags               = optional(map(string), {})
   })
 }
+```
 
-# Usage - only required fields needed
-database_config = {
-  name           = "mydb"
-  engine         = "mysql"
-  instance_class = "db.t3.micro"
-  # Optional fields use defaults
+#### `output-naming`
+
+Outputs follow `{name}_{type}_{attribute}`, omit the `this_` prefix, and use plural names for list-valued outputs. Flag `this_`-prefixed or singular-named list outputs.
+
+Bad:
+
+```hcl
+output "this_security_group_id" {   # drop "this_"
+  value = aws_security_group.this[0].id
+}
+
+output "subnet_id" {                # returns a list — should be plural
+  value = aws_subnet.private[*].id
 }
 ```
 
-**Complex type example:**
+Good:
 
 ```hcl
-# For lists/maps of same type
-variable "subnet_configs" {
-  description = "Map of subnet configurations"
-  type        = map(map(string))  # All values are maps of strings
-}
-
-# When types vary, use any
-variable "mixed_config" {
-  description = "Configuration with varying types"
-  type        = any
-}
-```
-
-### Output Structure
-
-**Pattern:** `{name}_{type}_{attribute}`
-
-```hcl
-# ✅ GOOD
-output "security_group_id" {  # "this_" should be omitted
+output "security_group_id" {
   description = "The ID of the security group"
   value       = try(aws_security_group.this[0].id, "")
 }
 
-output "private_subnet_ids" {  # Plural for list
+output "private_subnet_ids" {
   description = "List of private subnet IDs"
   value       = aws_subnet.private[*].id
-}
-
-# ❌ BAD
-output "this_security_group_id" {  # Don't prefix with "this_"
-  value = aws_security_group.this[0].id
-}
-
-output "subnet_id" {  # Should be plural "subnet_ids"
-  value = aws_subnet.private[*].id  # Returns list
 }
 ```

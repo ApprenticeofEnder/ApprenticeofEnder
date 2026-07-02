@@ -15,6 +15,7 @@ After applying the rules below, also apply the appropriate language skill when r
 
 - **C# / .NET** changes → also apply [`dotnet-code-quality`](../dotnet-code-quality/SKILL.md). It encodes language-specific quality rules (SOLID, async, immutability, fail-fast, etc.) used for review.
 - **TanStack** (Query / Router / Start) changes → also apply [`tanstack`](../tanstack/SKILL.md). It encodes query-key shape, loader patterns, server-function validation, SSR coordination, and common anti-patterns.
+- **Terraform / OpenTofu** changes → load [`references/terraform/index.md`](references/terraform/index.md). This is an inline rule-ID reference set (not a sibling skill — the `terraform` skill is diagnostic-framed), covering identity churn, secret/state exposure, `moved`/`for_each` correctness, version discipline, and provisioner misuse.
 - Other languages → use your judgment and the best-known standards for that ecosystem.
 
 If both apply (e.g., a full-stack PR with C# backend and TanStack frontend), apply both. Do not duplicate findings — surface each issue once, in the section where the reviewer can act on it.
@@ -163,7 +164,7 @@ Prioritize findings in this order:
 5. File-size and decomposition concerns
 6. Modularity and abstraction issues
 7. Legibility and maintainability concerns
-8. Language-specific findings from `dotnet-code-quality` / `tanstack` (cite the rule ID)
+8. Language-specific findings from `dotnet-code-quality` / `tanstack` / `references/terraform/` (cite the rule ID)
 
 Do not flood the review with low-value nits if there are larger structural issues.
 Prefer a smaller number of high-conviction comments over a long list of cosmetic notes.
