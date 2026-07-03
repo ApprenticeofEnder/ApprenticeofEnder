@@ -3,21 +3,11 @@
 
   inputs = {
     # Principle inputs (updated by `nix run .#update`)
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
-    nix-darwin = {
-      url = "github:nix-darwin/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # keep-sorted start block=yes newline_separated=yes
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    nixos-unified.url = "github:srid/nixos-unified";
-
-    nur = {
-      url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -26,30 +16,60 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-unified.url = "github:srid/nixos-unified";
+
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # keep-sorted end
+
     # Software inputs
+    # keep-sorted start block=yes newline_separated=yes
+    Terramaid.url = "github:RoseSecurity/Terramaid";
+
+    double-agent.url = "github:ApprenticeofEnder/double-agent-nix";
+
+    elephant.url = "github:abenz1267/elephant";
+
+    globset = {
+      url = "github:pdtpartners/globset";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     nixvim = {
       url = "github:nix-community/nixvim";
     };
-    Terramaid.url = "github:RoseSecurity/Terramaid";
-    elephant.url = "github:abenz1267/elephant";
-    double-agent.url = "github:ApprenticeofEnder/double-agent-nix";
+
+    obsidian-plugins = {
+      url = "github:cjavad/nixpille-obsidian-community-plugins";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     walker = {
       url = "github:abenz1267/walker";
       inputs.elephant.follows = "elephant";
     };
-    obsidian-plugins = {
-      url = "github:cjavad/nixpille-obsidian-community-plugins";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # keep-sorted end
   };
 
   # Wired using https://nixos-unified.org/guide/autowiring
