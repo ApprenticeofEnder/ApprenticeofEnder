@@ -7,15 +7,13 @@
 }: let
   inherit (flake) inputs;
   inherit (inputs) self;
-  shared-lib = import (self + /shared/lib) {inherit lib;};
+  shared-lib = import (self + /modules/shared/lib) {
+    inherit lib;
+    globset = inputs.globset;
+  };
 in {
-  imports =
-    [
-      self.nixosModules.common
-    ]
-    ++ shared-lib.getNixImports {
-      root = ./.;
-      exclude = ["common/*"];
-    };
+  imports = shared-lib.getNixImports {
+    root = ./.;
+  };
   services.openssh.enable = true;
 }
