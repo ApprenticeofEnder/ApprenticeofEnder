@@ -16,8 +16,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.luks.devices."luks-f0e76fce-ba6b-4eb1-8376-e42f2635f5a8".device = "/dev/disk/by-uuid/f0e76fce-ba6b-4eb1-8376-e42f2635f5a8";
-
   # TODO: Update this and refactor for modularity
   networking.hostName = "ender-raptor"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
