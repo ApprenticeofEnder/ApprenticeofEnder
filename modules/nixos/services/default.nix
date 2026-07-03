@@ -1,11 +1,16 @@
-let
-  disallowedFiles = [
-    # keep-sorted start
-    "default.nix"
-    # keep-sorted end
-  ];
-  filterFiles = filename: !(builtins.elem filename disallowedFiles);
+{
+  flake,
+  lib,
+  ...
+}: let
+  inherit (flake) inputs;
+  inherit (inputs) self;
+  shared-lib = import (self + /modules/shared/lib) {
+    inherit lib;
+    globset = inputs.globset;
+  };
 in {
-  imports = with builtins;
-    map (fn: ./${fn}) (filter filterFiles (attrNames (readDir ./.)));
+  imports = shared-lib.getNixImports {
+    root = ./.;
+  };
 }

@@ -1,10 +1,21 @@
 # A module that automatically imports everything else in the parent folder.
-let
-  filterFiles = filename: (filename
-    != "default.nix"
-    && filename != "linux-only"
-    && filename != "darwin-only");
+{
+  flake,
+  lib,
+  ...
+}: let
+  inherit (flake) inputs;
+  inherit (inputs) self;
+  shared-lib = import (self + /modules/shared/lib) {
+    inherit lib;
+    globset = inputs.globset;
+  };
 in {
-  imports = with builtins;
-    map (fn: ./${fn}) (filter filterFiles (attrNames (readDir ./.)));
+  imports = shared-lib.getNixImports {
+    root = ./.;
+    exclude = [
+      "linux-only/*"
+      "darwin-only/*"
+    ];
+  };
 }

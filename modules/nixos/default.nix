@@ -15,5 +15,4 @@ in {
   imports = shared-lib.getNixImports {
     root = ./.;
   };
-  services.openssh.enable = true;
 }
