@@ -1,16 +1,55 @@
 {
+  config,
   lib,
   pkgs,
   ...
-}: {
+}: let
+  # for more config: https://github.com/tejas-codex/vibe-terminal/blob/main/config/tmux.conf
+  extraConfig = ''
+    set -g allow-passthrough on
+    set -s extended-keys on
+    set -as terminal-features 'xterm*:extkeys'
+    set -ga terminal-overrides ",xterm-ghostty:RGB,*256col*:RGB"
+
+    bind | split-window -h -c "#{pane_current_path}"
+    bind - split-window -h -c "#{pane_current_path}"
+    bind c new-window -c "#{pane_current_path}"
+    bind x kill-pane
+    unbind '"'
+    unbind %
+
+    bind r source-file ${config.xdg.configHome}/tmux/tmux.conf \; display "\tConfig reloaded!"
+
+    set -g @resurrect-capture-pane-contents 'on'
+    set -g @resurrect-processes 'claude "claude -c" nvim vim btop htop node "~yazi" ssh'
+    set -g @resurrect-strategy-nvim 'session'
+  '';
+in {
   programs.tmux = {
     enable = true;
+    inherit extraConfig;
+
+    # keep-sorted start block=yes
+    aggressiveResize = true;
+    clock24 = true;
+    escapeTime = 0;
+    focusEvents = true;
+    historyLimit = 50000;
     keyMode = "vi";
+    mouse = true;
+    plugins = with pkgs.tmuxPlugins; [
+      # keep-sorted start
+      continuum
+      nord
+      pain-control
+      resurrect
+      tmux-fzf
+      tmux-which-key
+      # keep-sorted end
+    ];
+    sensibleOnTop = true;
     shell = "${lib.getExe pkgs.fish}";
-    extraConfig = ''
-      set -g allow-passthrough on
-      set -s extended-keys on
-      set -as terminal-features 'xterm*:extkeys'
-    '';
+    shortcut = "a";
+    # keep-sorted end
   };
 }
