@@ -18,11 +18,16 @@
     unbind '"'
     unbind %
 
+    bind -T copy-mode-vi v send -X begin-selection
+    bind -T copy-mode-vi y send -X copy-selection-and-cancel
+
     bind r source-file ${config.xdg.configHome}/tmux/tmux.conf \; display "\tConfig reloaded!"
 
     set -g @resurrect-capture-pane-contents 'on'
     set -g @resurrect-processes 'claude "claude -c" nvim vim btop htop node "~yazi" ssh'
     set -g @resurrect-strategy-nvim 'session'
+
+    set -gu default-command
   '';
 in {
   programs.tmux = {
