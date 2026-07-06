@@ -12,7 +12,7 @@
     set -ga terminal-overrides ",xterm-ghostty:RGB,*256col*:RGB"
 
     bind | split-window -h -c "#{pane_current_path}"
-    bind - split-window -h -c "#{pane_current_path}"
+    bind - split-window -v -c "#{pane_current_path}"
     bind c new-window -c "#{pane_current_path}"
     bind x kill-pane
     unbind '"'
