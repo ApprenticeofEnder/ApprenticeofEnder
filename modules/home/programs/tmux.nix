@@ -56,5 +56,34 @@ in {
     shell = "${lib.getExe pkgs.fish}";
     shortcut = "a";
     # keep-sorted end
+
+    tmuxinator = {
+      enable = true;
+      projects = {
+        personal = {
+          root = "~/ApprenticeofEnder";
+          windows = [
+            {
+              dev = {
+                layout = "main-vertical";
+                panes = [
+                  {
+                    editor = [
+                      "nvim"
+                    ];
+                  }
+                  {
+                    git = [
+                      "lazygit"
+                    ];
+                  }
+                  "fish"
+                ];
+              };
+            }
+          ];
+        };
+      };
+    };
   };
 }
