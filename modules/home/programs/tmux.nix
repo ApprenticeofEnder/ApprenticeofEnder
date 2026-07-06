@@ -62,6 +62,7 @@ in {
       projects = {
         personal = {
           root = "~/ApprenticeofEnder";
+          name = "personal";
           windows = [
             {
               dev = {
