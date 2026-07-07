@@ -101,6 +101,7 @@ in {
     sensibleOnTop = true;
     shell = "${lib.getExe pkgs.fish}";
     shortcut = "a";
+    terminal = "tmux-256color";
     # keep-sorted end
 
     tmuxinator = {
