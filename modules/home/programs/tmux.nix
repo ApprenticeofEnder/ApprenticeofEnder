@@ -80,7 +80,31 @@ in {
                       "lazygit"
                     ];
                   }
-                  "fish"
+                  ""
+                ];
+              };
+            }
+          ];
+        };
+        oac = lib.mkIf pkgs.stdenv.isDarwin {
+          root = "~/Work/Projects/oac";
+          name = "oac";
+          windows = [
+            {
+              dev = {
+                layout = "main-vertical";
+                panes = [
+                  {
+                    editor = [
+                      "nvim"
+                    ];
+                  }
+                  {
+                    git = [
+                      "lazygit"
+                    ];
+                  }
+                  ""
                 ];
               };
             }
