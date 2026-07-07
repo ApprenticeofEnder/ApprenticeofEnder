@@ -39,8 +39,6 @@
 
     double-agent.url = "github:ApprenticeofEnder/double-agent-nix";
 
-    elephant.url = "github:abenz1267/elephant";
-
     globset = {
       url = "github:pdtpartners/globset";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -65,10 +63,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    walker = {
-      url = "github:abenz1267/walker";
-      inputs.elephant.follows = "elephant";
-    };
     # keep-sorted end
   };
 
