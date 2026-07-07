@@ -15,6 +15,6 @@ in
     inherit name;
     inherit description;
     claude_model = "opus";
-    opencode_model = "opus";
+    opencode_model = "kimi-k27";
     permission_groups = ["read" "bash" "noedit"];
   }

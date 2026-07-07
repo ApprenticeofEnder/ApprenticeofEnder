@@ -25,7 +25,7 @@
         Fleet worker, HAIKU tier. Use for mechanical, well-specified scoped tasks — boilerplate, config files, renames, format-preserving edits, env/compose setup, anything where the steps are obvious and judgment is minimal. Dispatched by the lead thread with a single bounded task brief. Escalate to count/wiseman (sonnet) when the task needs design judgment, or trigger (opus) when it is security-critical. Interchangeable with tabloid.
       '';
       claude_model = "haiku";
-      opencode_model = "haiku";
+      opencode_model = "north-mini";
     };
     huxian = {
       description = ''
@@ -52,7 +52,7 @@
         Fleet worker, HAIKU tier. Precision file editor — surgical, format-preserving edits across one or a few files: targeted line/function changes, mechanical renames, signature tweaks, import fixups, comment/format cleanups where the exact change is already specified. Dispatched by the lead thread with a single bounded task brief. Interchangeable with fencer. Escalate to count/wiseman (sonnet) when the edit needs design judgment, or trigger (opus) when it is security-critical.
       '';
       claude_model = "haiku";
-      opencode_model = "haiku";
+      opencode_model = "north-mini";
     };
     tailor = {
       description = ''
@@ -64,7 +64,7 @@
         Fleet worker, OPUS tier. Use for the hardest, architectural, or security-critical scoped build tasks — auth, authorizers, crypto, data-model design, anything where a subtle mistake is expensive. Dispatched by the lead thread with a single bounded task brief. Not for trivial mechanical edits (use fencer) or moderate work (use count/wiseman).
       '';
       claude_model = "opus";
-      opencode_model = "opus";
+      opencode_model = "kimi-k27";
     };
     wiseman = {
       description = ''

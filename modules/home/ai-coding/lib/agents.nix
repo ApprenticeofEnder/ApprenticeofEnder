@@ -110,6 +110,16 @@ in rec {
       haiku = "github-copilot/claude-haiku-4.5";
       sonnet = "github-copilot/claude-sonnet-4.6";
       opus = "github-copilot/claude-opus-4.6";
+
+      # keep-sorted start
+      deepseek-v4 = "deepseek/deepseek-v4-flash";
+      kimi-k27 = "moonshotai/kimi-k2.7-code";
+      minimax-m3 = "minimax/minimax-m3";
+      nemotron = "nvidia/nemotron-3-ultra-550b-a55b";
+      north-mini = "cohere/north-mini-code:free";
+      owl-alpha = "openrouter/owl-alpha";
+      z-ai = "z-ai/glm-5.2";
+      # keep-sorted end
     };
     claude = {
       haiku = "haiku";
