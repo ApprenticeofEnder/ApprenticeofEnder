@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-stable,
   ...
 }: let
   # for more config: https://github.com/tejas-codex/vibe-terminal/blob/main/config/tmux.conf
@@ -32,6 +33,7 @@
 in {
   programs.tmux = {
     enable = true;
+    package = pkgs-stable.tmux;
     inherit extraConfig;
 
     # keep-sorted start block=yes
