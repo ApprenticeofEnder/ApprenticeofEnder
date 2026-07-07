@@ -79,6 +79,7 @@
       just # make for commands
       lazyssh
       libnotify
+      libz
       macchina
       mosh # better SSH
       ncdu # disk usage (baobab-like tui)

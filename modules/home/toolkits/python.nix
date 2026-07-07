@@ -15,12 +15,21 @@
       # keep-sorted end
     ];
   };
+
+  python = with pkgs;
+    python313.withPackages (
+      ps:
+        with ps; [
+          pygame
+          zlib-ng
+        ]
+    );
 in
   lib.mkMerge [
     vscodeConfig
     {
-      home.packages = with pkgs; [
-        python313
+      home.packages = [
+        python
       ];
       programs = {
         ruff = {
