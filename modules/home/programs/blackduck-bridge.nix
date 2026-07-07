@@ -71,7 +71,7 @@
       wrapProgram $out/bin/bridge-cli
     '';
 in {
-  home.packages = lib.optionals true [
+  home.packages = lib.optionals pkgs.stdenv.isDarwin [
     blackduck-bridge
   ];
 }
