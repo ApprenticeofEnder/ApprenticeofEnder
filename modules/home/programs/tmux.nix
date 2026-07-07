@@ -30,6 +30,50 @@
 
     set -gu default-command
   '';
+
+  window_layouts = {
+    editor = {
+      enableGit ? true,
+      enableShell ? true,
+    }: {
+      layout = "main-vertical";
+      panes =
+        [
+          {
+            editor = "nvim";
+          }
+        ]
+        ++ lib.optionals enableGit [
+          {
+            git = "lazygit";
+          }
+        ]
+        ++ lib.optionals enableShell [
+          ""
+        ];
+    };
+    agent = {
+      harness,
+      enableGit ? true,
+      enableShell ? true,
+    }: {
+      layout = "main-vertical";
+      panes =
+        [
+          {
+            agent = harness;
+          }
+        ]
+        ++ lib.optionals enableGit [
+          {
+            git = "lazygit";
+          }
+        ]
+        ++ lib.optionals enableShell [
+          ""
+        ];
+    };
+  };
 in {
   programs.tmux = {
     enable = true;
@@ -67,20 +111,17 @@ in {
           name = "personal";
           windows = [
             {
-              dev = {
-                layout = "main-vertical";
+              dev = window_layouts.editor {};
+            }
+            {
+              agent = window_layouts.agent {
+                harness = "opencode";
+              };
+            }
+            {
+              recon = {
                 panes = [
-                  {
-                    editor = [
-                      "nvim"
-                    ];
-                  }
-                  {
-                    git = [
-                      "lazygit"
-                    ];
-                  }
-                  ""
+                  "tv"
                 ];
               };
             }
@@ -91,21 +132,11 @@ in {
           name = "oac";
           windows = [
             {
-              dev = {
-                layout = "main-vertical";
-                panes = [
-                  {
-                    editor = [
-                      "nvim"
-                    ];
-                  }
-                  {
-                    git = [
-                      "lazygit"
-                    ];
-                  }
-                  ""
-                ];
+              dev = window_layouts.editor {};
+            }
+            {
+              agent = window_layouts.agent {
+                harness = "claude";
               };
             }
           ];
