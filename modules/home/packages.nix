@@ -68,42 +68,39 @@
     # keep-sorted end
   ];
 
-  utility = with pkgs;
-    [
-      # System
-      # keep-sorted start
-      cargo-seek
-      duf # disk usage
-      exiftool
-      imagemagick
-      just # make for commands
-      lazyssh
-      libnotify
-      libz
-      macchina
-      mosh # better SSH
-      ncdu # disk usage (baobab-like tui)
-      pik # process info
-      procs # better ps
-      sd # better sed
-      tldr # man with examples
-      tree
-      ttyd # terminal sharing
-      unzip
-      xclip
-      # keep-sorted end
+  utility = with pkgs; [
+    # System
+    # keep-sorted start
+    cargo-seek
+    duf # disk usage
+    exiftool
+    imagemagick
+    just # make for commands
+    lazyssh
+    libnotify
+    libz
+    macchina
+    mosh # better SSH
+    ncdu # disk usage (baobab-like tui)
+    pik # process info
+    procs # better ps
+    sd # better sed
+    tldr # man with examples
+    tree
+    ttyd # terminal sharing
+    unzip
+    xclip
+    # keep-sorted end
 
-      # Research
-      wiki-tui # wikipedia TUI
+    # Research
+    wiki-tui # wikipedia TUI
 
-      # Routine
-      lynx # text web browser
-      md-tui # markdown reader
-      ispell # spelling
-    ]
-    ++ [
-      pkgs-stable.ntfy-sh # notifications when commands finish
-    ];
+    # Routine
+    lynx # text web browser
+    md-tui # markdown reader
+    ispell # spelling
+    ntfy-sh
+  ];
 
   linux = with pkgs;
     [
