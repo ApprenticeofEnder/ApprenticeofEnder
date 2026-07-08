@@ -31,49 +31,50 @@
     set -gu default-command
   '';
 
-  window_layouts = {
-    editor = {
-      enableGit ? true,
-      enableShell ? true,
-    }: {
-      layout = "main-vertical";
-      panes =
-        [
-          {
-            editor = "nvim";
-          }
-        ]
-        ++ lib.optionals enableGit [
-          {
-            git = "lazygit";
-          }
-        ]
-        ++ lib.optionals enableShell [
-          ""
-        ];
+  mkProject = {
+    name,
+    root,
+    enable ? false,
+    agent ? "opencode",
+    additional_windows ? [],
+  }:
+    if !enable
+    then {}
+    else {
+      "${name}" = {
+        inherit name root;
+        windows =
+          [
+            {
+              dev = {
+                layout = "main-vertical";
+                panes = [
+                  {
+                    editor = "nvim";
+                  }
+                ];
+              };
+            }
+            {
+              agent = {
+                layout = "main-vertical";
+                panes = [
+                  {
+                    inherit agent;
+                  }
+                  {
+                    git = "lazygit";
+                  }
+                  {
+                    shell = "";
+                  }
+                ];
+              };
+            }
+          ]
+          ++ additional_windows;
+      };
     };
-    agent = {
-      harness,
-      enableGit ? true,
-      enableShell ? true,
-    }: {
-      layout = "main-vertical";
-      panes =
-        [
-          {
-            agent = harness;
-          }
-        ]
-        ++ lib.optionals enableGit [
-          {
-            git = "lazygit";
-          }
-        ]
-        ++ lib.optionals enableShell [
-          ""
-        ];
-    };
-  };
 in {
   programs.tmux = {
     enable = true;
@@ -107,43 +108,35 @@ in {
 
     tmuxinator = {
       enable = true;
-      projects = {
-        personal = {
-          root = "~/ApprenticeofEnder";
+      projects = lib.mergeAttrsList [
+        (mkProject {
           name = "personal";
-          windows = [
+          root = "~/ApprenticeofEnder";
+          enable = true;
+          agent = "opencode";
+          additional_windows = [
             {
-              dev = window_layouts.editor {};
-            }
-            {
-              agent = window_layouts.agent {
-                harness = "opencode";
-              };
-            }
-            {
-              recon = {
+              tv = {
                 panes = [
                   "tv"
                 ];
               };
             }
           ];
-        };
-        oac = lib.mkIf pkgs.stdenv.isDarwin {
-          root = "~/Work/Projects/oac";
+        })
+        (mkProject {
           name = "oac";
-          windows = [
-            {
-              dev = window_layouts.editor {};
-            }
-            {
-              agent = window_layouts.agent {
-                harness = "claude";
-              };
-            }
-          ];
-        };
-      };
+          root = "~/Work/Projects/oac";
+          enable = pkgs.stdenv.isDarwin;
+          agent = "claude";
+        })
+        (mkProject {
+          name = "acre-infra";
+          root = "~/Work/infra";
+          enable = pkgs.stdenv.isDarwin;
+          agent = "claude";
+        })
+      ];
     };
   };
 }
