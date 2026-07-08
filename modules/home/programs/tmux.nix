@@ -66,7 +66,7 @@
                     git = "lazygit";
                   }
                   {
-                    shell = "";
+                    shell = "clear";
                   }
                 ];
               };
