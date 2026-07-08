@@ -1,5 +1,5 @@
 {lib, ...}: let
-  ai_coding_lib = import ../lib {
+  ai_coding_lib = import ../../lib {
     inherit lib;
   };
   inherit (ai_coding_lib) mkAgent;
@@ -82,6 +82,7 @@ in
               inherit name;
               description = agent.description;
               agent_mode = "subagent";
+              prompt_file = ./${name}/agent.md;
             }
             (lib.optionalAttrs (lib.hasAttrByPath ["claude_model"] agent) {
               claude_model = agent.claude_model;

@@ -3,7 +3,7 @@
     # keep-sorted start
     ./agents/critic
     ./agents/debugger
-    ./agents/fleet.nix
+    ./agents/fleet
     ./agents/plan
     ./claude-code
     ./cursor
