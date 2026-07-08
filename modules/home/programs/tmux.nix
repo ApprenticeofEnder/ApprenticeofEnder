@@ -82,6 +82,7 @@ in {
 
     # keep-sorted start block=yes
     aggressiveResize = true;
+    baseIndex = 1;
     clock24 = true;
     escapeTime = 0;
     focusEvents = true;
