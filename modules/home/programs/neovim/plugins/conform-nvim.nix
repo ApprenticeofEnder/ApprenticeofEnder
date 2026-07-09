@@ -91,6 +91,7 @@
               local biome_config = require("conform.formatters.biome")
               local config = prettier_config
               config.command = "${lib.getExe pkgs.prettier}"
+              config.timeout_ms = 2000
               if require("conform").get_formatter_info("biome", bufnr).available then
                 config = biome_config
                 config.command = "${lib.getExe pkgs.biome}"
