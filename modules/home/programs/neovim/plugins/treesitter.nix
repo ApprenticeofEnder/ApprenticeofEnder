@@ -33,6 +33,7 @@
         python
         regex
         rust
+        scss
         sql
         svelte
         terraform
