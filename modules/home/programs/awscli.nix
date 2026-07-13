@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: let
   # Emit the credential JSON the AWS SDK expects, sourcing the access keys from
@@ -18,41 +19,72 @@
         '{Version: 1, AccessKeyId: $id, SecretAccessKey: $secret}'
     '';
 
-  poc = awsCredentialProcess "poc" "op://Work/aws-access-key-poc";
-  dev = awsCredentialProcess "dev" "op://Work/aws-access-key-dev";
+  mkAwsProfile = {
+    name,
+    access_key_uri,
+    enable ? true,
+    region ? "us-east-1",
+    source_profile ? null,
+    role_arn ? null,
+    output ? "json",
+  }: let
+    credential_process = awsCredentialProcess name access_key_uri;
+    profile_name =
+      if name == "default"
+      then "default"
+      else "profile ${name}";
+  in
+    if !enable
+    then {
+      credentials = {};
+      settings = {};
+    }
+    else {
+      # inherit name region source_profile role_arn output;
+      credentials = {
+        "${name}" = {
+          credential_process = "${credential_process}";
+        };
+      };
+      settings = {
+        "${profile_name}" = {
+          inherit region output source_profile role_arn;
+        };
+      };
+    };
+
+  profiles = {
+    default = mkAwsProfile {
+      name = "default";
+      access_key_uri = "op://Work/aws-access-key-dev";
+    };
+    poc = mkAwsProfile {
+      name = "poc";
+      access_key_uri = "op://Work/aws-access-key-poc";
+    };
+    dev = mkAwsProfile {
+      name = "dev";
+      access_key_uri = "op://Work/aws-access-key-dev";
+    };
+    staging = mkAwsProfile {
+      name = "staging";
+      access_key_uri = "op://Work/aws-access-key-dev";
+      source_profile = "dev";
+    };
+  };
+
+  profile_credentials = with builtins;
+    lib.mergeAttrsList (
+      map (profile: profile.credentials) (attrValues profiles)
+    );
+  profile_settings = with builtins;
+    lib.mergeAttrsList (
+      map (profile: profile.credentials) (attrValues profiles)
+    );
 in {
   programs.awscli = {
     enable = true;
-    credentials = {
-      default = {
-        credential_process = "${dev}";
-      };
-      "poc" = {
-        credential_process = "${poc}";
-      };
-      "dev" = {
-        credential_process = "${dev}";
-      };
-      staging = {
-        credential_process = "${dev}";
-      };
-    };
-    settings = {
-      # Bare `aws` (no --profile) resolves to the poc credentials.
-      default = {
-        region = "us-east-1";
-      };
-      "profile poc" = {
-        region = "us-east-1";
-      };
-      "profile dev" = {
-        region = "us-east-1";
-      };
-      "profile staging" = {
-        source_profile = "dev";
-        role_arn = "arn:aws:iam::289189983327:role/Administrator";
-        region = "us-east-1";
-      };
-    };
+    credentials = profile_credentials;
+    settings = profile_settings;
   };
 }
