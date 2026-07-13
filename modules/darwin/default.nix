@@ -1,17 +1,28 @@
 # This is your nix-darwin configuration.
 # For home configuration, see /modules/home/*
 {
-  imports = [
-    ./common
-    ./homebrew.nix
-  ];
+  flake,
+  lib,
+  ...
+}: let
+  inherit (flake) inputs;
+  inherit (inputs) self;
+  shared-lib = import (self + /modules/shared/lib) {
+    inherit lib;
+    globset = inputs.globset;
+  };
+in {
+  imports =
+    shared-lib.getNixImports {
+      root = ./.;
+    }
+    ++ [
+      ./common
+    ];
 
   # Use TouchID for `sudo` authentication
   security.pam.services.sudo_local.touchIdAuth = true;
 
-  services.tailscale = {
-    enable = true;
-  };
   # Configure macOS system
   # More Roberts-Macbook-Air-2s => https://github.com/ryan4yin/nix-darwin-kickstarter/blob/main/rich-demo/modules/system.nix
   system = {
