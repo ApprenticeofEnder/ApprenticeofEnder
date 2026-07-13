@@ -147,6 +147,7 @@
     ]
     ++ [
       pkgs-stable.podman
+      pkgs-stable.podman-compose
     ];
 
   fun = with pkgs; [
