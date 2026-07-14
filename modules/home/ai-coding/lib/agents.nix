@@ -30,7 +30,7 @@ in rec {
     description,
     permission_groups ? ["read" "edit" "bash"],
     claude_model ? "sonnet",
-    opencode_model ? "sonnet",
+    opencode_model ? "kimi-k27",
     cursor_model ? "composer",
     agent_mode ? "all",
     prompt_file ? ../agents/${name}/agent.md,
