@@ -79,7 +79,7 @@
     );
   profile_settings = with builtins;
     lib.mergeAttrsList (
-      map (profile: profile.credentials) (attrValues profiles)
+      map (profile: profile.settings) (attrValues profiles)
     );
 in {
   programs.awscli = {
