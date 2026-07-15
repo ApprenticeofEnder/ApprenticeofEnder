@@ -41,14 +41,19 @@
     }
     else {
       # inherit name region source_profile role_arn output;
-      credentials = {
-        "${name}" = {
-          credential_process = "${credential_process}";
-        };
-      };
+      credentials =
+        if (role_arn == null)
+        then {
+          "${name}" = {
+            credential_process = "${credential_process}";
+          };
+        }
+        else {};
       settings = {
         "${profile_name}" = {
-          inherit region output source_profile role_arn;
+          inherit region output;
+          source_profile = lib.mkIf (source_profile != null) source_profile;
+          role_arn = lib.mkIf (role_arn != null) role_arn;
         };
       };
     };
@@ -70,6 +75,7 @@
       name = "staging";
       access_key_uri = "op://Work/aws-access-key-dev";
       source_profile = "dev";
+      role_arn = "arn:aws:iam::289189983327:role/Administrator";
     };
   };
 
