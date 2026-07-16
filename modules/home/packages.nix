@@ -41,7 +41,6 @@
     # keep-sorted start
     gnutls
     nmap # recon
-    pulumi-esc # secrets management
     ripsecrets
     # _1password-gui # TODO: Work out the whole user/group requirement thing
     # _1password-cli
