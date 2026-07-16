@@ -19,6 +19,8 @@
     unbind '"'
     unbind %
 
+    setw -g main-pane-width 60%
+
     bind -T copy-mode-vi v send -X begin-selection
     bind -T copy-mode-vi y send -X copy-selection-and-cancel
 
