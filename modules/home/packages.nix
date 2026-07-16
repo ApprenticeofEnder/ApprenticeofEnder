@@ -61,7 +61,7 @@
     gama-tui # github actions manager
     kubectl # k8s
     opentofu # IaC
-    pulumi # IaC
+    pulumi-bin # IaC
     terraform # IaC
     # terramaid
     # keep-sorted end
