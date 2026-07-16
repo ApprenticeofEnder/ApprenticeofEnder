@@ -116,6 +116,13 @@ in {
           agent = "opencode";
           additional_windows = [
             {
+              deploy = {
+                panes = [
+                  "clear"
+                ];
+              };
+            }
+            {
               tv = {
                 panes = [
                   "tv"
@@ -129,12 +136,32 @@ in {
           root = "~/Work/Projects/oac";
           enable = pkgs.stdenv.isDarwin;
           agent = "claude";
+          additional_windows = [
+            {
+              deploy = {
+                panes = [
+                  "clear"
+                ];
+              };
+            }
+          ];
         })
         (mkProject {
           name = "acre-infra";
           root = "~/Work/infra";
           enable = pkgs.stdenv.isDarwin;
           agent = "claude";
+          additional_windows = [
+            {
+              test = {
+                layout = "tiled";
+                panes = [
+                  "clear"
+                  "lazydocker"
+                ];
+              };
+            }
+          ];
         })
       ];
     };
