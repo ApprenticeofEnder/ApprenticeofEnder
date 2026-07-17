@@ -17,7 +17,7 @@ in {
       root = ./.;
     }
     ++ [
-      ./common
+      ./common ## getNixImports doesn't seem to follow symlinks
     ];
 
   # Use TouchID for `sudo` authentication
