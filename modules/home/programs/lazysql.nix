@@ -1,4 +1,20 @@
-{
+{...}: let
+  mkDatabase = {
+    Name,
+    Username,
+    Password,
+    Hostname ? "127.0.0.1",
+    Port ? "5432",
+    Provider ? "postgres",
+    DBName,
+    URLParams ? "",
+    Commands ? [],
+  }: let
+    URL = "${Provider}://${Username}:${Password}@${Hostname}:${Port}/${DBName}?${URLParams}";
+  in {
+    inherit Name Username Password Hostname Port DBName URLParams Commands URL Provider;
+  };
+in {
   programs.lazysql = {
     enable = true;
     settings = {
@@ -9,18 +25,15 @@
       };
 
       database = [
-        {
-          Name = "MTGTrader (DEV)";
-          URL = "postgresql://mtgtrader:mtgtrader@127.0.0.1:5432/mtg_trader_dev?sslmode=disable";
-          Provider = "postgres";
-          Username = "";
-          Password = "";
-          Hostname = "";
-          Port = "";
-          DBName = "mtg_trader_dev";
-          URLParams = "";
-          Commands = [];
-        }
+        (
+          mkDatabase {
+            Name = "MTGTrader (DEV)";
+            Username = "mtgtrader";
+            Password = "mtgtrader";
+            DBName = "mtg_trader_dev";
+            URLParams = "sslmode=disable";
+          }
+        )
       ];
     };
   };
