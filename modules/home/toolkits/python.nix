@@ -17,13 +17,16 @@
   };
 
   python = with pkgs;
-    python313.withPackages (
-      ps:
-        with ps; [
-          pygame
-          zlib-ng
-        ]
-    );
+    if stdenv.isLinux
+    then
+      python313.withPackages (
+        ps:
+          with ps; [
+            pygame
+            zlib-ng
+          ]
+      )
+    else python313;
 in
   lib.mkMerge [
     vscodeConfig
