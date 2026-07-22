@@ -1,9 +1,9 @@
 {...}: {
   imports = [
     # keep-sorted start
-    ./agents/critic
     ./agents/debugger
     ./agents/fleet
+    ./agents/implementers
     ./agents/plan
     ./claude-code
     ./cursor
