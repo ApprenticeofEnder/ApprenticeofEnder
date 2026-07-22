@@ -63,6 +63,7 @@
     opentofu # IaC
     pulumi-bin # IaC
     terraform # IaC
+    terraform-docs # IaC documentation
     # terramaid
     # keep-sorted end
   ];
