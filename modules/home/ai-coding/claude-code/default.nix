@@ -101,6 +101,12 @@ in {
           (mkClaudePermissionList claude_tools.read [
             "*"
             "**/*.env.example"
+            "**/*.env.tpl"
+          ])
+          (mkClaudePermissionList claude_tools.edit [
+            "*"
+            "**/*.env.example"
+            "**/*.env.tpl"
           ])
           (mkClaudePermissionList claude_tools.bash [
             "git status"

@@ -34,16 +34,16 @@
     agent,
     home_manager ? false,
   }:
-    builtins.mapAttrs (
-      # deadnix: skip
-      tool_set: tool_list:
-        mcpToolList.${agent} (
+    lib.concatMapAttrs (
+      tool_set: tool_list: {
+        "${tool_set}" = mcpToolList.${agent} (
           {
             inherit name;
             tools = tool_list;
           }
           // lib.optionalAttrs (agent == "claude") {inherit home_manager;}
-        )
+        );
+      }
     )
     tools;
 
@@ -293,13 +293,18 @@
         allow = [
           "*"
           "*.env.example"
+          "*.env.tpl"
         ];
       };
     };
     edit = mkOpencodePermissionGroup {
       edit = mkOpencodePermissionList {
         deny = sensitive_files.opencode ++ lockfiles.opencode;
-        allow = ["*"];
+        allow = [
+          "*"
+          "*.env.example"
+          "*.env.tpl"
+        ];
       };
     };
     bash = mkOpencodePermissionGroup {
