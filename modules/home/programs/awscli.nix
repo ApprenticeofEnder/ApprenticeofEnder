@@ -77,6 +77,16 @@
       source_profile = "dev";
       role_arn = "arn:aws:iam::289189983327:role/Administrator";
     };
+    preprod = {
+      credentials = {};
+      settings = {
+        "profile preprod" = {
+          login_session = "arn:aws:iam::054037127348:user/robert.babaev";
+          region = "us-east-1";
+          output = "json";
+        };
+      };
+    };
   };
 
   profile_credentials = with builtins;
