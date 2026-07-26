@@ -1,9 +1,10 @@
 {
   lib,
   pkgs,
+  pkgs-stable,
   ...
 }: let
-  ollama = "${pkgs.ollama}/bin/ollama";
+  ollama = "${pkgs-stable.ollama-cuda}/bin/ollama";
   models = [
     "cogito:3b"
     "deepseek-coder:1.3b"
@@ -24,7 +25,7 @@ in {
   ];
   services.ollama = {
     enable = true;
-    package = pkgs.ollama-cuda;
+    package = pkgs-stable.ollama-cuda;
     port = 11434; # default
     host = "0.0.0.0"; # default
     # acceleration = "rocm";
