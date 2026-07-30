@@ -42,10 +42,13 @@ in
     vscodeConfig
     {
       home.packages = with pkgs; [
-        pnpm
+        # keep-sorted start
         biome
-        nodejs_24
         bun
+        nodejs_24
+        pnpm
+        yarn
+        # keep-sorted end
       ];
 
       xdg = {

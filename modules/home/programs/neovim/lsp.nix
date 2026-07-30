@@ -31,6 +31,7 @@
     "tflint"
     "tinymist"
     "ts_ls"
+    "vue_ls"
     "yamlls"
     # keep-sorted end
   ];

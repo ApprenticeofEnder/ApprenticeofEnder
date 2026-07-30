@@ -39,6 +39,7 @@
         terraform
         toml
         typescript
+        vue
         xml
         yaml
         # keep-sorted end
