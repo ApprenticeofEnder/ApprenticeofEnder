@@ -27,7 +27,9 @@
       SERVER_NAME="$1"
       SERVER_IMAGE="$2"
 
-      docker run --rm --interactive --name "$SERVER_NAME" "$SERVER_IMAGE"
+      DISCRIMINATOR=$(${lib.getExe pkgs.openssl} rand -hex 8)
+
+      docker run --rm --interactive --name "$SERVER_NAME-$DISCRIMINATOR" "$SERVER_IMAGE"
     '')
   ];
 
@@ -42,32 +44,12 @@
     servers = {
       hashicorp-terraform = {
         # disabled = true;
-        command = "docker";
+        command = "docker-mcp";
         args = [
-          "run"
-          "--rm"
-          "--interactive"
-          "--name"
           "terraform-mcp"
           "hashicorp/terraform-mcp-server:latest"
         ];
         type = "stdio";
-      };
-      aws-terraform = {
-        # disabled = true;
-        command = "docker";
-        args = [
-          "run"
-          "--rm"
-          "--interactive"
-          "--name"
-          "aws-terraform-mcp"
-          "mcp/aws-terraform:latest"
-        ];
-        type = "stdio";
-        env = {
-          FASTMCP_LOG_LEVEL = "ERROR";
-        };
       };
       serena = {
         command = "serena";

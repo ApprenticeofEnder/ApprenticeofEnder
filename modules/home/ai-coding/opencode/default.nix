@@ -121,11 +121,7 @@ in {
       mcp = {
         hashicorp-terraform = {
           command = [
-            "docker"
-            "run"
-            "--rm"
-            "--interactive"
-            "--name"
+            "docker-mcp"
             "terraform-mcp"
             "hashicorp/terraform-mcp-server:latest"
           ];

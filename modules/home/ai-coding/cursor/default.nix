@@ -67,12 +67,8 @@
       text = builtins.toJSON {
         mcpServers = {
           hashicorp-terraform = {
-            command = "docker";
+            command = "docker-mcp";
             args = [
-              "run"
-              "--rm"
-              "--interactive"
-              "--name"
               "terraform-mcp"
               "hashicorp/terraform-mcp-server:latest"
             ];
