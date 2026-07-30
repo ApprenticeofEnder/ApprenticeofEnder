@@ -64,12 +64,15 @@
                   {
                     inherit agent;
                   }
-                  {
-                    git = "lazygit";
-                  }
-                  {
-                    shell = "clear";
-                  }
+                ];
+              };
+            }
+            {
+              git = {
+                layout = "even-horizontal";
+                panes = [
+                  "lazygit"
+                  "clear"
                 ];
               };
             }
@@ -118,13 +121,6 @@ in {
           agent = "opencode";
           additional_windows = [
             {
-              deploy = {
-                panes = [
-                  "clear"
-                ];
-              };
-            }
-            {
               tv = {
                 panes = [
                   "tv"
@@ -156,7 +152,7 @@ in {
           additional_windows = [
             {
               test = {
-                layout = "tiled";
+                layout = "even-horizontal";
                 panes = [
                   "clear"
                   "lazydocker"
