@@ -178,6 +178,14 @@
         end
       '';
     } "whichkey query lookup")
+
+    # keep-sorted update
+    (makeMapping "${leader}ks" (lib.nixvim.mkRaw ''
+      function()
+        local filename = vim.api.nvim_buf_get_name(0)
+        return vim.cmd("!keep-sorted " .. filename)
+      end
+    '') "lint keep-sorted")
   ];
 
   insertMaps = mapModes ["i"] [
@@ -207,7 +215,7 @@
     (makeMapping "<" "<gv" "Indent left")
     (makeMapping ">" ">gv" "Indent right")
 
-    # keep-sorted macro!
+    # keep-sorted init
     (makeMapping "${leader}ks" (lib.nixvim.mkRaw ''
       function()
         local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)

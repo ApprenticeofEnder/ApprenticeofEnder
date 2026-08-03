@@ -56,21 +56,6 @@
         end
       '';
     }
-    {
-      pattern = ["*"];
-      desc = "Sort keep-sorted section macro";
-      event = [
-        "BufEnter"
-      ];
-      callback = lib.nixvim.mkRaw ''
-        function()
-          vim.fn.setreg(
-            "s",
-            ":!keep-sorted ${interpolate "vim.api.nvim_buf_get_name(0)"}${enter}"
-          )
-        end
-      '';
-    }
   ];
 in
   with helpers; {
