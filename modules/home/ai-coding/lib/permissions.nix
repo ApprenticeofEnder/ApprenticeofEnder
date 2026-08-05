@@ -233,8 +233,8 @@
   };
 
   claude_tools = {
-    read = ["Read" "Grep" "Glob"];
-    edit = ["Write" "Edit"];
+    read = ["Read"];
+    edit = ["Edit"];
     bash = ["Bash"];
   };
 
