@@ -60,6 +60,13 @@
       agent = "claude";
     };
   };
+
+  otel = {
+    endpoint = "http://localhost:4317";
+    protocol = "grpc";
+    metrics_exporter = "otlp";
+    logs_exporter = "otlp";
+  };
 in {
   imports = [
     ./hooks
@@ -85,8 +92,15 @@ in {
     settings = {
       model = "sonnet";
       env = {
+        # keep-sorted start
+        CLAUDE_CODE_ENABLE_TELEMETRY = 1;
         CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = 1;
         GIT_EXTERNAL_DIFF = "difft";
+        OTEL_EXPORTER_OTLP_ENDPOINT = otel.endpoint;
+        OTEL_EXPORTER_OTLP_PROTOCOL = otel.protocol;
+        OTEL_LOGS_EXPORTER = otel.logs_exporter;
+        OTEL_METRICS_EXPORTER = otel.metrics_exporter;
+        # keep-sorted end
       };
       enabledPlugins = {
         "claude-hud@claude-hud" = true;
