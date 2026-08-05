@@ -93,8 +93,8 @@ in {
       model = "sonnet";
       env = {
         # keep-sorted start
-        CLAUDE_CODE_ENABLE_TELEMETRY = 1;
-        CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = 1;
+        CLAUDE_CODE_ENABLE_TELEMETRY = "1";
+        CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
         GIT_EXTERNAL_DIFF = "difft";
         OTEL_EXPORTER_OTLP_ENDPOINT = otel.endpoint;
         OTEL_EXPORTER_OTLP_PROTOCOL = otel.protocol;
