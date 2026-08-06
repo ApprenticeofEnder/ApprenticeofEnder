@@ -82,12 +82,35 @@ in {
         source = ./scripts/claude-hud-statusline.sh;
         executable = true;
       };
+
+      ".claude/skills/skill-rules.json" = {
+        source = ./skill-rules.json;
+      };
     };
 
   programs.claude-code = {
     enable = true;
     enableMcpIntegration = true;
     context = context;
+
+    # `/plugin marketplace add` fails at runtime: it writes into settings.json,
+    # which home-manager manages as a read-only symlink into /nix/store.
+    # Declare marketplaces here instead so home-manager renders them into
+    # settings.json's `extraKnownMarketplaces` at build time.
+    marketplaces = {
+      ender-agent-ops = pkgs.fetchFromGitHub {
+        owner = "ApprenticeofEnder";
+        repo = "ender-agent-ops";
+        rev = "a36497ccd6744ce4e8ffa5d71ac19dc7d56550ab";
+        hash = "sha256-uC6+/nAqNVznCvxl/zkUcnAwviixgXYV7ioe7pVDc0E=";
+      };
+      claude-hud = pkgs.fetchFromGitHub {
+        owner = "jarrodwatts";
+        repo = "claude-hud";
+        rev = "59eadbe9bd4aa3df2f740f828069a8def4363606";
+        sha256 = "1996a65fllziwlirb5ym86fwm9rk6ff1vmvj3jrllxxayl5azazp";
+      };
+    };
 
     settings = {
       model = "sonnet";
@@ -104,6 +127,7 @@ in {
       };
       enabledPlugins = {
         "claude-hud@claude-hud" = true;
+        "skill-router@ender-agent-ops" = true;
       };
 
       statusLine = {

@@ -53,16 +53,6 @@
             ];
           }
         ];
-        UserPromptSubmit = [
-          {
-            hooks = [
-              {
-                type = "command";
-                command = "~/.claude/hooks/force-skill.sh";
-              }
-            ];
-          }
-        ];
         SubagentStart = [
           {
             matcher = "";
