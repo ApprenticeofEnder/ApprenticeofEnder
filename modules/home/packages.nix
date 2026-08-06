@@ -24,6 +24,7 @@
       nil # lsp
       nix-info # system information
       nix-tree # dependency navigation
+      nurl # get nix fetcher calls from urls
       # keep-sorted end
 
       # keep-sorted start
