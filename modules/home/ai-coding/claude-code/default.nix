@@ -84,7 +84,19 @@ in {
       };
 
       ".claude/skills/skill-rules.json" = {
-        source = ./skill-rules.json;
+        text = builtins.toJSON {
+          version = "0.1";
+          skills = {
+            caveman = {
+              skill_type = "domain";
+              priority = "critical";
+              description = "Token saver";
+              prompt_triggers = {
+                intent_patterns = [".*"];
+              };
+            };
+          };
+        };
       };
     };
 
