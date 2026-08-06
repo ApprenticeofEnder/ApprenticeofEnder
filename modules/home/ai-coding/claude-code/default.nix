@@ -101,8 +101,8 @@ in {
       ender-agent-ops = pkgs.fetchFromGitHub {
         owner = "ApprenticeofEnder";
         repo = "ender-agent-ops";
-        rev = "a36497ccd6744ce4e8ffa5d71ac19dc7d56550ab";
-        hash = "sha256-uC6+/nAqNVznCvxl/zkUcnAwviixgXYV7ioe7pVDc0E=";
+        rev = "5d2814491074ba3b865941b89721254bfad69a62";
+        hash = "sha256-DF0hp+neyDsQI+uLmvjeQfcnEt36uUpiFRdkJ13SsQE=";
       };
       claude-hud = pkgs.fetchFromGitHub {
         owner = "jarrodwatts";
