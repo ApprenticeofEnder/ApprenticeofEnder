@@ -4,11 +4,6 @@
       source = ./clamp-bash-timeout.sh;
       executable = true;
     };
-
-    ".claude/hooks/force-skill.sh" = {
-      source = ./force-skill.sh;
-      executable = true;
-    };
   };
   programs.claude-code = {
     settings = {
