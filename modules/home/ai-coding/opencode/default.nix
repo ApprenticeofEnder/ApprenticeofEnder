@@ -5,13 +5,16 @@
   ...
 }: let
   ai_coding_lib = import ../lib {inherit lib;};
-  inherit (ai_coding_lib) mkOpencodePermissionList;
-  inherit (ai_coding_lib) sensitive_files;
-  inherit (ai_coding_lib) lockfiles;
+  # keep-sorted start
   inherit (ai_coding_lib) global_bash;
-  inherit (ai_coding_lib) serena_tools;
-  inherit (ai_coding_lib) mcpToolSet;
+  inherit (ai_coding_lib) lockfiles;
   inherit (ai_coding_lib) mcpToolList;
+  inherit (ai_coding_lib) mcpToolSet;
+  inherit (ai_coding_lib) mkOpencodePermissionList;
+  inherit (ai_coding_lib) models;
+  inherit (ai_coding_lib) sensitive_files;
+  inherit (ai_coding_lib) serena_tools;
+  # keep-sorted end
 
   context = import ../lib/context.nix {inherit lib pkgs;};
 
@@ -117,6 +120,15 @@ in {
       autoupdate = false;
 
       provider = providers;
+
+      agent = {
+        build = {
+          model = models.opencode.deepseek-v4-flash;
+        };
+        plan = {
+          model = models.opencode.kimi-k3;
+        };
+      };
 
       mcp = {
         hashicorp-terraform = {
