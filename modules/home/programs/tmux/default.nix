@@ -95,14 +95,13 @@ in {
     historyLimit = 50000;
     keyMode = "vi";
     mouse = true;
-    plugins = with pkgs.tmuxPlugins; [
+    plugins = with pkgs-stable.tmuxPlugins; [
       # keep-sorted start
+      config.programs.tmux.nordPackage
       continuum
-      nord
       pain-control
       resurrect
       tmux-fzf
-      tmux-which-key
       # keep-sorted end
     ];
     sensibleOnTop = true;
