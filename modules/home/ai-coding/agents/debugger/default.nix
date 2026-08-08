@@ -12,7 +12,6 @@
   '';
 
   name = "debugger";
-  # TODO: Convert parts of the debugger subagent into skills
 in
   mkAgent {
     inherit name;

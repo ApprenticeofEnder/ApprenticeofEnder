@@ -10,7 +10,7 @@
         Reviews overall project state and provides objective, direct feedback with constructive criticism and suggestions for improvement. Use at significant milestones, after major changes, or when reviewing a diff before it lands.
       '';
       claude_model = "opus";
-      opencode_model = "kimi-k27";
+      opencode_model = "deepseek-v4-pro";
     };
     deduplicator = {
       description = ''

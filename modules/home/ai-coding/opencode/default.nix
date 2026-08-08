@@ -43,19 +43,6 @@
     })
   ];
 
-  # TODO: Research opencode models on openrouter
-  # - Cohere North series
-  # - Kimi series
-  # - GLM series
-  # - NVIDIA Nemotron
-  # - Qwen 3.7
-  # - Minimax
-  # - OpenRouter Owl Alpha
-  # - StepFun?
-  # - Laguna
-  # - DeepSeek
-  # - Xiaomi MiMo
-
   providers = lib.mergeAttrsList [
     {
       openrouter = {
@@ -68,13 +55,22 @@
     }
   ];
 
-  env_tpl = with builtins;
-    concatStringsSep "\n" (
+  opencode_env = {
+    OPENCODE_EXPERIMENTAL_PLAN_MODE = "1";
+  };
+
+  mkEnvList = with builtins;
+    env:
       attrValues (
-        mapAttrs (var_name: secret_ref: "${var_name}=${secret_ref}")
-        provider_env
-      )
-    );
+        mapAttrs (var_name: value: "${var_name}=${value}")
+        env
+      );
+
+  env_tpl = with builtins;
+    concatStringsSep "\n" (builtins.concatLists [
+      (mkEnvList provider_env)
+      (mkEnvList opencode_env)
+    ]);
 
   env_tpl_name = "opencode/.env.tpl";
 
@@ -97,6 +93,10 @@ in {
 
   home.shellAliases = {
     opencode = ''export $(op inject -i ${config.xdg.configHome}/${env_tpl_name}) && ${lib.getExe pkgs.opencode}'';
+  };
+
+  home.sessionVariables = {
+    OPENCODE_EXPERIMENTAL_PLAN_MODE = "1";
   };
 
   programs.opencode = {

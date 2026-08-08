@@ -4,7 +4,6 @@
     ./agents/debugger
     ./agents/fleet
     ./agents/implementers
-    ./agents/plan
     ./claude-code
     ./cursor
     ./mcp.nix

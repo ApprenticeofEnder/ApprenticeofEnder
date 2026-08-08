@@ -30,7 +30,7 @@ in rec {
     description,
     permission_groups ? ["read" "edit" "bash"],
     claude_model ? "sonnet",
-    opencode_model ? "kimi-k27",
+    opencode_model ? "minimax-m3",
     cursor_model ? "composer",
     agent_mode ? "all",
     prompt_file ? ../agents/${name}/agent.md,
@@ -109,8 +109,10 @@ in rec {
     opencode = let
       openrouter_models = {
         # keep-sorted start
-        deepseek-v4 = "deepseek/deepseek-v4-flash";
+        deepseek-v4-flash = "deepseek/deepseek-v4-flash-0731";
+        deepseek-v4-pro = "deepseek/deepseek-v4-pro";
         kimi-k27 = "moonshotai/kimi-k2.7-code";
+        kimi-k3 = "moonshotai/kimi-k3";
         minimax-m3 = "minimax/minimax-m3";
         nemotron = "nvidia/nemotron-3-ultra-550b-a55b";
         north-mini = "cohere/north-mini-code:free";
