@@ -33,3 +33,4 @@ You MUST follow these 3 phases in order for every debugging task.
 
 1. DO NOT make any code modifications or fixes before you have confirmed a hypothesis with evidence.
 2. If 3 fixes fail, STOP and warn the user about potential architectural issues.
+3. The SECOND there is any ambiguity, ask the user. Do not make assumptions.

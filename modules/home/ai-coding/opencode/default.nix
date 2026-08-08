@@ -165,6 +165,7 @@ in {
           skill = mkOpencodePermissionList {
             allow = ["caveman"];
           };
+          external-directory = "allow";
         }
         // (
           mkOpencodePermissionList {
