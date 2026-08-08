@@ -166,6 +166,9 @@
     allow = [
       "git status"
       "git diff"
+      "ls"
+      "head"
+      "wc"
     ];
   };
 

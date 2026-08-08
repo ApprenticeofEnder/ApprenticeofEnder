@@ -47,3 +47,4 @@ run:
 [group('Main')]
 run-generic:
   cachix watch-exec rbabaev -- nix run '.#non-nixos'
+  sudo $(readlink -f $(which non-nixos-gpu-setup))

@@ -128,6 +128,11 @@ in {
         plan = {
           model = models.opencode.kimi-k3;
         };
+        explore = {
+          permission = {
+            external-directory = "allow";
+          };
+        };
       };
 
       mcp = {
