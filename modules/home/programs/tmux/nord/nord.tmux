@@ -4,7 +4,6 @@
 # This source code is licensed under the MIT license found in the license file.
 
 NORD_TMUX_COLOR_THEME_FILE=src/nord.conf
-NORD_TMUX_VERSION=0.3.0
 NORD_TMUX_STATUS_CONTENT_FILE="src/nord-status-content.conf"
 NORD_TMUX_STATUS_CONTENT_NO_PATCHED_FONT_FILE="src/nord-status-content-no-patched-font.conf"
 NORD_TMUX_STATUS_CONTENT_OPTION="@nord_tmux_show_status_content"
@@ -26,9 +25,13 @@ __cleanup() {
 __load() {
   tmux source-file "$_current_dir/$NORD_TMUX_COLOR_THEME_FILE"
 
-  local status_content=$(tmux show-option -gqv "$NORD_TMUX_STATUS_CONTENT_OPTION")
-  local no_patched_font=$(tmux show-option -gqv "$NORD_TMUX_NO_PATCHED_FONT_OPTION")
-  local date_format=$(tmux show-option -gqv "$NORD_TMUX_STATUS_CONTENT_DATE_FORMAT")
+  local status_content
+  local no_patched_font
+  local date_format
+
+  status_content=$(tmux show-option -gqv "$NORD_TMUX_STATUS_CONTENT_OPTION")
+  no_patched_font=$(tmux show-option -gqv "$NORD_TMUX_NO_PATCHED_FONT_OPTION")
+  date_format=$(tmux show-option -gqv "$NORD_TMUX_STATUS_CONTENT_DATE_FORMAT")
 
   if [ "$(tmux show-option -gqv "clock-mode-style")" == '12' ]; then
     tmux set-environment -g NORD_TMUX_STATUS_TIME_FORMAT "%I:%M %p"

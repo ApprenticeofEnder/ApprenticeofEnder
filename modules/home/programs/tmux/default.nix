@@ -97,7 +97,7 @@ in {
     mouse = true;
     plugins = with pkgs-stable.tmuxPlugins; [
       # keep-sorted start
-      (import ./nord {inherit pkgs-stable;})
+      (import ./nord {inherit pkgs-stable lib;})
       continuum
       pain-control
       resurrect
