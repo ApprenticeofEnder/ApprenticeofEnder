@@ -50,6 +50,122 @@
         return vscode_cb()
       end
     end
+
+    _M.keep_sorted_option_defs = {
+      { key = "block", kind = "bool", default = false },
+      { key = "case", kind = "bool", default = true },
+      { key = "numeric", kind = "bool", default = false },
+      { key = "sticky_comments", kind = "bool", default = true },
+      { key = "newline_separated", kind = "bool", default = false },
+      { key = "order", kind = "enum2", values = { "asc", "desc" }, default = "asc" },
+      { key = "remove_duplicates", kind = "bool", default = true },
+      { key = "group", kind = "bool", default = true },
+    }
+
+    _M.keep_sorted_menu = function()
+      local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+      vim.api.nvim_feedkeys(esc, "x", false)
+
+      local start_line = vim.fn.line("'<")
+      local end_line = vim.fn.line("'>")
+      local first_line = vim.api.nvim_buf_get_lines(0, start_line - 1, start_line, false)[1]
+      local indent = first_line:match("^(%s*)") or ""
+      local cs = vim.bo.commentstring
+
+      local state = {}
+      for _, def in ipairs(_M.keep_sorted_option_defs) do
+        state[def.key] = def.default
+      end
+
+      local function bool_str(value)
+        return value and "yes" or "no"
+      end
+
+      local function render_lines()
+        local lines = {}
+        for _, def in ipairs(_M.keep_sorted_option_defs) do
+          local value = state[def.key]
+          if def.kind == "bool" then
+            table.insert(lines, string.format("[%s] %-20s%s", value and "x" or " ", def.key, bool_str(value)))
+          else
+            table.insert(lines, string.format("    %-20s%s", def.key, value))
+          end
+        end
+        return lines
+      end
+
+      local function build_opts_string()
+        local parts = {}
+        for _, def in ipairs(_M.keep_sorted_option_defs) do
+          local value = state[def.key]
+          if value ~= def.default then
+            table.insert(parts, def.key .. "=" .. (def.kind == "bool" and bool_str(value) or value))
+          end
+        end
+        return table.concat(parts, " ")
+      end
+
+      local function insert_markers(opts_str)
+        local start_text = opts_str ~= "" and ("keep-sorted start " .. opts_str) or "keep-sorted start"
+        local start_comment = indent .. cs:format(start_text)
+        local end_comment = indent .. cs:format("keep-sorted end")
+        vim.api.nvim_buf_set_lines(0, end_line, end_line, false, { end_comment })
+        vim.api.nvim_buf_set_lines(0, start_line - 1, start_line - 1, false, { start_comment })
+      end
+
+      local win
+
+      local function refresh()
+        vim.bo[win.buf].modifiable = true
+        vim.api.nvim_buf_set_lines(win.buf, 0, -1, false, render_lines())
+        vim.bo[win.buf].modifiable = false
+      end
+
+      local function toggle_current()
+        local row = vim.api.nvim_win_get_cursor(win.win)[1]
+        local def = _M.keep_sorted_option_defs[row]
+        if not def then
+          return
+        end
+        if def.kind == "bool" then
+          state[def.key] = not state[def.key]
+        else
+          local idx = 1
+          for i, v in ipairs(def.values) do
+            if v == state[def.key] then
+              idx = i
+              break
+            end
+          end
+          state[def.key] = def.values[(idx % #def.values) + 1]
+        end
+        refresh()
+      end
+
+      win = Snacks.win({
+        width = 40,
+        height = #_M.keep_sorted_option_defs,
+        border = "rounded",
+        title = " keep-sorted options ",
+        title_pos = "center",
+        footer = " <CR>/<Space> toggle | y confirm | q/<Esc> cancel ",
+        footer_pos = "center",
+        wo = { cursorline = true },
+        bo = { modifiable = false, filetype = "keep-sorted-menu" },
+        keys = {
+          ["<CR>"] = toggle_current,
+          ["<space>"] = toggle_current,
+          y = function(self)
+            self:close()
+            insert_markers(build_opts_string())
+          end,
+          q = "close",
+          ["<esc>"] = "close",
+        },
+      })
+
+      refresh()
+    end
   '';
 
   makeVsCodeMapping = key: vscodeAction: nvimAction: desc:
@@ -216,26 +332,7 @@
     (makeMapping ">" ">gv" "Indent right")
 
     # keep-sorted init
-    (makeMapping "${leader}ks" (lib.nixvim.mkRaw ''
-      function()
-        local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
-        vim.api.nvim_feedkeys(esc, "x", false)
-
-        local start_line = vim.fn.line("'<")
-        local end_line = vim.fn.line("'>")
-
-         -- Get indentation from first selected line
-        local first_line = vim.api.nvim_buf_get_lines(0, start_line - 1, start_line, false)[1]
-        local indent = first_line:match("^(%s*)") or ""
-        -- Build commented strings
-        local cs = vim.bo.commentstring
-        local start_comment = indent .. cs:format("keep-sorted start")
-        local end_comment = indent .. cs:format("keep-sorted end")
-        -- Insert end first so line numbers for start don't shift
-        vim.api.nvim_buf_set_lines(0, end_line, end_line, false, {end_comment})
-        vim.api.nvim_buf_set_lines(0, start_line - 1, start_line - 1, false, {start_comment})
-      end
-    '') "keep selection sorted")
+    (makeMapping "${leader}ks" (lib.nixvim.mkRaw "_M.keep_sorted_menu") "keep-sorted: configure & wrap selection")
   ];
 
   terminalMaps = mapModes ["t"] [
