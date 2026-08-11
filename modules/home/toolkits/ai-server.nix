@@ -1,16 +1,12 @@
 {
   lib,
-  pkgs,
   pkgs-stable,
   ...
 }: let
   ollama = "${pkgs-stable.ollama-cuda}/bin/ollama";
   models = [
-    "cogito:3b"
     "deepseek-coder:1.3b"
     "qwen2.5-coder:3b"
-    "deepcoder:1.5b"
-    "granite4.1:3b"
   ];
 
   # TODO: Investigate the following models:
@@ -20,9 +16,6 @@
 
   modelListBash = lib.concatStringsSep " " models;
 in {
-  home.packages = with pkgs; [
-    python313Packages.mlx-lm
-  ];
   services.ollama = {
     enable = true;
     package = pkgs-stable.ollama-cuda;
