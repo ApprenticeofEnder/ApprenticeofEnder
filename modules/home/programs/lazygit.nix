@@ -32,9 +32,10 @@
         commit.signOff = true;
         branchPrefix = "rbabaev/";
         # branchPrefix = "${config.me.username}/";
-        pagers = [
+        diffRenderers = [
           {
-            externalDiffCommand = "difft --color=always";
+            command = "difft --color=always";
+            type = "extDiff";
           }
         ];
       };
