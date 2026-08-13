@@ -122,6 +122,12 @@ in {
         rev = "59eadbe9bd4aa3df2f740f828069a8def4363606";
         sha256 = "1996a65fllziwlirb5ym86fwm9rk6ff1vmvj3jrllxxayl5azazp";
       };
+      laconic = pkgs.fetchFromGitHub {
+        owner = "yurug";
+        repo = "laconic-skill";
+        rev = "6f0a5724acb7e9f18aec1c5240434b19c77687ea";
+        hash = "sha256-ps8DA5hsbCK3mtRgm1l/7kp3zY4812Q0fqA5eGx0vMY=";
+      };
     };
 
     settings = {
@@ -140,6 +146,7 @@ in {
       enabledPlugins = {
         "claude-hud@claude-hud" = true;
         "skill-router@ender-agent-ops" = true;
+        "laconic@nomadic-labs" = true;
       };
 
       statusLine = {
