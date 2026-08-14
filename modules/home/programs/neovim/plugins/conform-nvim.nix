@@ -19,6 +19,20 @@
               )
               languages
             );
+          assignBiomeOrPrettier = languages:
+            builtins.listToAttrs (
+              map (
+                language: {
+                  name = language;
+                  value = {
+                    __unkeyed-1 = "biome";
+                    __unkeyed-2 = "prettier";
+                    stop_after_first = true;
+                  };
+                }
+              )
+              languages
+            );
         in
           {
             # keep-sorted start block=yes
@@ -48,7 +62,7 @@
             ];
             # keep-sorted end
           }
-          // assignFormatters ["js_formatting"] [
+          // assignBiomeOrPrettier [
             # keep-sorted start
             "css"
             "html"
@@ -78,27 +92,20 @@
           # keep-sorted end
         };
         formatters = {
+          biome = {
+            command = lib.getExe pkgs.biome;
+            require_cwd = true;
+          };
           hclfmt = {
             command = lib.getExe pkgs.hclfmt;
+          };
+          prettier = {
+            command = lib.getExe pkgs.prettier;
+            require_cwd = true;
           };
           shellcheck = {
             command = lib.getExe pkgs.shellcheck;
           };
-
-          js_formatting = lib.nixvim.mkRaw ''
-            function(bufnr)
-              local prettier_config = require("conform.formatters.prettier")
-              local biome_config = require("conform.formatters.biome")
-              local config = prettier_config
-              config.command = "${lib.getExe pkgs.prettier}"
-              config.timeout_ms = 2000
-              if require("conform").get_formatter_info("biome", bufnr).available then
-                config = biome_config
-                config.command = "${lib.getExe pkgs.biome}"
-              end
-              return config
-            end
-          '';
         };
         format_on_save = {
           # These options will be passed to conform.format()
