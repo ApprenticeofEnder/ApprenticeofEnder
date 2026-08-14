@@ -1,10 +1,27 @@
-{...}: {
-  home.file = {
-    ".claude/hooks/clamp-bash-timeout.sh" = {
-      source = ./clamp-bash-timeout.sh;
-      executable = true;
+{lib, ...}: let
+  mkScriptHook = name: let
+    filePath = ".claude/hooks/${name}.sh";
+  in {
+    file = {
+      "${filePath}" = {
+        source = ./${name}.sh;
+        executable = true;
+      };
     };
+    reference = "~/${filePath}";
   };
+
+  hooks = {
+    clamp-bash-timeout = mkScriptHook "clamp-bash-timeout";
+    format = mkScriptHook "format";
+  };
+
+  hookFiles = lib.mergeAttrsList (builtins.attrValues (lib.concatMapAttrs (name: hook: {
+      "${name}" = hook.file;
+    })
+    hooks));
+in {
+  home.file = hookFiles;
   programs.claude-code = {
     settings = {
       hooks = {
@@ -23,7 +40,7 @@
             hooks = [
               {
                 type = "command";
-                command = "~/.claude/hooks/clamp-bash-timeout.sh";
+                command = "${hooks.clamp-bash-timeout.reference}";
               }
             ];
           }
@@ -33,6 +50,17 @@
               {
                 type = "command";
                 command = "serena-hooks auto-approve --client=claude-code";
+              }
+            ];
+          }
+        ];
+        PostToolUse = [
+          {
+            matcher = "Edit|Write";
+            hooks = [
+              {
+                type = "command";
+                command = "${hooks.format.reference}";
               }
             ];
           }
