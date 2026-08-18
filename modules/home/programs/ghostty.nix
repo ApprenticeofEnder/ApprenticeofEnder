@@ -26,15 +26,29 @@ in
           # font-size = 11;
           font-family = "Hack Nerd Font";
           keybind = [
-            "ctrl+shift+w>v=new_split:right"
-            "ctrl+shift+w>s=new_split:down"
-            "ctrl+shift+w>q=close_surface"
-            "ctrl+shift+h=goto_split:left"
-            "ctrl+shift+l=goto_split:right"
-            "ctrl+shift+k=goto_split:up"
-            "ctrl+shift+j=goto_split:down"
+            # Split
+            "super+d=new_split:right"
+            "super+shift+d=new_split:down"
+            # Across
+            "super+t=new_tab"
+            "super+shift+left=previous_tab"
+            "super+shift+right=next_tab"
+            # Navigate
+            "super+alt+h=goto_split:left"
+            "super+alt+l=goto_split:right"
+            "super+alt+k=goto_split:up"
+            "super+alt+j=goto_split:down"
+            "super+shift+e=equalize_splits"
+            "super+shift+f=toggle_split_zoom"
+            # Destroy
+            "super+w=close_surface"
+            # Clipboard
             "ctrl+shift+v=paste_from_selection"
             "ctrl+v=paste_from_clipboard"
+            # Font Size
+            "super+plus=increase_font_size:1"
+            "super+minus=decrease_font_size:1"
+            "super+0=reset_font_size"
           ];
 
           copy-on-select = "clipboard";
