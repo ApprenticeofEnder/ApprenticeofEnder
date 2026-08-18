@@ -31,8 +31,8 @@ in
             "super+shift+d=new_split:down"
             # Across
             "super+t=new_tab"
-            "super+shift+left=previous_tab"
-            "super+shift+right=next_tab"
+            "super+shift+[=previous_tab"
+            "super+shift+]=next_tab"
             # Navigate
             "super+alt+h=goto_split:left"
             "super+alt+l=goto_split:right"

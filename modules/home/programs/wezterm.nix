@@ -14,9 +14,9 @@
       { key = "d", mods = "SUPER",           action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
       { key = "d", mods = "SUPER|SHIFT",     action = wezterm.action.SplitVertical({   domain = "CurrentPaneDomain" }) },
       -- Across
-      { key = "t",            mods = "SUPER",        action = wezterm.action.SpawnTab("CurrentPaneDomain") },
-      { key = "LeftArrow",    mods = "SUPER|SHIFT",  action = wezterm.action.ActivateTabRelative(-1) },
-      { key = "RightArrow",   mods = "SUPER|SHIFT",  action = wezterm.action.ActivateTabRelative(1) },
+      { key = "t", mods = "SUPER",        action = wezterm.action.SpawnTab("CurrentPaneDomain") },
+      { key = "[", mods = "SUPER|SHIFT",  action = wezterm.action.ActivateTabRelative(-1) },
+      { key = "]", mods = "SUPER|SHIFT",  action = wezterm.action.ActivateTabRelative(1) },
       -- Navigate
       { key = "h", mods = "SUPER|ALT",  action = wezterm.action.ActivatePaneDirection("Left") },
       { key = "l", mods = "SUPER|ALT",  action = wezterm.action.ActivatePaneDirection("Right") },
@@ -45,8 +45,6 @@ in
         settings = {
           default_prog = ["${pkgs.fish}/bin/fish"];
           scrollback_lines = 30000000;
-          initial_rows = 30;
-          initial_cols = 30;
           color_scheme = "Nord (Gogh)";
           font = lib.generators.mkLuaInline ''wezterm.font("Hack Nerd Font")'';
           set_environment_variables = {
@@ -55,6 +53,16 @@ in
           default_cwd = workingDirectory;
           keys = keysLua;
         };
+        extraConfig = ''
+          -- Source - https://stackoverflow.com/a/78743561
+          -- Posted by lllspecter
+          -- Retrieved 2026-08-18, License - CC BY-SA 4.0
+          local mux = wezterm.mux
+          wezterm.on("gui-startup", function(cmd)
+              local tab, pane, window = mux.spawn_window(cmd or {})
+              window:gui_window():maximize()
+          end)
+        '';
       };
     }
     (lib.mkIf pkgs.stdenv.isDarwin {
