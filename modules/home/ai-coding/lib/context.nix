@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  nixosConfig,
 }: let
   opAliases = tools:
     builtins.concatStringsSep "\n"
@@ -15,7 +16,24 @@
       )
       tools
     );
+
+  githubUsername = "ApprenticeofEnder";
+
+  currentOs = with pkgs;
+    if stdenv.isDarwin
+    then "MacOS"
+    else
+      (
+        if nixosConfig != null
+        then "NixOS"
+        else "Non-NixOS Linux"
+      );
 in ''
+  # Contextual Info
+
+  - You are on ${currentOs}
+  - My GitHub username is ${githubUsername}
+
   # Baseline operating rules
 
   These rules apply to every session in this environment. They are absolute.

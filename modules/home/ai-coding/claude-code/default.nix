@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  nixosConfig,
   ...
 }: let
   ai_coding_lib = import ../lib {inherit lib;};
@@ -16,7 +17,7 @@
   inherit (ai_coding_lib) serena_tools;
   # keep-sorted end
 
-  context = import ../lib/context.nix {inherit lib pkgs;};
+  context = import ../lib/context.nix {inherit lib pkgs nixosConfig;};
 
   skill_file_paths = collectLeafFiles ../skills "";
 
