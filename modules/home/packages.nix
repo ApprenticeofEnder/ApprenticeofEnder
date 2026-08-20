@@ -59,6 +59,7 @@
     actionlint # github actions linter
     ansible # deployment automation
     ansible-lint # linter
+    fluxcd # GitOps k8s automation
     gama-tui # github actions manager
     kubectl # k8s
     opentofu # IaC
