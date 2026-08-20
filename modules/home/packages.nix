@@ -62,6 +62,7 @@
     fluxcd # GitOps k8s automation
     gama-tui # github actions manager
     kubectl # k8s
+    lens # k8s dashboard
     opentofu # IaC
     pulumi-bin # IaC
     terraform # IaC
