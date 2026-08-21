@@ -87,6 +87,15 @@
         };
       };
     };
+    eks-backend = mkAwsProfile {
+      name = "eks-backend";
+      access_key_uri = "op://Homelab/EKS Floci Playground/seaweedfs";
+    };
+
+    eks-floci = mkAwsProfile {
+      name = "eks-floci";
+      access_key_uri = "op://Homelab/EKS Floci Playground/floci";
+    };
   };
 
   profile_credentials = with builtins;
