@@ -1,5 +1,5 @@
 {pkgs, ...}: {
   services.protonmail-bridge = {
-    enable = pkgs.stdenv.isLinux;
+    enable = pkgs.stdenv.hostPlatform.isLinux;
   };
 }

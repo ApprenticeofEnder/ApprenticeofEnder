@@ -171,9 +171,9 @@ in {
     ++ devops
     ++ utility
     ++ fun
-    ++ lib.optionals stdenv.isLinux linux
-    ++ lib.optionals (stdenv.isLinux && stdenv.isx86_64) x86Linux
-    ++ lib.optionals stdenv.isDarwin darwin;
+    ++ lib.optionals stdenv.hostPlatform.isLinux linux
+    ++ lib.optionals (stdenv.hostPlatform.isLinux && stdenv.hostPlatform.isx86_64) x86Linux
+    ++ lib.optionals stdenv.hostPlatform.isDarwin darwin;
 }
 #
 # TODO: Investigate the below tools

@@ -42,7 +42,7 @@
     {
       OPENROUTER_API_KEY = "op://Private/OpenRouter API Key - 1Password/credential";
     }
-    (lib.optionalAttrs (pkgs.stdenv.isDarwin) {
+    (lib.optionalAttrs (pkgs.stdenv.hostPlatform.isDarwin) {
       AWS_BEARER_TOKEN_BEDROCK = "op://Work/Amazon Bedrock API Key/credential";
     })
   ];

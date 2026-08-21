@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   services.redshift = {
-    enable = pkgs.stdenv.isLinux;
-    tray = pkgs.stdenv.isLinux;
+    enable = pkgs.stdenv.hostPlatform.isLinux;
+    tray = pkgs.stdenv.hostPlatform.isLinux;
     dawnTime = "7:00-9:00";
     duskTime = "19:30-21:00";
     temperature = {

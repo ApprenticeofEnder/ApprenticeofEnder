@@ -9,7 +9,7 @@
   };
 in {
   programs.tiny = {
-    enable = pkgs.stdenv.isLinux;
+    enable = pkgs.stdenv.hostPlatform.isLinux;
     settings = {
       servers = [
         {

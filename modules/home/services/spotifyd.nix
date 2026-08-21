@@ -1,5 +1,5 @@
 {pkgs, ...}: {
   services.spotifyd = {
-    enable = pkgs.stdenv.isLinux;
+    enable = pkgs.stdenv.hostPlatform.isLinux;
   };
 }

@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   services.podman = {
-    enable = pkgs.stdenv.isLinux;
+    enable = pkgs.stdenv.hostPlatform.isLinux;
     enableTypeChecks = true;
     autoUpdate.enable = true;
   };

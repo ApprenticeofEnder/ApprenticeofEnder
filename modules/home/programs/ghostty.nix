@@ -4,7 +4,7 @@
   ...
 }: let
   workingDirectory =
-    if pkgs.stdenv.isDarwin
+    if pkgs.stdenv.hostPlatform.isDarwin
     then "home"
     else "inherit";
 in
@@ -62,7 +62,7 @@ in
         };
       };
     }
-    (lib.mkIf pkgs.stdenv.isDarwin {
+    (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       programs.ghostty.package = pkgs.ghostty-bin;
     })
   ]

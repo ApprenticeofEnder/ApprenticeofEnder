@@ -131,7 +131,7 @@ in {
         (mkProject {
           name = "oac";
           root = "~/Work/Projects/oac";
-          enable = pkgs.stdenv.isDarwin;
+          enable = pkgs.stdenv.hostPlatform.isDarwin;
           agent = "claude";
           additional_windows = [
             {
@@ -146,7 +146,7 @@ in {
         (mkProject {
           name = "acre-infra";
           root = "~/Work/infra";
-          enable = pkgs.stdenv.isDarwin;
+          enable = pkgs.stdenv.hostPlatform.isDarwin;
           agent = "claude";
           additional_windows = [
             {

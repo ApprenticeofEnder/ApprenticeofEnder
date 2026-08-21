@@ -1,4 +1,4 @@
 {pkgs, ...}:
 with pkgs; {
-  services.remmina.enable = stdenv.isLinux;
+  services.remmina.enable = stdenv.hostPlatform.isLinux;
 }

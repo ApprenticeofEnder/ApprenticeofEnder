@@ -17,7 +17,7 @@
   };
 
   python = with pkgs;
-    if stdenv.isLinux
+    if stdenv.hostPlatform.isLinux
     then
       python313.withPackages (
         ps:

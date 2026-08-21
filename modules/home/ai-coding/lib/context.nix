@@ -20,7 +20,7 @@
   githubUsername = "ApprenticeofEnder";
 
   currentOs = with pkgs;
-    if stdenv.isDarwin
+    if stdenv.hostPlatform.isDarwin
     then "MacOS"
     else
       (

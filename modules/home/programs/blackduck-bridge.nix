@@ -25,7 +25,7 @@
 
   download_data = with pkgs; let
     os_name =
-      if stdenv.isDarwin
+      if stdenv.hostPlatform.isDarwin
       then darwinName
       else linuxName;
   in {
@@ -71,7 +71,7 @@
       wrapProgram $out/bin/bridge-cli
     '';
 in {
-  home.packages = lib.optionals pkgs.stdenv.isDarwin [
+  home.packages = lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
     blackduck-bridge
   ];
 }

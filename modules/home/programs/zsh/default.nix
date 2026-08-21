@@ -14,7 +14,7 @@
     };
     sessionVariables =
       {}
-      // lib.mkIf pkgs.stdenv.isDarwin {
+      // lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
         LIBRARY_PATH = "${pkgs.libiconv}/lib";
       };
 
@@ -71,12 +71,12 @@
           "docker-compose"
           "colored-man-pages"
         ]
-        ++ lib.optionals pkgs.stdenv.isDarwin [
+        ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
           "dash"
           "macos"
           "dotnet"
         ]
-        ++ lib.optionals pkgs.stdenv.isLinux [
+        ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
           "systemd"
         ];
       extraConfig = ''

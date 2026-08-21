@@ -105,7 +105,7 @@ in {
     };
   };
 
-  config = mkIf (cfg.enable && pkgs.stdenv.isLinux) {
+  config = mkIf (cfg.enable && pkgs.stdenv.hostPlatform.isLinux) {
     # Install ntfy package
     home.packages = [cfg.package pkgs.libnotify];
 

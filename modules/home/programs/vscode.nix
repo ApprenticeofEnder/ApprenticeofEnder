@@ -114,7 +114,7 @@ in
     sharedConfigs
     # MacOS
     (
-      lib.mkIf pkgs.stdenv.isDarwin (
+      lib.mkIf pkgs.stdenv.hostPlatform.isDarwin (
         darwinConfig
         // {
           programs.vscode.enable = false; # Disabled due to issues with LSP
@@ -123,7 +123,7 @@ in
     )
     # Linux
     (
-      lib.mkIf pkgs.stdenv.isLinux (
+      lib.mkIf pkgs.stdenv.hostPlatform.isLinux (
         linuxConfig
         // {
           home.packages = [

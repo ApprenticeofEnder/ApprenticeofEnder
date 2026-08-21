@@ -4,7 +4,7 @@
   ...
 }: let
   workingDirectory =
-    if pkgs.stdenv.isDarwin
+    if pkgs.stdenv.hostPlatform.isDarwin
     then "home"
     else "inherit";
 
@@ -65,7 +65,7 @@ in
         '';
       };
     }
-    (lib.mkIf pkgs.stdenv.isDarwin {
+    (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       programs.wezterm.settings.send_composed_key_when_left_alt_is_pressed = false;
     })
   ]
