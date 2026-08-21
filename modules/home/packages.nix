@@ -61,6 +61,7 @@
     ansible-lint # linter
     fluxcd # GitOps k8s automation
     gama-tui # github actions manager
+    kind # k8s in docker
     kubectl # k8s
     lens # k8s dashboard
     opentofu # IaC
