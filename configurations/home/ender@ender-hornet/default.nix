@@ -1,4 +1,8 @@
-{flake, ...}: let
+{
+  flake,
+  config,
+  ...
+}: let
   inherit (flake) inputs;
   inherit (inputs) self;
 
@@ -37,6 +41,11 @@ in {
     identity-agent = "~/.1password/agent.sock";
     ssh-sign = "/opt/1Password/op-ssh-sign";
     cli = "/usr/bin/op";
+  };
+
+  programs.firefox = {
+    enable = true;
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
   };
 
   home.stateVersion = "25.05";
