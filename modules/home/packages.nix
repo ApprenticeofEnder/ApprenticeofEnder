@@ -75,6 +75,7 @@
   utility = with pkgs; [
     # System
     # keep-sorted start
+    cairo # 2D graphics library
     cargo-seek
     duf # disk usage
     exiftool

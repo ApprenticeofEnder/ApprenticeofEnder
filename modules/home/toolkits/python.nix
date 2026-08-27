@@ -22,8 +22,14 @@
       python313.withPackages (
         ps:
           with ps; [
+            # keep-sorted start
+            evdev
+            lxml
+            pycairo
             pygame
+            pygobject3
             zlib-ng
+            # keep-sorted end
           ]
       )
     else python313;
