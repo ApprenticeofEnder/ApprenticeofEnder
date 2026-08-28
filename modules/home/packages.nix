@@ -105,6 +105,7 @@
     md-tui # markdown reader
     ispell # spelling
     ntfy-sh
+    touying # presentation exporter
   ];
 
   linux = with pkgs;

@@ -36,6 +36,7 @@ in {
       };
     };
     ts-context-commentstring.enable = true;
+    typst-preview.enable = true;
     which-key = {
       enable = true;
       settings = {

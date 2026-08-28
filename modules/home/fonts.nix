@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
@@ -11,4 +11,19 @@
       monospace = ["Hack Nerd Font"];
     };
   };
+
+  home.packages = with pkgs; [
+    # keep-sorted start
+    atkinson-hyperlegible-next
+    fira-code
+    fira-code-symbols
+    fira-sans
+    font-awesome
+    liberation_ttf
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
+    victor-mono
+    # keep-sorted end
+  ];
 }
