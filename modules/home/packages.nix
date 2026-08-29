@@ -87,6 +87,7 @@
     macchina
     mosh # better SSH
     ncdu # disk usage (baobab-like tui)
+    organicmaps # street maps
     pik # process info
     procs # better ps
     sd # better sed
