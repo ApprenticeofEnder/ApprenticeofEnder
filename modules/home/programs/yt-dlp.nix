@@ -8,7 +8,7 @@
       text = ''
         -x
 
-        -o ~/Music/Inbox/%(title)s.%(ext)s
+        -o ~/Storage/Music/Inbox/%(title)s.%(ext)s
 
         --audio-format mp3
       '';

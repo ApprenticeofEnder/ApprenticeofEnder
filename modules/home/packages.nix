@@ -131,18 +131,14 @@
       pkgs-stable.krita
     ];
 
-  x86Linux = with pkgs;
-    [
-      # keep-sorted start
-      audacity # audio editing
-      impala # wifi management
-      slack
-      tor-browser
-      # keep-sorted end
-    ]
-    ++ [
-      pkgs-stable.handbrake
-    ];
+  x86Linux = with pkgs; [
+    # keep-sorted start
+    audacity # audio editing
+    impala # wifi management
+    slack
+    tor-browser
+    # keep-sorted end
+  ];
 
   darwin = with pkgs;
     [
