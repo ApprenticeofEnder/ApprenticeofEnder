@@ -133,7 +133,6 @@
 
   x86Linux = with pkgs; [
     # keep-sorted start
-    audacity # audio editing
     impala # wifi management
     slack
     tor-browser
