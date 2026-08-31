@@ -1,6 +1,7 @@
 {
   flake,
   config,
+  pkgs,
   ...
 }: let
   inherit (flake) inputs;
@@ -47,6 +48,8 @@ in {
     enable = true;
     configPath = "${config.xdg.configHome}/mozilla/firefox";
   };
+
+  services.espanso.package = pkgs.espanso-wayland;
 
   home.stateVersion = "25.05";
 }
