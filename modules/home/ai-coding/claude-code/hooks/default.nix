@@ -20,7 +20,7 @@
     #   name = "format";
     # };
     post-write = mkScriptHook {
-      name = "post_format";
+      name = "post_write";
       extension = "py";
     };
   };
