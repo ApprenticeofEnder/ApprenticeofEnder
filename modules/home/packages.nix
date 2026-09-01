@@ -87,7 +87,6 @@
     macchina
     mosh # better SSH
     ncdu # disk usage (baobab-like tui)
-    organicmaps # street maps
     pik # process info
     procs # better ps
     sd # better sed
@@ -134,6 +133,7 @@
   x86Linux = with pkgs; [
     # keep-sorted start
     impala # wifi management
+    organicmaps # street maps
     slack
     tor-browser
     # keep-sorted end
