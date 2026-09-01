@@ -1,25 +1,34 @@
 {lib, ...}: let
-  mkScriptHook = name: let
-    filePath = ".claude/hooks/${name}.sh";
+  mkScriptHook = {
+    name,
+    extension ? "sh",
+  }: let
+    filePath = ".claude/hooks/${name}.${extension}";
   in {
     file = {
       "${filePath}" = {
-        source = ./${name}.sh;
+        source = ./${name}.${extension};
         executable = true;
       };
     };
     reference = "~/${filePath}";
   };
 
-  hooks = {
-    clamp-bash-timeout = mkScriptHook "clamp-bash-timeout";
-    format = mkScriptHook "format";
+  hookScripts = {
+    clamp-bash-timeout = mkScriptHook {name = "clamp-bash-timeout";};
+    # format = mkScriptHook {
+    #   name = "format";
+    # };
+    post-write = mkScriptHook {
+      name = "post_format";
+      extension = "py";
+    };
   };
 
   hookFiles = lib.mergeAttrsList (builtins.attrValues (lib.concatMapAttrs (name: hook: {
       "${name}" = hook.file;
     })
-    hooks));
+    hookScripts));
 in {
   home.file = hookFiles;
   programs.claude-code = {
@@ -40,7 +49,7 @@ in {
             hooks = [
               {
                 type = "command";
-                command = "${hooks.clamp-bash-timeout.reference}";
+                command = "${hookScripts.clamp-bash-timeout.reference}";
               }
             ];
           }
@@ -60,7 +69,7 @@ in {
             hooks = [
               {
                 type = "command";
-                command = "${hooks.format.reference}";
+                command = "${hookScripts.post-write.reference}";
               }
             ];
           }
