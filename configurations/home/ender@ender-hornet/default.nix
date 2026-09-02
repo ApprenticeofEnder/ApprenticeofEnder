@@ -51,5 +51,7 @@ in {
 
   services.espanso.package = pkgs.espanso-wayland;
 
+  podman.enable = true;
+
   home.stateVersion = "25.05";
 }
