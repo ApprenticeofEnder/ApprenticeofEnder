@@ -63,6 +63,7 @@
     gama-tui # github actions manager
     kind # k8s in docker
     kubectl # k8s
+    kubeseal # k8s secrets
     lens # k8s dashboard
     opentofu # IaC
     pulumi-bin # IaC
