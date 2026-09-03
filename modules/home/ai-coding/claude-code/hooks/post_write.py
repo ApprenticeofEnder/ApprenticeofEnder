@@ -13,6 +13,8 @@ from typing import Any
 
 def extract_file_path() -> Path:
     agent_input: dict[str, Any] = json.load(sys.stdin)
+    with open("tool-input.json", "w+") as outfile:
+        json.dump(agent_input, outfile)
     file_path: str = agent_input["tool_input"]["file_path"]
     return Path(file_path).resolve()
 
@@ -105,6 +107,12 @@ class RuffCheckProcessor(FileProcessor):
     matchers = ["**/*.py"]
     command = "ruff"
     args = ["check", "FILE"]
+
+
+class ActionlintProcessor(FileProcessor):
+    matchers = ["**/.github/workflows/*.yml", "**/.github/workflows/*.yaml"]
+    command = "actionlint"
+    args = ["-format", "'{{json .}}'", "FILE"]
 
 
 def main():
