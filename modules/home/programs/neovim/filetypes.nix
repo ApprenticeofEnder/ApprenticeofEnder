@@ -3,6 +3,7 @@
     pattern = {
       ".env.*" = "ini";
       "*.tfstate.backup" = "json";
+      "*.sh.tpl" = "sh";
     };
     filename = {
       ".env" = "ini";
