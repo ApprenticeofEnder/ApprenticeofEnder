@@ -54,4 +54,8 @@ in {
   podman.enable = true;
 
   home.stateVersion = "25.05";
+
+  home.packages = with pkgs; [
+    deadlock-mod-manager
+  ];
 }
