@@ -7,8 +7,11 @@ in {
     PUPPETEER_EXECUTABLE_PATH = "${pkgs.google-chrome}/bin/google-chrome-stable";
   };
   home.packages = with pkgs; [
+    # keep-sorted start
     dotnet-sdk_10
     google-chrome
+    imagemagick
+    # keep-sorted end
   ];
   programs.nixvim = {
     enable = true;
