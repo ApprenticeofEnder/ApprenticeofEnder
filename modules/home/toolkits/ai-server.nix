@@ -87,7 +87,7 @@ in {
       acceleration = cfg.acceleration;
       environmentVariables =
         {
-          OLLAMA_CONTEXT_LENGTH = "${cfg.contextLength}";
+          OLLAMA_CONTEXT_LENGTH = "${builtins.toString cfg.contextLength}";
         }
         // cfg.environmentVariables;
     };
@@ -98,7 +98,7 @@ in {
           npm = "@ai-sdk/openai-compatible";
           name = "ollama@${cfg.serverName}";
           options = {
-            "baseURL" = "http://${cfg.serverHost}:${cfg.port}/v1";
+            "baseURL" = "http://${cfg.serverHost}:${builtins.toString cfg.port}/v1";
           };
           models = genAttrs cfg.models (model: {
             name = model;
