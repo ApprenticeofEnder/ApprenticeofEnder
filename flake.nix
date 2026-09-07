@@ -23,6 +23,8 @@
 
     nixos-unified.url = "github:srid/nixos-unified";
 
+    nixpkgs-ollama.url = "github:/nixos/nixpkgs/e8be7818e19ada32105a8af937a6a473b38167ca";
+
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";

@@ -1,60 +1,124 @@
 {
+  config,
   lib,
-  pkgs-stable,
+  pkgs-ollama,
   ...
-}: let
-  ollama = "${pkgs-stable.ollama-cuda}/bin/ollama";
-  models = [
-    "deepseek-coder:1.3b"
-    "qwen2.5-coder:3b"
-  ];
+}:
+with lib; let
+  cfg = config.toolkits.ai-server;
 
-  # TODO: Investigate the following models:
-  # - https://ollama.com/library/gemma4
-  # - https://ollama.com/library/qwen3.5
-  # - https://ollama.com/library/laguna-xs.2
+  ollama = "${getExe config.services.ollama.package}";
 
-  modelListBash = lib.concatStringsSep " " models;
+  modelListBash = concatStringsSep " " cfg.models;
 in {
-  services.ollama = {
-    enable = true;
-    package = pkgs-stable.ollama-cuda;
-    port = 11434; # default
-    host = "0.0.0.0"; # default
-    # acceleration = "rocm";
-    acceleration = "cuda"; # nvidia
-    environmentVariables = {
-      OLLAMA_CONTEXT_LENGTH = "32000";
+  options.toolkits.ai-server = {
+    # keep-sorted start block=yes newline_separated=yes
+    acceleration = mkOption {
+      type = types.nullOr (types.enum [
+        false
+        "rocm"
+        "cuda"
+        "vulkan"
+      ]);
+      default = "cuda";
     };
-  };
 
-  programs.opencode.settings = {
-    # model = "ollama-ender/${builtins.elemAt models 0}";
-    provider = {
-      ollama-ender = {
-        npm = "@ai-sdk/openai-compatible";
-        name = "ollama@ender-raptor";
-        options = {
-          "baseURL" = "http://localhost:11434/v1";
-        };
-        models = lib.genAttrs models (model: {
-          name = model;
-        });
+    bindHost = mkOption {
+      type = types.str;
+      default = "127.0.0.1";
+      example = "0.0.0.0";
+      description = "The host on which ollama listens.";
+    };
+
+    contextLength = mkOption {
+      type = types.int;
+      default = 32000;
+      example = 4096;
+    };
+
+    enable = mkEnableOption "An Ollama-powered AI server.";
+
+    environmentVariables = mkOption {
+      type = with types; attrsOf str;
+      default = {};
+      example = {
+        OLLAMA_LLM_LIBRARY = "cpu";
+        HIP_VISIBLE_DEVICES = "0,1";
       };
     };
+
+    models = mkOption {
+      type = with types; listOf str;
+      default = [];
+      example = [
+        "deepseek-coder:1.3b"
+        "qwen2.5-coder:3b"
+      ];
+    };
+
+    port = mkOption {
+      type = types.int;
+      default = 11434;
+      example = 11111;
+    };
+
+    serverHost = mkOption {
+      type = types.str;
+      default = "localhost";
+      example = "ai-server.example.com";
+      description = "The hostname to reach Ollama.";
+    };
+
+    serverName = mkOption {
+      type = types.str;
+      default = "ollama-server";
+      example = "my-awesome-ai-server";
+      description = "The name to use in the OpenCode provider";
+    };
+    # keep-sorted end
   };
 
-  home.activation.pullOllamaModels = lib.mkIf (models != []) (
-    lib.hm.dag.entryAfter ["writeBoundary"] ''
-      if ! command -v ${ollama} &> /dev/null; then
-        echo "Ollama not available." && exit 1
-      fi
+  config = mkIf cfg.enable {
+    services.ollama = {
+      enable = true;
+      package = pkgs-ollama.ollama;
+      port = cfg.port;
+      host = cfg.bindHost;
+      acceleration = cfg.acceleration;
+      environmentVariables =
+        {
+          OLLAMA_CONTEXT_LENGTH = "${cfg.contextLength}";
+        }
+        // cfg.environmentVariables;
+    };
 
-      for model in ${modelListBash}; do
-        echo "Pulling $model..."
-        ${ollama} pull "$model" ||
-          echo "Warning: Failed to pull $model (service may not be running)"
-      done
-    ''
-  );
+    programs.opencode.settings = {
+      provider = {
+        "ollama-${cfg.serverName}" = {
+          npm = "@ai-sdk/openai-compatible";
+          name = "ollama@${cfg.serverName}";
+          options = {
+            "baseURL" = "http://${cfg.serverHost}:${cfg.port}/v1";
+          };
+          models = genAttrs cfg.models (model: {
+            name = model;
+          });
+        };
+      };
+    };
+
+    home.activation.pullOllamaModels = lib.mkIf (models != []) (
+      lib.hm.dag.entryAfter ["writeBoundary"] ''
+        if ! command -v ${ollama} &> /dev/null; then
+          echo "Ollama not available." && exit 1
+        fi
+
+        for model in ${modelListBash}; do
+          echo "Pulling $model..."
+          ${ollama} pull "$model" ||
+            echo "Warning: Failed to pull $model (service may not be running)"
+        done
+      ''
+    );
+  };
 }

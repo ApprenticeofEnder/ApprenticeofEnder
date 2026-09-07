@@ -22,7 +22,6 @@ in {
     ]
     ++ importHome "toolkits" [
       # keep-sorted start
-      "ai-server.nix"
       "game-dev.nix"
       "javascript.nix"
       "python.nix"
@@ -52,6 +51,27 @@ in {
   services.espanso.package = pkgs.espanso-wayland;
 
   podman.enable = true;
+
+  services.podman.containers = {
+    "kind-hornet-control-plane" = {
+      autoStart = true;
+    };
+  };
+
+  toolkits.ai-server = {
+    enable = true;
+
+    # keep-sorted start block=yes
+    acceleration = "cuda";
+    bindHost = "0.0.0.0";
+    models = [
+      "deepseek-coder:1.3b"
+      "qwen2.5-coder:3b"
+    ];
+    serverHost = "localhost";
+    serverName = "ender-hornet";
+    # keep-sorted end
+  };
 
   home.stateVersion = "25.05";
 
