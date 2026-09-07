@@ -52,12 +52,6 @@ in {
 
   podman.enable = true;
 
-  services.podman.containers = {
-    "kind-hornet-control-plane" = {
-      autoStart = true;
-    };
-  };
-
   toolkits.ai-server = {
     enable = true;
 
