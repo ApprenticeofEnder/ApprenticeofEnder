@@ -107,7 +107,7 @@ in {
       };
     };
 
-    home.activation.pullOllamaModels = lib.mkIf (models != []) (
+    home.activation.pullOllamaModels = lib.mkIf (cfg.models != []) (
       lib.hm.dag.entryAfter ["writeBoundary"] ''
         if ! command -v ${ollama} &> /dev/null; then
           echo "Ollama not available." && exit 1
