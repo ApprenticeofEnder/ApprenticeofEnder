@@ -21,6 +21,7 @@
     }
     // options;
 
+  # deadnix: skip
   cyberSciSshHost = {
     user ? "vpcadmin",
     hostname,
@@ -77,31 +78,6 @@ in {
       "homelab-pi" = sshHost {
         hostname = "192.168.18.100";
         publicKeyName = "pi_master.pub";
-      };
-
-      "deployment-hell" = cyberSciSshHost {
-        hostname = "10.0.2.93";
-        publicKeyName = "cybersci_2026_nationals.pub";
-      };
-
-      "assault-and-battery" = cyberSciSshHost {
-        hostname = "10.0.2.71";
-        publicKeyName = "cybersci_2026_nationals.pub";
-      };
-
-      "shellnet" = cyberSciSshHost {
-        hostname = "10.0.2.141";
-        publicKeyName = "cybersci_2026_nationals.pub";
-      };
-
-      "gitgoodgemma" = cyberSciSshHost {
-        hostname = "10.0.2.21";
-        publicKeyName = "cybersci_2026_nationals.pub";
-      };
-
-      defence = cyberSciSshHost {
-        hostname = "10.0.2.90";
-        publicKeyName = "cybersci_2026_nationals.pub";
       };
     };
   };
