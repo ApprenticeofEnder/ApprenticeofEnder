@@ -79,16 +79,6 @@ in {
   home.file =
     skill_files
     // {
-      ".claude/scripts/claude-hud-statusline.sh" = {
-        source = ./scripts/claude-hud-statusline.sh;
-        executable = true;
-      };
-
-      ".claude/scripts/statusline.py" = {
-        source = ./scripts/statusline.py;
-        executable = true;
-      };
-
       ".claude/skills/skill-rules.json" = {
         text = builtins.toJSON {
           version = "0.1";

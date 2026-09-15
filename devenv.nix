@@ -80,6 +80,7 @@ in {
         links=(
           starship
           nvim
+          claude
         )
         for link in "''${links[@]}"
         do

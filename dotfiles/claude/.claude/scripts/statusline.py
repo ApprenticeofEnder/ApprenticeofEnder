@@ -185,6 +185,7 @@ class ContextWindowData(FieldSet):
 
 
 def load_statusline_input(input_data: dict[Any, Any]) -> StatuslineInput:
+    print(input_data, file=sys.stderr)
     model_data = ModelData(**input_data.get("model", {}))
     cost_data = CostData(**input_data.get("cost", {}))
     context_window_data = ContextWindowData(
