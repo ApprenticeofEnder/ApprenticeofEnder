@@ -84,6 +84,11 @@ in {
         executable = true;
       };
 
+      ".claude/scripts/statusline.py" = {
+        source = ./scripts/statusline.py;
+        executable = true;
+      };
+
       ".claude/skills/skill-rules.json" = {
         text = builtins.toJSON {
           version = "0.1";
@@ -152,7 +157,7 @@ in {
 
       statusLine = {
         type = "command";
-        command = "~/.claude/scripts/claude-hud-statusline.sh";
+        command = "~/.claude/scripts/statusline.py";
       };
       permissions = {
         allow = lib.concatLists [
