@@ -3,9 +3,9 @@ import json
 import math
 import sys
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import UTC, datetime
 from enum import IntEnum
-from typing import Any
+from typing import Any, TypedDict
 
 number_names = ["", "K", "M", "B", "T"]
 
@@ -117,15 +117,16 @@ class ModelData(FieldSet):
 
     @property
     def model_colour(self) -> AnsiColor:
-        match self.display_name:
-            case "Opus":
-                return AnsiColor.YELLOW
-            case "Fable":
-                return AnsiColor.RED
-            case "Haiku":
-                return AnsiColor.GREEN
-            case _:
-                return AnsiColor.WHITE
+        if "Opus" in self.display_name:
+            return AnsiColor.YELLOW
+
+        if "Fable" in self.display_name:
+            return AnsiColor.RED
+
+        if "Haiku" in self.display_name:
+            return AnsiColor.GREEN
+
+        return AnsiColor.WHITE
 
     def render(self) -> str:
         return super().render(
@@ -145,7 +146,9 @@ class CostData(FieldSet):
 
     @property
     def human_duration(self):
-        timestamp = datetime.fromtimestamp(self.total_duration_ms / 1000.0)
+        timestamp = datetime.fromtimestamp(
+            self.total_duration_ms / 1000.0, tz=UTC
+        )
         return timestamp.strftime("%H:%M:%S")
 
     def render(self) -> str:
@@ -165,27 +168,50 @@ class ContextWindowData(FieldSet):
     context_window_size: int
     used_percentage: int | None = None
     remaining_percentage: int | None = None
+    current_usage: "CurrentUsage | None" = None
 
     @property
     def rendered_context_size(self) -> str:
         return human_readable_number(self.context_window_size)
 
-    def render(self) -> str:
-        color = AnsiColor.GREEN
-        if self.used_percentage > 50:
-            color = AnsiColor.YELLOW
+    @property
+    def color(self) -> AnsiColor:
+        if self.used_percentage is None:
+            return AnsiColor.WHITE
+
         if self.used_percentage > 70:
-            color = AnsiColor.RED
+            return AnsiColor.RED
+
+        if self.used_percentage > 50:
+            return AnsiColor.YELLOW
+
+        return AnsiColor.GREEN
+
+    def render(self) -> str:
+        color = self.color
+
+        percentage = 0
+
+        if self.used_percentage is not None:
+            percentage = self.used_percentage
 
         rendered_context = Ansi.render(
-            f"{self.used_percentage}/100% [{self.rendered_context_size}]",
+            f"{percentage}/100% [{self.rendered_context_size}]",
             foreground_color=color,
         )
         return super().render(context=rendered_context)
 
 
+class CurrentUsage(TypedDict):
+    input_tokens: int
+    output_tokens: int
+    cache_creation_input_tokens: int
+    cache_read_input_tokens: int
+
+
 def load_statusline_input(input_data: dict[Any, Any]) -> StatuslineInput:
-    print(input_data, file=sys.stderr)
+    with open("statusline_test.txt", "w+") as debugfile:
+        print(input_data, file=debugfile)
     model_data = ModelData(**input_data.get("model", {}))
     cost_data = CostData(**input_data.get("cost", {}))
     context_window_data = ContextWindowData(
@@ -198,10 +224,19 @@ def load_statusline_input(input_data: dict[Any, Any]) -> StatuslineInput:
 
 
 def main():
-    data: StatuslineInput = json.load(
-        sys.stdin, object_hook=load_statusline_input
-    )
-    print(data.render())
+    try:
+        input_data = json.load(sys.stdin)
+        statusline_input = StatuslineInput(
+            model=ModelData(**input_data.get("model", {})),
+            cost=CostData(**input_data.get("cost", {})),
+            context_window=ContextWindowData(
+                **input_data.get("context_window", {})
+            ),
+        )
+        print(statusline_input.render())
+    except Exception as e:
+        print("Error loading status:")
+        print(e)
 
 
 if __name__ == "__main__":
