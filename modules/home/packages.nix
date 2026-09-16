@@ -112,6 +112,7 @@
   linux = with pkgs;
     [
       # keep-sorted start
+      hayagriva
       kdePackages.okular
       lazyjournal
       less # needed for Ubuntu
