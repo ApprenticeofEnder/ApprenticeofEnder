@@ -38,7 +38,5 @@ in {
     cli = lib.getExe pkgs._1password-cli;
   };
 
-  podman.enable = true;
-
   home.stateVersion = "25.05";
 }
