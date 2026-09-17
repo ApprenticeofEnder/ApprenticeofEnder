@@ -53,7 +53,7 @@ in {
       enable = true;
       settings = {
         init.defaultBranch = "main";
-        pull.rebase = false;
+        pull.rebase = true;
         gpg = {
           format = "ssh";
           ssh = {
