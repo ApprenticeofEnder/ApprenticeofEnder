@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 with lib; let
@@ -17,6 +18,9 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      podman-compose
+    ];
     home.sessionVariables = {
       DOCKER_HOST = cfg.dockerHost;
     };
