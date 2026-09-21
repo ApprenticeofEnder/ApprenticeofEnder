@@ -47,6 +47,7 @@ in
         bun
         nodejs_24
         pnpm
+        prettier
         yarn
         # keep-sorted end
       ];
