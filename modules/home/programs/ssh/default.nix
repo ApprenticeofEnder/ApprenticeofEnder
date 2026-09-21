@@ -76,7 +76,7 @@ in {
       };
 
       "homelab-pi" = sshHost {
-        hostname = "192.168.18.100";
+        hostname = "192.168.2.100";
         publicKeyName = "pi_master.pub";
       };
     };
