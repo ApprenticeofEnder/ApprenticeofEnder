@@ -23,6 +23,10 @@
       name = "post_write";
       extension = "py";
     };
+    zizmor = mkScriptHook {
+      name = "zizmor";
+      extension = "py";
+    };
   };
 
   hookFiles = lib.mergeAttrsList (builtins.attrValues (lib.concatMapAttrs (name: hook: {
@@ -65,8 +69,19 @@ in {
         ];
         PostToolUse = [
           {
-            matcher = "Edit|Write";
+            matcher = "Edit";
             hooks = [
+              # TODO: Add hooks for specific commands
+              {
+                type = "command";
+                command = "${hookScripts.zizmor.reference}";
+                "if" = "Edit(**/.github/workflows/*.yml)";
+              }
+              {
+                type = "command";
+                command = "${hookScripts.zizmor.reference}";
+                "if" = "Edit(**/.github/workflows/*.yaml)";
+              }
               {
                 type = "command";
                 command = "${hookScripts.post-write.reference}";
