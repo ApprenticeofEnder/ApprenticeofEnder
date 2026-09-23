@@ -4,6 +4,7 @@
       ".env.*" = "ini";
       "*.tfstate.backup" = "json";
       "*.sh.tpl" = "sh";
+      ".*/%.github/workflows/.*%.ya?ml" = "yaml.ghactions";
     };
     filename = {
       ".env" = "ini";

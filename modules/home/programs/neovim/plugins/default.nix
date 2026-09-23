@@ -2,6 +2,7 @@
   filterFiles = filename: (
     filename
     != "default.nix"
+    && filename != "actionslsp.lua"
   );
 in {
   imports = with builtins;

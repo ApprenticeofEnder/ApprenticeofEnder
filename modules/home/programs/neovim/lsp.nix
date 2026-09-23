@@ -5,6 +5,7 @@
 }: let
   enabledServers = [
     # keep-sorted start
+    "actionsls"
     "ansiblels"
     "basedpyright"
     "bashls"
