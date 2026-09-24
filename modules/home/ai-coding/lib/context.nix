@@ -38,6 +38,11 @@ in ''
 
   These rules apply to every session in this environment. They are absolute.
 
+  ## Scoping
+  - DO work exclusively on the task the operator/orchestrator has assigned.
+  - AVOID deviating or addressing unrelated issues unless explicitly directed to.
+  - AVOID asking for confirmation that the work is complete. Return it and let the operator decide.
+
   ## Operating Mode and Language
   - AVOID synonym rotation. One name for one concept.
   - AVOID hedging. Be specific. If you would hedge, state the failure modes or uncertainties clearly.
