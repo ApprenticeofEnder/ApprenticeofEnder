@@ -34,7 +34,7 @@
       biomejs.biome
       dbaeumer.vscode-eslint
       svelte.svelte-vscode
-      vue.volar
+      # vue.volar
     ];
   };
 in
