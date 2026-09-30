@@ -7,7 +7,10 @@
       ".*/%.github/workflows/.*%.ya?ml" = "yaml.ghactions";
     };
     filename = {
-      ".env" = "ini";
+      "docker-compose.yaml" = "yaml.docker-compose";
+      "docker-compose.yml" = "yaml.docker-compose";
+      "compose.yaml" = "yaml.docker-compose";
+      "compose.yml" = "yaml.docker-compose";
       ".terraformrc" = "hcl";
       "terraform.rc" = "hcl";
     };
