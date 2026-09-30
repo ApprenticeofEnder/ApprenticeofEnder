@@ -38,20 +38,23 @@
       # pkgs-stable.cachix
     ];
 
-  security = with pkgs; [
-    # keep-sorted start
-    gnutls
-    nmap # recon
-    ripsecrets
-    # _1password-gui # TODO: Work out the whole user/group requirement thing
-    # _1password-cli
-    semgrep
-    snyk # vuln management
-    tcpdump # network forensics
-    wireshark # network forensics
-    zizmor
-    # keep-sorted end
-  ];
+  security = with pkgs;
+    [
+      # keep-sorted start
+      gnutls
+      nmap # recon
+      ripsecrets
+      # _1password-gui # TODO: Work out the whole user/group requirement thing
+      # _1password-cli
+      snyk # vuln management
+      tcpdump # network forensics
+      wireshark # network forensics
+      zizmor
+      # keep-sorted end
+    ]
+    ++ [
+      pkgs-stable.semgrep
+    ];
 
   devops = with pkgs; [
     # keep-sorted start

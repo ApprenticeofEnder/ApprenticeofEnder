@@ -4,6 +4,12 @@
   lib,
   ...
 }: let
+  pkgs-stable = import flake.inputs.nixpkgs-stable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config = {
+      allowUnfree = true;
+    };
+  };
   terramaidOverlay = _: prev: let
     system = prev.stdenv.hostPlatform.system;
   in {
@@ -16,7 +22,7 @@
     });
   };
 in {
-  nix.package = pkgs.lix;
+  nix.package = pkgs-stable.lix;
 
   nixpkgs = {
     config = {
