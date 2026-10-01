@@ -76,41 +76,44 @@
     # keep-sorted end
   ];
 
-  utility = with pkgs; [
-    # System
-    # keep-sorted start
-    cairo # 2D graphics library
-    cargo-seek
-    duf # disk usage
-    exiftool
-    imagemagick
-    just # make for commands
-    lazyssh
-    libnotify
-    libz
-    macchina
-    mosh # better SSH
-    ncdu # disk usage (baobab-like tui)
-    pik # process info
-    procs # better ps
-    sd # better sed
-    tldr # man with examples
-    tree
-    ttyd # terminal sharing
-    unzip
-    xclip
-    # keep-sorted end
+  utility = with pkgs;
+    [
+      # System
+      # keep-sorted start
+      cairo # 2D graphics library
+      cargo-seek
+      duf # disk usage
+      exiftool
+      imagemagick
+      just # make for commands
+      lazyssh
+      libnotify
+      libz
+      macchina
+      ncdu # disk usage (baobab-like tui)
+      pik # process info
+      procs # better ps
+      sd # better sed
+      tldr # man with examples
+      tree
+      ttyd # terminal sharing
+      unzip
+      xclip
+      # keep-sorted end
 
-    # Research
-    wiki-tui # wikipedia TUI
+      # Research
+      wiki-tui # wikipedia TUI
 
-    # Routine
-    lynx # text web browser
-    md-tui # markdown reader
-    ispell # spelling
-    ntfy-sh
-    touying # presentation exporter
-  ];
+      # Routine
+      lynx # text web browser
+      md-tui # markdown reader
+      ispell # spelling
+      ntfy-sh
+      touying # presentation exporter
+    ]
+    ++ [
+      pkgs-stable.mosh # better SSH
+    ];
 
   linux = with pkgs;
     [
@@ -127,11 +130,10 @@
       # fun that only works on Linux
       spotify
       hollywood
-
-      # Research
-      zotero # citation and document management
     ]
     ++ [
+      # Research
+      pkgs-stable.zotero # citation and document management
       pkgs-stable.krita
     ];
 
