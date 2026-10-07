@@ -15,7 +15,8 @@
             # keep-sorted start
             ".act/secrets"
             ".dev.vars"
-            ".env*"
+            ".env"
+            ".env.local"
             ".secrets"
             "wrangler.toml"
             # keep-sorted end
