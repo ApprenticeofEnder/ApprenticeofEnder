@@ -101,7 +101,6 @@
           };
           prettier = {
             command = lib.getExe pkgs.prettier;
-            require_cwd = true;
           };
           shellcheck = {
             command = lib.getExe pkgs.shellcheck;
