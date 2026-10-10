@@ -58,6 +58,12 @@
 in {
   home.file = sshKeys;
 
+  xdg.configFile = {
+    "1Password/agent.toml" = {
+      source = ./agent.toml;
+    };
+  };
+
   programs.ssh = {
     enable = true;
     # includes = [];
@@ -78,6 +84,13 @@ in {
       "homelab-pi" = sshHost {
         hostname = "192.168.2.100";
         publicKeyName = "pi_master.pub";
+      };
+
+      "beaverops-git" = sshHost {
+        user = "git";
+        publicKeyName = "beaverops.pub";
+        hostname = "localhost";
+        port = 2222;
       };
     };
   };
