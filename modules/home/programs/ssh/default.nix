@@ -59,7 +59,7 @@ in {
   home.file = sshKeys;
 
   xdg.configFile = {
-    "1Password/agent.toml" = {
+    "1Password/ssh/agent.toml" = {
       source = ./agent.toml;
     };
   };
