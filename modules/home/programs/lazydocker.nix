@@ -12,7 +12,7 @@
 in {
   home.shellAliases = {
     lzp = ''DOCKER_HOST="${sockets.podman}" ${lazydockerBin}'';
-    lzpr = ''DOCKER_HOST="${sockets.podmanRoot}" ${lazydockerBin}'';
+    lzpr = ''DOCKER_HOST="${sockets.podmanRoot}" sudo ${lazydockerBin}'';
     lzd = ''DOCKER_HOST=${sockets.docker} ${lazydockerBin}'';
   };
   programs.lazydocker = {
