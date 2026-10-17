@@ -112,13 +112,6 @@ in {
       enable = true;
       excludes = [".zsh$"];
     };
-    upcache = {
-      entry = "upcache";
-      enable = false;
-      stages = [
-        "pre-push"
-      ];
-    };
     vale.enable = true;
     # keep-sorted end
   };
