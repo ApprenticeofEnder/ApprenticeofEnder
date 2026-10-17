@@ -22,14 +22,6 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Enable networking
-  networking = {
-    networkmanager = {
-      enable = true;
-      # wifi.backend = "iwd";
-    };
-  };
-
   # Set your time zone.
   time.timeZone = "America/Toronto";
 
@@ -96,11 +88,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
