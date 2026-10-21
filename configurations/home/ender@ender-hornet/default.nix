@@ -74,4 +74,8 @@ in {
     openrgb
     signal-desktop
   ];
+
+  home.sessionVariables = {
+    PULSE_LATENCY_MSEC = "400";
+  };
 }
