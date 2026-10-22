@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-stable,
   lib,
   ...
 }: let
@@ -109,6 +110,7 @@
 in {
   programs.awscli = {
     enable = true;
+    package = pkgs-stable.awscli;
     credentials = profile_credentials;
     settings = profile_settings;
   };
