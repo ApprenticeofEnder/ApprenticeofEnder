@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  pkgs-stable,
   nixosConfig,
 }: let
   opAliases = tools:
@@ -12,7 +11,7 @@
           builtins.concatStringsSep " " [
             "- `${tool}` aliases to `op plugin run -- ${tool}`."
             "Needs interactive auth."
-            "Use `${lib.getExe pkgs-stable."${tool}"}` instead."
+            "Use `${lib.getExe pkgs."${tool}"}` instead."
           ]
       )
       tools
@@ -68,7 +67,7 @@ in ''
 
   ## Tool aliases
 
-  ${opAliases ["gh" "awscli"]}
+  ${opAliases ["gh" "awscli2"]}
 
   ## No Wheel Reinventions
 
