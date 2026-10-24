@@ -128,13 +128,12 @@
       # keep-sorted end
 
       # fun that only works on Linux
-      spotify
       hollywood
     ]
     ++ [
-      # Research
       pkgs-stable.zotero # citation and document management
       pkgs-stable.krita
+      pkgs-stable.spotify
     ];
 
   x86Linux = with pkgs; [
