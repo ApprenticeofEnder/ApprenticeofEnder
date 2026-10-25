@@ -70,7 +70,6 @@ in {
   home.stateVersion = "25.05";
 
   home.packages = with pkgs; [
-    deadlock-mod-manager
     openrgb
     signal-desktop
   ];
