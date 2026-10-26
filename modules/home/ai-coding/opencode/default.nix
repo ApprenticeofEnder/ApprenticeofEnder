@@ -107,7 +107,7 @@ in {
     enable = true;
     # enableMcpIntegration = true;
 
-    tui = {
+    cli = {
       theme = "nord";
       diff_style = "stacked";
     };
