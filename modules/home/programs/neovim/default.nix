@@ -15,7 +15,7 @@ in {
   ];
   programs.nixvim = {
     enable = true;
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs.useGlobalPackages = true;
     imports = [./nixvim-config.nix];
     # HACK: Nixvim hasn't updated nixpkgs yet
     lsp.servers = {
