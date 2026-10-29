@@ -108,8 +108,14 @@ in {
     # enableMcpIntegration = true;
 
     cli = {
-      theme = "nord";
-      diff_style = "stacked";
+      theme = {
+        name = "nord";
+      };
+    };
+
+    validateFiles = {
+      # cli = true;
+      # config = true;
     };
 
     skills = ../skills;
