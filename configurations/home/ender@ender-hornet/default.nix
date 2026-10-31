@@ -75,6 +75,6 @@ in {
   ];
 
   home.sessionVariables = {
-    PULSE_LATENCY_MSEC = "400";
+    PULSE_LATENCY_MSEC = "40";
   };
 }
