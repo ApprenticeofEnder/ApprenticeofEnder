@@ -30,6 +30,9 @@ in {
     config = {
       allowUnfree = true;
       nvidia.acceptLicense = true;
+      problems.handlers = {
+        "gtk+".broken = "warn"; # or "ignore"
+      };
     };
 
     overlays = [
