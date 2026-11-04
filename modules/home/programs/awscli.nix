@@ -87,6 +87,16 @@
         };
       };
     };
+    prod-root = {
+      credentials = {};
+      settings = {
+        "profile prod-root" = {
+          login_session = "arn:aws:iam::102592349844:user/robert.babaev";
+          region = "us-east-1";
+          output = "json";
+        };
+      };
+    };
     eks-backend = mkAwsProfile {
       name = "eks-backend";
       access_key_uri = "op://Homelab/EKS Floci Playground/seaweedfs";
