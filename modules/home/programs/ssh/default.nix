@@ -93,7 +93,7 @@ in {
         port = 2222;
       };
 
-      "beaverops.damoverflow.ca" = cyberSciSshHost {
+      "beaverops.damoverflow.com" = cyberSciSshHost {
         publicKeyName = "cybersci_2026_regionals.pub";
         hostname = "10.0.2.41";
       };
