@@ -72,6 +72,7 @@ in {
   home.packages = with pkgs; [
     openrgb
     signal-desktop
+    sqlite
   ];
 
   home.sessionVariables = {
