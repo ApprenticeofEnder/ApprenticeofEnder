@@ -88,6 +88,8 @@
       agent = "opencode";
     };
   };
+
+  op_account_id = "XFBD5TQ5CFH2DHBSQ342HEZCAE";
 in {
   xdg.configFile = {
     ${env_tpl_name} = {
@@ -96,7 +98,7 @@ in {
   };
 
   home.shellAliases = {
-    opencode = ''export $(op inject -i ${config.xdg.configHome}/${env_tpl_name}) && ${lib.getExe pkgs.opencode}'';
+    opencode = ''export $(op --account ${op_account_id} inject -i ${config.xdg.configHome}/${env_tpl_name}) && ${lib.getExe pkgs.opencode}'';
   };
 
   home.sessionVariables = {
