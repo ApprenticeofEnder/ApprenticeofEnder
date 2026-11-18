@@ -33,7 +33,7 @@ in {
     nix-top
     prettier
     jinja2-cli
-    pulumi-esc
+    pulumi
   ];
 
   scripts = {
@@ -94,7 +94,7 @@ in {
   enterTest = ''
     echo "Running tests"
     git --version | grep --color=auto "${pkgs.git.version}"
-    esc version | grep --color=auto "${pkgs.pulumi-esc.version}"
+    pulumi --version | grep --color=auto "${pkgs.pulumi.version}"
   '';
 
   git-hooks.hooks = {

@@ -69,7 +69,7 @@
     kubeseal # k8s secrets
     lens # k8s dashboard
     opentofu # IaC
-    pulumi-bin # IaC
+    pulumi # IaC
     terraform # IaC
     terraform-docs # IaC documentation
     # terramaid
