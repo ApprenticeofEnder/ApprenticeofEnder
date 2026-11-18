@@ -124,6 +124,10 @@ in {
         rev = "6f0a5724acb7e9f18aec1c5240434b19c77687ea";
         hash = "sha256-ps8DA5hsbCK3mtRgm1l/7kp3zY4812Q0fqA5eGx0vMY=";
       };
+      acre-agent-ops = builtins.fetchGit {
+        url = "git@github.com:acresecurity/acre-agent-ops.git";
+        rev = "1757f83283534e9f2925d81dba53a7afabede2a7";
+      };
     };
 
     settings = {
@@ -143,6 +147,7 @@ in {
         "claude-hud@claude-hud" = true;
         "skill-router@ender-agent-ops" = true;
         "laconic@nomadic-labs" = true;
+        "aup-guard-plugin@acre-agent-ops" = true;
       };
 
       statusLine = {
