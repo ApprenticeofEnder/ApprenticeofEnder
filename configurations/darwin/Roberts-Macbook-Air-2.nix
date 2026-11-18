@@ -3,6 +3,7 @@
 {
   flake,
   config,
+  pkgs,
   ...
 }: let
   inherit (flake) inputs;
@@ -28,6 +29,10 @@ in {
   myusers = [config.system.primaryUser];
 
   ids.gids.nixbld = 350;
+
+  users.users.robertbabaev.packages = with pkgs; [
+    openvpn
+  ];
 
   # Automatically move old dotfiles out of the way
   #
